@@ -1,0 +1,42 @@
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul > li:hover {
+  background-color: red;
+  transition: 0.5s;
+}
+
+nav {
+  position: relative;
+  height: 100vh;
+  background-color: rgb(00, 0, 0, 0.3);
+}
+
+.menu {
+  position: absolute;
+  z-index: 1;
+  background-color: #009b6e;
+  width: 60%;
+  height: 100%;
+}
+
+.menu > ul {
+  padding: 20px 0;
+  width: 100%;
+}
+
+.menu > ul > li {
+  line-height: 3rem;
+  text-align: left;
+  padding: 0 20px;
+  color: #fff;
+}
+
+/* .close {
+  position: absolute;
+  z-index: 1;
+  background-color: sandybrown;
+} */

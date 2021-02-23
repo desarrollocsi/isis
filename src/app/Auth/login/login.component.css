@@ -1,0 +1,153 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 15px;
+}
+
+.card {
+  width: 100%;
+  position: relative;
+  padding: 4rem 2rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+}
+
+.card-head {
+  position: absolute;
+  height: 170px;
+  width: 170px;
+  top: -75px;
+  padding: 8px;
+  border-radius: 50%;
+  background: white;
+  text-align: center;
+}
+
+.log {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+}
+
+.group {
+  position: relative;
+  height: 45px;
+  margin-bottom: 1.6rem;
+}
+
+.input-control {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  padding: 1.2rem;
+  border-radius: 2rem;
+  border: 1px solid #dadce0;
+  outline: none;
+  background: none;
+  z-index: 1;
+}
+
+.label-control {
+  position: absolute;
+  top: 0.9rem;
+  left: 1rem;
+  background-color: #fff;
+  padding: 0 0.25rem;
+  color: #80868b;
+  transition: 0.3s;
+}
+
+.input-control:focus + .label-control {
+  top: -0.5rem;
+  left: 0.9rem;
+  z-index: 10;
+}
+
+.input-control:not(:placeholder-shown).input-control:not(:focus)
+  + .label-control {
+  top: -0.5rem;
+  left: 0.9rem;
+  z-index: 10;
+}
+
+.input-control:focus {
+  border: 1px solid #fe7b12;
+}
+
+.btn {
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+  font-size: 1rem;
+  background-color: #015837;
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 2rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.bt-disabled {
+  background-color: #009b6e;
+  transition: 0.3s;
+}
+
+/*************message*******************/
+.message {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 3.7rem;
+  left: 1rem;
+}
+
+.message-group {
+  height: 65px;
+  transition: 0.3s;
+}
+
+.message-input {
+  border: 1px solid red;
+  height: 45px;
+}
+
+.message-input:focus {
+  border: 1px solid red;
+}
+
+.message-label {
+  color: red;
+}
+
+.message-text {
+  color: red;
+  font-size: 12px;
+}
+
+.message-svg {
+  margin-right: 8px;
+}
+/*******************************************/
+.link {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.link:hover {
+  color: royalblue;
+  cursor: pointer;
+}
