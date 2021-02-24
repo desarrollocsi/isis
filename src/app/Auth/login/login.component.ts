@@ -3,13 +3,21 @@ import { Router } from '@angular/router';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { AuthService } from '../../core/services/auth.service';
+import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(private router: Router, private fb: FormBuilder) {}
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private AS: AuthService,
+    private AST: AuthStorageService
+  ) {}
 
   form: FormGroup;
 
@@ -29,6 +37,8 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    console.log(this.form.value);
+    // if (this.form.valid) {
+    //   this.AS.getMenu().subscribe((data: any) => this.AST.setMenu(data));
+    // }
   }
 }

@@ -1,18 +1,34 @@
-<nav *ngIf="nav">
-  <div class="fondo">
-    <div class="menu">
-      <ul>
-        <li><a href="">menu 1</a></li>
-        <li><a href="">menu 2</a></li>
-        <li><a href="">menu 3</a></li>
-        <li><a href="">menu 4</a></li>
-        <li><a href="">menu 5</a></li>
+<div class="wrapper">
+  <nav>
+    <input type="checkbox" id="show-search" />
+    <input type="checkbox" id="show-menu" />
+    <label for="show-menu" class="menu-icon">
+      <img src="../../../../assets/icons/square.svg" />
+    </label>
+    <div class="content">
+      <div class="logo">
+        <img src="../../../../assets/img/Logo-csi-color.svg" alt="home" />
+      </div>
+      <ul class="links">
+        <li *ngFor="let menu of menus$ | async">
+          <a
+            *ngIf="menu.padre === 1"
+            (click)="onSubmenu(menu.id)"
+            class="desktop-link"
+            >{{ menu.nombre | titlecase }}</a
+          >
+          <input type="checkbox" id="show-features" />
+          <label *ngIf="menu.padre === 1" for="show-features">{{
+            menu.nombre | titlecase
+          }}</label>
+          <ul>
+            <li *ngFor="let submenu of submenus$ | async">
+              <a href="#">{{ submenu.nombre | titlecase }}</a>
+            </li>
+          </ul>
+        </li>
       </ul>
     </div>
-    <div class="close">
-      <button type="submit" (click)="test(false)">x</button>
-    </div>
-  </div>
-</nav>
-
-<button (click)="test(true)" type="submit">MENU</button>
+    <label for="show-search" class="search-icon"></label>
+  </nav>
+</div>
