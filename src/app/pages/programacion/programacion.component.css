@@ -4,6 +4,7 @@
 }
 
 .container-row {
+  width: auto;
   display: flex;
   justify-content: space-between;
   padding-top: 30px;
@@ -12,4 +13,11 @@
 
 .container-row .cell {
   width: 50%;
+}
+
+.cell-center {
+  width: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

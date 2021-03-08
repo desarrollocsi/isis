@@ -16,4 +16,14 @@ export class MessageService {
       showConfirmButton: false,
     });
   }
+
+  MessageInfo(info: string) {
+    const message = `<h1>${info}</h1>`;
+    Swal.fire({
+      icon: 'info',
+      html: message,
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  }
 }

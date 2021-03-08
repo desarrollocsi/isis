@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { ProgramacionService } from '../services/programacion.service';
 import { IntermedaryService } from '../../../core/services/intermedary.service';
 
@@ -26,7 +26,9 @@ export class ProgramacionListComponent implements OnInit {
   }
 
   getListProgramacion() {
-    this.listProgramaciones$ = this.PS.getProgramacionlist();
+    this.listProgramaciones$ = this.IS._fecha.pipe(
+      switchMap((fecha: string) => this.PS.getProgramacionlist(fecha))
+    );
   }
 
   onEdit(id: string) {

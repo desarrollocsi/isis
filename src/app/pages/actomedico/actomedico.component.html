@@ -1,5 +1,7 @@
 <form [formGroup]="formActoMedico" (ngSubmit)="onSubmit()" autocomplete="off">
   <div class="container">
+    {{ datosDelPaciente$ | async }}
+
     <div class="container-row">
       <div class="card">
         <h3>Signos Vitales</h3>
@@ -199,37 +201,32 @@
         </ng-container>
       </div>
 
-      <div class="card">
+      <div class="card" *ngIf="cieSelect$ | async as cieSelects">
         <h3>Cie 10 seleccionados</h3>
 
-        <div class="card-cie" *ngFor="let cieSelect of cieSelect$ | async">
+        <div class="card-cie" *ngFor="let cieSelect of cieSelects">
           <span class="card-title-cie">
             <h2>{{ cieSelect.codigo }}</h2>
             <h6>{{ cieSelect.descripcion }}</h6>
           </span>
           <span class="card-contenido-cie">
-            <span class="delete-cie">X</span>
-            <ul class="list-radio">
-              <li>
-                <input
-                  type="radio"
-                  id="presuntivo"
-                  [name]="cieSelect.codigo"
-                  value="Presuntivo"
-                  checked
-                />
-                <label for="presuntivo">Presuntivo</label>
-              </li>
-              <li>
-                <input
-                  type="radio"
-                  id="definitivo"
-                  [name]="cieSelect.codigo"
-                  value="Definitivo"
-                />
-                <label for="definitivo">Definitivo</label>
-              </li>
-            </ul>
+            <!-- <span class="delete-cie">X</span> -->
+            <div class="radio">
+              <input
+                type="radio"
+                [name]="cieSelect.codigo"
+                id="radio1"
+                class="radio__input"
+              />
+              <label for="radio1" class="radio_label">Presuntivo</label>
+              <input
+                type="radio"
+                [name]="cieSelect.codigo"
+                id="radio2"
+                class="radio__input"
+              />
+              <label for="radio2" class="radio_label">Defintivo</label>
+            </div>
           </span>
         </div>
       </div>

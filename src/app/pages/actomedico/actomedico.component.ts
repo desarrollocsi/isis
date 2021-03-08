@@ -6,6 +6,8 @@ import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ActomedicoService } from './services/actomedico.service';
 import { HttpService } from '../../core/services/http.service';
 import { CieForm } from '../../core/models/cie-form.class';
+import { IntermedaryService } from '../../core/services/intermedary.service';
+import { MessageService } from '../../core/services/message.service';
 
 @Component({
   selector: 'app-actomedico',
@@ -16,15 +18,18 @@ export class ActomedicoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private AMS: ActomedicoService,
-    private http: HttpService
+    private http: HttpService,
+    private IS: IntermedaryService,
+    private MS: MessageService
   ) {}
   formActoMedico: FormGroup;
   cies$: Observable<any>;
   antecedentes$: Observable<any>;
+  cieSelect$: Observable<any>;
+  datosDelPaciente$: Observable<any>;
   antecedentes: any;
   diagnosticos: any;
   add = [];
-  cieSelect$: Observable<any>;
   cieSelect = [];
 
   ngOnInit(): void {
@@ -52,6 +57,8 @@ export class ActomedicoComponent implements OnInit {
     this.antecedentes$ = this.http.getAntecedentes();
     this.antecedentes = this.formActoMedico.get('antecedentes') as FormArray;
     this.diagnosticos = this.formActoMedico.get('diagnosticos') as FormArray;
+
+    this.datosDelPaciente$ = this.IS._datoDePaciente;
   }
 
   get cie() {
@@ -91,6 +98,8 @@ export class ActomedicoComponent implements OnInit {
 
   onSubmit() {
     this.setCie();
-    this.AMS.postActoMedico(this.formActoMedico.value).subscribe(console.log);
+    this.AMS.postActoMedico(this.formActoMedico.value).subscribe((data) => {
+      this.MS.MessageInfo(data['message']);
+    });
   }
 }

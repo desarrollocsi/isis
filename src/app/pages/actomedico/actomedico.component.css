@@ -13,6 +13,7 @@
   border-radius: 1.5rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
   margin-bottom: 15px;
+  background-color: #fff;
 }
 
 .card-option {
@@ -178,7 +179,8 @@
   width: 100%;
   display: flex;
   margin-bottom: 5px;
-  /* border-radius: 1.5rem; */
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
 }
 
 .card-cie span {
@@ -200,11 +202,12 @@ h6 {
 .card-cie .card-title-cie {
   background-color: #828282;
   width: 50%;
+  border-top-left-radius: 1.5rem;
+  border-bottom-left-radius: 1.5rem;
 }
 
 .card-contenido-cie {
   width: 100%;
-  border: 1px solid red;
 }
 
 .card-contenido-cie .list-radio {
@@ -213,7 +216,6 @@ h6 {
 }
 
 .card-contenido-cie .delete-cie {
-  border: 1px solid red;
   margin: 0;
 }
 /* .card-contenido-cie .list-radio li {
@@ -222,3 +224,39 @@ h6 {
   padding: 0 1rem;
   margin: 10px;
 } */
+
+/*************radio*******************/
+
+.radio {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-radius: 2rem;
+  /* flex-wrap: wrap; */
+}
+
+.radio__input {
+  display: none;
+}
+
+.radio_label {
+  height: 40px;
+  width: 100%;
+  padding: 8px 14px;
+  font-size: 14px;
+  color: #fff;
+  background-color: #009578;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.radio_label:not(:last-of-type) {
+  border-right: 1px solid #000;
+}
+
+.radio__input:checked + .radio_label {
+  background-color: red;
+  transition: 0.5s;
+}

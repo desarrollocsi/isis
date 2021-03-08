@@ -18,6 +18,9 @@ export class IntermedaryService {
   private datoDePaciente = new BehaviorSubject<any>([]);
   _datoDePaciente = this.datoDePaciente.asObservable();
 
+  private fecha = new BehaviorSubject<string>('');
+  _fecha = this.fecha.asObservable();
+
   getMenus(data: any) {
     this.menus.next(data);
   }
@@ -27,6 +30,10 @@ export class IntermedaryService {
   }
   getDatoDePaciente(data: any) {
     this.datoDePaciente.next(data);
+  }
+
+  getFecha(fecha: string) {
+    this.fecha.next(fecha);
   }
 
   get refresh() {
