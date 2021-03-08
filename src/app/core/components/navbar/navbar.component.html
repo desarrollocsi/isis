@@ -11,19 +11,16 @@
       </div>
       <ul class="links">
         <li *ngFor="let menu of menus$ | async">
-          <a
-            *ngIf="menu.padre === 1"
-            (click)="onSubmenu(menu.id)"
-            class="desktop-link"
-            >{{ menu.nombre | titlecase }}</a
-          >
-          <input type="checkbox" id="show-features" />
-          <label *ngIf="menu.padre === 1" for="show-features">{{
+          <a class="desktop-link" (mouseover)="onSubmenu(menu.id)">{{
             menu.nombre | titlecase
-          }}</label>
+          }}</a>
+          <input type="checkbox" id="show-features" />
+          <label for="show-features">{{ menu.nombre | titlecase }}</label>
           <ul>
             <li *ngFor="let submenu of submenus$ | async">
-              <a href="#">{{ submenu.nombre | titlecase }}</a>
+              <a routerLink="{{ submenu.accion }}">{{
+                submenu.nombre | titlecase
+              }}</a>
             </li>
           </ul>
         </li>

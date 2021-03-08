@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, fromEvent } from 'rxjs';
-import { filter, tap, map, first } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
+import { IntermedaryService } from '../../services/intermedary.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,25 +10,22 @@ import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  constructor(private AST: AuthStorageService) {}
+  constructor(
+    private AST: AuthStorageService,
+    private IS: IntermedaryService
+  ) {}
 
   menus$: Observable<any>;
   submenus$: Observable<any>;
   submenu = false;
 
   ngOnInit(): void {
-    this.menus$ = of(this.AST.getMenu()).pipe(
-      map((menu: any) => menu.filter((menu: any) => menu.nivel !== 0))
+    this.menus$ = this.IS.dataMenu.pipe(
+      switchMap((id: number) => this.AST.getMenu(id))
     );
-
-    fromEvent(document, 'Mouse').subscribe(console.log);
   }
 
-  onSubmenu(id: Number) {
-    this.submenus$ = of(this.AST.getMenu()).pipe(
-      map((submenu: any) =>
-        submenu.filter((submenu: any) => submenu.padre === id)
-      )
-    );
+  onSubmenu(id: number) {
+    this.submenus$ = this.AST.getMenu(id);
   }
 }

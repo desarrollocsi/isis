@@ -1,10 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   text-decoration: none;
-  font-family: "Poppins", sans-serif;
 }
 
 .wrapper {
@@ -12,6 +7,7 @@
   position: fixed;
   width: 100%;
   box-shadow: 0 10px 15px rgba(92, 99, 105, 0.1);
+  z-index: 2;
 }
 .wrapper nav {
   position: relative;
@@ -40,7 +36,7 @@ nav .content .links {
 }
 .content .links li a,
 .content .links li label {
-  color: #000;
+  color: #828282;
   font-size: 18px;
   font-weight: 500;
   padding: 9px 17px;
@@ -52,7 +48,10 @@ nav .content .links {
 }
 .content .links li a:hover,
 .content .links li label:hover {
-  background: red;
+  background: #fe7b12;
+  color: #fff;
+  border-radius: 1.5rem;
+  cursor: pointer;
 }
 .wrapper .search-icon,
 .wrapper .menu-icon {
@@ -127,27 +126,27 @@ nav .content .links {
   position: absolute;
   background: #fff;
   top: 80px;
-  z-index: -1;
-  opacity: 0;
+  z-index: 1;
+  /* opacity: 0; */
   visibility: hidden;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.1);
+  border-radius: 1.5rem;
 }
 
 /***SUBMENU***/
-.content .links li:hover ul {
-  /* .content .links li ul { */
-  border: 1px solid #ddd;
-  top: 70px;
-  width: 200px;
+.content .links > li:hover ul {
+  padding: 10px;
+  top: 80px;
+  width: 250px;
   opacity: 1;
   visibility: visible;
-  transition: all 0.3s ease;
+  /* transition: all 0.3s ease; */
 }
 
 .content .links ul li a {
   display: block;
   width: 100%;
   line-height: 30px;
-  border-radius: 0px !important;
 }
 
 .content .links ul ul {

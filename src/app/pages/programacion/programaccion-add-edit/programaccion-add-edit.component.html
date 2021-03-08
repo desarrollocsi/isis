@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="card">
+    <form [formGroup]="formProgramacion" (ngSubmit)="onSend()">
+      <div class="group">
+        <input
+          type="date"
+          class="input-control"
+          placeholder=" "
+          formControlName="pr_fecha"
+        />
+        <label class="label-control">Fecha</label>
+      </div>
+
+      <div class="group">
+        <select
+          class="input-control input-select"
+          formControlName="pr_servicio"
+          (change)="getMedico($event.target.value)"
+        >
+          <option value="null">Seleccionar especialidad</option>
+          <option
+            *ngFor="let especialidad of especialidades$ | async"
+            [value]="especialidad.codigo"
+          >
+            {{ especialidad.descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="group">
+        <select class="input-control input-select" formControlName="pr_medico">
+          <option [ngValue]="null">Seleccionar medico</option>
+          <option
+            *ngFor="let medico of medicos$ | async"
+            [ngValue]="medico.codigo"
+          >
+            {{ medico.descripcion }}
+          </option>
+        </select>
+      </div>
+      <div class="group">
+        <select
+          class="input-control input-select"
+          formControlName="pr_consultorio"
+        >
+          <option [ngValue]="null">Seleccionar consultorio</option>
+          <option
+            *ngFor="let consultorio of consultorios$ | async"
+            [ngValue]="consultorio.codigo"
+          >
+            {{ consultorio.descripcion }}
+          </option>
+        </select>
+      </div>
+
+      <div class="group">
+        <select class="input-control input-select" formControlName="pr_turno">
+          <option value="null">Seleccionar turno</option>
+          <option *ngFor="let turno of turnos$ | async" [value]="turno.codigo">
+            {{ turno.descripcion }}
+          </option>
+        </select>
+      </div>
+
+      <div class="group">
+        <button type="submit" [disabled]="!formProgramacion.valid" class="btn">
+          Registrar programacion
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

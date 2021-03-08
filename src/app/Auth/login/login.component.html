@@ -4,28 +4,28 @@
       <div
         class="group"
         [ngClass]="{
-          'message-group': f.user.touched && f.user.errors
+          'message-group': f.username.touched && f.username.errors
         }"
       >
         <input
           type="text"
           class="input-control"
           placeholder=" "
-          formControlName="user"
+          formControlName="username"
           [ngClass]="{
-            'message-input': f.user.touched && f.user.errors
+            'message-input': f.username.touched && f.username.errors
           }"
         />
         <label
           class="label-control"
           [ngClass]="{
-            'message-label': f.user.touched && f.user.errors
+            'message-label': f.username.touched && f.username.errors
           }"
           >Usuario</label
         >
         <div
           class="message"
-          *ngIf="(f.user.dirty || f.user.touched) && f.user.errors"
+          *ngIf="(f.username.dirty || f.username.touched) && f.username.errors"
         >
           <div class="message-svg">
             <svg
@@ -43,7 +43,7 @@
               ></path>
             </svg>
           </div>
-          <span class="message-text">Ingrese por favo su usuario</span>
+          <span class="message-text">Ingrese por favor su usuario</span>
         </div>
       </div>
 

@@ -1,1 +1,16 @@
-<p>modules works!</p>
+<div class="container">
+  <div class="cards-list">
+    <div
+      class="card 1"
+      *ngFor="let module of modules$ | async"
+      (click)="onHome(module)"
+    >
+      <div class="card_image">
+        <img src="../../../../assets//icons//front-desk.svg" />
+      </div>
+      <div class="card_title">
+        <p>{{ module.nombre | titlecase }}</p>
+      </div>
+    </div>
+  </div>
+</div>

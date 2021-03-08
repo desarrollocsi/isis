@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { tap } from 'rxjs/operators';
 
-import { AuthService } from '../../core/services/auth.service';
-import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../services/auth.service';
+import { AuthStorageService } from '../../core/services/auth-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +24,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      user: [null, Validators.required],
+      username: [null, Validators.required],
       password: [null, Validators.required],
     });
   }
@@ -32,13 +33,10 @@ export class LoginComponent implements OnInit {
     return this.form.controls;
   }
 
-  nextPages() {
-    this.router.navigate(['home']);
-  }
-
   onLogin() {
-    // if (this.form.valid) {
-    //   this.AS.getMenu().subscribe((data: any) => this.AST.setMenu(data));
-    // }
+    this.AS.postLogin(this.form.value).subscribe((data) => {
+      this.AST.setMenu(data);
+      this.router.navigate(['modulos']);
+    });
   }
 }

@@ -1,0 +1,254 @@
+<form [formGroup]="formActoMedico" (ngSubmit)="onSubmit()" autocomplete="off">
+  <div class="container">
+    <div class="container-row">
+      <div class="card">
+        <h3>Signos Vitales</h3>
+        <div class="group textarea">
+          <textarea
+            rows="5"
+            cols="10"
+            class="input-control"
+            placeholder=" "
+            formControlName="motivo"
+          ></textarea>
+          <label for="" class="label-control">Motivo de Consulta</label>
+        </div>
+
+        <div class="group textarea">
+          <textarea
+            rows="5"
+            cols="10"
+            class="input-control"
+            placeholder=" "
+            formControlName="problema"
+          ></textarea>
+          <label for="" class="label-control"
+            >Enfermedad o Problema Actual</label
+          >
+        </div>
+        <div class="group textarea">
+          <textarea
+            rows="5"
+            cols="10"
+            class="input-control"
+            placeholder=" "
+            formControlName="examen"
+          ></textarea>
+          <label for="" class="label-control">Examen Fisico</label>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Signos Vitales</h3>
+        <div class="container-cell">
+          <div class="container-row">
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="parterial"
+              />
+              <label class="label-control">Presion Arterial</label>
+            </div>
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="fcardiaca"
+              />
+              <label class="label-control">F. Cardiaca(min)</label>
+            </div>
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="frespiratoria"
+              />
+              <label class="label-control">F.Respiratoria(min)</label>
+            </div>
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="tbucal"
+              />
+              <label class="label-control">Temp. Bucal(c)</label>
+            </div>
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="taxiliar"
+              />
+              <label class="label-control">Temp. Axilar(c)</label>
+            </div>
+          </div>
+          <div class="container-row">
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="peso"
+              />
+              <label class="label-control">Peso(kg)</label>
+            </div>
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="talla"
+              />
+              <label class="label-control">Talla(m)</label>
+            </div>
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="icorporal"
+              />
+              <label class="label-control">I.Masa corporal</label>
+            </div>
+            <div class="group">
+              <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="pcefalico"
+              />
+              <label class="label-control">Perim Cefalico(cm)</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-row">
+      <div class="card">
+        <h3>Antecedentes</h3>
+        <ng-container formArrayName="antecedentes">
+          <div *ngFor="let _ of antecedentes.controls; index as i">
+            <ng-container [formGroupName]="i">
+              <div class="group">
+                <select
+                  class="input-control input-select"
+                  formControlName="idan"
+                >
+                  <option [ngValue]="null">SELECCIONAR ANTENCEDENTES</option>
+                  <option
+                    [ngValue]="antecedente.id"
+                    *ngFor="let antecedente of antecedentes$ | async"
+                  >
+                    {{ antecedente.an_destipo }}/{{
+                      antecedente.an_descripcion
+                    }}
+                  </option>
+                </select>
+              </div>
+              <div class="group">
+                <input
+                  type="text"
+                  class="input-control"
+                  placeholder=" "
+                  formControlName="valor"
+                />
+                <label class="label-control">Descripcion</label>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+        <div class="group">
+          <div class="card-option" (click)="addBackground()">
+            <img src="../../../assets/icons/add-plus.svg" />
+            <span>Agregar antecedentes</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Cie10</h3>
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            placeholder=" "
+            formControlName="cie"
+          />
+          <label class="label-control">Buscar cie 10</label>
+        </div>
+        <ng-container *ngIf="cies$ | async as cies">
+          <div class="table">
+            <div class="row-header">
+              <div class="cell m10">Codigo</div>
+              <div class="cell">Descripcion</div>
+            </div>
+            <div class="row" (click)="addCie(cie)" *ngFor="let cie of cies">
+              <div class="cell m10">
+                {{ cie.codigo | titlecase }}
+              </div>
+              <div class="cell">
+                {{ cie.descripcion | titlecase }}
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <div class="card">
+        <h3>Cie 10 seleccionados</h3>
+
+        <div class="card-cie" *ngFor="let cieSelect of cieSelect$ | async">
+          <span class="card-title-cie">
+            <h2>{{ cieSelect.codigo }}</h2>
+            <h6>{{ cieSelect.descripcion }}</h6>
+          </span>
+          <span class="card-contenido-cie">
+            <span class="delete-cie">X</span>
+            <ul class="list-radio">
+              <li>
+                <input
+                  type="radio"
+                  id="presuntivo"
+                  [name]="cieSelect.codigo"
+                  value="Presuntivo"
+                  checked
+                />
+                <label for="presuntivo">Presuntivo</label>
+              </li>
+              <li>
+                <input
+                  type="radio"
+                  id="definitivo"
+                  [name]="cieSelect.codigo"
+                  value="Definitivo"
+                />
+                <label for="definitivo">Definitivo</label>
+              </li>
+            </ul>
+          </span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Atencion</h3>
+        <div class="group">
+          <select class="input-control input-select" formControlName="destino">
+            <option value="null">Seleccionar tipo de atencion</option>
+            <option value="1">RECITA</option>
+            <option value="2">INTERCONSULTA</option>
+            <option value="3">ALTA</option>
+            <option value="4">REFERENCIA</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="group-button">
+    <button type="submit" class="btn">Registrar acto medico</button>
+  </div>
+</form>

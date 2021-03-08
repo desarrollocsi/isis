@@ -7,9 +7,14 @@ const routes: Routes = [
     loadChildren: () => import('./Auth/auth.module').then((m) => m.AuthModule),
   },
   {
-    path: 'home',
+    path: 'modulos',
     loadChildren: () =>
       import('./shared/shared.module').then((m) => m.SharedModule),
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./pages/pages.module').then((m) => m.PagesModule),
   },
 ];
 

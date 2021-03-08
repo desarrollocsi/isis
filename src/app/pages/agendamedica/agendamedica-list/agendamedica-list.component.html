@@ -1,0 +1,26 @@
+<div class="table">
+  <div class="row-header">
+    <div class="cell">Historia</div>
+    <div class="cell">Paciente</div>
+    <div class="cell">Hora cita</div>
+    <div class="cell">Action</div>
+  </div>
+  <div class="row" *ngFor="let pacientesCitado of pacientesCitados$ | async">
+    <div class="cell">
+      {{ pacientesCitado.historia.hc_numhis | titlecase }}
+    </div>
+    <div class="cell">
+      {{ pacientesCitado.historia.hc_apepat | titlecase }}
+      {{ pacientesCitado.historia.hc_apemat | titlecase }}
+      {{ pacientesCitado.historia.hc_nombre | titlecase }}
+    </div>
+    <div class="cell">
+      {{ pacientesCitado.hora }}
+    </div>
+    <div class="cell">
+      <div class="icon-action-svg" (click)="pagesActomedico(pacientesCitado)">
+        <img src="../../../../assets//icons/checklist.svg" />
+      </div>
+    </div>
+  </div>
+</div>

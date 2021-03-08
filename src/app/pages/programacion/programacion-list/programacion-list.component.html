@@ -1,0 +1,40 @@
+<div class="table">
+  <div class="row-header">
+    <div class="cell">Medico</div>
+    <div class="cell">Consultorio</div>
+    <div class="cell">Especialidad</div>
+    <div class="cell">Turno</div>
+    <div class="cell">Accion</div>
+  </div>
+  <div
+    class="row"
+    *ngFor="let listProgramacione of listProgramaciones$ | async"
+  >
+    <div class="cell">
+      {{ listProgramacione.medico.descripcion | titlecase }}
+    </div>
+    <div class="cell">
+      {{ listProgramacione.consultorio.descripcion | titlecase }}
+    </div>
+    <div class="cell">
+      {{ listProgramacione.especialidad.descripcion | titlecase }}
+    </div>
+    <div class="cell">
+      {{ listProgramacione.turno.descripcion | titlecase }}
+    </div>
+    <div class="cell">
+      <div class="icon-action-svg">
+        <img
+          src="../../../../assets/icons/edit-color.svg"
+          alt="Editar"
+          (click)="onEdit(listProgramacione.pr_numero)"
+        />
+        <img
+          src="../../../../assets/icons/delete-color.svg"
+          alt="Borrar"
+          (click)="onDelete(listProgramacione.pr_numero)"
+        />
+      </div>
+    </div>
+  </div>
+</div>
