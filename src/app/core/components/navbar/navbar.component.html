@@ -18,9 +18,11 @@
           <label for="show-features">{{ menu.nombre | titlecase }}</label>
           <ul>
             <li *ngFor="let submenu of submenus$ | async">
-              <a routerLink="{{ submenu.accion }}">{{
-                submenu.nombre | titlecase
-              }}</a>
+              <a
+                routerLink="{{ submenu.accion }}"
+                (click)="onRoute(submenu.accion)"
+                >{{ submenu.nombre | titlecase }}</a
+              >
             </li>
           </ul>
         </li>

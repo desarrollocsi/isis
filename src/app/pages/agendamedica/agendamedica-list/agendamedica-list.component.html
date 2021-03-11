@@ -5,15 +5,23 @@
     <div class="cell">Hora cita</div>
     <div class="cell">Action</div>
   </div>
-  <div class="row" *ngFor="let pacientesCitado of pacientesCitados$ | async">
+  <div
+    class="row"
+    [ngStyle]="{
+      'background-color': pacientesCitado.estado === 'R' ? '#ccffff' : '#ceffce'
+    }"
+    *ngFor="
+      let pacientesCitado of pacientesCitados$
+        | async
+        | paginate: { itemsPerPage: 5, currentPage: p }
+    "
+  >
     <div class="cell">
-      {{ pacientesCitado.historia.hc_numhis | titlecase }}
+      {{ pacientesCitado.historia | titlecase }}
     </div>
 
     <div class="cell">
-      {{ pacientesCitado.historia.hc_apepat | titlecase }}
-      {{ pacientesCitado.historia.hc_apemat | titlecase }}
-      {{ pacientesCitado.historia.hc_nombre | titlecase }}
+      {{ pacientesCitado.paciente | titlecase }}
     </div>
     <div class="cell">
       {{ pacientesCitado.hora }}
@@ -24,4 +32,5 @@
       </div>
     </div>
   </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>

@@ -1,0 +1,30 @@
+<div class="table">
+  <div class="row-header">
+    <div class="cell">Codigo</div>
+    <div class="cell">descripcion</div>
+    <div class="cell">Accion</div>
+  </div>
+  <div
+    class="row"
+    *ngFor="
+      let dataDynamic of dataDynamic$
+        | async
+        | paginate: { itemsPerPage: 5, currentPage: p }
+    "
+  >
+    <div class="cell">
+      {{ dataDynamic.codigo | titlecase }}
+    </div>
+    <div class="cell">
+      {{ dataDynamic.descripcion | titlecase }}
+    </div>
+
+    <div class="cell">
+      <div class="icon-action-svg">
+        <img src="../../../../assets/icons/edit-color.svg" alt="Editar" />
+        <img src="../../../../assets/icons/delete-color.svg" alt="Borrar" />
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

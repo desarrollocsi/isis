@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { AgendamedicaService } from '../services/agendamedica.service';
 import { IntermedaryService } from '../../../core/services/intermedary.service';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-agendamedica-list',
@@ -19,7 +19,7 @@ export class AgendamedicaListComponent implements OnInit {
   ) {}
 
   pacientesCitados$: Observable<any>;
-
+  p: number = 1;
   ngOnInit(): void {
     this.pacientesCitados$ = this.IS._fecha.pipe(
       switchMap((fecha: string) => this.AS.getListadoCitas(fecha))
@@ -27,7 +27,7 @@ export class AgendamedicaListComponent implements OnInit {
   }
 
   pagesActomedico(data: any) {
-    // this.IS.getDatoDePaciente(data);
+    this.IS.getDatoDePaciente(data);
     this.router.navigate(['home/actomedico']);
   }
 }

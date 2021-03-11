@@ -28,4 +28,9 @@ export class NavbarComponent implements OnInit {
   onSubmenu(id: number) {
     this.submenus$ = this.AST.getMenu(id);
   }
+
+  onRoute(route: string) {
+    const url = route.substring(14);
+    this.IS.getRoute(url);
+  }
 }

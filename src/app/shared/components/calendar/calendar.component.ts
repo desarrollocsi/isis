@@ -33,7 +33,7 @@ export class CalendarComponent implements OnInit {
     this.getDaysFromDate(mes, anio);
   }
 
-  getDaysFromDate(month, year) {
+  getDaysFromDate(month: string, year: string) {
     const startDate = moment.utc(`${year}-${month}-01`);
     const endDate = startDate.clone().endOf('month');
     this.MesAnio = moment(startDate).format('MMMM,YYYY');
@@ -55,7 +55,7 @@ export class CalendarComponent implements OnInit {
     this.monthSelect = arrayDays;
   }
 
-  changeMonth(flag) {
+  changeMonth(flag: number) {
     if (flag < 0) {
       const prevDate = this.dateSelect.clone().subtract(1, 'month');
       this.getDaysFromDate(prevDate.format('MM'), prevDate.format('YYYY'));
@@ -65,7 +65,8 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  clickDay(day) {
+  clickDay(day: any) {
+    console.log(typeof day);
     const monthYear = this.dateSelect.format('YYYY-MM');
     const parse = `${monthYear}-${day.value}`;
     const objectDate = moment(parse);

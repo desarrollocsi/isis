@@ -63,8 +63,11 @@
 
       <div class="group">
         <button type="submit" [disabled]="!formProgramacion.valid" class="btn">
-          Registrar programacion
+          {{ buttonName }}
         </button>
+      </div>
+      <div class="group">
+        <button type="button" class="btn" (click)="onResetForm()">Nuevo</button>
       </div>
     </form>
   </div>

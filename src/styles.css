@@ -1,6 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
-
 @font-face {
   font-family: Humanist;
   src: url("./assets/fonts/humanist-777-bt.ttf");
@@ -11,7 +9,8 @@
 ::after {
   box-sizing: border-box;
   font-family: "Humanist", sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
+  color: #828282;
 }
 
 html,

@@ -21,6 +21,9 @@ export class IntermedaryService {
   private fecha = new BehaviorSubject<string>('');
   _fecha = this.fecha.asObservable();
 
+  private route = new BehaviorSubject<string>('');
+  _route = this.route.asObservable();
+
   getMenus(data: any) {
     this.menus.next(data);
   }
@@ -34,6 +37,10 @@ export class IntermedaryService {
 
   getFecha(fecha: string) {
     this.fecha.next(fecha);
+  }
+
+  getRoute(route: string) {
+    this.route.next(route);
   }
 
   get refresh() {

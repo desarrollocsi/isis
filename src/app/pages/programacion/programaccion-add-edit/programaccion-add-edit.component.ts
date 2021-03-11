@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { Observable } from 'rxjs';
@@ -15,7 +15,7 @@ import { ProgramacionForm } from '../../../core/models/programacion-form.class';
   templateUrl: './programaccion-add-edit.component.html',
   styleUrls: ['./programaccion-add-edit.component.css'],
 })
-export class ProgramaccionAddEditComponent implements OnInit {
+export class ProgramaccionAddEditComponent implements OnInit, OnDestroy {
   formProgramacion: FormGroup;
 
   especialidades$: Observable<any>;
@@ -23,6 +23,8 @@ export class ProgramaccionAddEditComponent implements OnInit {
   turnos$: Observable<any>;
   consultorios$: Observable<any>;
   programacionesData$: Observable<any>;
+  buttonName: string = 'Registrar programacion';
+  typeVerbo: string;
 
   constructor(
     private fb: FormBuilder,
@@ -69,17 +71,33 @@ export class ProgramaccionAddEditComponent implements OnInit {
         filter((data) => data.length > 0),
         switchMap((data) => this.PS.getProgramacionShow(data))
       )
-      .subscribe((data) =>
-        this.formProgramacion.setValue(new ProgramacionForm(data))
-      );
+      .subscribe((data: any) => {
+        console.log(data);
+        this.getMedico(data.pr_servicio);
+        this.formProgramacion.setValue(new ProgramacionForm(data));
+        this.buttonName = 'Actualizar programacion';
+        this.typeVerbo = 'PUT';
+      });
+  }
+
+  onResetForm() {
+    this.formProgramacion.reset();
+    this.buttonName = 'Registra Programacion';
+    this.typeVerbo = 'POST';
   }
 
   onSend() {
-    this.PS.postProgramacion(this.formProgramacion.value).subscribe(
-      (data: any) => {
-        this.MS.MessageSucces(data['message']);
-        this.formProgramacion.reset();
-      }
+    this.PS.apiDinamic(this.formProgramacion.value, this.typeVerbo).subscribe(
+      console.log
     );
+
+    // this.PS.postProgramacion(this.formProgramacion.value).subscribe(
+    //   (data: any) => {
+    //     this.MS.MessageSucces(data['message']);
+    //     this.formProgramacion.reset();
+    //   }
+    // );
   }
+
+  ngOnDestroy() {}
 }

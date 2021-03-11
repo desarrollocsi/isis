@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { of } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import * as moment from 'moment';
 
 import { IntermedaryService } from '../../../core/services/intermedary.service';
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -31,5 +32,28 @@ export class ProgramacionService {
     return this.http
       .post('http://192.168.10.144:8002/programaciones', data)
       .pipe(tap(() => this.IS.refresh.next()));
+  }
+
+  putProgramacion(data: any) {
+    return of(data);
+  }
+
+  apiDinamic(data: any, type: string = 'POST') {
+    switch (type) {
+      case 'POST': {
+        return this.http
+          .post('http://192.168.10.144:8002/programaciones', data)
+          .pipe(tap(() => this.IS.refresh.next()));
+      }
+      case 'PUT': {
+        return this.http
+          .put(
+            `http://192.168.10.144:8002/programaciones/${data.pr_numero}`,
+            data
+          )
+          .pipe(tap(() => this.IS.refresh.next()));
+      }
+    }
+    return of({ data, type });
   }
 }

@@ -28,6 +28,13 @@ const routes: Routes = [
             (m) => m.AgendamedicaModule
           ),
       },
+      {
+        path: 'ficheros',
+        loadChildren: () =>
+          import('./formdinamico/formdinamico.module').then(
+            (m) => m.FormdinamicoModule
+          ),
+      },
     ],
   },
 ];
