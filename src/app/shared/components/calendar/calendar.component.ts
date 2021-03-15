@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵɵtrustConstantResourceUrl } from '@angular/core';
 
 import { IntermedaryService } from '../../../core/services/intermedary.service';
 import * as moment from 'moment';
@@ -23,6 +23,7 @@ export class CalendarComponent implements OnInit {
   dateSelect: any;
   dateValue: any;
   MesAnio: string;
+  day: any;
 
   constructor(private IS: IntermedaryService) {}
 
@@ -51,7 +52,9 @@ export class CalendarComponent implements OnInit {
         indexWeek: dayObject.isoWeekday(),
       };
     });
+    this.day = moment().format('D');
 
+    console.log(this.day);
     this.monthSelect = arrayDays;
   }
 
@@ -66,7 +69,6 @@ export class CalendarComponent implements OnInit {
   }
 
   clickDay(day: any) {
-    console.log(typeof day);
     const monthYear = this.dateSelect.format('YYYY-MM');
     const parse = `${monthYear}-${day.value}`;
     const objectDate = moment(parse);
