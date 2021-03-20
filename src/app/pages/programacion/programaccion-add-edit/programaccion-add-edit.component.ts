@@ -72,7 +72,6 @@ export class ProgramaccionAddEditComponent implements OnInit, OnDestroy {
         switchMap((data) => this.PS.getProgramacionShow(data))
       )
       .subscribe((data: any) => {
-        console.log(data);
         this.getMedico(data.pr_servicio);
         this.formProgramacion.setValue(new ProgramacionForm(data));
         this.buttonName = 'Actualizar programacion';

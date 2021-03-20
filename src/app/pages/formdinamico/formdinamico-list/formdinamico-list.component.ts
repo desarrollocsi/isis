@@ -1,26 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormdinamicoService } from '../services/formdinamico.service';
 import { IntermedaryService } from '../../../core/services/intermedary.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { switchMap, take, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-formdinamico-list',
   templateUrl: './formdinamico-list.component.html',
   styleUrls: ['./formdinamico-list.component.css'],
 })
-export class FormdinamicoListComponent implements OnInit {
+export class FormdinamicoListComponent implements OnInit, OnDestroy {
   dataDynamic$: Observable<any>;
+  dataDynamicRefresh$: Observable<any>;
   p: number = 1;
+  subscription: Subscription;
+  URL: string;
   constructor(
     private FS: FormdinamicoService,
     private IS: IntermedaryService
   ) {}
 
-  ngOnInit(): void {
-    this.dataDynamic$ = this.IS._route.pipe(
-      tap(console.log),
+  get ListDynamic() {
+    return this.IS._route.pipe(
       take(1),
+      tap((data: string) => (this.URL = data)),
       switchMap((data) => this.FS.getApiDynamic(data))
     );
+  }
+
+  ngOnInit(): void {
+    this.getListdynamic();
+    this.subscription = this.IS.refresh.subscribe((_) => this.getListdynamic());
+  }
+  getListdynamic() {
+    this.dataDynamic$ = this.ListDynamic;
+  }
+
+  onEdit(id: string) {
+    this.IS.getDataDynamic(id);
+  }
+
+  onDelete(id: string) {
+    this.FS.getApiDynamic(this.URL, 'DELETE', id).subscribe(console.log);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

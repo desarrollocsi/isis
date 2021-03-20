@@ -1,0 +1,207 @@
+<div class="container-conte">
+  <div class="container-row">
+    <div class="cell cell-center"></div>
+    <div class="cell"></div>
+  </div>
+  <div class="container">
+    <div class="card">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="group">
+          <input
+            type="date"
+            class="input-control"
+            placeholder=" "
+            formControlName="fecha"
+          />
+          <label class="label-control">Fecha</label>
+        </div>
+
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            placeholder=" "
+            formControlName="historia"
+          />
+          <label class="label-control">N° historia del paciente</label>
+        </div>
+        <div class="group textarea">
+          <textarea
+            rows="5"
+            cols="10"
+            class="input-control"
+            placeholder=" "
+            formControlName="descripcion"
+          ></textarea>
+          <label for="" class="label-control"
+            >Descripción de la Incidencia/Evento Adverso
+          </label>
+        </div>
+        <fieldset class="fieldset-group">
+          <legend>Turno</legend>
+          <div class="container-checkbox">
+            <input
+              type="radio"
+              class="checkbox_input"
+              value="1"
+              id="manana"
+              formControlName="turno"
+            />
+            <label for="manana" class="checkbox_label">Mañana</label>
+            <input
+              type="radio"
+              class="checkbox_input"
+              value="2"
+              id="tarde"
+              formControlName="turno"
+            />
+            <label for="tarde" class="checkbox_label">Tarde</label>
+            <input
+              type="radio"
+              class="checkbox_input"
+              value="3"
+              id="noche"
+              formControlName="turno"
+            />
+            <label for="noche" class="checkbox_label">Noche</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset-group">
+          <legend>Área Asociada a la Incidencia/Evento Adverso</legend>
+          <div class="container-checkbox">
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="1"
+              id="coe"
+              formControlName="area1"
+              (change)="onCheckboxArea($event)"
+            />
+            <label for="coe" class="checkbox_label">COE</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="2"
+              id="co"
+              formControlName="area2"
+              (change)="onCheckboxArea($event)"
+            />
+            <label for="co" class="checkbox_label">Centro Quirúrgico</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="3"
+              id="hosp"
+              formControlName="area3"
+              (change)="onCheckboxArea($event)"
+            />
+            <label for="hosp" class="checkbox_label">Hospitalización</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="4"
+              id="neo"
+              formControlName="area4"
+              (change)="onCheckboxArea($event)"
+            />
+            <label for="neo" class="checkbox_label">Neonatología</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="5"
+              id="consultorios"
+              formControlName="area5"
+              (change)="onCheckboxArea($event)"
+            />
+            <label for="consultorios" class="checkbox_label">CONS</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="6"
+              id="otro"
+              formControlName="area6"
+              (change)="onCheckboxArea($event)"
+            />
+            <label for="otro" class="checkbox_label">Otros</label>
+          </div>
+          <div class="group" *ngIf="otrosArea">
+            <input
+              type="text"
+              class="input-control"
+              placeholder=" "
+              formControlName="otros"
+            />
+            <label class="label-control">Otra area</label>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset-group">
+          <legend>Colaborador involucrado al Incidente/Evento Adverso</legend>
+          <div class="container-checkbox">
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="1"
+              id="medico"
+              formControlName="colaborador1"
+              (change)="onCheckboxColaborador($event)"
+            />
+            <label for="medico" class="checkbox_label">Medico</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="2"
+              id="enfermera"
+              formControlName="colaborador2"
+              (change)="onCheckboxColaborador($event)"
+            />
+            <label for="enfermera" class="checkbox_label">Enfermera</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="3"
+              id="obstetrica"
+              formControlName="colaborador3"
+              (change)="onCheckboxColaborador($event)"
+            />
+            <label for="obstetrica" class="checkbox_label">Obstetrica</label>
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="4"
+              id="tecenfermera"
+              formControlName="colaborador4"
+              (change)="onCheckboxColaborador($event)"
+            />
+            <label for="tecenfermera" class="checkbox_label"
+              >Tec. Enfermera</label
+            >
+            <input
+              type="checkbox"
+              class="checkbox_input"
+              value="5"
+              id="otros"
+              formControlName="colaborador5"
+              (change)="onCheckboxColaborador($event)"
+            />
+            <label for="otros" class="checkbox_label">Otros</label>
+          </div>
+          <div class="group" *ngIf="otrosColaboradores">
+            <input
+              type="text"
+              class="input-control"
+              placeholder=" "
+              formControlName="otros"
+            />
+            <label class="label-control">Otra Colaborador</label>
+          </div>
+        </fieldset>
+
+        <div class="group">
+          <button type="submit" class="button">Enviar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

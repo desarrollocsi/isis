@@ -1,19 +1,54 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
+import { take, tap } from 'rxjs/operators';
+
+import { IntermedaryService } from './intermedary.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthStorageService {
-  constructor() {}
+  idmenu: string;
+  constructor(private IS: IntermedaryService) {}
 
   setMenu(data: any) {
-    localStorage.setItem('_menu', JSON.stringify(data.menu));
+    localStorage.setItem('_menu', JSON.stringify(data.Rol[0].menu));
   }
 
-  getMenu(id: number) {
-    const menu = JSON.parse(localStorage.getItem('_menu'));
+  setUsuario(data: any) {
+    localStorage.setItem('_usuario', data.User.username);
+  }
 
+  setRol(data: any) {
+    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].nombre));
+  }
+
+  setModulos(data: any) {
+    localStorage.setItem(`_${data.nombres}`, data.id);
+  }
+
+  get User() {
+    return localStorage.getItem('_usuario');
+  }
+
+  getModulos() {
+    const menu = JSON.parse(localStorage.getItem('_menu'));
+    return of(menu.filter((menu: any) => menu.nivel === 0));
+  }
+
+  isValidacionMenus(nombre: string) {
+    return localStorage.getItem(`_${nombre}`) ? true : false;
+  }
+
+  getMenu() {
+    const menu = JSON.parse(localStorage.getItem('_menu'));
+    const idmenu = localStorage.getItem(`_admision`);
+
+    return of(menu.filter((menu: any) => menu.padre === parseInt(idmenu)));
+  }
+
+  getSubmenu(id: number) {
+    const menu = JSON.parse(localStorage.getItem('_menu'));
     return of(menu.filter((menu: any) => menu.padre === id));
   }
 }

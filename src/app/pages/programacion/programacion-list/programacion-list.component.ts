@@ -20,7 +20,6 @@ export class ProgramacionListComponent implements OnInit {
   ngOnInit(): void {
     this.getListProgramacion();
     this.IS.refresh.subscribe((data) => {
-      console.log('refresh');
       this.getListProgramacion();
     });
   }

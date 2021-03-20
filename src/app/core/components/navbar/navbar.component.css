@@ -161,7 +161,7 @@ nav .content .links {
   top: 0;
 }
 
-/* Responsive code start */
+/****/
 @media screen and (max-width: 1250px) {
   .wrapper nav {
     max-width: 100%;

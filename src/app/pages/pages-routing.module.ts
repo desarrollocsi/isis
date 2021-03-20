@@ -35,6 +35,13 @@ const routes: Routes = [
             (m) => m.FormdinamicoModule
           ),
       },
+      {
+        path: 'calidad',
+        loadChildren: () =>
+          import('./f419-eventoadverso/f419-eventoadverso.module').then(
+            (m) => m.F419EventoadversoModule
+          ),
+      },
     ],
   },
 ];

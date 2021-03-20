@@ -7,22 +7,25 @@
     </label>
     <div class="content">
       <div class="logo">
-        <img src="../../../../assets/img/Logo-csi-color.svg" alt="home" />
+        <a routerLink="/home"
+          ><img src="../../../../assets/img/Logo-csi-color.svg" alt="home"
+        /></a>
       </div>
       <ul class="links">
         <li *ngFor="let menu of menus$ | async">
-          <a class="desktop-link" (mouseover)="onSubmenu(menu.id)">{{
-            menu.nombre | titlecase
-          }}</a>
+          <a
+            class="desktop-link"
+            routerLink="{{ menu.accion }}"
+            (mouseover)="onSubmenu(menu.id)"
+            >{{ menu.nombres | titlecase }}</a
+          >
           <input type="checkbox" id="show-features" />
-          <label for="show-features">{{ menu.nombre | titlecase }}</label>
+          <label for="show-features">{{ menu.nombres | titlecase }}</label>
           <ul>
             <li *ngFor="let submenu of submenus$ | async">
-              <a
-                routerLink="{{ submenu.accion }}"
-                (click)="onRoute(submenu.accion)"
-                >{{ submenu.nombre | titlecase }}</a
-              >
+              <a routerLink="{{ submenu.accion }}" (click)="onRoute(submenu)">{{
+                submenu.nombres | titlecase
+              }}</a>
             </li>
           </ul>
         </li>

@@ -21,8 +21,16 @@
 
     <div class="cell">
       <div class="icon-action-svg">
-        <img src="../../../../assets/icons/edit-color.svg" alt="Editar" />
-        <img src="../../../../assets/icons/delete-color.svg" alt="Borrar" />
+        <img
+          (click)="onEdit(dataDynamic.codigo)"
+          src="../../../../assets/icons/edit-color.svg"
+          alt="Editar"
+        />
+        <img
+          (click)="onDelete(dataDynamic.codigo)"
+          src="../../../../assets/icons/delete-color.svg"
+          alt="Borrar"
+        />
       </div>
     </div>
   </div>

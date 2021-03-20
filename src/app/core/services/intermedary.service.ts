@@ -10,7 +10,7 @@ export class IntermedaryService {
   private _refresh = new Subject<void>();
 
   private menus = new BehaviorSubject<any>([]);
-  dataMenu = this.menus.asObservable();
+  _menus = this.menus.asObservable();
 
   private programacion = new BehaviorSubject<any>([]);
   dataProgramacion = this.programacion.asObservable();
@@ -24,6 +24,9 @@ export class IntermedaryService {
   private route = new BehaviorSubject<string>('');
   _route = this.route.asObservable();
 
+  private dataDynamic = new BehaviorSubject<string>('');
+  _dataDynamic = this.dataDynamic.asObservable();
+
   getMenus(data: any) {
     this.menus.next(data);
   }
@@ -31,6 +34,7 @@ export class IntermedaryService {
   getEdit(data: any) {
     this.programacion.next(data);
   }
+
   getDatoDePaciente(data: any) {
     this.datoDePaciente.next(data);
   }
@@ -39,8 +43,12 @@ export class IntermedaryService {
     this.fecha.next(fecha);
   }
 
-  getRoute(route: string) {
+  getRoute(route: any) {
     this.route.next(route);
+  }
+
+  getDataDynamic(id: string) {
+    this.dataDynamic.next(id);
   }
 
   get refresh() {

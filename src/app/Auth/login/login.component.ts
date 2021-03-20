@@ -35,6 +35,8 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.AS.postLogin(this.form.value).subscribe((data) => {
+      this.AST.setRol(data);
+      this.AST.setUsuario(data);
       this.AST.setMenu(data);
       this.router.navigate(['modulos']);
     });

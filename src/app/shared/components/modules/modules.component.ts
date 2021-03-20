@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 
 import { AuthStorageService } from '../../../core/services/auth-storage.service';
 import { IntermedaryService } from '../../../core/services/intermedary.service';
@@ -21,11 +20,12 @@ export class ModulesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.modules$ = this.AS.getMenu(0);
+    this.modules$ = this.AS.getModulos();
   }
 
   onHome(data: any) {
     this.router.navigate(['home']);
-    this.IS.getMenus(data.id);
+    this.IS.getMenus(data);
+    this.AS.setModulos(data);
   }
 }
