@@ -27,6 +27,13 @@ export class IntermedaryService {
   private dataDynamic = new BehaviorSubject<string>('');
   _dataDynamic = this.dataDynamic.asObservable();
 
+  private modal = new BehaviorSubject<boolean>(false);
+  _modal = this.modal.asObservable();
+
+  getModal(status: boolean) {
+    this.modal.next(status);
+  }
+
   getMenus(data: any) {
     this.menus.next(data);
   }

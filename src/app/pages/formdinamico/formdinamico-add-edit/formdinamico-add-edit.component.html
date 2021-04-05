@@ -12,7 +12,7 @@
               class="input-control"
               placeholder=" "
             />
-            <label class="label-control">{{ form.label }}</label>
+            <label class="label-control">{{ form.label | titlecase }}</label>
           </div>
 
           <div class="group" *ngSwitchCase="'time'">
@@ -27,7 +27,9 @@
           </div>
           <div class="group" *ngSwitchCase="'select'">
             <select class="input-control" [formControlName]="form.key">
-              <option [ngValue]="null">SELECIONAR {{ form.label }}</option>
+              <option [ngValue]="null">
+                Seleccionar {{ form.label | titlecase }}
+              </option>
               <option
                 *ngFor="let option of form.options"
                 [ngValue]="option.codigo"

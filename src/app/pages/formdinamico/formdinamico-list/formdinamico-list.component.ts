@@ -14,6 +14,8 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
   p: number = 1;
   subscription: Subscription;
   URL: string;
+  checked: boolean = false;
+
   constructor(
     private FS: FormdinamicoService,
     private IS: IntermedaryService
@@ -31,6 +33,11 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
     this.getListdynamic();
     this.subscription = this.IS.refresh.subscribe((_) => this.getListdynamic());
   }
+
+  onModal(status: boolean) {
+    this.IS.getModal(status);
+  }
+
   getListdynamic() {
     this.dataDynamic$ = this.ListDynamic;
   }

@@ -4,19 +4,9 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-pages',
   template: `
     <app-navbar></app-navbar>
-    <div class="container-pages">
-      <router-outlet></router-outlet>
-    </div>
+    <router-outlet></router-outlet>
   `,
-  styles: [
-    `
-      .container-pages {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-      }
-    `,
-  ],
+  styles: [],
 })
 export class PagesComponent implements OnInit {
   constructor() {}

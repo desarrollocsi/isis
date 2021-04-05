@@ -17,9 +17,9 @@ html,
 body {
   margin: 0;
   padding: 0;
-  /* background-color: red; */
+  background-color: white;
 }
 
-h3 {
-  color: #015837;
+h1 {
+  font-size: 30px;
 }

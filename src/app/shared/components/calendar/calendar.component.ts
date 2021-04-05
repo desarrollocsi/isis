@@ -53,8 +53,6 @@ export class CalendarComponent implements OnInit {
       };
     });
     this.day = moment().format('D');
-
-    console.log(this.day);
     this.monthSelect = arrayDays;
   }
 

@@ -89,22 +89,20 @@
               ></path>
             </svg>
           </div>
-
           <span class="message-text">Ingrese por favor su password</span>
         </div>
       </div>
-      <div class="group">
-        <button
-          type="submit"
-          [ngClass]="{
-            'bt-disabled': !form.valid
-          }"
-          [disabled]="!form.valid"
-          class="btn"
-        >
-          Ingresar
-        </button>
-      </div>
+
+      <button
+        type="submit"
+        [ngClass]="{
+          'bt-disabled': !form.valid
+        }"
+        [disabled]="!form.valid"
+        class="btn"
+      >
+        Ingresar
+      </button>
       <span class="link"> ¿Olvidaste tu password?</span>
     </form>
   </div>

@@ -6,7 +6,6 @@
         (click)="changeMonth(-1)"
         src="../../../../assets/icons/arrow-left.svg"
       />
-
       <img
         (click)="changeMonth(1)"
         src="../../../../assets/icons/arrow-rigth.svg"
@@ -16,7 +15,6 @@
 
   <ol>
     <li *ngFor="let day of week" class="day-name">{{ day | slice: 0:3 }}</li>
-
     <li
       (click)="clickDay(day)"
       class="day"

@@ -19,8 +19,10 @@
             (mouseover)="onSubmenu(menu.id)"
             >{{ menu.nombres | titlecase }}</a
           >
-          <input type="checkbox" id="show-features" />
-          <label for="show-features">{{ menu.nombres | titlecase }}</label>
+          <input type="checkbox" id="showfeatures" />
+          <label (mouseover)="onSubmenu(menu.id)" for="showfeatures">{{
+            menu.nombres | titlecase
+          }}</label>
           <ul>
             <li *ngFor="let submenu of submenus$ | async">
               <a routerLink="{{ submenu.accion }}" (click)="onRoute(submenu)">{{

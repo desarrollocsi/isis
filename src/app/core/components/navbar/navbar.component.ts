@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
   }
 
   onSubmenu(id: number) {
+    console.log(id);
     this.submenus$ = this.AST.getSubmenu(id);
   }
 

@@ -1,0 +1,39 @@
+<input
+  *ngIf="modal$ | async"
+  class="modal-btn"
+  type="checkbox"
+  id="modal-btn"
+  name="modal-btn"
+  [checked]="status"
+  (click)="onCloseModal()"
+/>
+<div class="modal" *ngIf="form$ | async as formDynamic">
+  <div class="modal-wrap">
+    <div class="modal-head">
+      <h1>{{ formDynamic.nombre | titlecase }}</h1>
+    </div>
+    <div class="modal-body">
+      <div class="card">
+        <form [formGroup]="form">
+          <ng-container *ngFor="let form of formDynamic.formulariod">
+            <div [ngSwitch]="form.controltype">
+              <div class="group" *ngSwitchCase="'textbox'">
+                <input
+                  [type]="form.type"
+                  [id]="form.key"
+                  [formControlName]="form.key"
+                  class="input-control"
+                  placeholder=" "
+                />
+                <label class="label-control">{{
+                  form.label | titlecase
+                }}</label>
+              </div>
+            </div>
+          </ng-container>
+          <button class="btn">Registro</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

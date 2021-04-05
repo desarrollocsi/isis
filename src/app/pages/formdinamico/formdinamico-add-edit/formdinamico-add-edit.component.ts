@@ -27,6 +27,14 @@ export class FormdinamicoAddEditComponent implements OnInit {
     private MS: MessageService
   ) {}
 
+  get forms() {
+    return this.form.controls;
+  }
+
+  get usuario(): string {
+    return this.AS.User;
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({});
     this.onFormDynamic();
@@ -56,22 +64,22 @@ export class FormdinamicoAddEditComponent implements OnInit {
         switchMap((data) => this.FS.getApiDynamic(this.URL, 'GET', data))
       )
       .subscribe((data: any) => {
-        const user = this.AS.User;
-        this.form.setValue(Object.assign(data, { usuario: user }));
+        this.form.setValue(Object.assign(data, { usuario: this.usuario }));
       });
   }
 
   onNuevo() {
     this.type = 'POST';
     this.form.reset();
+    this.forms.usuario.setValue(this.usuario);
   }
 
   onSubmit() {
-    // const type = this.type === undefined ? 'POST' : this.type;
-    console.log(this.type);
-    // this.FS.getApiDynamic(this.URL, type, this.form.value).subscribe((data) => {
-    //   this.MS.MessageSucces(data['message']);
-    //   this.form.reset();
-    // });
+    console.log(this.form.value);
+    const type = this.type === undefined ? 'POST' : this.type;
+    this.FS.getApiDynamic(this.URL, type, this.form.value).subscribe((data) => {
+      this.MS.MessageSucces(data['message']);
+      this.onNuevo();
+    });
   }
 }
