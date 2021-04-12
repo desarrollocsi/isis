@@ -1,56 +1,68 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormdinamicoService } from '../services/formdinamico.service';
 import { IntermedaryService } from '../../../core/services/intermedary.service';
-import { Observable, Subscription } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
+import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
 @Component({
   selector: 'app-formdinamico-list',
   templateUrl: './formdinamico-list.component.html',
   styleUrls: ['./formdinamico-list.component.css'],
 })
 export class FormdinamicoListComponent implements OnInit, OnDestroy {
+  @Input() lists: any;
+
   dataDynamic$: Observable<any>;
   dataDynamicRefresh$: Observable<any>;
+
   p: number = 1;
-  subscription: Subscription;
   URL: string;
   checked: boolean = false;
+  edit: boolean = false;
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
   constructor(
     private FS: FormdinamicoService,
-    private IS: IntermedaryService
+    private IS: IntermedaryService,
+    private AS: AuthStorageService
   ) {}
 
-  get ListDynamic() {
-    return this.IS._route.pipe(
-      take(1),
-      tap((data: string) => (this.URL = data)),
-      switchMap((data) => this.FS.getApiDynamic(data))
-    );
+  get route() {
+    return this.IS._route;
+  }
+
+  get usuario(): string {
+    return this.AS.User;
   }
 
   ngOnInit(): void {
-    this.getListdynamic();
-    this.subscription = this.IS.refresh.subscribe((_) => this.getListdynamic());
+    this.route.pipe(take(1)).subscribe((data) => {
+      this.URL = data;
+    });
   }
 
-  onModal(status: boolean) {
-    this.IS.getModal(status);
+  openModal() {
+    this.IS.modal.next();
   }
 
-  getListdynamic() {
-    this.dataDynamic$ = this.ListDynamic;
-  }
-
-  onEdit(id: string) {
-    this.IS.getDataDynamic(id);
+  onEdit(id: any) {
+    of(id)
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        switchMap((id: string) => this.FS.getApiDynamic(this.URL, 'GET', id))
+      )
+      .subscribe((data) => {
+        this.IS.getDataId(Object.assign(data, { usuario: this.usuario }));
+      });
+    this.openModal();
   }
 
   onDelete(id: string) {
     this.FS.getApiDynamic(this.URL, 'DELETE', id).subscribe(console.log);
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

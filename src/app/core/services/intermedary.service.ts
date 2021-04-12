@@ -8,6 +8,7 @@ export class IntermedaryService {
   constructor() {}
 
   private _refresh = new Subject<void>();
+  private _modal = new Subject<void>();
 
   private menus = new BehaviorSubject<any>([]);
   _menus = this.menus.asObservable();
@@ -18,6 +19,9 @@ export class IntermedaryService {
   private datoDePaciente = new BehaviorSubject<any>([]);
   _datoDePaciente = this.datoDePaciente.asObservable();
 
+  private idDataEdit = new BehaviorSubject<object>({});
+  _idDataEdit = this.idDataEdit.asObservable();
+
   private fecha = new BehaviorSubject<string>('');
   _fecha = this.fecha.asObservable();
 
@@ -26,13 +30,6 @@ export class IntermedaryService {
 
   private dataDynamic = new BehaviorSubject<string>('');
   _dataDynamic = this.dataDynamic.asObservable();
-
-  private modal = new BehaviorSubject<boolean>(false);
-  _modal = this.modal.asObservable();
-
-  getModal(status: boolean) {
-    this.modal.next(status);
-  }
 
   getMenus(data: any) {
     this.menus.next(data);
@@ -58,7 +55,15 @@ export class IntermedaryService {
     this.dataDynamic.next(id);
   }
 
+  getDataId(id: object) {
+    this.idDataEdit.next(id);
+  }
+
   get refresh() {
     return this._refresh;
+  }
+
+  get modal() {
+    return this._modal;
   }
 }

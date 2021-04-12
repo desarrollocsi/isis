@@ -1,6 +1,5 @@
 <div>
-  <button class="btn" (click)="onModal(true)">+ new add</button>
-  <app-formdinamico-modal></app-formdinamico-modal>
+  <button class="btn" (click)="openModal()">+ new add</button>
 </div>
 <div class="table">
   <div class="row-header">
@@ -10,33 +9,32 @@
   </div>
   <div
     class="row"
-    *ngFor="
-      let dataDynamic of dataDynamic$
-        | async
-        | paginate: { itemsPerPage: 5, currentPage: p }
-    "
+    *ngFor="let list of lists | paginate: { itemsPerPage: 5, currentPage: p }"
   >
     <div class="cell">
-      {{ dataDynamic.codigo | titlecase }}
+      {{ list.codigo | titlecase }}
     </div>
     <div class="cell">
-      {{ dataDynamic.descripcion | titlecase }}
+      {{ list.descripcion | titlecase }}
     </div>
 
     <div class="cell">
       <div class="icon-action-svg">
         <img
-          (click)="onEdit(dataDynamic.codigo)"
+          (click)="onEdit(list.codigo)"
           src="../../../../assets/icons/edit-color.svg"
           alt="Editar"
         />
         <img
-          (click)="onDelete(dataDynamic.codigo)"
+          (click)="onDelete(list.codigo)"
           src="../../../../assets/icons/delete-color.svg"
           alt="Borrar"
         />
       </div>
     </div>
   </div>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
 </div>
+<ng-container *ngIf="edit"> </ng-container>

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
+import { take, takeUntil, tap } from 'rxjs/operators';
 import { IntermedaryService } from 'src/app/core/services/intermedary.service';
 import { FormdinamicoService } from '../services/formdinamico.service';
 
@@ -10,32 +10,71 @@ import { FormdinamicoService } from '../services/formdinamico.service';
   templateUrl: './formdinamico-modal.component.html',
   styleUrls: ['./formdinamico-modal.component.css'],
 })
-export class FormdinamicoModalComponent implements OnInit {
-  form$: Observable<any>;
+export class FormdinamicoModalComponent implements OnInit, OnDestroy {
+  @Input() forms: Observable<any>;
+
+  form$: Observable<object>;
   modal$: Observable<any>;
-  status: boolean = false;
+  data$: Observable<any>;
   form: FormGroup;
+  status: boolean = false;
+  URL: string;
+  private readonly unsubscribe$: Subject<void> = new Subject();
+
   constructor(
+    private fb: FormBuilder,
     private IS: IntermedaryService,
     private FS: FormdinamicoService
   ) {}
+
+  get route() {
+    return this.IS._route;
+  }
+
   ngOnInit(): void {
-    this.form$ = this.IS._route.pipe(
-      switchMap((data: string) => this.FS.getApiFormDynamic(data)),
-      map((data: any) => {
-        this.form = this.FS.formGroup(data);
-        this.status = false;
-        return data;
-      })
-    );
+    this.form = this.fb.group({});
     this.onOpenModal();
+    this.onForm();
+    this.onRoute();
+    this.onDataId();
+  }
+
+  onForm() {
+    this.form$ = this.forms.pipe(
+      tap((data) => (this.form = this.FS.formGroup(data)))
+    );
   }
 
   onOpenModal() {
-    this.modal$ = this.IS._modal.pipe(tap((data) => (this.status = data)));
+    this.IS.modal
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((_: any) => (this.status = true));
   }
 
   onCloseModal() {
     this.status = false;
+    this.form.reset();
+  }
+
+  onDataId() {
+    this.IS._idDataEdit
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => this.form.setValue(data));
+  }
+
+  onRoute() {
+    this.route.pipe(take(1)).subscribe((data) => {
+      this.URL = data;
+    });
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+    console.log(this.URL);
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

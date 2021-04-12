@@ -1,5 +1,4 @@
 <input
-  *ngIf="modal$ | async"
   class="modal-btn"
   type="checkbox"
   id="modal-btn"
@@ -7,15 +6,15 @@
   [checked]="status"
   (click)="onCloseModal()"
 />
-<div class="modal" *ngIf="form$ | async as formDynamic">
+<div class="modal" *ngIf="form$ | async as forms">
   <div class="modal-wrap">
     <div class="modal-head">
-      <h1>{{ formDynamic.nombre | titlecase }}</h1>
+      <h1>{{ forms.nombre | titlecase }}</h1>
     </div>
-    <div class="modal-body">
+    <div class="modal-body modal-scroll-y">
       <div class="card">
-        <form [formGroup]="form">
-          <ng-container *ngFor="let form of formDynamic.formulariod">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <ng-container *ngFor="let form of forms.formulariod">
             <div [ngSwitch]="form.controltype">
               <div class="group" *ngSwitchCase="'textbox'">
                 <input
@@ -29,9 +28,52 @@
                   form.label | titlecase
                 }}</label>
               </div>
+
+              <div class="group" *ngSwitchCase="'time'">
+                <input
+                  [type]="form.type"
+                  [id]="form.key"
+                  [formControlName]="form.key"
+                  class="input-control"
+                  placeholder=" "
+                />
+                <label class="label-control">{{ form.label }}</label>
+              </div>
+
+              <div class="group" *ngSwitchCase="'select'">
+                <select class="input-control" [formControlName]="form.key">
+                  <option [ngValue]="null">
+                    Seleccionar {{ form.label | titlecase }}
+                  </option>
+                  <option
+                    *ngFor="let option of form.options"
+                    [ngValue]="option.codigo"
+                  >
+                    {{ option.descripcion }}
+                  </option>
+                </select>
+              </div>
+              <fieldset class="fieldset-group" *ngSwitchCase="'radio'">
+                <legend>{{ form.label }}</legend>
+                <div class="container-checkbox">
+                  <ng-container *ngFor="let option of form.options">
+                    <input
+                      type="radio"
+                      class="checkbox_input"
+                      [formControlName]="form.key"
+                      [value]="option.codigo"
+                      [id]="option.descripcion"
+                    />
+                    <label [for]="option.descripcion" class="checkbox_label">{{
+                      option.descripcion
+                    }}</label>
+                  </ng-container>
+                </div>
+              </fieldset>
             </div>
+            {{ dataForm | json }}
           </ng-container>
-          <button class="btn">Registro</button>
+          <button type="submit" class="btn">Registro</button>
         </form>
       </div>
     </div>
