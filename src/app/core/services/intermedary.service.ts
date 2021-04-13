@@ -9,6 +9,8 @@ export class IntermedaryService {
 
   private _refresh = new Subject<void>();
   private _modal = new Subject<void>();
+  private _methodPost = new Subject<string>();
+  private _methodPut = new Subject<string>();
 
   private menus = new BehaviorSubject<any>([]);
   _menus = this.menus.asObservable();
@@ -19,7 +21,8 @@ export class IntermedaryService {
   private datoDePaciente = new BehaviorSubject<any>([]);
   _datoDePaciente = this.datoDePaciente.asObservable();
 
-  private idDataEdit = new BehaviorSubject<object>({});
+  // private idDataEdit = new BehaviorSubject<object>({});
+  private idDataEdit = new Subject<object>();
   _idDataEdit = this.idDataEdit.asObservable();
 
   private fecha = new BehaviorSubject<string>('');
@@ -59,11 +62,21 @@ export class IntermedaryService {
     this.idDataEdit.next(id);
   }
 
+  /*********** GET*****************/
+
   get refresh() {
     return this._refresh;
   }
 
   get modal() {
     return this._modal;
+  }
+
+  get methodPost() {
+    return this._methodPost;
+  }
+
+  get methodPut() {
+    return this._methodPut;
   }
 }

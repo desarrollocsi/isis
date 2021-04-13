@@ -41,20 +41,19 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
     });
   }
 
-  openModal() {
+  openModalSave() {
     this.IS.modal.next();
+    //this.IS.methodPost.next();
   }
 
   onEdit(id: any) {
-    of(id)
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        switchMap((id: string) => this.FS.getApiDynamic(this.URL, 'GET', id))
-      )
+    this.openModalSave();
+    this.FS.getApiDynamic(this.URL, 'GET', id)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
         this.IS.getDataId(Object.assign(data, { usuario: this.usuario }));
+        //this.IS.methodPut.next();
       });
-    this.openModal();
   }
 
   onDelete(id: string) {

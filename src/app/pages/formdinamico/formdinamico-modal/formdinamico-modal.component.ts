@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil, tap } from 'rxjs/operators';
+import { filter, first, take, takeUntil, tap } from 'rxjs/operators';
 import { IntermedaryService } from 'src/app/core/services/intermedary.service';
 import { FormdinamicoService } from '../services/formdinamico.service';
 
@@ -19,6 +19,9 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   form: FormGroup;
   status: boolean = false;
   URL: string;
+  method: string;
+  nameButton: string;
+
   private readonly unsubscribe$: Subject<void> = new Subject();
 
   constructor(
@@ -36,7 +39,22 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
     this.onOpenModal();
     this.onForm();
     this.onRoute();
+
+    // setTimeout(() => this.onDataId(), 5000);
     this.onDataId();
+
+    // this.IS.methodPost
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((_) => this.setVerbo('POST'));
+
+    // this.IS.methodPut.pipe(takeUntil(this.unsubscribe$)).subscribe((_) => {
+    //   this.setVerbo('PUT');
+    // });
+  }
+
+  setVerbo(verbo: string) {
+    this.method = verbo;
+    this.nameButton = verbo === 'POST' ? 'Registrar' : 'Actualizar';
   }
 
   onForm() {
@@ -46,9 +64,9 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   onOpenModal() {
-    this.IS.modal
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((_: any) => (this.status = true));
+    this.IS.modal.pipe(takeUntil(this.unsubscribe$)).subscribe((_: any) => {
+      this.status = true;
+    });
   }
 
   onCloseModal() {
@@ -57,9 +75,9 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   onDataId() {
-    this.IS._idDataEdit
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data) => this.form.setValue(data));
+    this.IS._idDataEdit.pipe(takeUntil(this.unsubscribe$)).subscribe((data) => {
+      this.form.setValue(data);
+    });
   }
 
   onRoute() {
@@ -69,8 +87,9 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.form.value);
-    console.log(this.URL);
+    this.FS.getApiDynamic(this.URL, this.method, this.form.value)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(console.log);
   }
 
   ngOnDestroy() {

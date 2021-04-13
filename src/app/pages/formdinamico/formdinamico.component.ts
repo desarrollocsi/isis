@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { switchMap, take, tap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 import { IntermedaryService } from 'src/app/core/services/intermedary.service';
 import { FormdinamicoService } from './services/formdinamico.service';
 
@@ -30,6 +30,7 @@ export class FormdinamicoComponent implements OnInit {
   ngOnInit(): void {
     this.getList();
     this.getForm();
+    this.IS.refresh.subscribe((_) => this.getList());
   }
 
   getList() {
