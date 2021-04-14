@@ -74,14 +74,14 @@ export class ProgramaccionAddEditComponent implements OnInit, OnDestroy {
       .subscribe((data: any) => {
         this.getMedico(data.pr_servicio);
         this.formProgramacion.setValue(new ProgramacionForm(data));
-        this.buttonName = 'Actualizar programacion';
+        this.buttonName = 'Actualizar';
         this.typeVerbo = 'PUT';
       });
   }
 
   onResetForm() {
     this.formProgramacion.reset();
-    this.buttonName = 'Registra Programacion';
+    this.buttonName = 'Registra';
     this.typeVerbo = 'POST';
   }
 

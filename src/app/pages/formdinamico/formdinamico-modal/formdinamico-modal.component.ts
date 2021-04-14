@@ -39,17 +39,15 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
     this.onOpenModal();
     this.onForm();
     this.onRoute();
-
-    // setTimeout(() => this.onDataId(), 5000);
     this.onDataId();
 
-    // this.IS.methodPost
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe((_) => this.setVerbo('POST'));
+    this.IS.methodPost
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((_) => this.setVerbo('POST'));
 
-    // this.IS.methodPut.pipe(takeUntil(this.unsubscribe$)).subscribe((_) => {
-    //   this.setVerbo('PUT');
-    // });
+    this.IS.methodPut.pipe(takeUntil(this.unsubscribe$)).subscribe((_) => {
+      this.setVerbo('PUT');
+    });
   }
 
   setVerbo(verbo: string) {

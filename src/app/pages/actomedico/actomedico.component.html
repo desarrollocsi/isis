@@ -239,10 +239,9 @@
           </ng-container>
         </div>
 
-        <div class="card" *ngIf="cieSelect$ | async as cieSelects">
+        <div class="card" *ngIf="cieSelect.length > 0">
           <h3>Cie 10 seleccionados</h3>
-
-          <div class="card-cie" *ngFor="let cieSelect of cieSelects">
+          <div class="card-cie" *ngFor="let cieSelect of cieSelect; index as i">
             <span class="card-title-cie">
               <h2>{{ cieSelect.codigo }}</h2>
               <h6>{{ cieSelect.descripcion }}</h6>
@@ -252,17 +251,17 @@
                 <input
                   type="radio"
                   [name]="cieSelect.codigo"
-                  id="radio1"
+                  [id]="'a' + i"
                   class="radio__input"
                 />
-                <label for="radio1" class="radio_label">Presuntivo</label>
+                <label [for]="'a' + i" class="radio_label">Presuntivo</label>
                 <input
                   type="radio"
                   [name]="cieSelect.codigo"
-                  id="radio2"
+                  [id]="'b' + i"
                   class="radio__input"
                 />
-                <label for="radio2" class="radio_label">Defintivo</label>
+                <label [for]="'b' + i" class="radio_label">Defintivo</label>
               </div>
             </span>
           </div>

@@ -41,7 +41,7 @@ export class ActomedicoComponent implements OnInit {
   cieSelect = [];
   visible = true;
   p: number = 1;
-
+  testdata = [];
   ngOnInit(): void {
     this.formActoMedico = this.fb.group({
       idcita: [null],
@@ -117,8 +117,12 @@ export class ActomedicoComponent implements OnInit {
   }
 
   addCie(data: any) {
+    if (this.ValidacionCie(data)) {
+      console.log('ya tiene registrado');
+      return;
+    }
     this.cieSelect.push(data);
-    this.cieSelect$ = of(this.cieSelect);
+
     const group = this.fb.group({
       idcie: [null],
       tdx: [null],
@@ -126,6 +130,13 @@ export class ActomedicoComponent implements OnInit {
     this.diagnosticos.push(group);
     this.add.push(new CieForm(data));
     this.visible = false;
+  }
+
+  ValidacionCie(data: any) {
+    const a = this.cieSelect.filter(
+      (cie, index) => cie.codigo[index] === data.codigo
+    ).length;
+    return a === 2 ? true : false;
   }
 
   setCie() {

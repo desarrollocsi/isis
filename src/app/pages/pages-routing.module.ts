@@ -29,6 +29,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'agendasecretaria',
+        loadChildren: () =>
+          import('./agendasecretaria/agendasecretaria.module').then(
+            (m) => m.AgendasecretariaModule
+          ),
+      },
+      {
         path: 'ficheros',
         loadChildren: () =>
           import('./formdinamico/formdinamico.module').then(

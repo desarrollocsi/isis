@@ -1,4 +1,4 @@
-import { Component, OnInit, ɵɵtrustConstantResourceUrl } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { IntermedaryService } from '../../../core/services/intermedary.service';
 import * as moment from 'moment';

@@ -43,7 +43,7 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
 
   openModalSave() {
     this.IS.modal.next();
-    //this.IS.methodPost.next();
+    this.IS.methodPost.next();
   }
 
   onEdit(id: any) {
@@ -52,7 +52,7 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
         this.IS.getDataId(Object.assign(data, { usuario: this.usuario }));
-        //this.IS.methodPut.next();
+        this.IS.methodPut.next();
       });
   }
 
