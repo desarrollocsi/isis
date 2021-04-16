@@ -3,7 +3,7 @@ export class ProgramacionAgenda {
   public descripcion: string;
 
   constructor(object: any) {
-    this.codigo = object.especialidad.codigo || null;
-    this.descripcion = object.especialidad.descripcion;
+    this.codigo = object.codigo || null;
+    this.descripcion = object.descripcion || null;
   }
 }

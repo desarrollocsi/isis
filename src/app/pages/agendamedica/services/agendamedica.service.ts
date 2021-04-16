@@ -12,7 +12,7 @@ export class AgendamedicaService {
     const isFecha = fecha === '' ? moment().format('YYYY-MM-DD') : fecha;
     return this.http.get(
       // `http://192.168.10.144:8002/pacientescitados?fecha=${isFecha}&medico=034`
-      `http://192.168.10.144:8002/pacientescitados?fecha=2021-02-22&medico=034`
+      `http://192.168.10.144:8002/pacientescitados?fecha=2021-04-15&medico=062`
     );
   }
 }

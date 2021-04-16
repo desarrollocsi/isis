@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { NgxPaginationModule } from 'ngx-pagination';
 import { SharedModule } from '../../shared/shared.module';
 import { ProgramacionRoutingModule } from './programacion-routing.module';
 import { ProgramacionListComponent } from './programacion-list/programacion-list.component';
@@ -21,6 +22,7 @@ import { ProgramaccionAddEditComponent } from './programaccion-add-edit/programa
     HttpClientModule,
     SharedModule,
     ReactiveFormsModule,
+    NgxPaginationModule,
   ],
   exports: [],
 })

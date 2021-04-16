@@ -19,58 +19,75 @@ export class CalendarComponent implements OnInit {
     'Domingo',
   ];
 
-  monthSelect: any[];
+  monthSelect: object[];
+  data: object[] = [];
   dateSelect: any;
-  dateValue: any;
-  MesAnio: string;
-  day: any;
+  yearMonth: string;
+  modoAleatorio: boolean = false;
+  modoRango: boolean = false;
 
   constructor(private IS: IntermedaryService) {}
 
   ngOnInit(): void {
     moment.locale('es');
-    const mes = moment().format('MM');
-    const anio = moment().format('YYYY');
-    this.getDaysFromDate(mes, anio);
+    this.getDays();
+    this.onDay(moment().format('YYYY-MM-DD'));
   }
 
-  getDaysFromDate(month: string, year: string) {
-    const startDate = moment.utc(`${year}-${month}-01`);
-    const endDate = startDate.clone().endOf('month');
-    this.MesAnio = moment(startDate).format('MMMM,YYYY');
-    this.dateSelect = startDate;
-
-    const diffDays = endDate.diff(startDate, 'days', true);
-    const numberDays = Math.round(diffDays);
-
-    const arrayDays = Object.keys([...Array(numberDays)]).map((a: any) => {
-      a = parseInt(a) + 1;
-      const dayObject = moment(`${year}-${month}-${a}`);
-      return {
-        name: dayObject.format('dddd'),
-        value: a,
-        indexWeek: dayObject.isoWeekday(),
-      };
-    });
-    this.day = moment().format('D');
+  getDays(
+    year: number = moment().year(),
+    month: number = moment().month() + 1
+  ) {
+    this.dateSelect = moment(`${year}-${month}-01`, 'YYYY-MM-DD');
+    const endDay = moment
+      .utc(`${year}-${month}-01`, 'YYYY-MM-DD')
+      .endOf('month')
+      .format('DD');
+    const arrayDays = Object.keys([...Array(parseInt(endDay))]).map(
+      (day: any) => {
+        day = +day + 1;
+        const dayObject = moment(`${year}-${month}-${day}`, 'YYYY-MM-DD');
+        const date = dayObject.format('YYYY-MM-DD');
+        const today = moment().format('YYYY-MM-DD');
+        const status = date === today ? true : false;
+        return {
+          date,
+          day: day,
+          Week: dayObject.isoWeekday(),
+          status,
+        };
+      }
+    );
+    this.yearMonth = moment(`${year},${month}`, 'YYYY-MM').format('MMMM,YYYY');
     this.monthSelect = arrayDays;
   }
 
   changeMonth(flag: number) {
-    if (flag < 0) {
-      const prevDate = this.dateSelect.clone().subtract(1, 'month');
-      this.getDaysFromDate(prevDate.format('MM'), prevDate.format('YYYY'));
-    } else {
-      const nextDate = this.dateSelect.clone().add(1, 'month');
-      this.getDaysFromDate(nextDate.format('MM'), nextDate.format('YYYY'));
+    const fecha =
+      flag < 0
+        ? this.dateSelect.subtract(1, 'month')
+        : this.dateSelect.add(1, 'month');
+    this.getDays(fecha.format('YYYY'), fecha.format('MM'));
+  }
+
+  onToday() {
+    this.modoAleatorio = false;
+    this.modoRango = false;
+    this.getDays();
+  }
+
+  onDay(fecha: any, evento?: MouseEvent) {
+    this.IS.getFecha(fecha);
+    if (evento) {
+      const { ctrlKey } = evento;
+      this.modoAleatorio = ctrlKey;
+      if (this.modoAleatorio) this.onAleatorio(fecha);
     }
   }
 
-  clickDay(day: any) {
-    const monthYear = this.dateSelect.format('YYYY-MM');
-    const parse = `${monthYear}-${day.value}`;
-    const objectDate = moment(parse);
-    this.dateValue = moment(objectDate).format('YYYY-MM-DD');
-    this.IS.getFecha(this.dateValue);
+  onAleatorio(fecha: string) {
+    this.data.push({ fecha });
+    const object = Object.assign([], this.data);
+    console.log(object);
   }
 }

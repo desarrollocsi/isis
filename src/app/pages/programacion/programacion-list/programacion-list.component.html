@@ -8,7 +8,11 @@
   </div>
   <div
     class="row"
-    *ngFor="let listProgramacione of listProgramaciones$ | async"
+    *ngFor="
+      let listProgramacione of listProgramaciones$
+        | async
+        | paginate: { itemsPerPage: 5, currentPage: p }
+    "
   >
     <div class="cell">
       {{ listProgramacione.medico.descripcion | titlecase }}
@@ -36,5 +40,8 @@
         />
       </div>
     </div>
+  </div>
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
 </div>

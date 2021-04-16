@@ -1,27 +1,54 @@
-<div class="wrapper-calendar">
-  <div class="header-calendar">
-    <span class="title">{{ MesAnio | titlecase }}</span>
-    <div>
-      <img
-        (click)="changeMonth(-1)"
-        src="../../../../assets/icons/arrow-left.svg"
-      />
-      <img
-        (click)="changeMonth(1)"
-        src="../../../../assets/icons/arrow-rigth.svg"
-      />
+<div class="card">
+  <div class="card-head">
+    <h1 class="title">{{ yearMonth | titlecase }}</h1>
+    <div class="card-button">
+      <div class="container-button">
+        <button type="button" class="btn" (click)="onToday()">Hoy</button>
+      </div>
+      <div class="container-icon">
+        <img
+          (click)="changeMonth(-1)"
+          src="../../../../assets/icons/arrow-left.svg"
+        />
+
+        <img
+          (click)="changeMonth(1)"
+          src="../../../../assets/icons/arrow-rigth.svg"
+        />
+      </div>
     </div>
   </div>
 
-  <ol>
-    <li *ngFor="let day of week" class="day-name">{{ day | slice: 0:3 }}</li>
-    <li
-      (click)="clickDay(day)"
-      class="day"
-      [style.gridColumnStart]="first ? day?.indexWeek : 'auto'"
-      *ngFor="let day of monthSelect; let first = first"
-    >
-      <span>{{ day?.value }}</span>
-    </li>
-  </ol>
+  <div class="card-body">
+    <div class="grid-head">
+      <span class="grid-head-item" *ngFor="let day of week">{{
+        day | slice: 0:1
+      }}</span>
+    </div>
+
+    <div class="grid-container">
+      <ng-container *ngFor="let a of monthSelect; first as first">
+        <ng-container *ngIf="modoAleatorio; else inputRadio">
+          <input type="checkbox" [id]="a.day" class="input-control-checkbox" />
+        </ng-container>
+
+        <label
+          class="grid-items"
+          [style.gridColumnStart]="first ? a?.Week : 'auto'"
+          [for]="a.day"
+          (click)="onDay(a.date, $event)"
+          >{{ a?.day }}</label
+        >
+        <ng-template #inputRadio>
+          <input
+            type="radio"
+            name="day"
+            [id]="a.day"
+            class="input-control-checkbox"
+            [checked]="a.status"
+          />
+        </ng-template>
+      </ng-container>
+    </div>
+  </div>
 </div>

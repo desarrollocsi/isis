@@ -9,8 +9,7 @@
 ::after {
   box-sizing: border-box;
   font-family: "Humanist", sans-serif;
-  font-size: 1rem;
-  color: #828282;
+  font-size: 1em;
 }
 
 html,
@@ -20,6 +19,10 @@ body {
   background-color: white;
 }
 
-h1 {
-  font-size: 30px;
+/**********CONTAINER***********/
+.container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 6rem;
 }

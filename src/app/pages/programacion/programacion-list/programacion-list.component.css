@@ -12,7 +12,6 @@
   background-color: #828282;
   border-top-right-radius: 1.2rem;
   border-top-left-radius: 1.2rem;
-  color: #fff;
 }
 
 .row-header .cell {
@@ -20,6 +19,8 @@
   width: 100%;
   padding-top: 19px;
   padding-bottom: 19px;
+  color: #fff;
+  font-weight: 600;
 }
 
 .row {
@@ -46,4 +47,9 @@
 
 .icon-action-svg img {
   padding-right: 10px;
+}
+
+.footer-pagination {
+  display: flex;
+  justify-content: center;
 }

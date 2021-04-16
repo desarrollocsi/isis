@@ -60,14 +60,17 @@
           </option>
         </select>
       </div>
-
-      <div class="group">
-        <button type="submit" [disabled]="!formProgramacion.valid" class="btn">
+      <div class="container-button">
+        <button type="button" class="btn-secondary" (click)="onResetForm()">
+          Nuevo
+        </button>
+        <button
+          type="submit"
+          [disabled]="!formProgramacion.valid"
+          class="btn-primary"
+        >
           {{ buttonName }}
         </button>
-      </div>
-      <div class="group">
-        <button type="button" class="btn" (click)="onResetForm()">Nuevo</button>
       </div>
     </form>
   </div>

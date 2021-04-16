@@ -1,13 +1,6 @@
-.container-conte {
-  width: 100%;
-  padding: 50px;
-}
-
 .container-row {
   display: flex;
   justify-content: space-between;
-  padding-top: 30px;
-  padding-bottom: 10px;
 }
 
 .container-row .cell {

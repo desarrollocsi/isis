@@ -12,6 +12,8 @@ import { IntermedaryService } from '../../../core/services/intermedary.service';
 export class ProgramacionListComponent implements OnInit {
   listProgramaciones$: Observable<any>;
   programacion$: Observable<any>;
+  p: number = 1;
+
   constructor(
     private PS: ProgramacionService,
     private IS: IntermedaryService

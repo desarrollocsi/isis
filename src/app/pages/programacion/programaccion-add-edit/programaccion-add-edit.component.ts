@@ -23,7 +23,7 @@ export class ProgramaccionAddEditComponent implements OnInit, OnDestroy {
   turnos$: Observable<any>;
   consultorios$: Observable<any>;
   programacionesData$: Observable<any>;
-  buttonName: string = 'Registrar programacion';
+  buttonName: string = 'Registrar';
   typeVerbo: string;
 
   constructor(
