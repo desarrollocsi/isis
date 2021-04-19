@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { AgendasecretariaService } from '../services/agendasecretaria.service';
 
@@ -12,6 +12,8 @@ export class AgendasecretariaListComponent implements OnInit {
   agendaMedicas$: Observable<any>;
   p: number = 1;
   status = false;
+  private readonly unsubscribe$: Subject<void> = new Subject();
+
   constructor(private AGS: AgendasecretariaService) {}
 
   ngOnInit(): void {

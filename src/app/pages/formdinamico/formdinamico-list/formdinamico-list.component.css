@@ -26,6 +26,7 @@
 .row {
   display: flex;
   justify-content: space-between;
+  transition: all 0.1s ease;
 }
 
 .row .cell {
@@ -39,6 +40,7 @@
 .row:hover {
   background-color: #a7a5a5;
   color: #fff;
+  font-weight: 600;
 }
 
 .icon-action-svg {
@@ -58,6 +60,8 @@
   margin-bottom: 20px;
   outline: none;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
 .btn:hover {

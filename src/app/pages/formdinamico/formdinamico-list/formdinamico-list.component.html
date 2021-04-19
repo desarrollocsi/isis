@@ -1,7 +1,7 @@
 <div>
   <button class="btn" (click)="openModalSave()">+ new add</button>
 </div>
-<div class="table">
+<div class="table animate__animated animate__fadeIn">
   <div class="row-header">
     <div class="cell">Codigo</div>
     <div class="cell">Descripcion</div>
@@ -41,3 +41,4 @@
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>
 </div>
+<app-toaster></app-toaster>

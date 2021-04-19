@@ -9,7 +9,7 @@
 <div class="modal" *ngIf="form$ | async as forms">
   <div class="modal-wrap">
     <div class="modal-head">
-      <h1>{{ forms.nombre | titlecase }}</h1>
+      <span class="modal-title">{{ forms.nombre | titlecase }}</span>
     </div>
     <div class="modal-body modal-scroll-y">
       <div class="card">
@@ -54,7 +54,7 @@
                 </select>
               </div>
               <fieldset class="fieldset-group" *ngSwitchCase="'radio'">
-                <legend>{{ form.label }}</legend>
+                <legend>{{ form.label | titlecase }}</legend>
                 <div class="container-checkbox">
                   <ng-container *ngFor="let option of form.options">
                     <input

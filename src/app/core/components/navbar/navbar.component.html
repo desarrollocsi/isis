@@ -14,16 +14,16 @@
       <ul class="links">
         <li *ngFor="let menu of menus$ | async">
           <a
-            style="border: 1px solid"
             class="desktop-link"
             routerLink="{{ menu.accion }}"
             (mouseover)="onSubmenu(menu.id)"
-            >{{ menu.nombres | titlecase }}</a
           >
-          <input type="checkbox" id="showfeatures" />
+            {{ menu.nombres | titlecase }}</a
+          >
+          <!-- <input type="checkbox" id="showfeatures" />
           <label (mouseover)="onSubmenu(menu.id)" for="showfeatures">{{
             menu.nombres | titlecase
-          }}</label>
+          }}</label> -->
           <ul>
             <li *ngFor="let submenu of submenus$ | async">
               <a routerLink="{{ submenu.accion }}" (click)="onRoute(submenu)">{{

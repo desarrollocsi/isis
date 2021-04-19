@@ -23,9 +23,9 @@ export class ModulesComponent implements OnInit {
     this.modules$ = this.AS.getModulos();
   }
 
-  onHome(data: any) {
+  onHome(id: string) {
+    this.IS.getMenus(id);
+    this.AS.setModulos(id);
     this.router.navigate(['home']);
-    this.IS.getMenus(data);
-    this.AS.setModulos(data);
   }
 }

@@ -26,6 +26,10 @@ export class ProgramacionListComponent implements OnInit {
     });
   }
 
+  openModal() {
+    this.IS.modal.next();
+  }
+
   getListProgramacion() {
     this.listProgramaciones$ = this.IS._fecha.pipe(
       switchMap((fecha: string) => this.PS.getProgramacionlist(fecha))

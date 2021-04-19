@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
 
 import { IntermedaryService } from './intermedary.service';
 
@@ -40,11 +39,11 @@ export class AuthStorageService {
     return localStorage.getItem(`_${nombre}`) ? true : false;
   }
 
-  getMenu() {
+  getMenu(data: any) {
+    const { id } = data;
     const menu = JSON.parse(localStorage.getItem('_menu'));
-    const idmenu = localStorage.getItem(`_admision`);
-
-    return of(menu.filter((menu: any) => menu.padre === parseInt(idmenu)));
+    // return of(menu.filter((menu: any) => menu.padre === parseInt(id)));
+    return of(menu.filter((menu: any) => menu.padre === parseInt('1')));
   }
 
   getSubmenu(id: number) {

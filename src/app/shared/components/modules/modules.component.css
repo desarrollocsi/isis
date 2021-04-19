@@ -32,13 +32,13 @@
   justify-content: center;
   width: inherit;
   height: inherit;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
 }
 
 .card .card_image img {
   width: 50%;
   height: 50%;
-  border-radius: 40px;
+  border-radius: 2rem;
   object-fit: cover;
 }
 

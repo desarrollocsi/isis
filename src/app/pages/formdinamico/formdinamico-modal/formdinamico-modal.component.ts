@@ -2,7 +2,9 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil, tap } from 'rxjs/operators';
+import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
 import { IntermedaryService } from 'src/app/core/services/intermedary.service';
+import { ToasterService } from 'src/app/core/services/toaster.service';
 import { FormdinamicoService } from '../services/formdinamico.service';
 
 @Component({
@@ -27,11 +29,17 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private IS: IntermedaryService,
-    private FS: FormdinamicoService
+    private FS: FormdinamicoService,
+    private AUS: AuthStorageService,
+    private TS: ToasterService
   ) {}
 
   get route() {
     return this.IS._route;
+  }
+
+  get usuario() {
+    return this.AUS.User;
   }
 
   ngOnInit(): void {
@@ -70,6 +78,7 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   onCloseModal() {
     this.status = false;
     this.form.reset();
+    this.form.controls.usuario.reset(this.usuario);
   }
 
   onDataId() {
@@ -87,7 +96,10 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.FS.getApiDynamic(this.URL, this.method, this.form.value)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(console.log);
+      .subscribe((data: any) => {
+        this.status = false;
+        this.TS.show('success', 'Bien hecho!', data.message, 2500);
+      });
   }
 
   ngOnDestroy() {

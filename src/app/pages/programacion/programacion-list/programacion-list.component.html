@@ -1,4 +1,5 @@
-<div class="table">
+<button class="btn" (click)="openModal()">+ Agregar</button>
+<div class="table animate__animated animate__fadeIn">
   <div class="row-header">
     <div class="cell">Medico</div>
     <div class="cell">Consultorio</div>
@@ -11,7 +12,7 @@
     *ngFor="
       let listProgramacione of listProgramaciones$
         | async
-        | paginate: { itemsPerPage: 5, currentPage: p }
+        | paginate: { itemsPerPage: 9, currentPage: p }
     "
   >
     <div class="cell">
@@ -41,6 +42,7 @@
       </div>
     </div>
   </div>
+
   <div class="footer-pagination">
     <pagination-controls (pageChange)="p = $event"></pagination-controls>
   </div>

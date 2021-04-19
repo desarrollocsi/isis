@@ -1,0 +1,77 @@
+<input
+  class="modal-btn"
+  type="checkbox"
+  id="modal-btn"
+  name="modal-btn"
+  [checked]="checkedModal"
+  (click)="closeModal()"
+/>
+<div class="modal">
+  <div class="modal-wrap">
+    <div class="modal-head"><h1>Programacion</h1></div>
+    <div class="modal-body">
+      <div class="card">
+        <form [formGroup]="form">
+          <div class="group">
+            <select
+              class="input-control input-select"
+              formControlName="pr_servicio"
+              (change)="getMedico($event.target.value)"
+            >
+              <option value="null">Seleccionar especialidad</option>
+              <option
+                [value]="especialidad.codigo"
+                *ngFor="let especialidad of especialidades$ | async"
+              >
+                {{ especialidad.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="group">
+            <select
+              class="input-control input-select"
+              formControlName="pr_servicio"
+            >
+              <option value="null">Seleccionar medicos</option>
+              <option
+                [value]="medico.codigo"
+                *ngFor="let medico of medicos$ | async"
+              >
+                {{ medico.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="group">
+            <select
+              class="input-control input-select"
+              formControlName="pr_servicio"
+            >
+              <option value="null">Seleccionar turnos</option>
+              <option
+                [value]="turno.codigo"
+                *ngFor="let turno of turnos$ | async"
+              >
+                {{ turno.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="group">
+            <select
+              class="input-control input-select"
+              formControlName="pr_servicio"
+            >
+              <option value="null">Seleccionar consultorios</option>
+              <option
+                [value]="consultorio.codigo"
+                *ngFor="let consultorio of consultorios$ | async"
+              >
+                {{ consultorio.descripcion }}
+              </option>
+            </select>
+          </div>
+          <button type="submit" class="btn">Registrar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
