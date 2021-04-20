@@ -55,3 +55,22 @@
   display: flex;
   justify-content: center;
 }
+/*******************************/
+.btn {
+  padding: 18px 32px;
+  font-size: 18px;
+  border-radius: 2rem;
+  border: none;
+  margin-bottom: 10px;
+  margin-left: 20px;
+  outline: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #828282;
+  color: #fff;
+  box-shadow: 0 8px 6px -6px black;
+}

@@ -1,3 +1,4 @@
+/****************MODAL**********************/
 [type="checkbox"]:checked,
 [type="checkbox"]:not(:checked) {
   position: absolute;
@@ -240,8 +241,6 @@
   background-color: #009b6e;
   transition: 0.5s;
 }
-
-/*************************/
 
 .fieldset-group {
   width: 100%;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { IntermedaryService } from '../../../core/services/intermedary.service';
@@ -54,5 +54,20 @@ export class ProgramacionService {
       }
     }
     return of({ data, type });
+  }
+
+  /****************SUBJECT*****************/
+  private dataProgramacion = new Subject<any>();
+  _dataProgramacion = this.dataProgramacion.asObservable();
+
+  private verbhttp = new Subject<any>();
+  _verbhttp = this.verbhttp.asObservable();
+
+  getDataProgramacion(data: any) {
+    this.dataProgramacion.next(data);
+  }
+
+  getVerbHttp(verb: string) {
+    this.verbhttp.next(verb);
   }
 }

@@ -16,6 +16,8 @@ import { CieForm } from '../../core/models/cie-form.class';
 import { IntermedaryService } from '../../core/services/intermedary.service';
 import { MessageService } from '../../core/services/message.service';
 
+import swal from 'sweetalert2';
+
 @Component({
   selector: 'app-actomedico',
   templateUrl: './actomedico.component.html',
@@ -38,7 +40,7 @@ export class ActomedicoComponent implements OnInit {
   antecedentes: any;
   diagnosticos: any;
   add = [];
-  cieSelect = [];
+  cieSelect: any = [];
   visible = true;
   p: number = 1;
   testdata = [];
@@ -118,11 +120,10 @@ export class ActomedicoComponent implements OnInit {
 
   addCie(data: any) {
     if (this.ValidacionCie(data)) {
-      console.log('ya tiene registrado');
+      swal.fire({ title: '<h4>Ya selecciono el cie</h4>', icon: 'info' });
       return;
     }
     this.cieSelect.push(data);
-
     const group = this.fb.group({
       idcie: [null],
       tdx: [null],
@@ -133,10 +134,15 @@ export class ActomedicoComponent implements OnInit {
   }
 
   ValidacionCie(data: any) {
-    const a = this.cieSelect.filter(
-      (cie, index) => cie.codigo[index] === data.codigo
-    ).length;
-    return a === 2 ? true : false;
+    return this.cieSelect.find((cie: any) => cie.id === data.id) !== undefined;
+  }
+
+  deleteCie(id: number) {
+    this.cieSelect.splice(this.cieSelect.indexOf(id), 1);
+  }
+
+  updateCie(event: any, id: number) {
+    this.add[id].tdx = event.target.value;
   }
 
   setCie() {
@@ -145,9 +151,10 @@ export class ActomedicoComponent implements OnInit {
 
   onSubmit() {
     this.setCie();
-    this.AMS.postActoMedico(this.formActoMedico.value).subscribe((data) => {
-      this.MS.MessageInfo(data['message']);
-      this.router.navigate(['home/agendamedica']);
-    });
+    console.log(this.formActoMedico.value);
+    // this.AMS.postActoMedico(this.formActoMedico.value).subscribe((data) => {
+    //   this.MS.MessageInfo(data['message']);
+    //   this.router.navigate(['home/agendamedica']);
+    // });
   }
 }

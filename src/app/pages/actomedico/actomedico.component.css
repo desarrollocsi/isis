@@ -56,6 +56,8 @@
 .input-control:focus + .label-control {
   top: -0.5rem;
   left: 0.9rem;
+  font-weight: 500;
+  font-size: 0.75rem;
   z-index: 1;
 }
 
@@ -63,6 +65,8 @@
   + .label-control {
   top: -0.5rem;
   left: 0.9rem;
+  font-weight: 500;
+  font-size: 0.75rem;
   z-index: 1;
 }
 
@@ -74,21 +78,25 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 20px;
 }
 
 .btn {
-  width: 40%;
-  height: 100%;
+  width: 25%;
   outline: none;
   border: none;
-  font-size: 1rem;
-  background-color: #009b6e;
-  color: #fff;
-  padding: 1rem 2rem;
+  padding: 18px 32px;
+  font-size: 18px;
+  font-weight: 600;
   border-radius: 2rem;
   cursor: pointer;
   transition: 0.3s;
+}
+
+.btn:hover {
+  background-color: #828282;
+  color: #fff;
+  box-shadow: 0 8px 6px -6px black;
+  transform: translatey(-5px);
 }
 
 .bt-disabled {
@@ -173,51 +181,43 @@
   width: 100%;
   display: flex;
   margin-bottom: 5px;
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.1);
-}
-
-.card-cie span {
-  width: 100%;
-  padding: 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-}
-
-.card-cie span h2,
-h6 {
-  margin: 0;
-  padding: 0;
-  flex-wrap: wrap;
-  color: #fff;
+  border-radius: 2rem;
+  /* box-shadow: 0 10px 25px rgba(92, 99, 105, 0.1); */
+  /* box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); */
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  /* border: 1px solid #dbdbdb; */
 }
 
 .card-cie .card-title-cie {
-  background-color: #828282;
-  width: 50%;
-  border-top-left-radius: 1.5rem;
-  border-bottom-left-radius: 1.5rem;
-}
-
-.card-contenido-cie {
-  width: 100%;
-}
-
-.card-contenido-cie .list-radio {
-  list-style: none;
+  width: 20%;
   display: flex;
+  justify-content: center;
+  padding: 1rem 1rem;
+  background-color: #828282;
+  color: #fff;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
 }
 
-.card-contenido-cie .delete-cie {
-  margin: 0;
+.card-cie .card-contenido-cie {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: 65%;
+  /* border-right: 1px solid #dbdbdb; */
 }
-/* .card-contenido-cie .list-radio li {
-  flex: auto;
-  background-color: red;
-  padding: 0 1rem;
-  margin: 10px;
-} */
+
+.card-cie .card-delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 15%;
+}
+
+.card-cie .card-delete .icon-delete {
+  cursor: pointer;
+}
 
 /*************radio*******************/
 
@@ -228,7 +228,6 @@ h6 {
   align-items: center;
   overflow: hidden;
   border-radius: 2rem;
-  /* flex-wrap: wrap; */
 }
 
 .radio__input {
@@ -236,22 +235,23 @@ h6 {
 }
 
 .radio_label {
-  height: 40px;
   width: 100%;
-  padding: 8px 14px;
-  font-size: 14px;
+  padding: 16px 32px;
+  font-size: 16px;
+  font-weight: 600;
   color: #fff;
-  background-color: #009578;
+  background-color: #8cc8c8;
   cursor: pointer;
   transition: background 0.1s;
+  text-align: center;
 }
 
 .radio_label:not(:last-of-type) {
-  border-right: 1px solid #000;
+  border-right: 1px solid #fff;
 }
 
 .radio__input:checked + .radio_label {
-  background-color: red;
+  background-color: #009578;
   transition: 0.5s;
 }
 

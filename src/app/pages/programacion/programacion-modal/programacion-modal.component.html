@@ -11,7 +11,7 @@
     <div class="modal-head"><h1>Programacion</h1></div>
     <div class="modal-body">
       <div class="card">
-        <form [formGroup]="form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="group">
             <select
               class="input-control input-select"
@@ -30,7 +30,7 @@
           <div class="group">
             <select
               class="input-control input-select"
-              formControlName="pr_servicio"
+              formControlName="pr_medico"
             >
               <option value="null">Seleccionar medicos</option>
               <option
@@ -44,21 +44,7 @@
           <div class="group">
             <select
               class="input-control input-select"
-              formControlName="pr_servicio"
-            >
-              <option value="null">Seleccionar turnos</option>
-              <option
-                [value]="turno.codigo"
-                *ngFor="let turno of turnos$ | async"
-              >
-                {{ turno.descripcion }}
-              </option>
-            </select>
-          </div>
-          <div class="group">
-            <select
-              class="input-control input-select"
-              formControlName="pr_servicio"
+              formControlName="pr_consultorio"
             >
               <option value="null">Seleccionar consultorios</option>
               <option
@@ -69,6 +55,21 @@
               </option>
             </select>
           </div>
+          <div class="group">
+            <select
+              class="input-control input-select"
+              formControlName="pr_turno"
+            >
+              <option value="null">Seleccionar turnos</option>
+              <option
+                [value]="turno.codigo"
+                *ngFor="let turno of turnos$ | async"
+              >
+                {{ turno.descripcion }}
+              </option>
+            </select>
+          </div>
+
           <button type="submit" class="btn">Registrar</button>
         </form>
       </div>

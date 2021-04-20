@@ -32,7 +32,7 @@
     <div class="container-content">
       <div class="container-row">
         <div class="card">
-          <h3>Signos Vitales</h3>
+          <h3>1.- Observaciones</h3>
           <div class="group textarea">
             <textarea
               rows="5"
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="card">
-          <h3>Signos Vitales</h3>
+          <h3>2.- Signos Vitales</h3>
           <div class="container-cell">
             <div class="container-row">
               <div class="group">
@@ -160,16 +160,16 @@
       </div>
       <div class="container-row">
         <div class="card">
-          <h3>Antecedentes</h3>
+          <h3>3.- Antecedentes</h3>
           <ng-container formArrayName="antecedentes">
             <div *ngFor="let _ of antecedentes.controls; index as i">
               <ng-container [formGroupName]="i">
                 <div class="group">
                   <select
-                    class="input-control input-select"
+                    class="input-control input-select animate__animated animate__fadeIn"
                     formControlName="idan"
                   >
-                    <option [ngValue]="null">SELECCIONAR ANTENCEDENTES</option>
+                    <option [ngValue]="null">Seleccionar antecedente</option>
                     <option
                       [ngValue]="antecedente.id"
                       *ngFor="let antecedente of antecedentes$ | async"
@@ -183,7 +183,7 @@
                 <div class="group">
                   <input
                     type="text"
-                    class="input-control"
+                    class="input-control animate__animated animate__fadeIn"
                     placeholder=" "
                     formControlName="valor"
                   />
@@ -201,7 +201,7 @@
         </div>
 
         <div class="card">
-          <h3>Cie-X</h3>
+          <h3>4.- Cie-X</h3>
           <div class="group">
             <input
               type="text"
@@ -212,7 +212,10 @@
             <label class="label-control">Buscar cie-X</label>
           </div>
           <ng-container *ngIf="cies$ | async as cies">
-            <div class="table" *ngIf="visible">
+            <div
+              class="table animate__animated animate__fadeIn"
+              *ngIf="visible"
+            >
               <div class="row-header">
                 <div class="cell m10">Codigo</div>
                 <div class="cell">Descripcion</div>
@@ -239,36 +242,54 @@
           </ng-container>
         </div>
 
-        <div class="card" *ngIf="cieSelect.length > 0">
-          <h3>Cie 10 seleccionados</h3>
-          <div class="card-cie" *ngFor="let cieSelect of cieSelect; index as i">
+        <div
+          class="card animate__animated animate__fadeIn"
+          *ngIf="cieSelect.length > 0"
+        >
+          <h3>Cie-X seleccionados</h3>
+          <div
+            class="card-cie animate__animated animate__fadeIn"
+            *ngFor="let cieSelect of cieSelect; index as i"
+          >
             <span class="card-title-cie">
               <h2>{{ cieSelect.codigo }}</h2>
-              <h6>{{ cieSelect.descripcion }}</h6>
+              <!-- <h6>{{ cieSelect.descripcion }}</h6> -->
             </span>
             <span class="card-contenido-cie">
               <div class="radio">
                 <input
                   type="radio"
                   [name]="cieSelect.codigo"
+                  value="PRESUNTIVO"
                   [id]="'a' + i"
                   class="radio__input"
+                  checked
+                  (click)="updateCie($event, i)"
                 />
                 <label [for]="'a' + i" class="radio_label">Presuntivo</label>
                 <input
                   type="radio"
+                  value="DEFINITIVO"
                   [name]="cieSelect.codigo"
                   [id]="'b' + i"
                   class="radio__input"
+                  (click)="updateCie($event, i)"
                 />
-                <label [for]="'b' + i" class="radio_label">Defintivo</label>
+                <label [for]="'b' + i" class="radio_label">Definitivo</label>
               </div>
+            </span>
+            <span class="card-delete">
+              <img
+                src="../../../assets/icons/delete_black_white.svg"
+                class="icon-delete"
+                (click)="deleteCie(i)"
+              />
             </span>
           </div>
         </div>
 
         <div class="card">
-          <h3>Atencion</h3>
+          <h3>5.- Atencion</h3>
           <div class="group">
             <select
               class="input-control input-select"
@@ -284,8 +305,8 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="group-button">
-    <button type="submit" class="btn">Registrar acto medico</button>
+    <div class="group-button">
+      <button type="submit" class="btn">Registrar</button>
+    </div>
   </div>
 </form>

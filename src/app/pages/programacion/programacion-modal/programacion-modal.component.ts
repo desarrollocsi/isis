@@ -2,8 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
 import { HttpService } from 'src/app/core/services/http.service';
 import { IntermedaryService } from 'src/app/core/services/intermedary.service';
+import { ProgramacionService } from '../services/programacion.service';
+import { Programacion } from '../model/Programacion.class';
+
+import * as moment from 'moment';
+import { ToasterService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'app-programacion-modal',
@@ -17,28 +23,33 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
   medicos$: Observable<any>;
   turnos$: Observable<any>;
   consultorios$: Observable<any>;
+  verbHttp: string = '';
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   constructor(
     private fb: FormBuilder,
     private IS: IntermedaryService,
-    private http: HttpService
+    private http: HttpService,
+    private PS: ProgramacionService,
+    private TS: ToasterService
   ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
+      pr_fecha: [moment().format('YYYY-MM-DD')],
       pr_numero: [null],
-      pr_fecha: [null],
       pr_servicio: [null],
-      pr_consultorio: [null],
       pr_medico: [null],
+      pr_consultorio: [null],
       pr_turno: [null],
     });
 
-    this.openModal();
     this.getEspecialidades();
     this.getTurno();
     this.getConsultorios();
+    this.openModal();
+    this.setValue();
+    this.onVerbHttp();
   }
 
   openModal() {
@@ -52,6 +63,21 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
     this.checkedModal = false;
   }
 
+  onVerbHttp() {
+    this.PS._verbhttp
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => (this.verbHttp = data));
+  }
+
+  setValue() {
+    this.PS._dataProgramacion
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => {
+        this.getMedico(data.pr_servicio);
+        this.form.setValue(new Programacion(data));
+      });
+  }
+
   getEspecialidades() {
     this.especialidades$ = this.http.getEspecialidades();
   }
@@ -63,8 +89,19 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
   getTurno() {
     this.turnos$ = this.http.getTurnos();
   }
+
   getConsultorios() {
     this.consultorios$ = this.http.getConsultorio();
+  }
+
+  onSubmit() {
+    console.log(this.form.value);
+    this.PS.apiDinamic(this.form.value, this.verbHttp)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data: any) => {
+        this.checkedModal = false;
+        this.TS.show('success', 'Bien hecho!', data.message, 3000);
+      });
   }
 
   ngOnDestroy(): void {
