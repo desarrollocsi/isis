@@ -19,7 +19,7 @@ export class AuthStorageService {
   }
 
   setRol(data: any) {
-    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].nombre));
+    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].descripcion));
   }
 
   setModulos(data: any) {
@@ -42,8 +42,7 @@ export class AuthStorageService {
   getMenu(data: any) {
     const { id } = data;
     const menu = JSON.parse(localStorage.getItem('_menu'));
-    // return of(menu.filter((menu: any) => menu.padre === parseInt(id)));
-    return of(menu.filter((menu: any) => menu.padre === parseInt('1')));
+    return of(menu.filter((menu: any) => menu.padre === parseInt(id)));
   }
 
   getSubmenu(id: number) {

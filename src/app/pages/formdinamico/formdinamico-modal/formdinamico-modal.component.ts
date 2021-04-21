@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil, tap } from 'rxjs/operators';
 import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
@@ -43,12 +43,10 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({});
     this.onOpenModal();
     this.onForm();
     this.onRoute();
     this.onDataId();
-
     this.IS.methodPost
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((_) => this.setVerbo('POST'));
@@ -65,7 +63,10 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
 
   onForm() {
     this.form$ = this.forms.pipe(
-      tap((data) => (this.form = this.FS.formGroup(data)))
+      tap((data) => {
+        this.form = this.FS.formGroup(data);
+        this.form.addControl('usuario', new FormControl(this.usuario));
+      })
     );
   }
 
@@ -94,12 +95,13 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.FS.getApiDynamic(this.URL, this.method, this.form.value)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data: any) => {
-        this.status = false;
-        this.TS.show('success', 'Bien hecho!', data.message, 2500);
-      });
+    console.log(this.form.getRawValue());
+    // this.FS.getApiDynamic(this.URL, this.method, this.form.value)
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((data: any) => {
+    //     this.status = false;
+    //     this.TS.show('success', 'Bien hecho!', data.message, 2500);
+    //   });
   }
 
   ngOnDestroy() {

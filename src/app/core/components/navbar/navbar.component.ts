@@ -20,6 +20,10 @@ export class NavbarComponent implements OnInit {
   submenu = false;
 
   ngOnInit(): void {
+    this.onMenu();
+  }
+
+  onMenu() {
     this.menus$ = this.IS._menus.pipe(
       switchMap((id: string) => this.AST.getMenu(id))
     );

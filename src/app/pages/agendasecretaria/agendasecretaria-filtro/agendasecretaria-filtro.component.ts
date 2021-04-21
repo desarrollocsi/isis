@@ -48,6 +48,7 @@ export class AgendasecretariaFiltroComponent implements OnInit {
   }
 
   getMedicos() {
+    this.idprogramacion.reset(null);
     const data = this.setData();
     this.medicos$ = this.AGS.getMedico(data).pipe(
       tap((_) => this.idprogramacion.enable())

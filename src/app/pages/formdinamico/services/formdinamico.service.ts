@@ -52,7 +52,7 @@ export class FormdinamicoService {
     }
 
     return this.http.get(
-      `http://192.168.10.144:8002/formulario/${data.tabla}/`
+      `http://192.168.10.144:8002/formularioall/${data.tabla}/`
     );
   }
 
