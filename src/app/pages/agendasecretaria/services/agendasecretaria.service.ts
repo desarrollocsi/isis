@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 
 import { ProgramacionAgenda } from '../../../core/models/programacion-agenda.class';
 import { BehaviorSubject, Subject } from 'rxjs';
@@ -30,9 +30,10 @@ export class AgendasecretariaService {
     );
   }
 
-  getAgenMedica(id: string) {
+  getAgenMedica(data: any) {
+    const { pr_numero } = data;
     return this.http.get(
-      `http://192.168.10.144:8002/agendamedica?programacion=${id}`
+      `http://192.168.10.144:8002/agendamedica?programacion=${pr_numero}`
     );
   }
 
@@ -40,11 +41,22 @@ export class AgendasecretariaService {
 
   _modal = new Subject<void>();
 
-  private idProgramacion = new BehaviorSubject<any>([]);
-  _idProgramacion = this.idProgramacion.asObservable();
+  private idProgramacion = new BehaviorSubject<any>(null);
+  _idProgramacion = this.idProgramacion
+    .asObservable()
+    .pipe(filter((data) => data !== null));
+
+  private dataProgramacion = new BehaviorSubject<any>(null);
+  _dataProgramacion = this.dataProgramacion
+    .asObservable()
+    .pipe(filter((data) => data !== null));
 
   getIdProgramacion(id: string) {
     this.idProgramacion.next(id);
+  }
+
+  getDataProgramacion(data: any) {
+    this.dataProgramacion.next(data);
   }
 
   get openModal() {

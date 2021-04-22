@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 
 @Injectable({
@@ -8,8 +8,8 @@ import { filter } from 'rxjs/operators';
 export class ToasterService {
   constructor() {}
 
-  subject = new BehaviorSubject<any>(null);
-  toaster = this.subject.asObservable().pipe(filter((data) => data !== null));
+  subject = new Subject<any>();
+  toaster = this.subject.asObservable();
 
   show(type: any, title?: string, body?: string, delay?: number) {
     this.subject.next({ type, title, body, delay });

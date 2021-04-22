@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ProgramacionService } from '../services/programacion.service';
 import { IntermedaryService } from '../../../core/services/intermedary.service';
+import { ToasterService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'app-programacion-list',
@@ -16,7 +17,8 @@ export class ProgramacionListComponent implements OnInit, OnDestroy {
   private readonly unsubscribe$: Subject<void> = new Subject();
   constructor(
     private PS: ProgramacionService,
-    private IS: IntermedaryService
+    private IS: IntermedaryService,
+    private TS: ToasterService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +52,12 @@ export class ProgramacionListComponent implements OnInit, OnDestroy {
   onDelete(id: string) {
     this.PS.getProgramacionDelete(id)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(console.log);
+      .subscribe(
+        (data: any) =>
+          this.TS.show('success', 'Bien hecho!', data.message, 3500),
+        (error: any) =>
+          this.TS.show('error', 'Algo paso!', error.error.message, 3500)
+      );
   }
 
   ngOnDestroy(): void {

@@ -95,13 +95,13 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.form.getRawValue());
-    // this.FS.getApiDynamic(this.URL, this.method, this.form.value)
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe((data: any) => {
-    //     this.status = false;
-    //     this.TS.show('success', 'Bien hecho!', data.message, 2500);
-    //   });
+    this.FS.getApiDynamic(this.URL, this.method, this.form.value)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data: any) => {
+        this.status = false;
+        this.form.reset();
+        this.TS.show('success', 'Bien hecho!', data.message, 2500);
+      });
   }
 
   ngOnDestroy() {

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { AgendasecretariaService } from '../services/agendasecretaria.service';
-
+import { AgendaMedicaData } from '../../../core/models/Agenda-Medica-data.class';
 @Component({
   selector: 'app-agendasecretaria-list',
   templateUrl: './agendasecretaria-list.component.html',
   styleUrls: ['./agendasecretaria-list.component.css'],
 })
 export class AgendasecretariaListComponent implements OnInit {
-  agendaMedicas$: Observable<any>;
+  agendaMedicaslists$: Observable<any>;
+  agendaMedicaData$: Observable<any>;
   p: number = 1;
   status = false;
   private readonly unsubscribe$: Subject<void> = new Subject();
@@ -17,18 +18,24 @@ export class AgendasecretariaListComponent implements OnInit {
   constructor(private AGS: AgendasecretariaService) {}
 
   ngOnInit(): void {
-    this.getAgendaMedica();
+    this.getAgendaMedicaList();
   }
 
   agendar() {
     this.AGS._modal.next();
   }
 
-  getAgendaMedica() {
-    this.agendaMedicas$ = this.AGS._idProgramacion.pipe(
-      filter((id: string) => id.length > 0),
+  getAgendaMedicaData() {
+    this.agendaMedicaData$ = this.AGS._dataProgramacion.pipe(
+      map((data: any) => new AgendaMedicaData(data))
+    );
+  }
+
+  getAgendaMedicaList() {
+    this.agendaMedicaslists$ = this.AGS._idProgramacion.pipe(
       tap((_) => (this.status = true)),
-      switchMap((id: string) => this.AGS.getAgenMedica(id))
+      switchMap((data: any) => this.AGS.getAgenMedica(data)),
+      tap((_) => this.getAgendaMedicaData())
     );
   }
 }

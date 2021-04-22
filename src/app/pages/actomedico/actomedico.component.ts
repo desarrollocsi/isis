@@ -17,6 +17,7 @@ import { IntermedaryService } from '../../core/services/intermedary.service';
 import { MessageService } from '../../core/services/message.service';
 
 import swal from 'sweetalert2';
+import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
 
 @Component({
   selector: 'app-actomedico',
@@ -30,7 +31,8 @@ export class ActomedicoComponent implements OnInit {
     private http: HttpService,
     private IS: IntermedaryService,
     private MS: MessageService,
-    private router: Router
+    private router: Router,
+    private AU: AuthStorageService
   ) {}
   formActoMedico: FormGroup;
   cies$: Observable<any>;
@@ -44,6 +46,11 @@ export class ActomedicoComponent implements OnInit {
   visible = true;
   p: number = 1;
   testdata = [];
+
+  get usuario() {
+    return this.AU.User;
+  }
+
   ngOnInit(): void {
     this.formActoMedico = this.fb.group({
       idcita: [null],
@@ -63,7 +70,9 @@ export class ActomedicoComponent implements OnInit {
       destino: [null],
       antecedentes: this.fb.array([]),
       diagnosticos: this.fb.array([]),
+      usuario: [this.usuario],
     });
+
     this.antecedentes$ = this.http.getAntecedentes();
     this.antecedentes = this.formActoMedico.get('antecedentes') as FormArray;
     this.diagnosticos = this.formActoMedico.get('diagnosticos') as FormArray;
@@ -151,10 +160,9 @@ export class ActomedicoComponent implements OnInit {
 
   onSubmit() {
     this.setCie();
-    console.log(this.formActoMedico.value);
-    // this.AMS.postActoMedico(this.formActoMedico.value).subscribe((data) => {
-    //   this.MS.MessageInfo(data['message']);
-    //   this.router.navigate(['home/agendamedica']);
-    // });
+    this.AMS.postActoMedico(this.formActoMedico.value).subscribe((data) => {
+      this.MS.MessageInfo(data['message']);
+      this.router.navigate(['home/agendamedica']);
+    });
   }
 }

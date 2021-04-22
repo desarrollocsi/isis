@@ -9,10 +9,9 @@ export class AgendamedicaService {
   constructor(private http: HttpClient) {}
 
   getListadoCitas(fecha: string) {
-    const isFecha = fecha === '' ? moment().format('YYYY-MM-DD') : fecha;
+    const isFecha = fecha ? fecha : moment().format('YYYY-MM-DD');
     return this.http.get(
-      // `http://192.168.10.144:8002/pacientescitados?fecha=${isFecha}&medico=034`
-      `http://192.168.10.144:8002/pacientescitados?fecha=2021-04-15&medico=062`
+      `http://192.168.10.144:8002/pacientescitados?fecha=${isFecha}&medico=022`
     );
   }
 }

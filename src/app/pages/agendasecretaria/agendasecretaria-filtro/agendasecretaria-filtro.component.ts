@@ -20,7 +20,7 @@ export class AgendasecretariaFiltroComponent implements OnInit {
   ) {}
 
   especialidad = new FormControl({ value: null, disabled: true });
-  idprogramacion = new FormControl({ value: null, disabled: true });
+  programacion = new FormControl({ value: null, disabled: true });
   fecha = new FormControl(null);
 
   ngOnInit(): void {
@@ -29,7 +29,7 @@ export class AgendasecretariaFiltroComponent implements OnInit {
 
   resetForm(fecha: string) {
     this.especialidad.reset(null);
-    this.idprogramacion.reset({ value: null, disabled: true });
+    this.programacion.reset({ value: null, disabled: true });
     this.fecha.reset(fecha);
   }
 
@@ -48,14 +48,16 @@ export class AgendasecretariaFiltroComponent implements OnInit {
   }
 
   getMedicos() {
-    this.idprogramacion.reset(null);
+    this.programacion.reset(null);
     const data = this.setData();
     this.medicos$ = this.AGS.getMedico(data).pipe(
-      tap((_) => this.idprogramacion.enable())
+      tap((_) => this.programacion.enable())
     );
   }
 
   agendaMedica() {
-    this.AGS.getIdProgramacion(this.idprogramacion.value);
+    const data = JSON.parse(this.programacion.value);
+    this.AGS.getIdProgramacion(data);
+    this.AGS.getDataProgramacion(data);
   }
 }

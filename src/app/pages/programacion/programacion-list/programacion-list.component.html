@@ -2,43 +2,48 @@
 <div class="table animate__animated animate__fadeIn">
   <div class="row-header">
     <div class="cell">Medico</div>
-    <div class="cell">Consultorio</div>
-    <div class="cell">Especialidad</div>
-    <div class="cell">Turno</div>
-    <div class="cell">Accion</div>
+    <div class="cell cell-50">Consultorio</div>
+    <div class="cell cell-50">Especialidad</div>
+    <div class="cell cell-50">Turno</div>
+    <div class="cell cell-50">Opciones</div>
   </div>
   <div
-    class="row"
+    class="row-body"
     *ngFor="
       let listProgramacione of listProgramaciones$
         | async
-        | paginate: { itemsPerPage: 5, currentPage: p }
+        | paginate: { itemsPerPage: 9, currentPage: p }
     "
   >
     <div class="cell">
       {{ listProgramacione.medico.descripcion | titlecase }}
     </div>
-    <div class="cell">
+    <div class="cell cell-50">
       {{ listProgramacione.consultorio.descripcion | titlecase }}
     </div>
-    <div class="cell">
+    <div class="cell cell-50">
       {{ listProgramacione.especialidad.descripcion | titlecase }}
     </div>
-    <div class="cell">
-      {{ listProgramacione.turno.descripcion | titlecase }}
+    <div class="cell cell-50">
+      {{ listProgramacione.turno.descripcion | titlecase | slice: 18 }}
     </div>
-    <div class="cell">
-      <div class="icon-action-svg">
-        <img
-          src="../../../../assets/icons/edit-color.svg"
-          alt="Editar"
-          (click)="onEdit(listProgramacione.pr_numero)"
-        />
-        <img
-          src="../../../../assets/icons/delete-color.svg"
-          alt="Borrar"
-          (click)="onDelete(listProgramacione.pr_numero)"
-        />
+    <div class="cell cell-50">
+      <div class="dropdown">
+        <span>...</span>
+        <div class="dropdown-content">
+          <span>ñlksajdlkasjdlajslsdas</span>
+
+          <img
+            src="../../../../assets/icons/edit-color.svg"
+            alt="Editar"
+            (click)="onEdit(listProgramacione.pr_numero)"
+          />
+          <img
+            src="../../../../assets/icons/delete-color.svg"
+            alt="Borrar"
+            (click)="onDelete(listProgramacione.pr_numero)"
+          />
+        </div>
       </div>
     </div>
   </div>

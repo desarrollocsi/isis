@@ -13,7 +13,7 @@
     </div>
     <div class="modal-body modal-scroll-y">
       <div class="card">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" autocomplete="off">
           <ng-container *ngFor="let form of forms.formulariod">
             <div [ngSwitch]="form.controltype">
               <div class="group" *ngSwitchCase="'textbox'">

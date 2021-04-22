@@ -43,9 +43,6 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
       this.URL = data;
     });
   }
-
-  toaster() {}
-
   openModalSave() {
     this.IS.modal.next();
     this.IS.methodPost.next();

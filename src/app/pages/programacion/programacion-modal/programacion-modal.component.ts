@@ -95,7 +95,6 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.form.value);
     this.PS.apiDinamic(this.form.value, this.verbHttp)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {

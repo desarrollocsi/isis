@@ -24,7 +24,7 @@ export class IntermedaryService {
   private datoDePaciente = new BehaviorSubject<any>([]);
   _datoDePaciente = this.datoDePaciente.asObservable();
 
-  private fecha = new BehaviorSubject<string>('');
+  private fecha = new BehaviorSubject<string>(null);
   _fecha = this.fecha.asObservable();
 
   private route = new BehaviorSubject<string>('');
