@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { IntermedaryService } from '../../../core/services/intermedary.service';
-import { AuthStorageService } from '../../../core/services/auth-storage.service';
 import { take, tap } from 'rxjs/operators';
+
+import { IntermedaryService, AuthStorageService } from '../../../core/services';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -51,9 +52,7 @@ export class FormdinamicoService {
       this.router.navigate(['home']);
     }
 
-    return this.http.get(
-      `http://192.168.10.144:8002/formularioall/${data.tabla}/`
-    );
+    return this.http.get(`${environment.apiUrl}/formularioall/${data.tabla}/`);
   }
 
   getApiDynamic(URL?: any, type?: string, data?: any) {
@@ -63,27 +62,25 @@ export class FormdinamicoService {
 
     switch (type) {
       case 'GET': {
-        return this.http.get(
-          `http://192.168.10.144:8002/${URL.nombres}/${data}`
-        );
+        return this.http.get(`${environment.apiUrl}/${URL.nombres}/${data}`);
       }
       case 'POST': {
         return this.http
-          .post(`http://192.168.10.144:8002/${URL.nombres}/`, data)
+          .post(`${environment.apiUrl}/${URL.nombres}/`, data)
           .pipe(tap((_) => this.IS.refresh.next()));
       }
       case 'PUT': {
         return this.http
-          .put(`http://192.168.10.144:8002/${URL.nombres}/${data.codigo}`, data)
+          .put(`${environment.apiUrl}/${URL.nombres}/${data.codigo}`, data)
           .pipe(tap((_) => this.IS.refresh.next()));
       }
       case 'DELETE': {
         return this.http
-          .delete(`http://192.168.10.144:8002/${URL.nombres}/${data}`)
+          .delete(`${environment.apiUrl}/${URL.nombres}/${data}`)
           .pipe(tap((_) => this.IS.refresh.next()));
       }
       default: {
-        return this.http.get(`http://192.168.10.144:8002/${URL.nombres}/`);
+        return this.http.get(`${environment.apiUrl}/${URL.nombres}/`);
       }
     }
   }

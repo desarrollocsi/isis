@@ -12,6 +12,7 @@ export class ToasterService {
   toaster = this.subject.asObservable();
 
   show(type: any, title?: string, body?: string, delay?: number) {
+    console.log('test');
     this.subject.next({ type, title, body, delay });
   }
 }

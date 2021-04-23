@@ -3,7 +3,7 @@
   type="checkbox"
   id="modal-btn"
   name="modal-btn"
-  [checked]="status"
+  [checked]="estadoModal"
   (click)="onCloseModal()"
 />
 <div class="modal" *ngIf="form$ | async as forms">
@@ -72,7 +72,7 @@
               </fieldset>
             </div>
           </ng-container>
-          <button type="submit" class="btn">{{ nameButton }}</button>
+          <button type="submit" class="btn">{{ buttonTitulo }}</button>
         </form>
       </div>
     </div>

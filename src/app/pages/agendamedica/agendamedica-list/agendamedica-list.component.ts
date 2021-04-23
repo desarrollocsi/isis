@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { AgendamedicaService } from '../services/agendamedica.service';
-import { IntermedaryService } from '../../../core/services/intermedary.service';
-import { switchMap } from 'rxjs/operators';
+import { IntermedaryService } from '../../../core/services';
 
 @Component({
   selector: 'app-agendamedica-list',

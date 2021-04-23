@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
-import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
-import { IntermedaryService } from '../../services/intermedary.service';
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+import { AuthStorageService, IntermedaryService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-navbar',

@@ -3,11 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { CoreRoutingModule } from './core-routing.module';
 import { NavbarComponent } from './components/navbar/navbar.component';
-import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
-  declarations: [NavbarComponent, LayoutComponent],
+  declarations: [NavbarComponent],
   imports: [CommonModule, CoreRoutingModule],
-  exports: [NavbarComponent, LayoutComponent],
+  exports: [NavbarComponent],
 })
 export class CoreModule {}

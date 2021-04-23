@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { ProgramacionService } from '../services/programacion.service';
-import { IntermedaryService } from '../../../core/services/intermedary.service';
-import { ToasterService } from 'src/app/core/services/toaster.service';
+
+import { IntermedaryService, ToasterService } from '../../../core/services';
 
 @Component({
   selector: 'app-programacion-list',

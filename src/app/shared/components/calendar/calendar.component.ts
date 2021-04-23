@@ -88,6 +88,5 @@ export class CalendarComponent implements OnInit {
   onAleatorio(fecha: string) {
     this.data.push({ fecha });
     const object = Object.assign([], this.data);
-    console.log(object);
   }
 }

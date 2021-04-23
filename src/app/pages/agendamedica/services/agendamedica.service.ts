@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../../environments/environment';
+
 import * as moment from 'moment';
 
 @Injectable({
@@ -11,7 +13,7 @@ export class AgendamedicaService {
   getListadoCitas(fecha: string) {
     const isFecha = fecha ? fecha : moment().format('YYYY-MM-DD');
     return this.http.get(
-      `http://192.168.10.144:8002/pacientescitados?fecha=${isFecha}&medico=022`
+      `${environment.apiUrl}/pacientescitados?fecha=${isFecha}&medico=022`
     );
   }
 }

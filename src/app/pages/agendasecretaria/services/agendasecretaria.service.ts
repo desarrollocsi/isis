@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { filter, map } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { ProgramacionAgenda } from '../../../core/models/programacion-agenda.class';
-import { BehaviorSubject, Subject } from 'rxjs';
+
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -13,9 +15,7 @@ export class AgendasecretariaService {
 
   getEspecialidades(fecha: string) {
     return this.http
-      .get(
-        `http://192.168.10.144:8002/especialidadesprogramacion?fecha=${fecha}`
-      )
+      .get(`${environment.apiUrl}/especialidadesprogramacion?fecha=${fecha}`)
       .pipe(
         map((data: any) =>
           data.map((data: any) => new ProgramacionAgenda(data))
@@ -26,18 +26,18 @@ export class AgendasecretariaService {
   getMedico(data: any) {
     const { fecha, especialidad } = data;
     return this.http.get(
-      `http://192.168.10.144:8002/medicosprogramacion?fecha=${fecha}&especialidad=${especialidad}`
+      `${environment.apiUrl}/medicosprogramacion?fecha=${fecha}&especialidad=${especialidad}`
     );
   }
 
   getAgenMedica(data: any) {
     const { pr_numero } = data;
     return this.http.get(
-      `http://192.168.10.144:8002/agendamedica?programacion=${pr_numero}`
+      `${environment.apiUrl}/agendamedica?programacion=${pr_numero}`
     );
   }
 
-  /**************INTERMEDIARIO**************/
+  /**************INTERMEDIARIO-SUBJECT**************/
 
   _modal = new Subject<void>();
 

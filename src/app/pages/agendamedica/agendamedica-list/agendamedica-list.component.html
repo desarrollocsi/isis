@@ -1,38 +1,49 @@
-<div class="table animate__animated animate__fadeIn">
-  <div class="row-header">
-    <div class="cell">Historia</div>
-    <div class="cell">Paciente</div>
-    <div class="cell">Hora cita</div>
-    <div class="cell">Action</div>
-  </div>
-  <div
-    class="row"
-    [ngStyle]="{
-      'background-color': pacientesCitado.estado === 'R' ? '#ccffff' : '#ceffce'
-    }"
-    *ngFor="
-      let pacientesCitado of pacientesCitados$
-        | async
-        | paginate: { itemsPerPage: 5, currentPage: p }
-    "
-  >
-    <div class="cell">
-      {{ pacientesCitado.historia | titlecase }}
+<ng-container
+  *ngIf="pacientesCitados$ | async as pacientesCitados"
+  class="animate__animated animate__fadeIn"
+>
+  <div class="table animate__animated animate__fadeIn">
+    <div class="row-header">
+      <div class="cell cell-30">N° O</div>
+      <div class="cell cell-30">Hora cita</div>
+      <div class="cell cell-30">Historia</div>
+      <div class="cell">Paciente</div>
     </div>
+    <div
+      class="row-body animate__animated animate__fadeIn"
+      (click)="pagesActomedico(pacientesCitado)"
+      [ngStyle]="{
+        'background-color':
+          pacientesCitado.estado === 'R' ? '#ccffff' : '#ceffce'
+      }"
+      *ngFor="
+        let pacientesCitado of pacientesCitados
+          | paginate: { itemsPerPage: 10, currentPage: p };
+        index as i
+      "
+    >
+      <div class="cell cell-30">
+        {{ i + 1 }}
+      </div>
+      <div class="cell cell-30">
+        {{ pacientesCitado.hora }}
+      </div>
+      <div class="cell cell-30">
+        {{ pacientesCitado.historia | titlecase }}
+      </div>
 
-    <div class="cell">
-      {{ pacientesCitado.paciente | titlecase }}
-    </div>
-    <div class="cell">
-      {{ pacientesCitado.hora }}
-    </div>
-    <div class="cell">
+      <div class="cell cell-text-left">
+        {{ pacientesCitado.paciente | titlecase }}
+      </div>
+
+      <!-- <div class="cell cell-30">
       <div class="icon-action-svg" (click)="pagesActomedico(pacientesCitado)">
         <img src="../../../../assets//icons/checklist.svg" />
       </div>
+    </div> -->
+    </div>
+    <div class="footer-pagination">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
-  <ng-container>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
-  </ng-container>
-</div>
+</ng-container>

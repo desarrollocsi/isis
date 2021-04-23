@@ -3,8 +3,9 @@ import { HttpClient } from '@angular/common/http';
 import { of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { IntermedaryService } from '../../../core/services/intermedary.service';
+import { IntermedaryService } from '../../../core/services';
 import * as moment from 'moment';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,41 +16,28 @@ export class ProgramacionService {
   getProgramacionlist(fecha: string) {
     const isFecha = fecha === '' ? moment().format('YYYY-MM-DD') : fecha;
     return this.http.get(
-      `http://192.168.10.144:8002/admision/citas/programacionesfecha?fecha=${isFecha}`
+      `${environment.apiUrl}/admision/citas/programacionesfecha?fecha=${isFecha}`
     );
   }
 
   getProgramacionShow(id: string) {
-    return this.http.get(`http://192.168.10.144:8002/programaciones/${id}`);
+    return this.http.get(`${environment.apiUrl}/programaciones/${id}`);
   }
 
   getProgramacionDelete(id: string) {
-    return this.http.delete(`http://192.168.10.144:8002/programaciones/${id}`);
-  }
-
-  postProgramacion(data: any) {
-    return this.http
-      .post('http://192.168.10.144:8002/programaciones', data)
-      .pipe(tap(() => this.IS.refresh.next()));
-  }
-
-  putProgramacion(data: any) {
-    return of(data);
+    return this.http.delete(`${environment.apiUrl}/programaciones/${id}`);
   }
 
   apiDinamic(data: any, type: string = 'POST') {
     switch (type) {
       case 'POST': {
         return this.http
-          .post('http://192.168.10.144:8002/programaciones', data)
+          .post(`${environment.apiUrl}/programaciones`, data)
           .pipe(tap(() => this.IS.refresh.next()));
       }
       case 'PUT': {
         return this.http
-          .put(
-            `http://192.168.10.144:8002/programaciones/${data.pr_numero}`,
-            data
-          )
+          .put(`${environment.apiUrl}/programaciones/${data.pr_numero}`, data)
           .pipe(tap(() => this.IS.refresh.next()));
       }
     }

@@ -19,11 +19,15 @@ export class AuthStorageService {
   }
 
   setRol(data: any) {
-    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].descripcion));
+    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].nombre));
   }
 
   setModulos(data: any) {
     localStorage.setItem(`_${data.nombres}`, data.id);
+  }
+
+  get ValidacionUsuario() {
+    return localStorage.getItem('_usuario') ? true : false;
   }
 
   get User() {

@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { switchMap, tap } from 'rxjs/operators';
-import { IntermedaryService } from 'src/app/core/services/intermedary.service';
 import { AgendasecretariaService } from '../services/agendasecretaria.service';
+import { IntermedaryService } from 'src/app/core/services';
 
 @Component({
   selector: 'app-agendasecretaria-filtro',

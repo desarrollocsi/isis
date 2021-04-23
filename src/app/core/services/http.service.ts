@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,24 +9,24 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   getEspecialidades() {
-    return this.http.get('http://192.168.10.144:8002/especialidades/');
+    return this.http.get(`${environment.apiUrl}/especialidades/`);
   }
 
   getMedicos(id: any) {
     return this.http.get(
-      `http://192.168.10.144:8002/medicosespecialidad?especialidad=${id}`
+      `${environment.apiUrl}/medicosespecialidad?especialidad=${id}`
     );
   }
 
   getTurnos() {
-    return this.http.get('http://192.168.10.144:8002/turnos/');
+    return this.http.get(`${environment.apiUrl}/turnos/`);
   }
 
   getConsultorio() {
-    return this.http.get('http://192.168.10.144:8002/consultorios/');
+    return this.http.get(`${environment.apiUrl}/consultorios/`);
   }
 
   getAntecedentes() {
-    return this.http.get('http://192.168.10.144:8002/antecedentes');
+    return this.http.get(`${environment.apiUrl}/antecedentes`);
   }
 }

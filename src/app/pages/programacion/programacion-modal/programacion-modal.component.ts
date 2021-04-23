@@ -3,13 +3,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { HttpService } from 'src/app/core/services/http.service';
-import { IntermedaryService } from 'src/app/core/services/intermedary.service';
 import { ProgramacionService } from '../services/programacion.service';
+
+import {
+  IntermedaryService,
+  HttpService,
+  ToasterService,
+} from 'src/app/core/services';
+
 import { Programacion } from '../model/Programacion.class';
 
 import * as moment from 'moment';
-import { ToasterService } from 'src/app/core/services/toaster.service';
 
 @Component({
   selector: 'app-programacion-modal',

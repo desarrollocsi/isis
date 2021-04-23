@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { AuthStorageService } from '../../../core/services/auth-storage.service';
-import { IntermedaryService } from '../../../core/services/intermedary.service';
+import { AuthStorageService, IntermedaryService } from '../../../core/services';
 
 @Component({
   selector: 'app-modules',

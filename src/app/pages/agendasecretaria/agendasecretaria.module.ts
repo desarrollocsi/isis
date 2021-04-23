@@ -10,6 +10,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { AgendasecretariaListComponent } from './agendasecretaria-list/agendasecretaria-list.component';
 import { AgendasecretariaFiltroComponent } from './agendasecretaria-filtro/agendasecretaria-filtro.component';
 import { AgendasecretariaModalComponent } from './agendasecretaria-modal/agendasecretaria-modal.component';
+import { AgendasecretariaRegistrarComponent } from './agendasecretaria-registrar/agendasecretaria-registrar.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { AgendasecretariaModalComponent } from './agendasecretaria-modal/agendas
     AgendasecretariaListComponent,
     AgendasecretariaFiltroComponent,
     AgendasecretariaModalComponent,
+    AgendasecretariaRegistrarComponent,
   ],
   imports: [
     CommonModule,

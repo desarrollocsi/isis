@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { tap } from 'rxjs/operators';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { AuthService } from '../services/auth.service';
-import { AuthStorageService } from '../../core/services/auth-storage.service';
+import { AuthStorageService } from '../../core/services';
 
 @Component({
   selector: 'app-login',
@@ -34,16 +32,11 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.AS.postLogin(this.form.value).subscribe(
-      (data) => {
-        this.AST.setRol(data);
-        this.AST.setUsuario(data);
-        this.AST.setMenu(data);
-        this.router.navigate(['modulos']);
-      },
-      (error: any) => {
-        console.log('subscribe', error);
-      }
-    );
+    this.AS.postLogin(this.form.value).subscribe((data) => {
+      this.AST.setRol(data);
+      this.AST.setUsuario(data);
+      this.AST.setMenu(data);
+      this.router.navigate(['modulos']);
+    });
   }
 }

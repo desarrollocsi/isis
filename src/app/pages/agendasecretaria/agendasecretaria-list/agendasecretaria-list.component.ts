@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { AgendasecretariaService } from '../services/agendasecretaria.service';
 import { AgendaMedicaData } from '../../../core/models/Agenda-Medica-data.class';
 @Component({
@@ -13,7 +13,6 @@ export class AgendasecretariaListComponent implements OnInit {
   agendaMedicaData$: Observable<any>;
   p: number = 1;
   status = false;
-  private readonly unsubscribe$: Subject<void> = new Subject();
 
   constructor(private AGS: AgendasecretariaService) {}
 
@@ -21,14 +20,8 @@ export class AgendasecretariaListComponent implements OnInit {
     this.getAgendaMedicaList();
   }
 
-  agendar() {
+  openModal() {
     this.AGS._modal.next();
-  }
-
-  getAgendaMedicaData() {
-    this.agendaMedicaData$ = this.AGS._dataProgramacion.pipe(
-      map((data: any) => new AgendaMedicaData(data))
-    );
   }
 
   getAgendaMedicaList() {
@@ -36,6 +29,12 @@ export class AgendasecretariaListComponent implements OnInit {
       tap((_) => (this.status = true)),
       switchMap((data: any) => this.AGS.getAgenMedica(data)),
       tap((_) => this.getAgendaMedicaData())
+    );
+  }
+
+  getAgendaMedicaData() {
+    this.agendaMedicaData$ = this.AGS._dataProgramacion.pipe(
+      map((data: any) => new AgendaMedicaData(data))
     );
   }
 }

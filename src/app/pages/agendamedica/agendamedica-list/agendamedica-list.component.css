@@ -1,41 +1,56 @@
 .table {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   width: 100%;
-  border-radius: 1.2rem;
+  border-radius: 1.5rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  margin-left: 20px;
+  height: 520px;
 }
 
 .row-header {
   display: flex;
   justify-content: space-between;
   background-color: #828282;
-  border-top-right-radius: 1.2rem;
-  border-top-left-radius: 1.2rem;
-  color: #fff;
+  border-top-right-radius: 1.5rem;
+  border-top-left-radius: 1.5rem;
 }
 
 .row-header .cell {
   text-align: center;
   width: 100%;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 19px;
+  padding-bottom: 19px;
   color: #fff;
   font-weight: 600;
 }
 
-.row {
-  display: flex;
-  justify-content: space-between;
+.table .row-header .cell-30 {
+  width: 30%;
 }
 
-.row .cell {
+.row-body {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.row-body .cell {
   width: 100%;
-  border-bottom: 1px solid #000;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  border-bottom: 1px solid #dbdbdb;
+  padding-top: 10px;
+  padding-bottom: 10px;
   text-align: center;
+}
+
+.table .row-body .cell-text-left {
+  padding-left: 15px;
+  text-align: left;
+}
+
+.table .row-body .cell-30 {
+  width: 30%;
+  border-right: 1px solid #dbdbdb;
 }
 
 .cell .icon-action-svg {
@@ -44,4 +59,9 @@
 
 .icon-svg:hover {
   color: #fe7b12;
+}
+/***************/
+.footer-pagination {
+  display: flex;
+  justify-content: center;
 }

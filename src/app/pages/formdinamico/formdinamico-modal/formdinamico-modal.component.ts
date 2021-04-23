@@ -1,11 +1,15 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { take, takeUntil, tap } from 'rxjs/operators';
-import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
-import { IntermedaryService } from 'src/app/core/services/intermedary.service';
-import { ToasterService } from 'src/app/core/services/toaster.service';
+import { takeUntil, tap } from 'rxjs/operators';
+
 import { FormdinamicoService } from '../services/formdinamico.service';
+
+import {
+  AuthStorageService,
+  IntermedaryService,
+  ToasterService,
+} from 'src/app/core/services';
 
 @Component({
   selector: 'app-formdinamico-modal',
@@ -19,20 +23,23 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   modal$: Observable<any>;
   data$: Observable<any>;
   form: FormGroup;
-  status: boolean = false;
+  estadoModal: boolean = false;
   URL: string;
-  method: string;
-  nameButton: string;
+  verboHtpp: string;
+  buttonTitulo: string;
 
   private readonly unsubscribe$: Subject<void> = new Subject();
 
   constructor(
-    private fb: FormBuilder,
     private IS: IntermedaryService,
     private FS: FormdinamicoService,
     private AUS: AuthStorageService,
     private TS: ToasterService
   ) {}
+
+  get id() {
+    return this.IS._idDataEdit;
+  }
 
   get route() {
     return this.IS._route;
@@ -46,7 +53,7 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
     this.onOpenModal();
     this.onForm();
     this.onRoute();
-    this.onDataId();
+    this.onData();
     this.IS.methodPost
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((_) => this.setVerbo('POST'));
@@ -57,8 +64,8 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   setVerbo(verbo: string) {
-    this.method = verbo;
-    this.nameButton = verbo === 'POST' ? 'Registrar' : 'Actualizar';
+    this.verboHtpp = verbo;
+    this.buttonTitulo = verbo === 'POST' ? 'Registrar' : 'Actualizar';
   }
 
   onForm() {
@@ -71,40 +78,39 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   }
 
   onOpenModal() {
-    this.IS.modal.pipe(takeUntil(this.unsubscribe$)).subscribe((_: any) => {
-      this.status = true;
-    });
+    this.IS.modal
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((_) => (this.estadoModal = true));
   }
 
   onCloseModal() {
-    this.status = false;
+    this.estadoModal = false;
     this.form.reset();
     this.form.controls.usuario.reset(this.usuario);
   }
 
-  onDataId() {
-    this.IS._idDataEdit.pipe(takeUntil(this.unsubscribe$)).subscribe((data) => {
-      this.form.setValue(data);
-    });
+  onData() {
+    this.id
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => this.form.setValue(data));
   }
 
   onRoute() {
-    this.route.pipe(take(1)).subscribe((data) => {
-      this.URL = data;
-    });
+    this.route
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => (this.URL = data));
   }
 
   onSubmit() {
-    this.FS.getApiDynamic(this.URL, this.method, this.form.value)
+    this.FS.getApiDynamic(this.URL, this.verboHtpp, this.form.value)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {
-        this.status = false;
-        this.form.reset();
         this.TS.show('success', 'Bien hecho!', data.message, 2500);
+        this.onCloseModal();
       });
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }

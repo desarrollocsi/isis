@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 export class AuthService {
   constructor(private http: HttpClient) {}
 
-  URL: string = `http://192.168.10.144:8002/login`;
+  URL: string = `${environment.apiUrl}/login`;
 
   postLogin(data: any) {
     return this.http.post(this.URL, data);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { combineLatest, Observable, of } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
@@ -11,14 +11,17 @@ import {
 } from 'rxjs/operators';
 
 import { ActomedicoService } from './services/actomedico.service';
-import { HttpService } from '../../core/services/http.service';
+
+import {
+  HttpService,
+  IntermedaryService,
+  MessageService,
+  AuthStorageService,
+} from '../../core/services';
+
 import { CieForm } from '../../core/models/cie-form.class';
-import { IntermedaryService } from '../../core/services/intermedary.service';
-import { MessageService } from '../../core/services/message.service';
 
 import swal from 'sweetalert2';
-import { AuthStorageService } from 'src/app/core/services/auth-storage.service';
-
 @Component({
   selector: 'app-actomedico',
   templateUrl: './actomedico.component.html',

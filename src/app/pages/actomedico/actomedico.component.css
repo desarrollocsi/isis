@@ -6,10 +6,14 @@
   width: 100%;
   position: relative;
   padding: 2rem 2rem;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
   margin-bottom: 15px;
   background-color: #fff;
+}
+
+.card-p {
+  padding: 0.75rem 2rem;
 }
 
 .card-option {
@@ -258,14 +262,14 @@
 /***************card datos del paciente********************/
 
 .card-detalles {
-  padding: 10px;
+  padding: 0.75rem;
   display: flex;
+  border: 1px solid;
 }
 
 .card-avatar {
   display: flex;
   justify-content: center;
-
   width: 35%;
 }
 
@@ -273,6 +277,7 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  border: 1px solid;
 }
 
 .card-header {
