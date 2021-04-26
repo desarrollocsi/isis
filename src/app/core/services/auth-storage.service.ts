@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 
-import { IntermedaryService } from './intermedary.service';
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthStorageService {
   idmenu: string;
-  constructor(private IS: IntermedaryService) {}
+  constructor() {}
 
   setMenu(data: any) {
     localStorage.setItem('_menu', JSON.stringify(data.Rol[0].menu));
@@ -19,11 +17,19 @@ export class AuthStorageService {
   }
 
   setRol(data: any) {
-    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].nombre));
+    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].descripcion));
   }
 
   setModulos(data: any) {
-    localStorage.setItem(`_${data.nombres}`, data.id);
+    localStorage.setItem(`_modulo`, JSON.stringify(data));
+  }
+
+  get rol() {
+    return localStorage.getItem('_rol');
+  }
+
+  get modulos() {
+    return JSON.parse(localStorage.getItem('_modulo'));
   }
 
   get ValidacionUsuario() {
@@ -52,5 +58,9 @@ export class AuthStorageService {
   getSubmenu(id: number) {
     const menu = JSON.parse(localStorage.getItem('_menu'));
     return of(menu.filter((menu: any) => menu.padre === id));
+  }
+
+  clearLocalstorage() {
+    localStorage.clear();
   }
 }

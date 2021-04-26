@@ -25,7 +25,9 @@ export class ProgramacionService {
   }
 
   getProgramacionDelete(id: string) {
-    return this.http.delete(`${environment.apiUrl}/programaciones/${id}`);
+    return this.http
+      .delete(`${environment.apiUrl}/programaciones/${id}`)
+      .pipe(tap(() => this.IS.refresh.next()));
   }
 
   apiDinamic(data: any, type: string = 'POST') {

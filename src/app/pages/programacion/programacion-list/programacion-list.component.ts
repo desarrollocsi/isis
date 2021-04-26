@@ -54,7 +54,12 @@ export class ProgramacionListComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (data: any) =>
-          this.TS.show('success', 'Bien hecho!', data.message, 3500),
+          this.TS.show(
+            'success',
+            'Bien hecho!',
+            'Se elimino correctamente',
+            3500
+          ),
         (error: any) =>
           this.TS.show('error', 'Algo paso!', error.error.message, 3500)
       );

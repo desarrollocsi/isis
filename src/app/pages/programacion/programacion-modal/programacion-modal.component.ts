@@ -64,6 +64,7 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.form.reset();
+    this.form.controls.pr_fecha.reset(moment().format('YYYY-MM-DD'));
     this.checkedModal = false;
   }
 
@@ -102,7 +103,7 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
     this.PS.apiDinamic(this.form.value, this.verbHttp)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {
-        this.checkedModal = false;
+        this.closeModal();
         this.TS.show('success', 'Bien hecho!', data.message, 3000);
       });
   }

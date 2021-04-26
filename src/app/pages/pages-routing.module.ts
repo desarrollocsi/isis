@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
+import { RolesGuard } from '../core/guard';
 
 const routes: Routes = [
   {
     path: '',
     component: PagesComponent,
-
     children: [
       {
         path: 'programacion',
@@ -24,6 +24,7 @@ const routes: Routes = [
       },
       {
         path: 'agendamedica',
+        canLoad: [RolesGuard],
         loadChildren: () =>
           import('./agendamedica/agendamedica.module').then(
             (m) => m.AgendamedicaModule
@@ -48,6 +49,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./f419-eventoadverso/f419-eventoadverso.module').then(
             (m) => m.F419EventoadversoModule
+          ),
+      },
+      {
+        path: 'consultatenciones',
+        loadChildren: () =>
+          import('./consultas-atenciones/consultas-atenciones.module').then(
+            (m) => m.ConsultasAtencionesModule
           ),
       },
     ],

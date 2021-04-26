@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { AuthStorageService } from './auth-storage.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class IntermedaryService {
-  constructor() {}
+  constructor(private AUS: AuthStorageService) {}
 
   private _refresh = new Subject<void>();
   private _modal = new Subject<void>();
@@ -15,7 +16,7 @@ export class IntermedaryService {
   private idDataEdit = new Subject<object>();
   _idDataEdit = this.idDataEdit.asObservable();
 
-  private menus = new BehaviorSubject<any>([]);
+  private menus = new BehaviorSubject<any>(this.AUS.modulos || []);
   _menus = this.menus.asObservable();
 
   private programacion = new BehaviorSubject<any>([]);

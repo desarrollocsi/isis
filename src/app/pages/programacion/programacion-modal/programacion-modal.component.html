@@ -70,7 +70,9 @@
             </select>
           </div>
 
-          <button type="submit" class="btn">Registrar</button>
+          <button type="submit" class="btn">
+            {{ verbHttp === "POST" ? "Registrar" : "Actualizar" }}
+          </button>
         </form>
       </div>
     </div>

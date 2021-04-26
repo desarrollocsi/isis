@@ -2,13 +2,13 @@ import { Injectable } from '@angular/core';
 import { CanLoad, Route, UrlSegment, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { AuthStorageService } from '../services/auth-storage.service';
+import { AuthStorageService } from '../services';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanLoad {
-  constructor(private AS: AuthStorageService, private router: Router) {}
+export class SessionGuard implements CanLoad {
+  constructor(private AUS: AuthStorageService, private router: Router) {}
 
   canLoad(
     route: Route,
@@ -18,13 +18,12 @@ export class AuthGuard implements CanLoad {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    const auth = this.AS.ValidacionUsuario;
-
-    if (!auth) {
-      this.router.navigate(['']);
-      return false;
-    }
-
+    const auth = this.AUS.ValidacionUsuario;
+    // if (auth) {
+    //   //this.router.navigate(['modulos']);
+    //   return false;
+    // }
+    // this.router.navigate(['modulos']);
     return true;
   }
 }

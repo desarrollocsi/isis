@@ -32,11 +32,20 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this.AS.postLogin(this.form.value).subscribe((data) => {
+    this.AS.postLogin(this.form.value).subscribe((data: any) => {
       this.AST.setRol(data);
       this.AST.setUsuario(data);
       this.AST.setMenu(data);
-      this.router.navigate(['modulos']);
+      this.countModulos(data.Rol[0].menu);
     });
+  }
+
+  countModulos(data: any) {
+    if (data.filter((data: any) => data.nivel === 0).length > 1) {
+      this.router.navigate(['modulos']);
+      return;
+    }
+    this.AST.setModulos(data[0]);
+    this.router.navigate(['home']);
   }
 }

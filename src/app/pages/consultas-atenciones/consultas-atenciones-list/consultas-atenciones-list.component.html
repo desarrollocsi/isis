@@ -1,0 +1,24 @@
+<div class="table animate__animated animate__fadeIn">
+  <div class="row-header">
+    <div class="cell">Medico</div>
+    <div class="cell">Consultorio</div>
+    <div class="cell">Fecha</div>
+    <div class="cell">Hora</div>
+    <div class="cell">Historia</div>
+  </div>
+  <div
+    class="row-body animate__animated animate__fadeIn"
+    *ngFor="
+      let listado of listados | paginate: { itemsPerPage: 6, currentPage: p }
+    "
+  >
+    <div class="cell">{{ listado.medico }}</div>
+    <div class="cell">{{ listado.consultorio }}</div>
+    <div class="cell">{{ listado.fecha }}</div>
+    <div class="cell">{{ listado.hora }}</div>
+    <div class="cell">{{ listado.historia }}</div>
+  </div>
+  <div class="footer-pagination">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+</div>

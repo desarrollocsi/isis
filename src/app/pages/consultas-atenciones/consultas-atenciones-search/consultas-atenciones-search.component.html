@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="group">
+    <input
+      type="text"
+      class="input-control"
+      placeholder=" "
+      (keyup)="search($event.target)"
+    />
+    <label class="label-control">Buscar</label>
+  </div>
+</div>
+<app-consultas-atenciones-list
+  [listados]="data$ | async"
+></app-consultas-atenciones-list>

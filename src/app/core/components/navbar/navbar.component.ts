@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { AuthStorageService, IntermedaryService } from 'src/app/core/services';
@@ -11,15 +13,22 @@ import { AuthStorageService, IntermedaryService } from 'src/app/core/services';
 export class NavbarComponent implements OnInit {
   constructor(
     private AST: AuthStorageService,
-    private IS: IntermedaryService
+    private IS: IntermedaryService,
+    private router: Router
   ) {}
 
   menus$: Observable<any>;
   submenus$: Observable<any>;
   submenu = false;
+  usuario: string;
 
   ngOnInit(): void {
     this.onMenu();
+    this.onUsuario();
+  }
+
+  onUsuario() {
+    this.usuario = this.AST.User;
   }
 
   onMenu() {
@@ -35,5 +44,10 @@ export class NavbarComponent implements OnInit {
   onRoute(route: any) {
     const { nombres, tabla } = route;
     this.IS.getRoute({ nombres, tabla });
+  }
+
+  logout() {
+    this.AST.clearLocalstorage();
+    this.router.navigate(['']);
   }
 }
