@@ -53,7 +53,7 @@ export class ProgramacionListComponent implements OnInit, OnDestroy {
     this.PS.getProgramacionDelete(id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
-        (data: any) =>
+        (_: any) =>
           this.TS.show(
             'success',
             'Bien hecho!',

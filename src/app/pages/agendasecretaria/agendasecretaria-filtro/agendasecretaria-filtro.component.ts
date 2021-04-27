@@ -57,7 +57,7 @@ export class AgendasecretariaFiltroComponent implements OnInit {
 
   agendaMedica() {
     const data = JSON.parse(this.programacion.value);
-    this.AGS.getIdProgramacion(data);
-    this.AGS.getDataProgramacion(data);
+    this.AGS.setIdProgramacion(data);
+    this.AGS.setDataProgramacion(data);
   }
 }

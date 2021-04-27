@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { AgendasecretariaService } from '../services/agendasecretaria.service';
-import { AgendaMedicaData } from '../../../core/models/Agenda-Medica-data.class';
+
 @Component({
   selector: 'app-agendasecretaria-list',
   templateUrl: './agendasecretaria-list.component.html',
@@ -20,8 +20,9 @@ export class AgendasecretariaListComponent implements OnInit {
     this.getAgendaMedicaList();
   }
 
-  openModal() {
+  openModal(data: any) {
     this.AGS._modal.next();
+    this.AGS.setDataCupo(data);
   }
 
   getAgendaMedicaList() {
@@ -33,8 +34,6 @@ export class AgendasecretariaListComponent implements OnInit {
   }
 
   getAgendaMedicaData() {
-    this.agendaMedicaData$ = this.AGS._dataProgramacion.pipe(
-      map((data: any) => new AgendaMedicaData(data))
-    );
+    this.agendaMedicaData$ = this.AGS.getDataProgramacion();
   }
 }
