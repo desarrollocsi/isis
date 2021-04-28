@@ -15,6 +15,9 @@ export class AgendasecretariaModalComponent implements OnInit, OnDestroy {
   constructor(private AGS: AgendasecretariaService) {}
 
   ngOnInit(): void {
+    this.AGS._modal2
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data: boolean) => (this.status = data));
     this.opeModal();
   }
 
@@ -26,6 +29,7 @@ export class AgendasecretariaModalComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.status = false;
+    this.AGS.setModal(false);
   }
 
   ngOnDestroy(): void {

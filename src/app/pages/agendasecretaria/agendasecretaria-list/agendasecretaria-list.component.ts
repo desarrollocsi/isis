@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { AgendasecretariaService } from '../services/agendasecretaria.service';
 
 @Component({
@@ -8,21 +8,28 @@ import { AgendasecretariaService } from '../services/agendasecretaria.service';
   templateUrl: './agendasecretaria-list.component.html',
   styleUrls: ['./agendasecretaria-list.component.css'],
 })
-export class AgendasecretariaListComponent implements OnInit {
+export class AgendasecretariaListComponent implements OnInit, OnDestroy {
   agendaMedicaslists$: Observable<any>;
   agendaMedicaData$: Observable<any>;
   p: number = 1;
   status = false;
 
+  private unsubscribe$ = new Subject<void>();
+
   constructor(private AGS: AgendasecretariaService) {}
 
   ngOnInit(): void {
     this.getAgendaMedicaList();
+    this.AGS.refresh
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((_) => this.getAgendaMedicaList());
   }
 
   openModal(data: any) {
-    this.AGS._modal.next();
-    this.AGS.setDataCupo(data);
+    if (!data.historia) {
+      this.AGS._modal.next();
+      this.AGS.setDataCupo(data);
+    }
   }
 
   getAgendaMedicaList() {
@@ -35,5 +42,10 @@ export class AgendasecretariaListComponent implements OnInit {
 
   getAgendaMedicaData() {
     this.agendaMedicaData$ = this.AGS.getDataProgramacion();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

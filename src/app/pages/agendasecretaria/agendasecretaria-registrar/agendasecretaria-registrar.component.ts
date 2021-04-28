@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   switchMap,
+  takeUntil,
   tap,
 } from 'rxjs/operators';
 
 import { AgendasecretariaService } from '../services/agendasecretaria.service';
-import { AuthStorageService } from '../../../core/services';
+import { AuthStorageService, ToasterService } from '../../../core/services';
 
 import * as moment from 'moment';
 
@@ -18,7 +19,7 @@ import * as moment from 'moment';
   templateUrl: './agendasecretaria-registrar.component.html',
   styleUrls: ['./agendasecretaria-registrar.component.css'],
 })
-export class AgendasecretariaRegistrarComponent implements OnInit {
+export class AgendasecretariaRegistrarComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   search = new Subject<string>();
@@ -33,10 +34,13 @@ export class AgendasecretariaRegistrarComponent implements OnInit {
   acreditaciones$: Observable<any>;
   status: boolean = false;
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
+
   constructor(
     private fb: FormBuilder,
     private AGS: AgendasecretariaService,
-    private AS: AuthStorageService
+    private AS: AuthStorageService,
+    private TS: ToasterService
   ) {}
 
   getValue(target: EventTarget): string {
@@ -55,11 +59,12 @@ export class AgendasecretariaRegistrarComponent implements OnInit {
     return this.form.controls;
   }
 
-  searchInput = new FormControl('');
+  searchinput = new FormControl(null);
+  checkbox = new FormControl(false);
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      ci_cuenta: [null],
+      ci_cuenta: [' '],
       ci_numhist: [null],
       ci_fechacita: [null],
       ci_programacion: [null],
@@ -68,15 +73,37 @@ export class AgendasecretariaRegistrarComponent implements OnInit {
       ci_observaciones: [null],
       ci_edad: [null],
       ci_tipopac: [null],
-      ci_tipomov: [null],
+      ci_tipomov: ['111'],
       ci_actividad: [null],
       ci_usersisa: [this.usuario],
     });
-
     this.onDataProgramacion();
     this.onDataCupos();
     this.onSearch();
     this.getPacienteSeleccionado();
+    this.modal();
+  }
+
+  modal() {
+    this.AGS._modal2
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((_) => this.formReset());
+  }
+
+  formReset() {
+    this.campos.ci_tipomov.reset('111');
+    this.campos.ci_usersisa.reset(this.usuario);
+    this.campos.ci_tipopac.reset();
+    this.campos.ci_observaciones.reset();
+    this.searchinput.reset();
+  }
+
+  selectChecked(event: any) {
+    if (this.checkbox.value) {
+      this.campos.ci_tipomov.reset(event.value);
+      return;
+    }
+    this.campos.ci_tipomov.reset('111');
   }
 
   onDataProgramacion() {
@@ -87,10 +114,10 @@ export class AgendasecretariaRegistrarComponent implements OnInit {
 
   onDataCupos() {
     this.AGS._dataCupo.subscribe((data: any) => {
-      this.campos.ci_orden.setValue(data.orden);
-      this.campos.ci_horatencion.setValue(data.hora);
-      this.campos.ci_fechacita.setValue(
-        moment(data.fecha, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      this.campos.ci_orden.reset(data.orden);
+      this.campos.ci_horatencion.reset(data.hora);
+      this.campos.ci_fechacita.reset(
+        moment(data.fecha, 'DD/MM/YYYY').format('YYYY-MM-DD 00:00:00')
       );
     });
   }
@@ -106,6 +133,7 @@ export class AgendasecretariaRegistrarComponent implements OnInit {
 
   seleccionarPaciente(data: any) {
     this.campos.ci_numhist.setValue(data.historia);
+    this.campos.ci_edad.setValue(data.edad);
     this.getAcreditacion(data.historia);
     this.pacienteSeleccionado.next(data);
   }
@@ -121,6 +149,16 @@ export class AgendasecretariaRegistrarComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.AGS.setModal(false);
+    this.AGS.postGenerarCita(this.form.value)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data: any) =>
+        this.TS.show('success', 'Bien hecho!', data.message)
+      );
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

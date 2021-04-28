@@ -12,6 +12,6 @@ export class ConsultasAtenciones {
     this.hora = object.ci_horatencion || '';
     this.consultorio = object.consultorio || '';
     this.medico = object.medico || '';
-    this.fecha = moment(object.ci_fechacita).format('YYYY-MM-DD') || '';
+    this.fecha = moment(object.ci_fechacita).format('DD-MM-YYYY') || '';
   }
 }

@@ -38,9 +38,13 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
     private TS: ToasterService
   ) {}
 
+  get fecha() {
+    return this.form.controls;
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
-      pr_fecha: [moment().format('YYYY-MM-DD')],
+      pr_fecha: [null],
       pr_numero: [null],
       pr_servicio: [null],
       pr_medico: [null],
@@ -54,6 +58,13 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
     this.openModal();
     this.setValue();
     this.onVerbHttp();
+    this.setFecha();
+  }
+
+  setFecha() {
+    this.IS._fecha.pipe(takeUntil(this.unsubscribe$)).subscribe((data) => {
+      this.fecha.pr_fecha.setValue(moment(data).format('YYYY-MM-DD'));
+    });
   }
 
   openModal() {
@@ -64,7 +75,7 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.form.reset();
-    this.form.controls.pr_fecha.reset(moment().format('YYYY-MM-DD'));
+    this.setFecha();
     this.checkedModal = false;
   }
 

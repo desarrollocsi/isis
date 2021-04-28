@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
 
 import {
   ProgramacionAgenda,
   AgendaMedicaData,
   DatosPacientes,
+  Acreditacion,
 } from '../../../core/models';
 
 import { environment } from '../../../../environments/environment';
@@ -50,9 +51,17 @@ export class AgendasecretariaService {
   }
 
   getAcreditacion(historia: string) {
-    return this.http.get(
-      `${environment.apiUrl}/planeshistoria?historia=00000${historia}`
-    );
+    return this.http
+      .get(`${environment.apiUrl}/planeshistoria?historia=${historia}`)
+      .pipe(
+        map((data: any) => data.map((value: any) => new Acreditacion(value)))
+      );
+  }
+
+  postGenerarCita(data: any) {
+    return this.http
+      .post(`${environment.apiUrl}/citas`, data)
+      .pipe(tap((_) => this.refresh.next()));
   }
 
   getDataProgramacion() {
@@ -64,6 +73,10 @@ export class AgendasecretariaService {
   /**************INTERMEDIARIO-SUBJECT**************/
 
   _modal = new Subject<void>();
+  _refresh = new Subject<void>();
+
+  modal = new Subject<boolean>();
+  _modal2 = this.modal.asObservable();
 
   private idProgramacion = new BehaviorSubject<any>(null);
   _idProgramacion = this.idProgramacion
@@ -90,6 +103,14 @@ export class AgendasecretariaService {
 
   setDataCupo(data: any) {
     this.dataCupo.next(data);
+  }
+
+  setModal(status: boolean) {
+    this.modal.next(status);
+  }
+
+  get refresh() {
+    return this._refresh;
   }
 
   get openModal() {
