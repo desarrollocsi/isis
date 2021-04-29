@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { ProgramacionService } from '../services/programacion.service';
 
 import { IntermedaryService, ToasterService } from '../../../core/services';
@@ -35,7 +35,8 @@ export class ProgramacionListComponent implements OnInit, OnDestroy {
 
   getListProgramacion() {
     this.listProgramaciones$ = this.IS._fecha.pipe(
-      switchMap((fecha: string) => this.PS.getProgramacionlist(fecha))
+      switchMap((fecha: string) => this.PS.getProgramacionlist(fecha)),
+      tap(console.log)
     );
   }
 

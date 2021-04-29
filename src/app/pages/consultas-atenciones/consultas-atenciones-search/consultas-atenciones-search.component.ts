@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { ConsultasAtencionesService } from '../services/consultas-atenciones.service';
 
 @Component({
@@ -11,7 +16,6 @@ import { ConsultasAtencionesService } from '../services/consultas-atenciones.ser
 export class ConsultasAtencionesSearchComponent implements OnInit {
   search$ = new Subject<string>();
   data$: Observable<any>;
-
   constructor(private CAS: ConsultasAtencionesService) {}
 
   search(search: any) {

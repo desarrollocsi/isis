@@ -51,11 +51,9 @@ nav .content .links {
 .content .links li a:hover,
 .content .links li label:hover {
   background: #fe7b12;
-  /* background: #828282; */
   color: #fff;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   cursor: pointer;
-  /* box-shadow: 0 8px 6px -6px black; */
 }
 .wrapper .search-icon,
 .wrapper .menu-icon {
@@ -132,11 +130,8 @@ nav .content .links {
   z-index: 1;
   opacity: 0;
   visibility: hidden;
-  /* box-shadow: 0 10px 25px rgba(92, 99, 105, 0.1); */
-  /* box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2); */
-  /* box-shadow: -5px -5px 10px; */
-  /* box-shadow: 0 0 10px 5px; */
-  box-shadow: 0 0 10px rgba(92, 99, 105, 0.2);
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
   border-radius: 1.5rem;
   cursor: pointer;
 }
@@ -179,13 +174,13 @@ nav .content .links {
 .dropdown-content {
   display: none;
   position: absolute;
-  /* top: 52px; */
-  left: -80px;
+  left: -100px;
   background-color: #f9f9f9;
   height: auto;
-  min-width: 200px;
-  border-radius: 1.5rem;
-  box-shadow: 0 0 10px rgba(92, 99, 105, 0.2);
+  min-width: 230px;
+  border-radius: 2rem;
+  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
+    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
   padding: 16px 10px;
   z-index: 1;
   opacity: 0;
@@ -198,6 +193,33 @@ nav .content .links {
   align-items: center;
   height: 30px;
   cursor: pointer;
+  color: #828282;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 1.5rem 0;
+}
+
+.dropdown-content .dropdown-content-item:hover {
+  background: #fe7b12;
+  color: #fff;
+  border-radius: 2rem;
+  cursor: pointer;
+}
+
+.container-icon,
+.container-texto {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.container-icon {
+  padding: 0 0.5rem 0 1rem;
+}
+
+.container-texto {
+  width: 100%;
 }
 
 .dropdown:hover .dropdown-content {

@@ -42,9 +42,17 @@
           {{ usuario }}
         </span>
         <div class="dropdown-content">
+          <div class="dropdown-content-item">
+            <div class="container-icon">
+              <img src="../../../../assets/icons/settings.svg" />
+            </div>
+            <div class="container-texto">Configuración</div>
+          </div>
           <div class="dropdown-content-item" (click)="logout()">
-            <img src="../../../../assets/icons/logout.svg" />
-            Cerrar session
+            <div class="container-icon">
+              <img src="../../../../assets/icons/logout.svg" />
+            </div>
+            <div class="container-texto">Cerrar session</div>
           </div>
         </div>
       </div>

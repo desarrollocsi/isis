@@ -19,7 +19,7 @@
       {{ listProgramacione.medico.descripcion | titlecase }}
     </div>
     <div class="cell cell-50">
-      {{ listProgramacione.consultorio.descripcion | titlecase }}
+      {{ listProgramacione.consultorio.descripcion | titlecase | slice: 12 }}
     </div>
     <div class="cell cell-50">
       {{ listProgramacione.especialidad.descripcion | titlecase }}

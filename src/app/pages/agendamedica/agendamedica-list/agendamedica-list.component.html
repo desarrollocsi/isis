@@ -2,7 +2,10 @@
   *ngIf="pacientesCitados$ | async as pacientesCitados"
   class="animate__animated animate__fadeIn"
 >
-  <div class="table animate__animated animate__fadeIn">
+  <div
+    class="table animate__animated animate__fadeIn"
+    *ngIf="status; else message"
+  >
     <div class="row-header">
       <div class="cell cell-30">N° O</div>
       <div class="cell cell-30">Hora cita</div>
@@ -47,3 +50,8 @@
     </div>
   </div>
 </ng-container>
+<ng-template #message>
+  <div class="message-error animate__animated animate__fadeIn">
+    <h1>{{ usuario }} no tiene citas para hoy!</h1>
+  </div>
+</ng-template>

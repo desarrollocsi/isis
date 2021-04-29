@@ -28,7 +28,7 @@ export class RolesGuard implements CanLoad {
     const rol = this.AUS.rol;
 
     switch (rol) {
-      case '"SECRETARIA"':
+      case 'SECRETARIA':
         {
           this.router.navigate(['home/agendasecretaria']);
         }

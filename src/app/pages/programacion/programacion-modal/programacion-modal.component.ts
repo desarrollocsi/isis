@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { ProgramacionService } from '../services/programacion.service';
 
@@ -95,7 +95,15 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
   }
 
   getEspecialidades() {
-    this.especialidades$ = this.http.getEspecialidades();
+    this.especialidades$ = this.http
+      .getEspecialidades()
+      .pipe(map(this.orderbyDescripcion));
+  }
+
+  orderbyDescripcion(data: any) {
+    return data.sort((a: any, b: any) =>
+      a.descripcion > b.descripcion ? 1 : -1
+    );
   }
 
   getMedico(id: any) {

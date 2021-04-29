@@ -17,11 +17,22 @@ export class AuthStorageService {
   }
 
   setRol(data: any) {
-    localStorage.setItem('_rol', JSON.stringify(data.Rol[0].descripcion));
+    localStorage.setItem('_rol', data.Rol[0].descripcion);
+    this.setIdMedioc(data);
+  }
+
+  setIdMedioc(data: any) {
+    if (data.Rol[0].descripcion === 'MEDICO') {
+      localStorage.setItem('_idmedico', data.User.id_medico);
+    }
   }
 
   setModulos(data: any) {
     localStorage.setItem(`_modulo`, JSON.stringify(data));
+  }
+
+  get idMedico() {
+    return localStorage.getItem('_idmedico');
   }
 
   get rol() {

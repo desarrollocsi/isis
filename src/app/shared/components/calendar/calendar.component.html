@@ -1,6 +1,8 @@
 <div class="card animate__animated animate__fadeIn">
   <div class="card-head">
-    <h1 class="title">{{ yearMonth | titlecase }}</h1>
+    <h1 class="title animate__animated animate__fadeIn">
+      {{ yearMonth | titlecase }}
+    </h1>
     <div class="card-button">
       <div class="container-button">
         <button type="button" class="btn" (click)="onToday()">Hoy</button>
@@ -26,7 +28,7 @@
       }}</span>
     </div>
 
-    <div class="grid-container">
+    <div class="grid-container animate__animated animate__fadeIn">
       <ng-container *ngFor="let a of monthSelect; first as first">
         <ng-container *ngIf="modoAleatorio; else inputRadio">
           <input type="checkbox" [id]="a.day" class="input-control-checkbox" />

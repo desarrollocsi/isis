@@ -5,25 +5,23 @@
         <div class="card-avatar">
           <img src="../../../assets/icons/user.svg" />
         </div>
-        <div class="card-row">
-          <div class="card-header">
+
+        <div class="card-datos">
+          <div class="item">
             <span class="value">{{ datos.paciente | titlecase }}</span>
             <span class="label">Paciente</span>
           </div>
-
-          <div class="card-datos">
-            <div class="item">
-              <span class="value">{{ datos.historia }}</span>
-              <span class="label">Historia</span>
-            </div>
-            <div class="item">
-              <span class="value">{{ datos.edad }}</span>
-              <span class="label">Edad</span>
-            </div>
-            <div class="item">
-              <span class="value">{{ datos.sexo }}</span>
-              <span class="label">Sexo</span>
-            </div>
+          <div class="item">
+            <span class="value">{{ datos.historia }}</span>
+            <span class="label">Historia</span>
+          </div>
+          <div class="item">
+            <span class="value">{{ datos.edad }}</span>
+            <span class="label">Edad</span>
+          </div>
+          <div class="item">
+            <span class="value">{{ datos.sexo }}</span>
+            <span class="label">Sexo</span>
           </div>
         </div>
       </div>

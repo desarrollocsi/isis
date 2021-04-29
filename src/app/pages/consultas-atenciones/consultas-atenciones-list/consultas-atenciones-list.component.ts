@@ -7,6 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class ConsultasAtencionesListComponent implements OnInit {
   @Input() listados: any;
+  @Input() status: boolean;
   p: number = 1;
   constructor() {}
 

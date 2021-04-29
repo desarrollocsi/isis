@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { AuthStorageService } from './auth-storage.service';
 
 @Injectable({
@@ -26,7 +27,7 @@ export class IntermedaryService {
   _datoDePaciente = this.datoDePaciente.asObservable();
 
   private fecha = new BehaviorSubject<string>(null);
-  _fecha = this.fecha.asObservable();
+  _fecha = this.fecha.asObservable().pipe(filter((data: any) => data !== null));
 
   private route = new BehaviorSubject<string>('');
   _route = this.route.asObservable();

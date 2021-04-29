@@ -109,7 +109,7 @@ export class ActomedicoComponent implements OnInit {
 
   IMC() {
     combineLatest([this.peso, this.talla])
-      .pipe(map(([peso, talla]) => Math.round(peso / (talla * talla))))
+      .pipe(map(([peso, talla]) => (peso / (talla * talla)).toFixed(2)))
       .subscribe((data) => this.fam.icorporal.setValue(data));
   }
 

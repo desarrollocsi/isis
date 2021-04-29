@@ -15,9 +15,11 @@ export class ConsultasAtencionesService {
     return this.http
       .get(`${environment.apiUrl}/listaratenciones/${search.padStart(10, '0')}`)
       .pipe(
-        map((data: any) =>
-          data.map((value: any) => new ConsultasAtenciones(value))
-        )
+        map((data: any) => {
+          return data.status === undefined
+            ? data.map((val: any) => new ConsultasAtenciones(val))
+            : [data];
+        })
       );
   }
 }

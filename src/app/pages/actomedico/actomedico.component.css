@@ -13,7 +13,9 @@
 }
 
 .card-p {
-  padding: 0.75rem 2rem;
+  padding: 0.3rem;
+  border-radius: 3rem;
+  margin-bottom: 5px;
 }
 
 .card-option {
@@ -261,29 +263,18 @@
 
 /***************card datos del paciente********************/
 
-.card-detalles {
-  padding: 0.75rem;
-  display: flex;
-  border: 1px solid;
-}
-
 .card-avatar {
-  display: flex;
-  justify-content: center;
-  width: 35%;
+  padding: 0.3rem;
 }
 
-.card-detalles .card-row {
+.card-detalles {
   display: flex;
-  flex-direction: column;
+}
+
+.card-datos {
+  display: flex;
   width: 100%;
-  border: 1px solid;
-}
-
-.card-header {
-  display: flex;
-  flex-direction: column;
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 .card-header .value,
@@ -297,13 +288,10 @@
   font-weight: 600;
 }
 
-.card-datos {
-  display: flex;
-}
-
 .card-datos .item {
-  padding: 1rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   flex: 1;
 }
