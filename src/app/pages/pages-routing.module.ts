@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PagesComponent } from './pages.component';
-import { RolesGuard } from '../core/guard';
+import { RolesGuard, PerfilGuard } from '../core/guard';
 
 const routes: Routes = [
   {
@@ -24,7 +24,8 @@ const routes: Routes = [
       },
       {
         path: 'agendamedica',
-        canLoad: [RolesGuard],
+        canActivateChild: [PerfilGuard],
+        // canActivateChild: [PerfilGuard],
         loadChildren: () =>
           import('./agendamedica/agendamedica.module').then(
             (m) => m.AgendamedicaModule

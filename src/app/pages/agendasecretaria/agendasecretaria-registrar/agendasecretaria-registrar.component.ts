@@ -4,6 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
+  map,
   switchMap,
   takeUntil,
   tap,
@@ -32,7 +33,8 @@ export class AgendasecretariaRegistrarComponent implements OnInit, OnDestroy {
   agendaMedicaData$: Observable<any>;
   paciente$: Observable<any>;
   acreditaciones$: Observable<any>;
-  status: boolean = false;
+  statusSearch: boolean = false;
+  statusDatosPaciente: boolean = false;
 
   private readonly unsubscribe$: Subject<void> = new Subject();
 
@@ -96,6 +98,8 @@ export class AgendasecretariaRegistrarComponent implements OnInit, OnDestroy {
     this.campos.ci_tipopac.reset();
     this.campos.ci_observaciones.reset();
     this.searchinput.reset();
+    this.statusDatosPaciente = false;
+    this.statusSearch = false;
   }
 
   selectChecked(event: any) {
@@ -127,7 +131,10 @@ export class AgendasecretariaRegistrarComponent implements OnInit, OnDestroy {
       debounceTime(500),
       distinctUntilChanged(),
       switchMap((search: string) => this.AGS.getBuscarPaciente(search)),
-      tap((_) => (this.status = true))
+      map((data: any) =>
+        data.sort((a: any, b: any) => (a.paciente > b.paciente ? 1 : -1))
+      ),
+      tap((_) => (this.statusSearch = true))
     );
   }
 
@@ -140,7 +147,10 @@ export class AgendasecretariaRegistrarComponent implements OnInit, OnDestroy {
 
   getPacienteSeleccionado() {
     this.paciente$ = this._pacienteSeleccionado.pipe(
-      tap((_) => (this.status = false))
+      tap((_) => {
+        this.statusSearch = false;
+        this.statusDatosPaciente = true;
+      })
     );
   }
 

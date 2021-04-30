@@ -26,13 +26,11 @@ export class RolesGuard implements CanLoad {
     | boolean
     | UrlTree {
     const rol = this.AUS.rol;
-
-    switch (rol) {
-      case 'SECRETARIA':
-        {
-          this.router.navigate(['home/agendasecretaria']);
-        }
-        break;
+    console.log(rol);
+    console.log(route);
+    if (rol === 'SECRETARIA') {
+      this.router.navigate(['home/agendasecretaria']);
+      return false;
     }
 
     return true;

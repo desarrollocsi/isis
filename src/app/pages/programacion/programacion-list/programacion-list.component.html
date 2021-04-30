@@ -30,18 +30,28 @@
     <div class="cell cell-50 dropdown">
       <span>...</span>
       <div class="dropdown-content">
-        <span>ñlksajdlkasjdlajslsdas</span>
-
-        <img
-          src="../../../../assets/icons/edit-color.svg"
-          alt="Editar"
+        <div
+          class="dropdown-content-item"
           (click)="onEdit(listProgramacione.pr_numero)"
-        />
-        <img
-          src="../../../../assets/icons/delete-color.svg"
-          alt="Borrar"
+        >
+          <div class="container-icon">
+            <img src="../../../../assets/icons/edit-color.svg" alt="Editar" />
+          </div>
+          <div class="container-texto">Editar</div>
+        </div>
+        <div
+          class="dropdown-content-item"
           (click)="onDelete(listProgramacione.pr_numero)"
-        />
+        >
+          <div class="container-icon">
+            <img
+              src="../../../../assets/icons/delete-color.svg"
+              alt="Borrar"
+              (click)="onDelete(listProgramacione.pr_numero)"
+            />
+          </div>
+          <div class="container-texto">Eliminar</div>
+        </div>
       </div>
     </div>
   </div>

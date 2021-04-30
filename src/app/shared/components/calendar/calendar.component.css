@@ -10,6 +10,7 @@
   padding: 0.5rem 0.5rem;
   box-shadow: rgba(92, 99, 105, 0.1) 0px 4px 16px,
     rgba(92, 99, 105, 0.1) 0px 8px 24px, rgba(92, 99, 105, 0.1) 0px 16px 56px;
+  border: 1px solid #dadce0;
 }
 
 .card-head {
@@ -78,6 +79,11 @@
   text-align: center;
   margin: 0.2em;
   font-size: 1rem;
+  transition: 0.1s;
+}
+
+.grid-items:hover {
+  background-color: #f0c882;
 }
 
 .input-control-checkbox {
@@ -86,7 +92,8 @@
 
 .input-control-checkbox:checked + .grid-items {
   background-color: #f0c882;
-  transition: 0.3s;
+  font-weight: 700;
+  color: #828282;
 }
 
 .btn {

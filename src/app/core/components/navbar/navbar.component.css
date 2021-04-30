@@ -130,8 +130,8 @@ nav .content .links {
   z-index: 1;
   opacity: 0;
   visibility: hidden;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  border: 1px solid #dadce0;
   border-radius: 1.5rem;
   cursor: pointer;
 }
@@ -179,12 +179,12 @@ nav .content .links {
   height: auto;
   min-width: 230px;
   border-radius: 2rem;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
   padding: 16px 10px;
   z-index: 1;
   opacity: 0;
   visibility: hidden;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  border: 1px solid #dadce0;
 }
 
 .dropdown-content .dropdown-content-item {
@@ -205,6 +205,7 @@ nav .content .links {
   color: #fff;
   border-radius: 2rem;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .container-icon,

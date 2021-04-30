@@ -35,8 +35,7 @@ export class ProgramacionListComponent implements OnInit, OnDestroy {
 
   getListProgramacion() {
     this.listProgramaciones$ = this.IS._fecha.pipe(
-      switchMap((fecha: string) => this.PS.getProgramacionlist(fecha)),
-      tap(console.log)
+      switchMap((fecha: string) => this.PS.getProgramacionlist(fecha))
     );
   }
 

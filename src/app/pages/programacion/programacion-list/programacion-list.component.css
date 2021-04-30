@@ -3,11 +3,10 @@
   flex-direction: column;
   width: 100%;
   border-radius: 2rem;
-  /* box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2); */
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px,
-    rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
   margin-left: 20px;
   height: 520px;
+  border: 1px solid #dadce0;
 }
 
 .row-header {
@@ -41,8 +40,9 @@
 }
 
 .row-body:hover {
-  background-color: #009b6e;
-  color: #fff;
+  /* background-color: #009b6e; */
+  border: 1px solid #fe7b12;
+  /* color: #fff; */
   font-weight: 600;
 }
 
@@ -79,17 +79,19 @@
   border: none;
   margin-bottom: 10px;
   margin-left: 20px;
-  background-color: #8cc8c8;
+  background-color: #828282;
+  /* border: 1px solid #828282; */
+  /* border: 1px solid #8cc8c8; */
   outline: none;
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  box-shadow: rgba(92, 99, 105, 0.1) 0px 4px 16px,
-    rgba(92, 99, 105, 0.1) 0px 8px 24px, rgba(92, 99, 105, 0.1) 0px 16px 56px;
+  /* box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2); */
+  color: #fff;
 }
 
 .btn:hover {
-  background-color: #828282;
+  background-color: #009b6e;
   color: #fff;
   box-shadow: 0 8px 6px -6px black;
 }
@@ -104,12 +106,43 @@
   position: absolute;
   background-color: #f9f9f9;
   height: 100px;
+  height: auto;
   min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  padding: 16px 16px;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  padding: 16px 10px;
   z-index: 1;
+  border-radius: 2rem;
+  transition: all 0.3s ease;
+  border: 1px solid #dadce0;
 }
 
+.dropdown-content .dropdown-content-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  cursor: pointer;
+  color: #828282;
+  font-size: 18px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  padding: 1.5rem 0;
+}
+
+.container-icon,
+.container-texto {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.container-icon {
+  padding: 0 0.5rem 0 1rem;
+}
+
+.container-texto {
+  width: 100%;
+}
 .dropdown:hover .dropdown-content {
   display: block;
 }

@@ -3,9 +3,9 @@
   flex-direction: column;
   width: 100%;
   border-radius: 2rem;
-  box-shadow: rgba(92, 99, 105, 0.1) 0px 4px 16px,
-    rgba(92, 99, 105, 0.1) 0px 8px 24px, rgba(92, 99, 105, 0.1) 0px 16px 56px;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
   height: 355px;
+  border: 1px solid #dadce0;
 }
 
 .row-header {
