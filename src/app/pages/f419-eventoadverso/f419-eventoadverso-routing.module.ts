@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { F419EventoadversoComponent } from './f419-eventoadverso.component';
 
 const routes: Routes = [
-  { path: 'eventosadversos', component: F419EventoadversoComponent },
+  { path: 'f419', component: F419EventoadversoComponent },
 ];
 
 @NgModule({

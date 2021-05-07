@@ -20,4 +20,18 @@ export class ActomedicoService {
   postActoMedico(data: any) {
     return this.http.post(`${environment.apiUrl}/actomedico`, data);
   }
+
+  apidynamic(verb: string, data: any) {
+    switch (verb) {
+      case 'POST': {
+        return this.http.post(`${environment.apiUrl}/actomedico`, data);
+      }
+      case 'PUT': {
+        return this.http.put(
+          `${environment.apiUrl}/actomedico/${data.idcita}`,
+          data
+        );
+      }
+    }
+  }
 }

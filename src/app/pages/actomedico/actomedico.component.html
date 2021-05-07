@@ -62,7 +62,7 @@
               placeholder=" "
               formControlName="examen"
             ></textarea>
-            <label for="" class="label-control">Examen Fisico</label>
+            <label class="label-control">Examen Fisico</label>
           </div>
         </div>
         <div class="card">
@@ -162,36 +162,46 @@
           <ng-container formArrayName="antecedentes">
             <div *ngFor="let _ of antecedentes.controls; index as i">
               <ng-container [formGroupName]="i">
-                <div class="group">
-                  <select
-                    class="input-control input-select animate__animated animate__fadeIn"
-                    formControlName="idan"
-                  >
-                    <option [ngValue]="null">Seleccionar antecedente</option>
-                    <option
-                      [ngValue]="antecedente.id"
-                      *ngFor="let antecedente of antecedentes$ | async"
+                <div class="card">
+                  <div class="group">
+                    <select
+                      class="input-control input-select animate__animated animate__fadeIn"
+                      formControlName="idan"
                     >
-                      {{ antecedente.an_destipo }}/{{
-                        antecedente.an_descripcion
-                      }}
-                    </option>
-                  </select>
-                </div>
-                <div class="group">
-                  <input
-                    type="text"
-                    class="input-control animate__animated animate__fadeIn"
-                    placeholder=" "
-                    formControlName="valor"
-                  />
-                  <label class="label-control">Descripcion</label>
+                      <option [ngValue]="null">Seleccionar antecedente</option>
+                      <option
+                        [ngValue]="antecedente.id"
+                        *ngFor="let antecedente of antecedentes$ | async"
+                      >
+                        {{ antecedente.an_destipo }}/{{
+                          antecedente.an_descripcion
+                        }}
+                      </option>
+                    </select>
+                  </div>
+                  <div class="container-row-form">
+                    <div class="group">
+                      <input
+                        type="text"
+                        class="input-control animate__animated animate__fadeIn"
+                        placeholder=" "
+                        formControlName="valor"
+                      />
+                      <label class="label-control">Descripcion</label>
+                    </div>
+                    <div class="group group-50" (click)="deleteAntecedente(i)">
+                      <img
+                        src="../../../assets/icons/delete_black_white.svg"
+                        class="icon-delete"
+                      />
+                    </div>
+                  </div>
                 </div>
               </ng-container>
             </div>
           </ng-container>
           <div class="group">
-            <div class="card-option" (click)="addBackground()">
+            <div class="card-option" (click)="agregarAntecedentes()">
               <img src="../../../assets/icons/add-plus.svg" />
               <span>Agregar antecedentes</span>
             </div>
@@ -205,10 +215,12 @@
               type="text"
               class="input-control"
               placeholder=" "
-              formControlName="cie"
+              (keyup)="search($event.target)"
+              [formControl]="searchs"
             />
             <label class="label-control">Buscar cie-X</label>
           </div>
+
           <ng-container *ngIf="cies$ | async as cies">
             <div
               class="table animate__animated animate__fadeIn"
@@ -220,7 +232,7 @@
               </div>
               <div
                 class="row"
-                (click)="addCie(cie)"
+                (click)="agregarCieX(cie)"
                 *ngFor="
                   let cie of cies
                     | paginate: { itemsPerPage: 3, currentPage: p }
@@ -233,57 +245,67 @@
                   {{ cie.descripcion | titlecase }}
                 </div>
               </div>
-              <pagination-controls
-                (pageChange)="p = $event"
-              ></pagination-controls>
+              <div class="footer-pagination">
+                <pagination-controls
+                  (pageChange)="p = $event"
+                ></pagination-controls>
+              </div>
             </div>
           </ng-container>
         </div>
-
         <div
           class="card animate__animated animate__fadeIn"
-          *ngIf="cieSelect.length > 0"
+          *ngIf="diagnosticos.value.length > 0"
         >
           <h3>Cie-X seleccionados</h3>
-          <div
-            class="card-cie animate__animated animate__fadeIn"
-            *ngFor="let cieSelect of cieSelect; index as i"
-          >
-            <span class="card-title-cie">
-              <h2>{{ cieSelect.codigo }}</h2>
-              <!-- <h6>{{ cieSelect.descripcion }}</h6> -->
-            </span>
-            <span class="card-contenido-cie">
-              <div class="radio">
-                <input
-                  type="radio"
-                  [name]="cieSelect.codigo"
-                  value="PRESUNTIVO"
-                  [id]="'a' + i"
-                  class="radio__input"
-                  checked
-                  (click)="updateCie($event, i)"
-                />
-                <label [for]="'a' + i" class="radio_label">Presuntivo</label>
-                <input
-                  type="radio"
-                  value="DEFINITIVO"
-                  [name]="cieSelect.codigo"
-                  [id]="'b' + i"
-                  class="radio__input"
-                  (click)="updateCie($event, i)"
-                />
-                <label [for]="'b' + i" class="radio_label">Definitivo</label>
-              </div>
-            </span>
-            <span class="card-delete">
-              <img
-                src="../../../assets/icons/delete_black_white.svg"
-                class="icon-delete"
-                (click)="deleteCie(i)"
-              />
-            </span>
-          </div>
+          <ng-container formArrayName="diagnosticos">
+            <div *ngFor="let _ of diagnosticos.controls; index as i">
+              <ng-container [formGroupName]="i">
+                <div class="card-cie animate__animated animate__fadeIn">
+                  <span class="card-title-cie">
+                    <span
+                      data-tooltip="{{ diagnosticos.value[i].descripcion }}"
+                    >
+                      <h2>{{ diagnosticos.value[i].codigo }}</h2>
+                    </span>
+                  </span>
+                  <span class="card-contenido-cie">
+                    <div class="radio">
+                      <input
+                        type="radio"
+                        value="PRESUNTIVO"
+                        [id]="'a' + i"
+                        class="radio__input"
+                        [checked]="diagnosticos.value[i].tdx === 'PRESUNTIVO'"
+                        (click)="updateCie($event, i)"
+                      />
+                      <label [for]="'a' + i" class="radio_label"
+                        >Presuntivo</label
+                      >
+                      <input
+                        type="radio"
+                        value="DEFINITIVO"
+                        [id]="'b' + i"
+                        class="radio__input"
+                        [checked]="diagnosticos.value[i].tdx === 'DEFINITIVO'"
+                        (click)="updateCie($event, i)"
+                      />
+                      <label [for]="'b' + i" class="radio_label"
+                        >Definitivo</label
+                      >
+                    </div>
+                  </span>
+                  <span class="card-delete">
+                    <img
+                      src="../../../assets/icons/delete_black_white.svg"
+                      class="icon-delete"
+                      (click)="deleteCie(i)"
+                    />
+                  </span>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
         </div>
 
         <div class="card">
@@ -304,7 +326,7 @@
       </div>
     </div>
     <div class="group-button">
-      <button type="submit" class="btn">Registrar</button>
+      <button type="submit" class="btn">{{tituloBoton}}</button>
     </div>
   </div>
 </form>

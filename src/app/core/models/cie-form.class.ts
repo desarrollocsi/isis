@@ -3,7 +3,7 @@ export class CieForm {
   public tdx: string;
 
   constructor(object: any) {
-    this.idcie = object.id;
+    this.idcie = object.id || object.idcie;
     this.tdx = 'PRESUNTIVO';
   }
 }

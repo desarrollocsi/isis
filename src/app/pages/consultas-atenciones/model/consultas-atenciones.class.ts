@@ -7,6 +7,7 @@ export class ConsultasAtenciones {
   public medico: string;
   public fecha: string;
   public status: boolean;
+  public paciente: string;
 
   constructor(object: any) {
     this.historia = +object.ci_numhist || null;
@@ -14,6 +15,7 @@ export class ConsultasAtenciones {
     this.consultorio = object.consultorio || '';
     this.medico = object.medico || '';
     this.fecha = moment(object.ci_fechacita).format('DD-MM-YYYY') || '';
+    this.paciente = object.paciente || '';
     this.status = true;
   }
 }

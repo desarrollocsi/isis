@@ -13,7 +13,7 @@ export class ConsultasAtencionesService {
 
   getConsultasAtenciones(search: string) {
     return this.http
-      .get(`${environment.apiUrl}/listaratenciones/${search.padStart(10, '0')}`)
+      .get(`${environment.apiUrl}/lisatenciones?search=${search}`)
       .pipe(
         map((data: any) => {
           return data.status === undefined

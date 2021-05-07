@@ -22,7 +22,7 @@ export class MessageService {
     Swal.fire({
       icon: 'info',
       html: message,
-      timer: 1500,
+      timer: 3000,
       showConfirmButton: false,
     });
   }

@@ -1,0 +1,70 @@
+<div class="card">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="group">
+      <input
+        type="text"
+        class="input-control"
+        placeholder=" "
+        formControlName="tipoDocumento"
+      />
+      <label class="label-control">Tipo documento</label>
+    </div>
+    <div class="group">
+      <input
+        type="text"
+        class="input-control"
+        placeholder=" "
+        formControlName="documento"
+      />
+      <label class="label-control">Numero de documento</label>
+    </div>
+    <div class="group">
+      <input
+        type="text"
+        class="input-control"
+        placeholder=" "
+        formControlName="apellidoPaterno"
+      />
+      <label class="label-control">Apellido Paterno</label>
+    </div>
+    <div class="group">
+      <input
+        type="text"
+        class="input-control"
+        placeholder=" "
+        formControlName="apellidoMaterno"
+      />
+      <label class="label-control">Apellido Materno</label>
+    </div>
+    <div class="group">
+      <input
+        type="text"
+        class="input-control"
+        placeholder=" "
+        formControlName="nombre"
+      />
+      <label class="label-control">Primer Nombre</label>
+    </div>
+    <div class="group">
+      <input
+        type="date"
+        class="input-control"
+        placeholder=" "
+        formControlName="fechaNacimiento"
+      />
+      <label class="label-control">Fecha de nacimiento</label>
+    </div>
+    <div class="group">
+      <input
+        type="text"
+        class="input-control"
+        placeholder=" "
+        formControlName="genero"
+      />
+      <label class="label-control">Genero</label>
+    </div>
+    <div class="group">
+      <button type="submit" class="btn">Enviar</button>
+    </div>
+  </form>
+</div>

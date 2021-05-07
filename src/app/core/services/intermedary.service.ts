@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { AuthStorageService } from './auth-storage.service';
 
 @Injectable({
@@ -17,14 +17,19 @@ export class IntermedaryService {
   private idDataEdit = new Subject<object>();
   _idDataEdit = this.idDataEdit.asObservable();
 
+  private dataActoMedico = new Subject<any>();
+  _dataActoMedico = this.dataActoMedico.asObservable();
+
   private menus = new BehaviorSubject<any>(this.AUS.modulos || []);
   _menus = this.menus.asObservable();
 
   private programacion = new BehaviorSubject<any>([]);
   dataProgramacion = this.programacion.asObservable();
 
-  private datoDePaciente = new BehaviorSubject<any>([]);
-  _datoDePaciente = this.datoDePaciente.asObservable();
+  private datoDePaciente = new BehaviorSubject<any>(null);
+  _datoDePaciente = this.datoDePaciente
+    .asObservable()
+    .pipe(filter((data: any) => data !== null));
 
   private fecha = new BehaviorSubject<string>(null);
   _fecha = this.fecha.asObservable().pipe(filter((data: any) => data !== null));
@@ -61,6 +66,10 @@ export class IntermedaryService {
 
   getDataId(id: object) {
     this.idDataEdit.next(id);
+  }
+
+  getDataActoMedico(id: any) {
+    this.dataActoMedico.next(id);
   }
 
   /*********** GET*****************/

@@ -1,6 +1,7 @@
 <ng-container *ngIf="listados?.length > 1; else message">
   <div class="table animate__animated animate__fadeIn">
     <div class="row-header">
+      <div class="cell">Paciente</div>
       <div class="cell">Medico</div>
       <div class="cell">Consultorio</div>
       <div class="cell">Fecha</div>
@@ -13,7 +14,8 @@
         let listado of listados | paginate: { itemsPerPage: 6, currentPage: p }
       "
     >
-      <div class="cell">{{ listado.medico }}</div>
+      <div class="cell">{{ listado.paciente | titlecase }}</div>
+      <div class="cell">{{ listado.medico | titlecase }}</div>
       <div class="cell">{{ listado.consultorio }}</div>
       <div class="cell">{{ listado.fecha }}</div>
       <div class="cell">{{ listado.hora }}</div>

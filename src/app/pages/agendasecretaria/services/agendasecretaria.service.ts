@@ -64,6 +64,10 @@ export class AgendasecretariaService {
       .pipe(tap((_) => this.refresh.next()));
   }
 
+  putAnulacionCitas(data: any) {
+    return this.http.put(`${environment.apiUrl}/citas/${data.id}`, data);
+  }
+
   getDataProgramacion() {
     return this._dataProgramacion.pipe(
       map((data) => new AgendaMedicaData(data))

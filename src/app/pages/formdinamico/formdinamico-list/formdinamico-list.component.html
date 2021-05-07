@@ -19,7 +19,7 @@
       {{ list.descripcion | titlecase }}
     </div>
     <div class="cell">
-      {{ list.fecha }}
+      {{ list.fecha | date: "medium":"UTC-5":"en-PET" }}
     </div>
 
     <div class="cell">

@@ -1,8 +1,3 @@
-.container-conte {
-  width: 100%;
-  padding: 50px;
-}
-
 .container-row {
   width: auto;
   display: flex;
@@ -23,25 +18,27 @@
 }
 
 /***************************/
-.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  padding: 15px;
-}
-
 .card {
   width: 100%;
   padding: 2rem 2rem;
-  border-radius: 1.5rem;
+  border-radius: 2rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  border: 1px solid #dadce0;
+}
+
+.card-head {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 0 1rem;
+  margin-bottom: 1rem;
 }
 
 .group {
   position: relative;
   height: 45px;
   margin-bottom: 1.5rem;
+  width: 100%;
 }
 
 .textarea {
@@ -60,7 +57,6 @@
   outline: none;
   background: none;
   z-index: 1;
-  text-transform: uppercase;
 }
 
 .input-select {
@@ -79,8 +75,10 @@
 
 .input-control:focus + .label-control {
   top: -0.5rem;
-  left: 0.8rem;
+  left: 0.9rem;
   z-index: 1;
+  font-weight: 500;
+  font-size: 0.75rem;
 }
 
 .input-control:not(:placeholder-shown).input-control:not(:focus)
@@ -88,24 +86,31 @@
   top: -0.5rem;
   left: 0.8rem;
   z-index: 1;
+  font-weight: 500;
+  font-size: 0.75rem;
 }
 
 .input-control:focus {
   border: 1px solid #fe7b12;
 }
 
-.button {
-  width: 100%;
-  display: block;
-  outline: none;
-  border: none;
-  font-size: 1rem;
-  background-color: #01a272;
-  color: #fff;
-  padding: 0.75rem 2rem;
+.btn {
+  padding: 18px 0;
+  font-size: 18px;
   border-radius: 2rem;
+  border: none;
+  margin-bottom: 20px;
+  outline: none;
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #828282;
+  color: #fff;
+  box-shadow: 0 8px 6px -6px black;
 }
 
 /******checkbox*******/
@@ -116,10 +121,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 2.5rem;
+  border-radius: 2rem;
   overflow: hidden;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  flex-direction: column;
 }
 
 .checkbox_input {
@@ -129,15 +133,19 @@
 .checkbox_label {
   width: 100%;
   height: 100%;
-  padding: 8px 14px;
+  font-size: 18px;
+  padding: 18px 18px;
   background-color: #8cc8c8;
   cursor: pointer;
   color: #fff;
   text-align: center;
+  font-weight: 600;
+  position: relative;
+  border: 1px solid;
 }
 
 .checkbox_label:not(:last-of-type) {
-  border-right: 1px solid #dcf0f4;
+  border-bottom: 1px solid #dadce0;
 }
 
 .checkbox_input:checked + .checkbox_label {
@@ -145,14 +153,57 @@
   transition: 0.5s;
 }
 
+.checkbox_label .tooltip {
+  display: none;
+  position: absolute;
+  left: 40px;
+  top: 30px;
+  z-index: 2;
+  background-color: black;
+  border-radius: 1rem;
+  width: 150px;
+}
+
+.checkbox_label:hover .tooltip {
+  display: block;
+}
+
 /*************************/
 
 .fieldset-group {
+  width: 100%;
   margin: 0;
-  padding: 20px;
-  border-radius: 2rem;
-  border: 1px solid #dadce0;
+  padding: 0;
+  border: none;
   outline: none;
   background: none;
   margin-bottom: 1.5rem;
+}
+
+.fieldset-group legend {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) and (min-width: 992px) {
+  .container-form {
+    width: 100%;
+    display: flex;
+  }
+
+  .container {
+    align-items: center;
+  }
+
+  .card {
+    width: 50%;
+  }
+
+  .container-checkbox {
+    align-items: baseline;
+    flex-direction: row;
+  }
+
+  .checkbox_label:not(:last-of-type) {
+    border-right: 1px solid #dcf0f4;
+  }
 }

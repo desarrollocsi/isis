@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { combineLatest, Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import { combineLatest, Observable, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
   map,
   switchMap,
+  takeUntil,
   tap,
 } from 'rxjs/operators';
 
@@ -19,15 +20,13 @@ import {
   AuthStorageService,
 } from '../../core/services';
 
-import { CieForm } from '../../core/models/cie-form.class';
-
 import swal from 'sweetalert2';
 @Component({
   selector: 'app-actomedico',
   templateUrl: './actomedico.component.html',
   styleUrls: ['./actomedico.component.css'],
 })
-export class ActomedicoComponent implements OnInit {
+export class ActomedicoComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private AMS: ActomedicoService,
@@ -42,17 +41,20 @@ export class ActomedicoComponent implements OnInit {
   antecedentes$: Observable<any>;
   cieSelect$: Observable<any>;
   datosDelPaciente$: Observable<any>;
+  search$ = new Subject<string>();
   antecedentes: any;
   diagnosticos: any;
-  add = [];
-  cieSelect: any = [];
   visible = true;
   p: number = 1;
-  testdata = [];
+  VERB_HTTP: string = 'POST';
+  tituloBoton: string = 'Registrar';
 
+  private readonly unsubscribe$: Subject<void> = new Subject();
   get usuario() {
     return this.AU.User;
   }
+
+  searchs = new FormControl(null);
 
   ngOnInit(): void {
     this.formActoMedico = this.fb.group({
@@ -69,7 +71,6 @@ export class ActomedicoComponent implements OnInit {
       talla: [null],
       icorporal: [null],
       pcefalico: [null],
-      cie: [null],
       destino: [null],
       antecedentes: this.fb.array([]),
       diagnosticos: this.fb.array([]),
@@ -80,13 +81,10 @@ export class ActomedicoComponent implements OnInit {
     this.antecedentes = this.formActoMedico.get('antecedentes') as FormArray;
     this.diagnosticos = this.formActoMedico.get('diagnosticos') as FormArray;
 
-    this.getDatoDelPaciente();
+    this.getDataActoMedico();
     this.getCie();
-    this.IMC();
-  }
-
-  get cie() {
-    return this.formActoMedico.get('cie').valueChanges;
+    this.calculoDeImc();
+    this.getDatoDelPaciente();
   }
 
   get peso() {
@@ -97,32 +95,68 @@ export class ActomedicoComponent implements OnInit {
     return this.formActoMedico.get('talla').valueChanges;
   }
 
-  get fam() {
+  get form() {
     return this.formActoMedico.controls;
   }
 
   getDatoDelPaciente() {
     this.datosDelPaciente$ = this.IS._datoDePaciente.pipe(
-      tap((data: any) => this.formActoMedico.controls.idcita.setValue(data.id))
+      tap((data: any) => this.form.idcita.setValue(data.id))
     );
   }
 
-  IMC() {
+  getDataActoMedico() {
+    this.IS._dataActoMedico
+      .pipe(
+        tap((_) => {
+          this.VERB_HTTP = 'PUT';
+          this.tituloBoton = 'Actualizar';
+        }),
+        takeUntil(this.unsubscribe$)
+      )
+      .subscribe((data) => {
+        this.formActoMedico.patchValue(data);
+        this.setAntecedentes(data.antecedentes);
+        this.setCieX(data.diagnosticos);
+      });
+  }
+
+  setAntecedentes(data: any) {
+    data.map((val: any) => {
+      const group = this.fb.group(val);
+      this.antecedentes.push(group);
+    });
+  }
+
+  setCieX(data: any) {
+    data.map((val: any) => {
+      this.agregarCieX(val);
+    });
+  }
+
+  calculoDeImc() {
     combineLatest([this.peso, this.talla])
-      .pipe(map(([peso, talla]) => (peso / (talla * talla)).toFixed(2)))
-      .subscribe((data) => this.fam.icorporal.setValue(data));
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        map(([peso, talla]) => (peso / (talla * talla)).toFixed(2))
+      )
+      .subscribe((data) => this.form.icorporal.setValue(data));
+  }
+
+  search(search: any) {
+    this.search$.next(search.value);
   }
 
   getCie() {
-    this.cies$ = this.cie.pipe(
-      debounceTime(900),
+    this.cies$ = this.search$.pipe(
+      debounceTime(700),
       distinctUntilChanged(),
       switchMap((data: any) => this.AMS.getCie(data)),
       tap((_) => (this.visible = true))
     );
   }
 
-  addBackground() {
+  agregarAntecedentes() {
     const group = this.fb.group({
       idan: [null],
       valor: [null],
@@ -130,42 +164,52 @@ export class ActomedicoComponent implements OnInit {
     this.antecedentes.push(group);
   }
 
-  addCie(data: any) {
-    if (this.ValidacionCie(data)) {
-      swal.fire({ title: '<h4>Ya selecciono el cie</h4>', icon: 'info' });
+  agregarCieX(data: any) {
+    if (this.validacionAddcie(data)) {
+      swal.fire('', 'Ya selecciono el Cie-X', 'info');
       return;
     }
-    this.cieSelect.push(data);
-    const group = this.fb.group({
-      idcie: [null],
-      tdx: [null],
-    });
+    Object.assign(data, { tdx: 'PRESUNTIVO', idcie: data.id });
+    delete data['id'];
+    const group = this.fb.group(data);
     this.diagnosticos.push(group);
-    this.add.push(new CieForm(data));
     this.visible = false;
   }
 
-  ValidacionCie(data: any) {
-    return this.cieSelect.find((cie: any) => cie.id === data.id) !== undefined;
+  validacionAddcie(data: any) {
+    return this.diagnosticos.value.some(
+      (val: any) => val.codigo === data.codigo
+    );
   }
 
-  deleteCie(id: number) {
-    this.cieSelect.splice(this.cieSelect.indexOf(id), 1);
+  deleteAntecedente(indice: number) {
+    this.antecedentes.removeAt(indice);
   }
 
-  updateCie(event: any, id: number) {
-    this.add[id].tdx = event.target.value;
+  deleteCie(indice: number) {
+    this.diagnosticos.removeAt(indice);
   }
 
-  setCie() {
-    this.diagnosticos.setValue(this.add);
+  updateCie(event: any, indice: number) {
+    const cie = this.diagnosticos.at(indice).value;
+    Object.seal(cie);
+    cie.tdx = event.target.value;
+    this.diagnosticos.at(indice).value = cie;
   }
 
   onSubmit() {
-    this.setCie();
-    this.AMS.postActoMedico(this.formActoMedico.value).subscribe((data) => {
-      this.MS.MessageInfo(data['message']);
-      this.router.navigate(['home/agendamedica']);
-    });
+    // this.VERB_HTTP
+    console.log(this.formActoMedico.value);
+    // this.AMS.apidynamic('POST', this.formActoMedico.value)
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((data) => {
+    //     this.MS.MessageInfo(data['message']);
+    //     this.router.navigate(['home/agendamedica']);
+    //   });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

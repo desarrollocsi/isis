@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
 
 import { AgendamedicaService } from '../services/agendamedica.service';
 import { IntermedaryService, AuthStorageService } from '../../../core/services';
@@ -11,8 +11,9 @@ import { IntermedaryService, AuthStorageService } from '../../../core/services';
   templateUrl: './agendamedica-list.component.html',
   styleUrls: ['./agendamedica-list.component.css'],
 })
-export class AgendamedicaListComponent implements OnInit {
+export class AgendamedicaListComponent implements OnInit, OnDestroy {
   status: boolean = false;
+  private readonly unsubscribe$: Subject<void> = new Subject();
   constructor(
     private AS: AgendamedicaService,
     private router: Router,
@@ -38,7 +39,20 @@ export class AgendamedicaListComponent implements OnInit {
   }
 
   pagesActomedico(data: any) {
+    const { id, actomedico_id } = data;
     this.IS.getDatoDePaciente(data);
+    if (actomedico_id) this.DataActomedico(actomedico_id);
     this.router.navigate(['home/actomedico']);
+  }
+
+  DataActomedico(id: string) {
+    this.AS.getActoMedico(id).subscribe((data) => {
+      this.IS.getDataActoMedico(data);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

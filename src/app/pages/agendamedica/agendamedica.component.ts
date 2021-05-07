@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agendamedica',
@@ -7,11 +6,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./agendamedica.component.css'],
 })
 export class AgendamedicaComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor() {}
 
   ngOnInit(): void {}
-
-  agendaSecretaria() {
-    this.router.navigate(['home/agendasecretaria']);
-  }
 }

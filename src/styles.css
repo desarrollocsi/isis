@@ -10,7 +10,6 @@
   box-sizing: border-box;
   font-family: "Humanist", sans-serif;
   font-size: 1em;
-  /* color: #828282; */
 }
 
 html,
@@ -26,5 +25,11 @@ body {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 6rem;
+  padding: 6rem 1rem;
+}
+
+@media (min-width: 768px) and (min-width: 992px) {
+  .container {
+    padding: 6rem;
+  }
 }

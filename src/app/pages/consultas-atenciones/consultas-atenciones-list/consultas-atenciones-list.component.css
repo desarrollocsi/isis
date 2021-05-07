@@ -4,7 +4,6 @@
   width: 100%;
   border-radius: 2rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
-  height: 355px;
   border: 1px solid #dadce0;
 }
 
@@ -29,13 +28,13 @@
   display: flex;
   justify-content: space-between;
   cursor: pointer;
-  height: 300px;
 }
 
 .row-body .cell {
   width: 100%;
-  border-bottom: 1px solid #f2f2f2;
   padding: 10px 0;
+  border-bottom: 1px solid #f2f2f2;
+  border-right: 1px solid #dbdbdb;
   text-align: center;
 }
 
