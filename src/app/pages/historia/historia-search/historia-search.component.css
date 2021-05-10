@@ -1,18 +1,16 @@
 .card {
   width: 100%;
-  padding: 2rem 2rem;
+  margin-bottom: 10px;
   border-radius: 2rem;
+  padding: 1rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
   border: 1px solid #dadce0;
 }
-
 .group {
   position: relative;
   height: 45px;
-  margin-bottom: 1.5rem;
-  width: 100%;
+  /* margin-bottom: 1.6rem; */
 }
-
 .input-control {
   position: absolute;
   top: 0;
@@ -27,11 +25,6 @@
   z-index: 1;
 }
 
-.input-select {
-  height: 40px;
-  padding: 0 1.2rem;
-}
-
 .label-control {
   position: absolute;
   top: 0.9rem;
@@ -41,20 +34,18 @@
   color: #80868b;
   transition: 0.3s;
 }
-
 .input-control:focus + .label-control {
   top: -0.5rem;
   left: 0.9rem;
-  z-index: 1;
-  font-weight: 500;
   font-size: 0.75rem;
+  font-weight: 500;
+  z-index: 10;
 }
-
 .input-control:not(:placeholder-shown).input-control:not(:focus)
   + .label-control {
   top: -0.5rem;
   left: 0.8rem;
-  z-index: 1;
+  z-index: 10;
   font-weight: 500;
   font-size: 0.75rem;
 }
@@ -64,7 +55,7 @@
 }
 
 .btn {
-  padding: 18px 0;
+  padding: 18px 32px;
   font-size: 18px;
   border-radius: 2rem;
   border: none;
@@ -73,13 +64,54 @@
   cursor: pointer;
   font-weight: 600;
   transition: all 0.3s ease;
-  width: 100%;
+  /* width: 100%; */
 }
 
 .btn:hover {
   background-color: #828282;
   color: #fff;
   box-shadow: 0 8px 6px -6px black;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 2rem;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  margin-top: 1rem;
+  /* height: 520px; */
+  border: 1px solid #dadce0;
+}
+
+.row-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #009b6e;
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+}
+
+.row-header .cell {
+  text-align: center;
+  width: 100%;
+  padding-top: 19px;
+  padding-bottom: 19px;
+  color: #fff;
+  font-weight: 600;
+}
+.row-body {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.row-body .cell {
+  width: 100%;
+  border-bottom: 1px solid #f2f2f2;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
 }
 
 @media (min-width: 768px) and (min-width: 992px) {

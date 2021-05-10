@@ -28,7 +28,7 @@ export class ActomedicoService {
       }
       case 'PUT': {
         return this.http.put(
-          `${environment.apiUrl}/actomedico/${data.idcita}`,
+          `${environment.apiUrl}/actomedico/${data.id}`,
           data
         );
       }

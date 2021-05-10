@@ -1,13 +1,15 @@
 <div class="card">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="group">
-      <input
-        type="text"
-        class="input-control"
-        placeholder=" "
-        formControlName="hc_tipodoc"
-      />
-      <label class="label-control">Tipo documento</label>
+      <select class="input-control input-select" formControlName="hc_tipodoc">
+        <option [value]="null">Seleccionar tipo documento</option>
+        <option
+          [value]="tipoDocumento.codigo"
+          *ngFor="let tipoDocumento of tipoDocumentos$ | async"
+        >
+          {{ tipoDocumento.descripcion | titlecase }}
+        </option>
+      </select>
     </div>
     <div class="group">
       <input
@@ -57,17 +59,19 @@
     </div>
 
     <div class="group">
-      <input
-        type="text"
-        class="input-control"
-        placeholder=" "
-        formControlName="hc_estcivil"
-      />
-      <label class="label-control">Estado civil</label>
+      <select class="input-control input-select" formControlName="hc_estcivil">
+        <option [value]="null">Seleccionar estado civil</option>
+        <option
+          [value]="estadoCivil.codigo"
+          *ngFor="let estadoCivil of estadoCiviles$ | async"
+        >
+          {{ estadoCivil.descripcion | titlecase }}
+        </option>
+      </select>
     </div>
     <div class="group">
       <input
-        type="text"
+        type="date"
         class="input-control"
         placeholder=" "
         formControlName="hc_fecnac"
@@ -102,13 +106,18 @@
       <label class="label-control">Direccion</label>
     </div>
     <div class="group">
-      <input
-        type="text"
-        class="input-control"
-        placeholder=" "
+      <select
+        class="input-control input-select"
         formControlName="hc_nacionalidad"
-      />
-      <label class="label-control">Nacionalidad</label>
+      >
+        <option [value]="null">Seleccionar nacionalidad</option>
+        <option
+          [value]="nacionalidad.codigo"
+          *ngFor="let nacionalidad of nacionalidades$ | async"
+        >
+          {{ nacionalidad.nacionalidad | titlecase }}
+        </option>
+      </select>
     </div>
     <div class="group">
       <input
@@ -138,22 +147,15 @@
       <label class="label-control">Telefono2 / Celula2</label>
     </div>
     <div class="group">
-      <input
-        type="text"
-        class="input-control"
-        placeholder=" "
-        formControlName="hc_telefono2"
-      />
-      <label class="label-control">Telefono2 / Celula2</label>
-    </div>
-    <div class="group">
-      <input
-        type="text"
-        class="input-control"
-        placeholder=" "
-        formControlName="hc_ocupacion"
-      />
-      <label class="label-control">Ocupacion</label>
+      <select class="input-control input-select" formControlName="hc_ocupacion">
+        <option [value]="null">Seleccionar ocupacion</option>
+        <option
+          [value]="ocupacion.codigo"
+          *ngFor="let ocupacion of ocupaciones$ | async"
+        >
+          {{ ocupacion.descripcion | titlecase }}
+        </option>
+      </select>
     </div>
 
     <div class="group">
@@ -181,3 +183,4 @@
     </div>
   </form>
 </div>
+<app-toaster></app-toaster>

@@ -39,7 +39,7 @@ export class AgendamedicaListComponent implements OnInit, OnDestroy {
   }
 
   pagesActomedico(data: any) {
-    const { id, actomedico_id } = data;
+    const { actomedico_id } = data;
     this.IS.getDatoDePaciente(data);
     if (actomedico_id) this.DataActomedico(actomedico_id);
     this.router.navigate(['home/actomedico']);

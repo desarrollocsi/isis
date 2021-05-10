@@ -323,10 +323,15 @@
             </select>
           </div>
         </div>
+        <pre>
+          <code>
+            {{ formActoMedico.getRawValue() | json }}
+          </code>
+        </pre>
       </div>
     </div>
     <div class="group-button">
-      <button type="submit" class="btn">{{tituloBoton}}</button>
+      <button type="submit" class="btn">{{ tituloBoton }}</button>
     </div>
   </div>
 </form>

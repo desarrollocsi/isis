@@ -1,0 +1,32 @@
+<div class="card">
+  <div class="group">
+    <input
+      type="text"
+      class="input-control"
+      placeholder=" "
+      (keyup)="search($event.target)"
+    />
+    <label class="label-control">Buscar</label>
+  </div>
+  <ng-container
+    *ngIf="datas$ | async as datoPacientes"
+    class="animate__animated animate__fadeIn"
+  >
+    <div class="table animate__animated animate__fadeIn">
+      <div class="row-header">
+        <div class="cell">Paciente</div>
+        <div class="cell">Sexo</div>
+      </div>
+      <div class="row-body" *ngFor="let datoPaciente of datoPacientes">
+        <div class="cell cell-text-left">
+          {{ datoPaciente.hc_apepat | titlecase }}
+          {{ datoPaciente.hc_apemat | titlecase }}
+          {{ datoPaciente.hc_nombre | titlecase }}
+        </div>
+        <div class="cell">
+          {{ datoPaciente.sexo }}
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

@@ -27,6 +27,22 @@ export class HttpService {
   }
 
   getAntecedentes() {
-    return this.http.get(`${environment.apiUrl}/antecedentes`);
+    return this.http.get(`${environment.apiUrl}/antecedentes/`);
+  }
+
+  getPaises() {
+    return this.http.get(`${environment.apiUrl}/paises/`);
+  }
+
+  getEstadoCiviles() {
+    return this.http.get(`${environment.apiUrl}/estadosciviles/`);
+  }
+
+  getTipoDocumentos() {
+    return this.http.get(`${environment.apiUrl}/tipodedocumentos/`);
+  }
+
+  getOcupaciones() {
+    return this.http.get(`${environment.apiUrl}/ocupaciones/`);
   }
 }

@@ -56,7 +56,7 @@ export class F419EventoadversoComponent implements OnInit {
   onCheckbox(event: any, opcion: string) {
     const checked = event.target.checked;
     const value = event.target.value;
-
+    console.log(value);
     switch (opcion) {
       case 'AREA': {
         this.otrosArea = value === '6' && checked ? true : false;
@@ -105,13 +105,13 @@ export class F419EventoadversoComponent implements OnInit {
 
     switch (opcion) {
       case 'AREA': {
-        index = this.areas.value.findIndex((val) => val.codigo === codigo);
+        index = this.areas.value.findIndex((val: any) => val.codigo === codigo);
         this.areas.removeAt(index);
         break;
       }
       case 'COLABORADOR': {
         index = this.colaboradores.value.findIndex(
-          (val) => val.codigo === codigo
+          (val: any) => val.codigo === codigo
         );
         this.colaboradores.removeAt(index);
         break;

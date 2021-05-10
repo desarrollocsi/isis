@@ -32,8 +32,8 @@ export class AgendasecretariaListComponent implements OnInit, OnDestroy {
     }
   }
 
-  AnulacionCita(event: any) {
-    console.log(event);
+  AnulacionCita(idcita: number) {
+    this.AGS.putAnulacionCitas(idcita).subscribe(console.log);
   }
 
   getAgendaMedicaList() {

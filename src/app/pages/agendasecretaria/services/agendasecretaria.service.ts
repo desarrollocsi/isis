@@ -64,8 +64,12 @@ export class AgendasecretariaService {
       .pipe(tap((_) => this.refresh.next()));
   }
 
-  putAnulacionCitas(data: any) {
-    return this.http.put(`${environment.apiUrl}/citas/${data.id}`, data);
+  putAnulacionCitas(idcita: any) {
+    return this.http
+      .put(`${environment.apiUrl}/citas/${idcita}`, {
+        ci_estado: 'E',
+      })
+      .pipe(tap((_) => this.refresh.next()));
   }
 
   getDataProgramacion() {

@@ -58,6 +58,7 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formActoMedico = this.fb.group({
+      id: [null],
       idcita: [null],
       motivo: [null],
       problema: [null],
@@ -130,7 +131,7 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
 
   setCieX(data: any) {
     data.map((val: any) => {
-      this.agregarCieX(val);
+      this.agregarCieX(val, false);
     });
   }
 
@@ -158,22 +159,30 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
 
   agregarAntecedentes() {
     const group = this.fb.group({
+      id: [0],
       idan: [null],
       valor: [null],
     });
     this.antecedentes.push(group);
   }
 
-  agregarCieX(data: any) {
+  agregarCieX(data: any, nuevo = true) {
     if (this.validacionAddcie(data)) {
       swal.fire('', 'Ya selecciono el Cie-X', 'info');
       return;
     }
-    Object.assign(data, { tdx: 'PRESUNTIVO', idcie: data.id });
-    delete data['id'];
-    const group = this.fb.group(data);
-    this.diagnosticos.push(group);
+
+    this.diagnosticos.push(this.ValidacionUpdate(data, nuevo));
     this.visible = false;
+  }
+
+  ValidacionUpdate(data: any, nuevo: boolean) {
+    Object.assign(data, { idcie: data.id });
+    if (this.VERB_HTTP === 'PUT' && nuevo) {
+      Object.seal(data);
+      data.id = 0;
+    }
+    return this.fb.group(data);
   }
 
   validacionAddcie(data: any) {
@@ -191,21 +200,16 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
   }
 
   updateCie(event: any, indice: number) {
-    const cie = this.diagnosticos.at(indice).value;
-    Object.seal(cie);
-    cie.tdx = event.target.value;
-    this.diagnosticos.at(indice).value = cie;
+    this.diagnosticos.at(indice).value.tdx = event.target.value;
   }
 
   onSubmit() {
-    // this.VERB_HTTP
-    console.log(this.formActoMedico.value);
-    // this.AMS.apidynamic('POST', this.formActoMedico.value)
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe((data) => {
-    //     this.MS.MessageInfo(data['message']);
-    //     this.router.navigate(['home/agendamedica']);
-    //   });
+    this.AMS.apidynamic(this.VERB_HTTP, this.formActoMedico.value)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => {
+        this.MS.MessageInfo(data['message']);
+        this.router.navigate(['home/agendamedica']);
+      });
   }
 
   ngOnDestroy(): void {
