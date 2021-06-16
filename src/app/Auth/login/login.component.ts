@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
-import { AuthStorageService } from '../../core/services';
+import { AuthStorageService, IntermedaryService } from '../../core/services';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private AS: AuthService,
-    private AST: AuthStorageService
+    private AST: AuthStorageService,
+    private IS: IntermedaryService
   ) {}
 
   form: FormGroup;
@@ -33,9 +34,9 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     this.AS.postLogin(this.form.value).subscribe((data: any) => {
-      this.AST.setRol(data);
-      this.AST.setUsuario(data);
       this.AST.setMenu(data);
+      this.AST.setUsuario(data);
+      this.AST.setRol(data);
       this.countModulos(data.Rol[0].menu);
     });
   }
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
       this.router.navigate(['modulos']);
       return;
     }
+
     this.AST.setModulos(data[0]);
     this.router.navigate(['home']);
   }

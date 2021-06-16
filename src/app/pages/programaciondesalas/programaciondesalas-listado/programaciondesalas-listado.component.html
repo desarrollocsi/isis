@@ -1,0 +1,38 @@
+<div class="container">
+  <span class="title__head">{{ fecha | titlecase }}</span>
+  <table>
+    <thead>
+      <tr>
+        <th>Sala</th>
+        <th>Hora</th>
+        <th>Intervencion</th>
+        <th>Anestesia</th>
+        <th>Cirujano</th>
+        <th>Paciente</th>
+        <th>Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let programacion of programaciones$ | async">
+        <td>{{ programacion.sala }}</td>
+        <td>{{ programacion.diahora }}</td>
+        <td>{{ programacion.intervencion | titlecase }}</td>
+        <td>{{ programacion.anestesia | titlecase }}</td>
+        <td>{{ programacion.cirujano | titlecase }}</td>
+        <td>{{ programacion.paciente | titlecase }}</td>
+        <td>
+          <div class="container-icon">
+            <img
+              src="../../../../assets/icons/edit-color.svg"
+              (click)="onEditar(programacion)"
+            />
+            <img
+              src="../../../../assets/icons/delete-color.svg"
+              (click)="onEliminar(programacion)"
+            />
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

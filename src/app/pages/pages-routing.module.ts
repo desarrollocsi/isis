@@ -63,6 +63,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('./historia/historia.module').then((m) => m.HistoriaModule),
       },
+      {
+        path: 'programaciondesalas',
+        loadChildren: () =>
+          import('./programaciondesalas/programaciondesalas.module').then(
+            (m) => m.ProgramaciondesalasModule
+          ),
+      },
     ],
   },
 ];

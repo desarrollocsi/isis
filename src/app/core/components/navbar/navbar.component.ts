@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { AuthStorageService, IntermedaryService } from 'src/app/core/services';
 
 @Component({
@@ -33,6 +33,7 @@ export class NavbarComponent implements OnInit {
 
   onMenu() {
     this.menus$ = this.IS._menus.pipe(
+      tap(console.log),
       switchMap((id: string) => this.AST.getMenu(id))
     );
   }
@@ -48,6 +49,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.AST.clearLocalstorage();
+    this.IS.getMenus(null);
     this.router.navigate(['']);
   }
 }

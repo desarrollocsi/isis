@@ -1,0 +1,101 @@
+<div class="container">
+  <div class="container-form">
+    <div class="group">
+      <input
+        type="search"
+        class="input-control"
+        (keyup)="search($event.target.value)"
+        placeholder=" "
+      />
+      <label class="label-control">Buscar paciente</label>
+    </div>
+    <div
+      *ngIf="isSearch"
+      class="animate__animated"
+      [class.animate__slideInUp]="isSearch"
+    >
+      <div class="table__head">
+        <div class="table__item w__20">historia</div>
+        <div class="table__item w__80">Paciente</div>
+      </div>
+      <div class="row__scroll">
+        <div
+          class="table__body"
+          *ngFor="let value of values$ | async"
+          (click)="seleccionarPaciente(value)"
+        >
+          <div class="table__item w__20">{{ value.historia }}</div>
+          <div class="table__item w__80">{{ value.paciente | titlecase }}</div>
+        </div>
+      </div>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="row__item__4">
+        <div class="group">
+          <select class="input-control input-select" formControlName="cama">
+            <option value="null">Seleccionar cama</option>
+            <option [value]="cama.codigo" *ngFor="let cama of camas$ | async">
+              {{ cama.descripcionCorto }}
+            </option>
+          </select>
+        </div>
+        <div class="group">
+          <select
+            class="input-control input-select"
+            (change)="changeMedicoIntervecion($event.target.value)"
+            formControlName="especialidad"
+          >
+            <option value="null">Seleccionar especialidad</option>
+            <option
+              [value]="especialidad.codigo"
+              *ngFor="let especialidad of especialidades$ | async"
+            >
+              {{ especialidad.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <div class="group">
+          <select class="input-control input-select" formControlName="medico">
+            <option value="null">Seleccionar medico</option>
+            <option
+              [value]="medico.codigo"
+              *ngFor="let medico of medicos$ | async"
+            >
+              {{ medico.nombre | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="intervencion"
+          >
+            <option value="null">Seleccionar intervencion</option>
+            <option
+              [value]="intervencion.codigo"
+              *ngFor="let intervencion of intervenciones$ | async"
+            >
+              {{ intervencion.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="group">
+        <select class="input-control input-select" formControlName="anestesia">
+          <option value="null">Seleccionar anestesias</option>
+          <option
+            [value]="anestesia.codigo"
+            *ngFor="let anestesia of anestesias$ | async"
+          >
+            {{ anestesia.descripcion | titlecase }}
+          </option>
+        </select>
+      </div>
+      <div class="group">
+        <button type="submit" class="btn">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>

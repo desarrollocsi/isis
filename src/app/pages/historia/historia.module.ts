@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import { HistoriaRoutingModule } from './historia-routing.module';
 import { HistoriaComponent } from './historia.component';
@@ -21,6 +22,7 @@ import { HistoriaSearchComponent } from './historia-search/historia-search.compo
     ReactiveFormsModule,
     HttpClientModule,
     SharedModule,
+    NgxPaginationModule,
   ],
 })
 export class HistoriaModule {}

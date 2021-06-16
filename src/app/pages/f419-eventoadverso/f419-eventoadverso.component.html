@@ -20,7 +20,7 @@
             placeholder=" "
             formControlName="historia"
           />
-          <label class="label-control">Historia</label>
+          <label class="label-control">N° de historia</label>
         </div>
       </div>
 
@@ -123,7 +123,10 @@
             formControlName="a5"
             (change)="onCheckbox($event, 'AREA')"
           />
-          <label for="consultorios" class="checkbox_label">CONS</label>
+          <label for="consultorios" class="checkbox_label">
+            CONS
+            <span class="tooltip">Consulta Externa</span>
+          </label>
           <input
             type="checkbox"
             class="checkbox_input"

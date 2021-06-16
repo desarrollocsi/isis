@@ -124,6 +124,7 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
 
   setAntecedentes(data: any) {
     data.map((val: any) => {
+      Object.assign(val, { id: 0 });
       const group = this.fb.group(val);
       this.antecedentes.push(group);
     });
@@ -158,11 +159,8 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
   }
 
   agregarAntecedentes() {
-    const group = this.fb.group({
-      id: [0],
-      idan: [null],
-      valor: [null],
-    });
+    const form = { idan: [null], valor: [null] };
+    const group = this.fb.group(form);
     this.antecedentes.push(group);
   }
 
@@ -171,7 +169,6 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
       swal.fire('', 'Ya selecciono el Cie-X', 'info');
       return;
     }
-
     this.diagnosticos.push(this.ValidacionUpdate(data, nuevo));
     this.visible = false;
   }

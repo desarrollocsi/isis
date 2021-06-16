@@ -20,8 +20,11 @@ export class IntermedaryService {
   private dataActoMedico = new Subject<any>();
   _dataActoMedico = this.dataActoMedico.asObservable();
 
-  private menus = new BehaviorSubject<any>(this.AUS.modulos || []);
-  _menus = this.menus.asObservable();
+  private menus = new BehaviorSubject<any>(this.AUS.modulos || null);
+  _menus = this.menus.asObservable().pipe(
+    tap(console.log),
+    filter((data: any) => data !== null)
+  );
 
   private programacion = new BehaviorSubject<any>([]);
   dataProgramacion = this.programacion.asObservable();

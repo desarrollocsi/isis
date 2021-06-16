@@ -2,6 +2,7 @@
   <div class="group">
     <input
       type="text"
+      [formControl]="searchs"
       class="input-control"
       placeholder=" "
       (keyup)="search($event.target)"
@@ -12,12 +13,19 @@
     *ngIf="datas$ | async as datoPacientes"
     class="animate__animated animate__fadeIn"
   >
-    <div class="table animate__animated animate__fadeIn">
+    <div class="table animate__animated animate__fadeIn" *ngIf="status">
       <div class="row-header">
         <div class="cell">Paciente</div>
         <div class="cell">Sexo</div>
       </div>
-      <div class="row-body" *ngFor="let datoPaciente of datoPacientes">
+      <div
+        class="row-body"
+        (click)="setData(datoPaciente)"
+        *ngFor="
+          let datoPaciente of datoPacientes
+            | paginate: { itemsPerPage: 3, currentPage: p }
+        "
+      >
         <div class="cell cell-text-left">
           {{ datoPaciente.hc_apepat | titlecase }}
           {{ datoPaciente.hc_apemat | titlecase }}
@@ -26,6 +34,9 @@
         <div class="cell">
           {{ datoPaciente.sexo }}
         </div>
+      </div>
+      <div class="footer-pagination">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
   </ng-container>

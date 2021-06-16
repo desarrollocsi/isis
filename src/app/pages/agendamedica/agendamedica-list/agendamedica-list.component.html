@@ -16,8 +16,9 @@
       class="row-body animate__animated animate__fadeIn"
       (click)="pagesActomedico(pacientesCitado)"
       [ngStyle]="{
-        'background-color':
-          pacientesCitado.estado === 'R' ? '#ccffff' : '#ceffce'
+        'background-color': pacientesCitado.actomedico_id
+          ? '#ceffce'
+          : '#ccffff'
       }"
       *ngFor="
         let pacientesCitado of pacientesCitados

@@ -21,6 +21,14 @@ export class ActomedicoService {
     return this.http.post(`${environment.apiUrl}/actomedico`, data);
   }
 
+  deleteAntecedente() {
+    return this.http.delete(`${environment.apiUrl}/ant)`);
+  }
+
+  deleteCiex() {
+    return this.http.delete(`${environment.apiUrl}/ant)`);
+  }
+
   apidynamic(verb: string, data: any) {
     switch (verb) {
       case 'POST': {

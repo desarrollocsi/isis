@@ -3,6 +3,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
+import { HistoriaData } from '../model/historia-data.class';
+
+import * as moment from 'moment';
+
 import {
   HttpService,
   AuthStorageService,
@@ -21,7 +25,7 @@ export class HistoriaRegistrarComponent implements OnInit {
   estadoCiviles$: Observable<any>;
   tipoDocumentos$: Observable<any>;
   ocupaciones$: Observable<any>;
-
+  dataPaciente: object = null;
   constructor(
     private fb: FormBuilder,
     private HS: HistoriaService,
@@ -34,6 +38,10 @@ export class HistoriaRegistrarComponent implements OnInit {
     return this.form.controls.hc_usuario;
   }
 
+  get fechaNacimiento() {
+    return this.form.controls.hc_fecnac;
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       hc_numhis: [null],
@@ -44,7 +52,7 @@ export class HistoriaRegistrarComponent implements OnInit {
       hc_nombre: [null],
       hc_tipohc: [null],
       hc_estcivil: [null],
-      hc_fecnac: [null],
+      hc_fecnac_i3: [null],
       hc_sexo: [null],
       hc_ubnacim: [null],
       hc_direccion: [null],
@@ -100,12 +108,20 @@ export class HistoriaRegistrarComponent implements OnInit {
     this.HS._data.subscribe((data: any) => {
       this.VERB_HTTP = 'PUT';
       this.form.patchValue(data);
+      this.fechaNacimiento.reset(
+        moment(data.hc_fecnac, 'DD/MM/YYYY').format('YYYY-MM-DD')
+      );
     });
+  }
+
+  AsignacionHc(data: any) {
+    this.dataPaciente = new HistoriaData(data);
   }
 
   onSubmit() {
     this.HS.apiDinamic(this.VERB_HTTP, this.form.value).subscribe(
       (data: any) => {
+        this.AsignacionHc(data.data);
         this.TS.show('success', 'Bien hecho!', data.message);
         this.form.reset();
         this.campoUsuario.reset(this.ATH.User);

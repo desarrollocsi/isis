@@ -165,7 +165,10 @@
                 <div class="card">
                   <div class="group">
                     <select
-                      class="input-control input-select animate__animated animate__fadeIn"
+                      class="
+                        input-control input-select
+                        animate__animated animate__fadeIn
+                      "
                       formControlName="idan"
                     >
                       <option [ngValue]="null">Seleccionar antecedente</option>
@@ -276,7 +279,10 @@
                         value="PRESUNTIVO"
                         [id]="'a' + i"
                         class="radio__input"
-                        [checked]="diagnosticos.value[i].tdx === 'PRESUNTIVO'"
+                        [checked]="
+                          (diagnosticos.value[i].tdx || 'PRESUNTIVO') ===
+                          'PRESUNTIVO'
+                        "
                         (click)="updateCie($event, i)"
                       />
                       <label [for]="'a' + i" class="radio_label"
@@ -323,11 +329,11 @@
             </select>
           </div>
         </div>
-        <pre>
+        <!-- <pre>
           <code>
             {{ formActoMedico.getRawValue() | json }}
           </code>
-        </pre>
+        </pre> -->
       </div>
     </div>
     <div class="group-button">

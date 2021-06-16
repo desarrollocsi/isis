@@ -4,7 +4,11 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { FormdinamicoService } from '../services/formdinamico.service';
 
-import { IntermedaryService, AuthStorageService } from '../../../core/services';
+import {
+  IntermedaryService,
+  AuthStorageService,
+  ToasterService,
+} from '../../../core/services';
 
 @Component({
   selector: 'app-formdinamico-list',
@@ -26,7 +30,8 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
   constructor(
     private FS: FormdinamicoService,
     private IS: IntermedaryService,
-    private AS: AuthStorageService
+    private AS: AuthStorageService,
+    private TS: ToasterService
   ) {}
 
   get route() {
@@ -58,7 +63,15 @@ export class FormdinamicoListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(id: string) {
-    this.FS.getApiDynamic(this.URL, 'DELETE', id).subscribe(console.log);
+    this.FS.getApiDynamic(this.URL, 'DELETE', id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.TS.show('success', 'Bien hecho!', data.message, 2500);
+        },
+        (erro) =>
+          this.TS.show('warning', 'Algo paso!', 'No se puede eliminar', 2500)
+      );
   }
 
   ngOnDestroy() {

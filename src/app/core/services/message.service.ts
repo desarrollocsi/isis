@@ -22,7 +22,17 @@ export class MessageService {
     Swal.fire({
       icon: 'info',
       html: message,
-      timer: 3000,
+      timer: 1500,
+      showConfirmButton: false,
+    });
+  }
+
+  MessageError(info: string) {
+    const message = `<h1>${info}</h1>`;
+    Swal.fire({
+      icon: 'error',
+      html: message,
+      timer: 1500,
       showConfirmButton: false,
     });
   }
