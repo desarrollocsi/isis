@@ -15,8 +15,9 @@ import {
   medicos,
   intervenciones,
   anestesia,
+  participantes,
 } from './db/db';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-programaciondesalas',
@@ -34,11 +35,60 @@ export class ProgramaciondesalasComponent implements OnInit {
   public anestesias$: Observable<any>;
   isSearch: boolean = false;
   form: FormGroup;
+  participantes: FormArray;
+
   constructor(private fb: FormBuilder) {}
 
   search(value: number) {
     this.search$.next(value);
   }
+
+  dataForm = [
+    {
+      name: 'action_modal',
+      value: 'add',
+    },
+    {
+      name: 'id_modal',
+      value: '0',
+    },
+    {
+      name: 'grado_academico',
+      value: '1',
+    },
+    {
+      name: 'estudio_peru',
+      value: '0',
+    },
+    {
+      name: 'regimen',
+      value: '1',
+    },
+    {
+      name: 'institucion_tipo',
+      value: '1',
+    },
+    {
+      name: 'institucion_nombre',
+      value: 'saf',
+    },
+    {
+      name: 'estudio_realizado',
+      value: 'dsfds',
+    },
+    {
+      name: 'nro_colegiatura',
+      value: '1',
+    },
+    {
+      name: 'fecha_inicio',
+      value: '2021-06-18',
+    },
+    {
+      name: 'fecha_termino',
+      value: '',
+    },
+  ];
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -47,12 +97,15 @@ export class ProgramaciondesalasComponent implements OnInit {
       medico: [null],
       intervencion: [null],
       anestesia: [null],
+      participantes: this.fb.array([]),
     });
 
     this.values$ = this.searchData();
     this.especialidades$ = of(especialidades);
     this.camas$ = of(camas);
     this.anestesias$ = of(anestesia);
+    this.participantes = this.form.get('participantes') as FormArray;
+    this.crearObject();
   }
 
   // buscar() {
@@ -61,6 +114,12 @@ export class ProgramaciondesalasComponent implements OnInit {
   //   //   map((val: number) => this.searchData(val))
   //   // );
   // }
+
+  crearObject() {
+    const object = {};
+    this.dataForm.map(({ name, value }) => (object[name] = value || ''));
+    console.log(object);
+  }
 
   searchData() {
     return of(data);
@@ -96,9 +155,18 @@ export class ProgramaciondesalasComponent implements OnInit {
     );
   }
 
-  // searchData(historia: number) {
-  //   return data.filter((value: any) => value.historia === +historia);
-  // }
+  getParticipantes(codigo: string) {
+    return participantes.filter((val: any) => val.codigo === codigo);
+  }
+
+  setParticipantes(codigo: string) {
+    this.participantes.clear();
+    const form = this.getParticipantes(codigo);
+    form.map((val) => {
+      Object.assign(val, { descripcionPersonal: null });
+      this.participantes.push(this.fb.group(val));
+    });
+  }
 
   onSubmit() {
     console.log(this.form.value);

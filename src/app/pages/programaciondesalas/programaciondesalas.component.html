@@ -71,6 +71,7 @@
           <select
             class="input-control input-select"
             formControlName="intervencion"
+            (change)="setParticipantes($event.target.value)"
           >
             <option value="null">Seleccionar intervencion</option>
             <option
@@ -93,9 +94,30 @@
           </option>
         </select>
       </div>
+
+      <ng-container formArrayName="participantes">
+        <div
+          *ngFor="let _ of participantes.controls; index as i"
+          class="animate__animated animate__fadeIn"
+        >
+          <ng-container [formGroupName]="i">
+            <lable>{{ participantes.value[i].descripcion }}</lable>
+
+            <select formControlName="descripcionPersonal">
+              <option [value]="null">Seleccionar cama</option>
+              <option [value]="cama.codigo" *ngFor="let cama of camas$ | async">
+                {{ cama.descripcion | titlecase }}
+              </option>
+            </select>
+          </ng-container>
+        </div>
+      </ng-container>
+
       <div class="group">
         <button type="submit" class="btn">Enviar</button>
       </div>
     </form>
   </div>
 </div>
+
+<!-- {{ form.value | json }} -->
