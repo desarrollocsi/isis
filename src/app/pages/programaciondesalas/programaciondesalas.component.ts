@@ -17,7 +17,7 @@ import {
   anestesia,
   participantes,
 } from './db/db';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-programaciondesalas',
@@ -90,9 +90,43 @@ export class ProgramaciondesalasComponent implements OnInit {
     },
   ];
 
+  FORM_DYNAMIC = [
+    {
+      name: 'prueba1',
+      type: 'text',
+      value: 'prueba',
+      rules: {
+        required: true,
+        minLength: 10,
+      },
+    },
+    {
+      name: 'prueba2',
+      type: 'text',
+      value: 'prueba',
+      rules: {
+        required: true,
+      },
+    },
+    {
+      name: 'prueba3',
+      type: 'text',
+      value: 'prueba',
+      rules: {
+        required: false,
+      },
+    },
+    {
+      name: 'prueba4',
+      type: 'text',
+      value: null,
+      rules: { required: false },
+    },
+  ];
+
   ngOnInit(): void {
     this.form = this.fb.group({
-      cama: [null],
+      cama: [null, [Validators.required, Validators.minLength(4)]],
       especialidad: [null],
       medico: [null],
       intervencion: [null],
@@ -105,7 +139,25 @@ export class ProgramaciondesalasComponent implements OnInit {
     this.camas$ = of(camas);
     this.anestesias$ = of(anestesia);
     this.participantes = this.form.get('participantes') as FormArray;
-    this.crearObject();
+
+    this.formDynamic();
+    console.log(this.form);
+  }
+
+  formDynamic() {
+    this.FORM_DYNAMIC.map(({ name, value, rules }) => {
+      this.form.addControl(
+        name,
+        this.fb.control(value, this.validatorsDynamic({ rules }))
+      );
+    });
+  }
+  validatorsDynamic({ rules }) {
+    const VALIDATOR_DYNAMIC = {
+      required: Validators.required,
+      minLength: Validators.minLength(10),
+    };
+    return Object.entries(rules).map(([key]) => VALIDATOR_DYNAMIC[key]);
   }
 
   // buscar() {
@@ -116,9 +168,14 @@ export class ProgramaciondesalasComponent implements OnInit {
   // }
 
   crearObject() {
-    const object = {};
-    this.dataForm.map(({ name, value }) => (object[name] = value || ''));
-    console.log(object);
+    // const object = {};
+    // this.dataForm.map(({ name, value }) => (object[name] = value || ''));
+    // const key = 'item';
+    // const formKey = 'form';
+    // this.dataObject[formKey][key].push('prueba1');
+    // this.dataObject[formKey][key].push('prueba2');
+    // console.log(this.dataObject);
+    // console.log(this.dataObject[formKey]);
   }
 
   searchData() {
