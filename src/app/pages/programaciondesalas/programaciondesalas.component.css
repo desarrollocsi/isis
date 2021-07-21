@@ -144,6 +144,27 @@
   overflow-y: scroll;
 }
 
+.container__card {
+  display: flex;
+  justify-content: space-around;
+}
+
+.mr_02rem {
+  margin-bottom: 0.2rem;
+}
+
+.card__item {
+  width: 50%;
+  text-align: center;
+}
+
+fieldset {
+  padding: 2rem 4rem;
+  margin: 0 0 1.2rem 0;
+  border-radius: 2rem;
+  border: 1px solid #dadce0;
+}
+
 @media (min-width: 768px) and (min-width: 992px) {
   .card {
     width: 50%;

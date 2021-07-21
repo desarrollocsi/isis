@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import {
-  debounceTime,
-  filter,
-  find,
-  map,
-  switchMap,
-  tap,
-} from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   data,
   especialidades,
@@ -17,7 +11,6 @@ import {
   anestesia,
   participantes,
 } from './db/db';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-programaciondesalas',
@@ -45,7 +38,7 @@ export class ProgramaciondesalasComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      cama: [null, Validators.required, Validators.minLength(4)],
+      cama: [null],
       especialidad: [null],
       medico: [null],
       intervencion: [null],
