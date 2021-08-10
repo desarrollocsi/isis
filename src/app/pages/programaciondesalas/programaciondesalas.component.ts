@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map } from 'rxjs/operators';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import {
   data,
   especialidades,

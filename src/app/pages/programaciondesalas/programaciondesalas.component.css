@@ -32,7 +32,12 @@
   position: relative;
   height: 45px;
   margin-bottom: 1.2rem;
+  margin-right: 0.5rem;
   width: 100%;
+}
+
+.group:last-child {
+  margin-right: 0;
 }
 
 .input-control {
@@ -155,14 +160,24 @@
 
 .card__item {
   width: 50%;
-  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.card__title {
+  font-weight: 600;
+  color: #828282;
 }
 
 fieldset {
   padding: 2rem 4rem;
-  margin: 0 0 1.2rem 0;
+  margin: 0 1.2rem 1.2rem 0;
   border-radius: 2rem;
   border: 1px solid #dadce0;
+}
+
+fieldset:last-child {
+  margin: 0 0 1.2rem 0;
 }
 
 @media (min-width: 768px) and (min-width: 992px) {
@@ -174,7 +189,7 @@ fieldset {
     width: 100%;
   }
 
-  .row__item__4 {
+  .row__item {
     display: flex;
   }
 }

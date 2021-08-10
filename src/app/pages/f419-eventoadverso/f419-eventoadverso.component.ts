@@ -56,7 +56,7 @@ export class F419EventoadversoComponent implements OnInit {
   onCheckbox(event: any, opcion: string) {
     const checked = event.target.checked;
     const value = event.target.value;
-    console.log(value);
+
     switch (opcion) {
       case 'AREA': {
         this.otrosArea = value === '6' && checked ? true : false;

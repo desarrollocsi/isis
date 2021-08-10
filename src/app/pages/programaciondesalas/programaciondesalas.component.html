@@ -9,6 +9,7 @@
       />
       <label class="label-control">Buscar paciente</label>
     </div>
+
     <div
       *ngIf="isSearch"
       class="animate__animated"
@@ -30,7 +31,7 @@
       </div>
     </div>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="row__item__4">
+      <div class="row__item">
         <div class="group">
           <select class="input-control input-select" formControlName="cama">
             <option value="null">Seleccionar cama</option>
@@ -56,18 +57,6 @@
         </div>
 
         <div class="group">
-          <select class="input-control input-select" formControlName="medico">
-            <option value="null">Seleccionar medico</option>
-            <option
-              [value]="medico.codigo"
-              *ngFor="let medico of medicos$ | async"
-            >
-              {{ medico.nombre | titlecase }}
-            </option>
-          </select>
-        </div>
-
-        <div class="group">
           <select
             class="input-control input-select"
             formControlName="intervencion"
@@ -79,6 +68,18 @@
               *ngFor="let intervencion of intervenciones$ | async"
             >
               {{ intervencion.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <div class="group">
+          <select class="input-control input-select" formControlName="medico">
+            <option value="null">Seleccionar medico</option>
+            <option
+              [value]="medico.codigo"
+              *ngFor="let medico of medicos$ | async"
+            >
+              {{ medico.nombre | titlecase }}
             </option>
           </select>
         </div>
@@ -98,36 +99,49 @@
         formArrayName="participantes"
         *ngIf="participantes.controls.length > 0"
       >
-        <fieldset class="animate__animated animate__fadeIn">
-          <legend>Participantes:</legend>
-          <div
-            *ngFor="let _ of participantes.controls; index as i"
-            class="animate__animated animate__fadeIn"
-          >
-            <ng-container [formGroupName]="i">
-              <div class="container__card">
-                <div class="card__item">
-                  <lable>{{ participantes.value[i].descripcion }}</lable>
-                </div>
+        <div class="row__item">
+          <fieldset class="animate__animated animate__fadeIn w-100">
+            <legend>Participantes:</legend>
+            <div *ngFor="let _ of participantes.controls; index as indice">
+              <ng-container [formGroupName]="indice">
+                <div class="container__card animate__animated animate__fadeIn">
+                  <div class="card__item">
+                    <lable class="card__title">{{
+                      participantes.value[indice].descripcion | titlecase
+                    }}</lable>
+                  </div>
 
-                <div class="group mr_02rem">
-                  <select
-                    class="input-control input-select"
-                    formControlName="descripcionPersonal"
-                  >
-                    <option [value]="null">Seleccionar cama</option>
-                    <option
-                      [value]="cama.codigo"
-                      *ngFor="let cama of camas$ | async"
+                  <div class="group mr_02rem">
+                    <select
+                      class="input-control input-select"
+                      formControlName="descripcionPersonal"
                     >
-                      {{ cama.descripcion | titlecase }}
-                    </option>
-                  </select>
+                      <option [value]="null">Seleccionar cama</option>
+                      <option
+                        [value]="cama.codigo"
+                        *ngFor="let cama of camas$ | async"
+                      >
+                        {{ cama.descripcion | titlecase }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
-              </div>
-            </ng-container>
-          </div>
-        </fieldset>
+              </ng-container>
+            </div>
+          </fieldset>
+          <fieldset class="animate__animated animate__fadeIn w-100">
+            <legend>Disponibilidad de salas</legend>
+            <div>
+              <span>Sala 01</span>
+            </div>
+            <div>
+              <span>Sala 02</span>
+            </div>
+            <div>
+              <span>Sala 03</span>
+            </div>
+          </fieldset>
+        </div>
       </ng-container>
 
       <div class="group">
