@@ -28,7 +28,19 @@ export class ProgramaciondesalasComponent implements OnInit {
   public anestesias$: Observable<any>;
   isSearch: boolean = false;
   form: FormGroup;
-  participantes: FormArray;
+  // participantes: FormArray;
+
+  get participantes(): FormArray {
+    return this.form.get('participantes') as FormArray;
+  }
+
+  get cirujano() {
+    return this.participantes.at(0).get('descripcionPersonal');
+  }
+
+  get tiempoDeIntervencio() {
+    return this.form.get('tiempo');
+  }
 
   constructor(private fb: FormBuilder) {}
 
@@ -43,6 +55,10 @@ export class ProgramaciondesalasComponent implements OnInit {
       medico: [null],
       intervencion: [null],
       anestesia: [null],
+      petitori: [null],
+      semana: [null],
+      tiempo: [null],
+      antibiotico: [null],
       participantes: this.fb.array([]),
     });
 
@@ -50,7 +66,6 @@ export class ProgramaciondesalasComponent implements OnInit {
     this.especialidades$ = of(especialidades);
     this.camas$ = of(camas);
     this.anestesias$ = of(anestesia);
-    this.participantes = this.form.get('participantes') as FormArray;
   }
 
   searchData() {
@@ -69,6 +84,10 @@ export class ProgramaciondesalasComponent implements OnInit {
   changeMedicoIntervecion(codigo: string) {
     this.getMedicos(codigo);
     this.getIntervencion(codigo);
+  }
+
+  setAsignacionCirujano(codigo: string) {
+    this.cirujano.reset({ value: codigo, disabled: true });
   }
 
   getIntervencion(codigo: string) {
@@ -91,13 +110,16 @@ export class ProgramaciondesalasComponent implements OnInit {
     return participantes.filter((val: any) => val.codigo === codigo);
   }
 
-  setParticipantes(codigo: string) {
+  setParticipantes(data: any) {
+    const { codigo, tiempo } = JSON.parse(data);
     this.participantes.clear();
     const form = this.getParticipantes(codigo);
     form.map((val) => {
       Object.assign(val, { descripcionPersonal: null });
       this.participantes.push(this.fb.group(val));
     });
+
+    this.tiempoDeIntervencio.reset({ value: tiempo, disabled: true });
   }
 
   onSubmit() {

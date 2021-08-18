@@ -1,1 +1,204 @@
-<p>programaciondesalas-registrado works!</p>
+<div class="container">
+  <div class="container-form">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!--row1 beginning-->
+      <div class="row__item">
+        <div class="group">
+          <select class="input-control input-select" formControlName="cama">
+            <option value="null">Seleccionar cama</option>
+            <option [value]="cama.codigo" *ngFor="let cama of camas$ | async">
+              {{ cama.descripcionCorto }}
+            </option>
+          </select>
+        </div>
+        <div class="group">
+          <select
+            class="input-control input-select"
+            (change)="changeMedicoIntervecion($event.target.value)"
+            formControlName="especialidad"
+          >
+            <option value="null">Seleccionar especialidad</option>
+            <option
+              [value]="especialidad.codigo"
+              *ngFor="let especialidad of especialidades$ | async"
+            >
+              {{ especialidad.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="intervencion"
+            (change)="setParticipantes($event.target.value)"
+          >
+            <option value="null">Seleccionar intervencion</option>
+            <option
+              [value]="intervencion | json"
+              *ngFor="let intervencion of intervenciones$ | async"
+            >
+              {{ intervencion.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="medico"
+            (change)="setAsignacionCirujano($event.target.value)"
+          >
+            <option value="null">Seleccionar medico</option>
+            <option
+              [value]="medico.codigo"
+              *ngFor="let medico of medicos$ | async"
+            >
+              {{ medico.nombre | titlecase }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!--row1 end-->
+      <!--row2 beginning-->
+      <div class="row__item">
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="intervencion"
+          >
+            <option value="null">Seleccionar intervencion 2</option>
+            <option
+              [value]="intervencion.codigo"
+              *ngFor="let intervencion of intervenciones$ | async"
+            >
+              {{ intervencion.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="intervencion"
+          >
+            <option value="null">Seleccionar intervencion 3</option>
+            <option
+              [value]="intervencion.codigo"
+              *ngFor="let intervencion of intervenciones$ | async"
+            >
+              {{ intervencion.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="anestesia"
+          >
+            <option value="null">Seleccionar anestesias</option>
+            <option
+              [value]="anestesia.codigo"
+              *ngFor="let anestesia of anestesias$ | async"
+            >
+              {{ anestesia.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <!--row2 end-->
+      <!--row3 beginning-->
+      <div class="row__item">
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="petitori"
+            placeholder=" "
+          />
+          <label class="label-control">N° petitorio</label>
+        </div>
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="semana"
+            placeholder=" "
+          />
+          <label class="label-control">N° Semana</label>
+        </div>
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="tiempo"
+            placeholder=" "
+          />
+          <label class="label-control">Tiempo</label>
+        </div>
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="antibiotico"
+            placeholder=" "
+          />
+          <label class="label-control">Antibiotico</label>
+        </div>
+      </div>
+      <!--row3 end-->
+
+      <!--form array beginning-->
+      <ng-container
+        formArrayName="participantes"
+        *ngIf="participantes.controls.length > 0"
+      >
+        <div class="row__item">
+          <fieldset class="animate__animated animate__fadeIn w__100">
+            <legend>Participantes:</legend>
+            <div *ngFor="let _ of participantes.controls; index as indice">
+              <ng-container [formGroupName]="indice">
+                <div class="container__card animate__animated animate__fadeIn">
+                  <div class="card__item">
+                    <lable class="card__title">{{
+                      participantes.value[indice].descripcion | titlecase
+                    }}</lable>
+                  </div>
+                  <div class="group mr_02rem">
+                    <select
+                      class="input-control input-select"
+                      formControlName="descripcionPersonal"
+                    >
+                      <option [value]="null">Seleccionar personal</option>
+                      <option
+                        [value]="medico.codigo"
+                        *ngFor="let medico of medicos$ | async"
+                      >
+                        {{ medico.nombre | titlecase }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </fieldset>
+          <fieldset class="animate__animated animate__fadeIn w__100">
+            <legend>Disponibilidad de salas</legend>
+            <div>
+              <span>Sala 01</span>
+            </div>
+            <div>
+              <span>Sala 02</span>
+            </div>
+            <div>
+              <span>Sala 03</span>
+            </div>
+          </fieldset>
+        </div>
+      </ng-container>
+      <!--form array end-->
+      <div class="group">
+        <button type="submit" class="btn">Enviar</button>
+      </div>
+    </form>
+  </div>
+</div>

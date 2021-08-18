@@ -30,6 +30,7 @@
         </div>
       </div>
     </div>
+
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="row__item">
         <div class="group">
@@ -64,7 +65,7 @@
           >
             <option value="null">Seleccionar intervencion</option>
             <option
-              [value]="intervencion.codigo"
+              [value]="intervencion | json"
               *ngFor="let intervencion of intervenciones$ | async"
             >
               {{ intervencion.descripcion | titlecase }}
@@ -73,7 +74,11 @@
         </div>
 
         <div class="group">
-          <select class="input-control input-select" formControlName="medico">
+          <select
+            class="input-control input-select"
+            formControlName="medico"
+            (change)="setAsignacionCirujano($event.target.value)"
+          >
             <option value="null">Seleccionar medico</option>
             <option
               [value]="medico.codigo"
@@ -84,23 +89,99 @@
           </select>
         </div>
       </div>
-      <div class="group">
-        <select class="input-control input-select" formControlName="anestesia">
-          <option value="null">Seleccionar anestesias</option>
-          <option
-            [value]="anestesia.codigo"
-            *ngFor="let anestesia of anestesias$ | async"
+
+      <div class="row__item">
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="intervencion"
+            (change)="setParticipantes($event.target.value)"
           >
-            {{ anestesia.descripcion | titlecase }}
-          </option>
-        </select>
+            <option value="null">Seleccionar intervencion 2</option>
+            <option
+              [value]="intervencion.codigo"
+              *ngFor="let intervencion of intervenciones$ | async"
+            >
+              {{ intervencion.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="intervencion"
+            (change)="setParticipantes($event.target.value)"
+          >
+            <option value="null">Seleccionar intervencion 3</option>
+            <option
+              [value]="intervencion.codigo"
+              *ngFor="let intervencion of intervenciones$ | async"
+            >
+              {{ intervencion.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="anestesia"
+          >
+            <option value="null">Seleccionar anestesias</option>
+            <option
+              [value]="anestesia.codigo"
+              *ngFor="let anestesia of anestesias$ | async"
+            >
+              {{ anestesia.descripcion | titlecase }}
+            </option>
+          </select>
+        </div>
       </div>
+      <!--row3-->
+      <div class="row__item">
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="petitori"
+            placeholder=" "
+          />
+          <label class="label-control">N° petitorio</label>
+        </div>
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="semana"
+            placeholder=" "
+          />
+          <label class="label-control">N° Semana</label>
+        </div>
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="tiempo"
+            placeholder=" "
+          />
+          <label class="label-control">Tiempo</label>
+        </div>
+        <div class="group">
+          <input
+            type="text"
+            class="input-control"
+            formControlName="antibiotico"
+            placeholder=" "
+          />
+          <label class="label-control">Antibiotico</label>
+        </div>
+      </div>
+
       <ng-container
         formArrayName="participantes"
         *ngIf="participantes.controls.length > 0"
       >
         <div class="row__item">
-          <fieldset class="animate__animated animate__fadeIn w-100">
+          <fieldset class="animate__animated animate__fadeIn w__100">
             <legend>Participantes:</legend>
             <div *ngFor="let _ of participantes.controls; index as indice">
               <ng-container [formGroupName]="indice">
@@ -110,18 +191,17 @@
                       participantes.value[indice].descripcion | titlecase
                     }}</lable>
                   </div>
-
                   <div class="group mr_02rem">
                     <select
                       class="input-control input-select"
                       formControlName="descripcionPersonal"
                     >
-                      <option [value]="null">Seleccionar cama</option>
+                      <option [value]="null">Seleccionar personal</option>
                       <option
-                        [value]="cama.codigo"
-                        *ngFor="let cama of camas$ | async"
+                        [value]="medico.codigo"
+                        *ngFor="let medico of medicos$ | async"
                       >
-                        {{ cama.descripcion | titlecase }}
+                        {{ medico.nombre | titlecase }}
                       </option>
                     </select>
                   </div>
@@ -129,7 +209,7 @@
               </ng-container>
             </div>
           </fieldset>
-          <fieldset class="animate__animated animate__fadeIn w-100">
+          <fieldset class="animate__animated animate__fadeIn w__100">
             <legend>Disponibilidad de salas</legend>
             <div>
               <span>Sala 01</span>
