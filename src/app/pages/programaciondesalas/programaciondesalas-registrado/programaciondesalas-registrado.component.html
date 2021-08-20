@@ -29,7 +29,7 @@
         <div class="group">
           <select
             class="input-control input-select"
-            formControlName="intervencion"
+            [formControl]="intervencion"
             (change)="setParticipantes($event.target.value)"
           >
             <option value="null">Seleccionar intervencion</option>
@@ -63,7 +63,7 @@
         <div class="group">
           <select
             class="input-control input-select"
-            formControlName="intervencion"
+            formControlName="intervencion2"
           >
             <option value="null">Seleccionar intervencion 2</option>
             <option
@@ -78,7 +78,7 @@
         <div class="group">
           <select
             class="input-control input-select"
-            formControlName="intervencion"
+            formControlName="intervencion3"
           >
             <option value="null">Seleccionar intervencion 3</option>
             <option

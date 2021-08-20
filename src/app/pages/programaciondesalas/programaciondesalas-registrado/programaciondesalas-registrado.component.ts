@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { ProgramaciondesalasService } from '../services';
@@ -25,8 +25,12 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     return this.participantes.at(0).get('descripcionPersonal');
   }
 
-  get tiempoDeIntervencio() {
+  get tiempoDeIntervencion() {
     return this.form.get('tiempo');
+  }
+
+  get codigoIntervencion() {
+    return this.form.get('intervencion1');
   }
 
   constructor(
@@ -34,12 +38,16 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     private programacionDeSalasServices: ProgramaciondesalasService
   ) {}
 
+  intervencion = new FormControl(null);
+
   ngOnInit(): void {
     this.form = this.fb.group({
       cama: [null],
       especialidad: [null],
       medico: [null],
-      intervencion: [null],
+      intervencion1: [null],
+      intervencion2: [null],
+      intervencion3: [null],
       anestesia: [null],
       petitori: [null],
       semana: [null],
@@ -50,21 +58,40 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
 
     this.camas$ = this.programacionDeSalasServices.getCamas();
     this.especialidades$ = this.programacionDeSalasServices.getEspecialidades();
-    this.intervenciones$ = this.programacionDeSalasServices.getIntervenciones();
-    this.medicos$ = this.programacionDeSalasServices.getMedicos();
     this.anestesias$ = this.programacionDeSalasServices.getAnestesia();
   }
 
   changeMedicoIntervecion(codigo: string) {
-    console.log(codigo);
+    this.MedicosPorEspecialidad(codigo);
+    this.intervencionesPorEspecialidad(codigo);
   }
 
-  setParticipantes(codigo: string) {
-    console.log(codigo);
+  MedicosPorEspecialidad(codigoDeEspecialidad: string) {
+    this.medicos$ =
+      this.programacionDeSalasServices.getMedicos(codigoDeEspecialidad);
+  }
+
+  intervencionesPorEspecialidad(codigoDeEspecialidad: string) {
+    this.intervenciones$ =
+      this.programacionDeSalasServices.getIntervenciones(codigoDeEspecialidad);
+  }
+
+  setParticipantes(data: string) {
+    const { codigo, tiempo } = JSON.parse(data);
+
+    const participantes =
+      this.programacionDeSalasServices.getParticipantes(codigo);
+    participantes.map((data) => {
+      data['descripcionPersonal'] = null;
+      this.participantes.push(this.fb.group(data));
+    });
+
+    this.tiempoDeIntervencion.setValue(tiempo);
+    this.codigoIntervencion.setValue(codigo);
   }
 
   setAsignacionCirujano(codigo: string) {
-    console.log(codigo);
+    this.cirujano.reset({ value: codigo, disabled: true });
   }
 
   onSubmit() {

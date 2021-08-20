@@ -6,7 +6,8 @@ import { ProgramaciondesalasRegistradoComponent } from './programaciondesalas-re
 
 const routes: Routes = [
   { path: '', component: ProgramaciondesalasComponent },
-  { path: 'programacion', component: ProgramaciondesalasRegistradoComponent },
+  { path: 'registrar', component: ProgramaciondesalasRegistradoComponent },
+  { path: 'listado', component: ProgramaciondesalasListadoComponent },
 ];
 
 @NgModule({

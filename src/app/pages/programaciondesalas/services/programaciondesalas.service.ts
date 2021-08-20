@@ -24,19 +24,30 @@ export class ProgramaciondesalasService {
     return of(camas);
   }
 
-  getMedicos() {
-    return of(medicos);
+  getMedicos(codigoDeEspecialidad: string) {
+    return of(
+      medicos.filter(
+        (medicos) => medicos.codigoEspecialidad === codigoDeEspecialidad
+      )
+    );
   }
 
-  getIntervenciones() {
-    return of(intervenciones);
+  getIntervenciones(codigoDeEspecialidad: string) {
+    return of(
+      intervenciones.filter(
+        (intervenciones) =>
+          intervenciones.codigoEspecialidad === codigoDeEspecialidad
+      )
+    );
   }
 
   getAnestesia() {
     return of(anestesia);
   }
 
-  getParticipantes() {
-    return of(participantes);
+  getParticipantes(codigo: string) {
+    return participantes.filter(
+      (participantes) => participantes.codigo === codigo
+    );
   }
 }
