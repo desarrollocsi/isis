@@ -12,7 +12,6 @@
   padding: 4rem 2rem;
   border-radius: 2rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
-  border: 1px solid #dadce0;
 }
 
 .card-head {
@@ -86,13 +85,13 @@
   border: #fff;
   background-color: #fe7b12;
   color: #fff;
-  padding: 18px 32px;
+  padding: 14px 32px;
   font-size: 18px;
   border-radius: 2rem;
   cursor: pointer;
   user-select: none;
   outline: none;
-  margin-bottom: 15px;
+  margin-bottom: 1rem;
 }
 
 .bt-disabled {

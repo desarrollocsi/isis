@@ -5,9 +5,14 @@ import { ProgramaciondesalasListadoComponent } from './programaciondesalas-lista
 import { ProgramaciondesalasRegistradoComponent } from './programaciondesalas-registrado/programaciondesalas-registrado.component';
 
 const routes: Routes = [
-  { path: '', component: ProgramaciondesalasComponent },
-  { path: 'registrar', component: ProgramaciondesalasRegistradoComponent },
-  { path: 'listado', component: ProgramaciondesalasListadoComponent },
+  {
+    path: '',
+    component: ProgramaciondesalasComponent,
+    children: [
+      { path: '', component: ProgramaciondesalasListadoComponent },
+      { path: 'registrar', component: ProgramaciondesalasRegistradoComponent },
+    ],
+  },
 ];
 
 @NgModule({

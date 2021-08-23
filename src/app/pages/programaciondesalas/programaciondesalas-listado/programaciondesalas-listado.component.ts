@@ -20,11 +20,11 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     this.fecha = moment().format('dddd DD, MMMM YYYY');
   }
 
-  onEditar({ codigo }: ProgramacionModel) {
+  onUpdate({ codigo }: ProgramacionModel) {
     console.log(codigo);
   }
 
-  onEliminar({ codigo }: ProgramacionModel) {
+  onDelete({ codigo }: ProgramacionModel) {
     console.log(codigo);
   }
 }

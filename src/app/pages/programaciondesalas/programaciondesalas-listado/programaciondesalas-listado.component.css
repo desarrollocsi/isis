@@ -141,12 +141,78 @@ td:nth-of-type(6):before {
   }
 
   /**************************************************************/
-  table,
+  /* table,
   thead,
   tbody,
   th,
   td,
   tr {
-    /* display: inherit; */
-  }
+    display: inherit;
+  } */
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-radius: 2rem;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  margin-left: 1rem;
+}
+
+.row__header,
+.row__body {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row__header {
+  background-color: #009b6e;
+  border-top-right-radius: 2rem;
+  border-top-left-radius: 2rem;
+}
+
+.row__header .cell,
+.row__body .cell {
+  width: 100%;
+  text-align: center;
+}
+
+.row__header .cell {
+  padding-top: 19px;
+  padding-bottom: 19px;
+  color: #fff;
+  font-weight: 600;
+}
+
+.row__body .cell {
+  border-bottom: 1px solid #f2f2f2;
+  border-right: 1px solid #dbdbdb;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.row__body .cell:last-child {
+  border-right: none;
+}
+
+.table .row__header .cell__20,
+.table .row__body .cell__20 {
+  width: 20%;
+}
+
+.table .row__header .cell__50,
+.table .row__body .cell__50 {
+  width: 50%;
+}
+
+.table .row__body .cell__text__left {
+  text-align: left;
+  margin-left: 0.7rem;
+}
+
+.actions__icons {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
 }

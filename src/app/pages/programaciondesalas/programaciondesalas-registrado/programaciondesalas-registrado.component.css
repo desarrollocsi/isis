@@ -1,31 +1,10 @@
 .card {
   width: 100%;
+  background-color: #fff;
   padding: 2rem 2rem;
   border-radius: 2rem;
-  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
-  border: 1px solid #dadce0;
-}
-
-.card-title,
-.card-body {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
-}
-
-.card-title .content,
-.card-body .content {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #009b6e;
-}
-
-.card-title .title-secondary,
-.card-body .title-secondary {
-  font-size: 1rem;
-  color: #828282;
-  font-weight: 600;
+  box-shadow: rgba(92, 99, 105, 0.1) 0px 4px 16px,
+    rgba(92, 99, 105, 0.1) 0px 8px 24px, rgba(92, 99, 105, 0.1) 0px 16px 56px;
 }
 
 .group {
@@ -170,20 +149,58 @@
 }
 
 fieldset {
-  padding: 2rem 4rem;
+  padding: 4rem 2rem;
   margin: 0 1.2rem 1.2rem 0;
   border-radius: 2rem;
-  border: 1px solid #dadce0;
+  border: 0;
+  box-shadow: rgba(92, 99, 105, 0.1) 0px 4px 16px,
+    rgba(92, 99, 105, 0.1) 0px 8px 24px, rgba(92, 99, 105, 0.1) 0px 16px 56px;
 }
 
 fieldset:last-child {
   margin: 0 0 1.2rem 0;
 }
 
+/******/
+.container__checkbox {
+  width: 100%;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 2.5rem;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.checkbox__input {
+  display: none;
+}
+
+.checkbox__label {
+  width: 100%;
+  height: 45px;
+  padding: 1rem 0 2rem 0;
+  background-color: #8cc8c8;
+  cursor: pointer;
+  color: #fff;
+  text-align: center;
+  font-weight: 600;
+}
+
+.checkbox__label:not(:last-of-type) {
+  border-right: 1px solid #dcf0f4;
+}
+
+.checkbox__input:checked + .checkbox__label {
+  background-color: #009b6e;
+  transition: 0.5s;
+}
+
 @media (min-width: 768px) and (min-width: 992px) {
-  .card {
+  /* .card {
     width: 50%;
-  }
+  } */
 
   .w__100 {
     width: 100%;

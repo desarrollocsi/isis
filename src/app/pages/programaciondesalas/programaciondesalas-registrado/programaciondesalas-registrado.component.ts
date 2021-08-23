@@ -53,6 +53,7 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
       semana: [null],
       tiempo: [null],
       antibiotico: [null],
+      area: [null],
       participantes: this.fb.array([]),
     });
 
@@ -86,7 +87,7 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
       this.participantes.push(this.fb.group(data));
     });
 
-    this.tiempoDeIntervencion.setValue(tiempo);
+    this.tiempoDeIntervencion.reset({ value: tiempo, disabled: true });
     this.codigoIntervencion.setValue(codigo);
   }
 

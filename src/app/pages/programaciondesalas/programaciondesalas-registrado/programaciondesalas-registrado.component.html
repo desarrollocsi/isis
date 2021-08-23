@@ -1,7 +1,7 @@
-<div class="container">
-  <div class="container-form">
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <!--row1 beginning-->
+<div class="container-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <!--row 1 beginning-->
       <div class="row__item">
         <div class="group">
           <select class="input-control input-select" formControlName="cama">
@@ -57,8 +57,8 @@
           </select>
         </div>
       </div>
-      <!--row1 end-->
-      <!--row2 beginning-->
+      <!--row 1 end-->
+      <!--row 2 beginning-->
       <div class="row__item">
         <div class="group">
           <select
@@ -105,8 +105,8 @@
           </select>
         </div>
       </div>
-      <!--row2 end-->
-      <!--row3 beginning-->
+      <!--row 2 end-->
+      <!--row 3 beginning-->
       <div class="row__item">
         <div class="group">
           <input
@@ -145,7 +145,55 @@
           <label class="label-control">Antibiotico</label>
         </div>
       </div>
-      <!--row3 end-->
+      <!--row 3 end-->
+
+      <!--row 4 beginning-->
+      <!-- <div class="group"> -->
+      <h1>Are de Preparacion</h1>
+      <div class="container__checkbox">
+        <input
+          class="checkbox__input"
+          type="radio"
+          id="sd"
+          value="SD"
+          name="area"
+          formControlName="area"
+          checked
+        />
+        <label for="sd" class="checkbox__label">SD</label>
+
+        <input
+          type="radio"
+          class="checkbox__input"
+          id="recuperacion"
+          value="RE"
+          name="area"
+          formControlName="area"
+        />
+        <label for="recuperacion" class="checkbox__label">Recuperacion</label>
+
+        <input
+          type="radio"
+          class="checkbox__input"
+          id="hospitalario"
+          value="HO"
+          name="area"
+          formControlName="area"
+        />
+        <label for="hospitalario" class="checkbox__label">Hospitalario</label>
+
+        <input
+          type="radio"
+          class="checkbox__input"
+          id="emergencia"
+          value="EM"
+          name="area"
+          formControlName="area"
+        />
+        <label for="emergencia" class="checkbox__label">Emergencia</label>
+      </div>
+      <!-- </div> -->
+      <!--row 4 end-->
 
       <!--form array beginning-->
       <ng-container
@@ -154,7 +202,7 @@
       >
         <div class="row__item">
           <fieldset class="animate__animated animate__fadeIn w__100">
-            <legend>Participantes:</legend>
+            <h1>Participantes</h1>
             <div *ngFor="let _ of participantes.controls; index as indice">
               <ng-container [formGroupName]="indice">
                 <div class="container__card animate__animated animate__fadeIn">
@@ -181,8 +229,8 @@
               </ng-container>
             </div>
           </fieldset>
-          <fieldset class="animate__animated animate__fadeIn w__100">
-            <legend>Disponibilidad de salas</legend>
+          <!-- <fieldset class="animate__animated animate__fadeIn w__100">
+            <h1>Disponibilidad de salas</h1>
             <div>
               <span>Sala 01</span>
             </div>
@@ -192,13 +240,39 @@
             <div>
               <span>Sala 03</span>
             </div>
-          </fieldset>
+          </fieldset> -->
         </div>
       </ng-container>
       <!--form array end-->
+      <!--Estancia beginning-->
+      <h1>Estancia</h1>
+      <div
+        class="container__checkbox"
+        *ngIf="participantes.controls.length > 0"
+      >
+        <input
+          type="radio"
+          class="checkbox__input"
+          id="ambulatorio"
+          value="AM"
+          name="estancia"
+          formControlName="estancia"
+        />
+        <label for="ambulatorio" class="checkbox__label">Ambulatorio</label>
+        <input
+          type="radio"
+          class="checkbox__input"
+          id="hospitalario"
+          value="HO"
+          name="estancia"
+          formControlName="estancia"
+        />
+        <label for="hospitalario" class="checkbox__label">Hospitalario</label>
+      </div>
+      <!--Estancia end-->
       <div class="group">
         <button type="submit" class="btn">Enviar</button>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
