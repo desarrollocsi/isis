@@ -33,6 +33,10 @@
   z-index: 1;
 }
 
+.textarea {
+  height: 100px;
+}
+
 .input-select {
   padding: 0 1.2rem;
 }
@@ -53,12 +57,13 @@
   z-index: 1;
   font-weight: 500;
   font-size: 0.75rem;
+  color: #fe7b12;
 }
 
 .input-control:not(:placeholder-shown).input-control:not(:focus)
   + .label-control {
   top: -0.5rem;
-  left: 0.8rem;
+  left: 0.9rem;
   z-index: 1;
   font-weight: 500;
   font-size: 0.75rem;

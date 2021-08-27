@@ -10,6 +10,8 @@ import {
   participantes,
 } from '../db/db';
 
+import { formDynamic } from '../db/form__dynamic';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -49,5 +51,9 @@ export class ProgramaciondesalasService {
     return participantes.filter(
       (participantes) => participantes.codigo === codigo
     );
+  }
+
+  getFormDynamic() {
+    return of(formDynamic);
   }
 }

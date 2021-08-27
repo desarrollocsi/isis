@@ -26,7 +26,6 @@ export class FormdinamicoService {
     if (!this.isValidacionData(form)) {
       this.router.navigate(['home']);
     }
-
     const group: any = {};
     const user = this.AS.User;
     form.formulariod.map((form: any) => {

@@ -5,7 +5,7 @@
       <div class="row__item">
         <div class="group">
           <select class="input-control input-select" formControlName="cama">
-            <option value="null">Seleccionar cama</option>
+            <option value="null">seleccionar camas</option>
             <option [value]="cama.codigo" *ngFor="let cama of camas$ | async">
               {{ cama.descripcionCorto }}
             </option>
@@ -146,9 +146,7 @@
         </div>
       </div>
       <!--row 3 end-->
-
       <!--row 4 beginning-->
-      <!-- <div class="group"> -->
       <h1>Are de Preparacion</h1>
       <div class="container__checkbox">
         <input
@@ -192,8 +190,61 @@
         />
         <label for="emergencia" class="checkbox__label">Emergencia</label>
       </div>
-      <!-- </div> -->
       <!--row 4 end-->
+      <!--row 5 beginning-->
+      <div class="group textarea">
+        <textarea
+          rows="5"
+          cols="10"
+          class="input-control"
+          placeholder=" "
+          formControlName="cq_pedido"
+        ></textarea>
+        <label class="label-control">Motivo / Observaciones</label>
+      </div>
+      <!--row 5 end-->
+      <!--Estancia beginning-->
+      <h1>Estancia</h1>
+      <div class="container__checkbox">
+        <input
+          type="radio"
+          class="checkbox__input"
+          id="ambulatorio"
+          value="AM"
+          name="estancia"
+          formControlName="estancia"
+        />
+        <label for="ambulatorio" class="checkbox__label">Ambulatorio</label>
+        <input
+          type="radio"
+          class="checkbox__input"
+          id="hosp"
+          value="HO"
+          name="estancia"
+          formControlName="estancia"
+        />
+        <label for="hosp" class="checkbox__label">Hospitalario</label>
+      </div>
+      <!--Estancia end-->
+      <!--Equipos medicos beginning -->
+      <h1>Equipos Medicos</h1>
+      <div *ngIf="form$ | async as form">
+        <div class="container__checkbox">
+          <ng-container *ngFor="let equipos of form.equipoMedicos; index as i">
+            <input
+              [type]="equipos.type"
+              class="checkbox__input"
+              [id]="equipos.label"
+              [value]="equipos.value"
+              (change)="addPush($event.target, equipos)"
+            />
+            <label [for]="equipos.label" class="checkbox__label">{{
+              equipos.label | titlecase
+            }}</label>
+          </ng-container>
+        </div>
+      </div>
+      <!--Equipos end-->
 
       <!--form array beginning-->
       <ng-container
@@ -244,32 +295,7 @@
         </div>
       </ng-container>
       <!--form array end-->
-      <!--Estancia beginning-->
-      <h1>Estancia</h1>
-      <div
-        class="container__checkbox"
-        *ngIf="participantes.controls.length > 0"
-      >
-        <input
-          type="radio"
-          class="checkbox__input"
-          id="ambulatorio"
-          value="AM"
-          name="estancia"
-          formControlName="estancia"
-        />
-        <label for="ambulatorio" class="checkbox__label">Ambulatorio</label>
-        <input
-          type="radio"
-          class="checkbox__input"
-          id="hospitalario"
-          value="HO"
-          name="estancia"
-          formControlName="estancia"
-        />
-        <label for="hospitalario" class="checkbox__label">Hospitalario</label>
-      </div>
-      <!--Estancia end-->
+
       <div class="group">
         <button type="submit" class="btn">Enviar</button>
       </div>

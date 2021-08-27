@@ -15,10 +15,15 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   intervenciones$: Observable<any>;
   medicos$: Observable<any>;
   anestesias$: Observable<any>;
+  form$: Observable<any>;
   form: FormGroup;
 
   get participantes(): FormArray {
     return this.form.get('participantes') as FormArray;
+  }
+
+  get equiposMedicos(): FormArray {
+    return this.form.get('equipos') as FormArray;
   }
 
   get cirujano() {
@@ -27,6 +32,10 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
 
   get tiempoDeIntervencion() {
     return this.form.get('tiempo');
+  }
+
+  get cama() {
+    return this.form.get('cama').errors;
   }
 
   get codigoIntervencion() {
@@ -54,12 +63,16 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
       tiempo: [null],
       antibiotico: [null],
       area: [null],
+      estancia: [null],
+      cq_pedido: [null],
       participantes: this.fb.array([]),
+      equipos: this.fb.array([]),
     });
 
     this.camas$ = this.programacionDeSalasServices.getCamas();
     this.especialidades$ = this.programacionDeSalasServices.getEspecialidades();
     this.anestesias$ = this.programacionDeSalasServices.getAnestesia();
+    this.form$ = this.programacionDeSalasServices.getFormDynamic();
   }
 
   changeMedicoIntervecion(codigo: string) {
@@ -78,6 +91,7 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   }
 
   setParticipantes(data: string) {
+    this.participantes.clear();
     const { codigo, tiempo } = JSON.parse(data);
 
     const participantes =
@@ -93,6 +107,20 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
 
   setAsignacionCirujano(codigo: string) {
     this.cirujano.reset({ value: codigo, disabled: true });
+  }
+
+  addPush(event: any, data: any) {
+    const { checked } = event;
+    const equiposMedicos = { codigo: data.value, estado: 1 };
+    checked && this.equiposMedicos.push(this.fb.group(equiposMedicos));
+    !checked && this.deleteEquiposMedicos(data);
+  }
+
+  deleteEquiposMedicos(data: any) {
+    const indice = this.equiposMedicos.value.findIndex(
+      (val: any) => val.value == data.value
+    );
+    this.equiposMedicos.removeAt(indice);
   }
 
   onSubmit() {
