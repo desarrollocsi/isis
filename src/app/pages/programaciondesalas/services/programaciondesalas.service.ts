@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import {
   data,
@@ -16,7 +17,7 @@ import { formDynamic } from '../db/form__dynamic';
   providedIn: 'root',
 })
 export class ProgramaciondesalasService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   getEspecialidades() {
     return of(especialidades);
@@ -55,5 +56,9 @@ export class ProgramaciondesalasService {
 
   getFormDynamic() {
     return of(formDynamic);
+  }
+
+  getTest() {
+    return this.http.get('http://127.0.0.1:8000/programacion/0000007555');
   }
 }

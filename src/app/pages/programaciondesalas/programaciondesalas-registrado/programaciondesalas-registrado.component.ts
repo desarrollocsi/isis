@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { ProgramaciondesalasService } from '../services';
 
@@ -42,21 +43,25 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     return this.form.get('intervencion1');
   }
 
+  get forms() {
+    return this.form.controls;
+  }
+
   constructor(
     private fb: FormBuilder,
     private programacionDeSalasServices: ProgramaciondesalasService
   ) {}
 
-  intervencion = new FormControl(null);
+  intervencion = new FormControl({ value: null, disabled: true });
 
   ngOnInit(): void {
     this.form = this.fb.group({
       cama: [null],
       especialidad: [null],
-      medico: [null],
-      intervencion1: [null],
-      intervencion2: [null],
-      intervencion3: [null],
+      medico: [{ value: null, disabled: true }],
+      intervencion1: [{ value: null, disabled: true }],
+      intervencion2: [{ value: null, disabled: true }],
+      intervencion3: [{ value: null, disabled: true }],
       anestesia: [null],
       petitori: [null],
       semana: [null],
@@ -75,9 +80,18 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     this.form$ = this.programacionDeSalasServices.getFormDynamic();
   }
 
-  changeMedicoIntervecion(codigo: string) {
-    this.MedicosPorEspecialidad(codigo);
-    this.intervencionesPorEspecialidad(codigo);
+  camposReset() {
+    this.intervencion.reset({ value: null, disabled: false });
+    this.forms.intervencion1.reset({ value: null, disabled: false });
+    this.forms.intervencion2.reset({ value: null, disabled: false });
+    this.forms.intervencion3.reset({ value: null, disabled: false });
+    this.forms.medico.reset({ value: null, disabled: false });
+  }
+
+  changeMedicoIntervecion(codigoDeEspecialidad: string) {
+    this.MedicosPorEspecialidad(codigoDeEspecialidad);
+    this.intervencionesPorEspecialidad(codigoDeEspecialidad);
+    codigoDeEspecialidad && this.camposReset();
   }
 
   MedicosPorEspecialidad(codigoDeEspecialidad: string) {
@@ -93,7 +107,6 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   setParticipantes(data: string) {
     this.participantes.clear();
     const { codigo, tiempo } = JSON.parse(data);
-
     const participantes =
       this.programacionDeSalasServices.getParticipantes(codigo);
     participantes.map((data) => {
@@ -109,16 +122,15 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     this.cirujano.reset({ value: codigo, disabled: true });
   }
 
-  addPush(event: any, data: any) {
-    const { checked } = event;
-    const equiposMedicos = { codigo: data.value, estado: 1 };
+  agregarEquipoMedico(checked: boolean, { value }) {
+    const equiposMedicos = { codigo: value, estado: 1 };
     checked && this.equiposMedicos.push(this.fb.group(equiposMedicos));
-    !checked && this.deleteEquiposMedicos(data);
+    !checked && this.deleteEquiposMedicos(value);
   }
 
-  deleteEquiposMedicos(data: any) {
+  deleteEquiposMedicos(codigoDeEquipoMedico: any) {
     const indice = this.equiposMedicos.value.findIndex(
-      (val: any) => val.value == data.value
+      ({ codigo }) => codigo === codigoDeEquipoMedico
     );
     this.equiposMedicos.removeAt(indice);
   }

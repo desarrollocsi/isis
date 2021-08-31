@@ -148,47 +148,19 @@
       <!--row 3 end-->
       <!--row 4 beginning-->
       <h1>Are de Preparacion</h1>
-      <div class="container__checkbox">
-        <input
-          class="checkbox__input"
-          type="radio"
-          id="sd"
-          value="SD"
-          name="area"
-          formControlName="area"
-          checked
-        />
-        <label for="sd" class="checkbox__label">SD</label>
-
-        <input
-          type="radio"
-          class="checkbox__input"
-          id="recuperacion"
-          value="RE"
-          name="area"
-          formControlName="area"
-        />
-        <label for="recuperacion" class="checkbox__label">Recuperacion</label>
-
-        <input
-          type="radio"
-          class="checkbox__input"
-          id="hospitalario"
-          value="HO"
-          name="area"
-          formControlName="area"
-        />
-        <label for="hospitalario" class="checkbox__label">Hospitalario</label>
-
-        <input
-          type="radio"
-          class="checkbox__input"
-          id="emergencia"
-          value="EM"
-          name="area"
-          formControlName="area"
-        />
-        <label for="emergencia" class="checkbox__label">Emergencia</label>
+      <div *ngIf="form$ | async as areaPreparaciones">
+        <div class="container__checkbox">
+          <ng-container *ngFor="let f of areaPreparaciones.areaPreparaciones">
+            <input
+              type="radio"
+              class="checkbox__input"
+              [value]="f.value"
+              [id]="f.label"
+              formControlName="area"
+            />
+            <label [for]="f.label" class="checkbox__label">{{ f.label }}</label>
+          </ng-container>
+        </div>
       </div>
       <!--row 4 end-->
       <!--row 5 beginning-->
@@ -205,38 +177,32 @@
       <!--row 5 end-->
       <!--Estancia beginning-->
       <h1>Estancia</h1>
-      <div class="container__checkbox">
-        <input
-          type="radio"
-          class="checkbox__input"
-          id="ambulatorio"
-          value="AM"
-          name="estancia"
-          formControlName="estancia"
-        />
-        <label for="ambulatorio" class="checkbox__label">Ambulatorio</label>
-        <input
-          type="radio"
-          class="checkbox__input"
-          id="hosp"
-          value="HO"
-          name="estancia"
-          formControlName="estancia"
-        />
-        <label for="hosp" class="checkbox__label">Hospitalario</label>
+      <div *ngIf="form$ | async as atenciones">
+        <div class="container__checkbox">
+          <ng-container *ngFor="let x of atenciones.estancias">
+            <input
+              type="radio"
+              class="checkbox__input"
+              [value]="x.value"
+              [id]="x.label"
+              formControlName="estancia"
+            />
+            <label [for]="x.label" class="checkbox__label">{{ x.label }}</label>
+          </ng-container>
+        </div>
       </div>
       <!--Estancia end-->
       <!--Equipos medicos beginning -->
       <h1>Equipos Medicos</h1>
       <div *ngIf="form$ | async as form">
         <div class="container__checkbox">
-          <ng-container *ngFor="let equipos of form.equipoMedicos; index as i">
+          <ng-container *ngFor="let equipos of form.equipoMedicos">
             <input
               [type]="equipos.type"
               class="checkbox__input"
               [id]="equipos.label"
               [value]="equipos.value"
-              (change)="addPush($event.target, equipos)"
+              (change)="agregarEquipoMedico($event.target.checked, equipos)"
             />
             <label [for]="equipos.label" class="checkbox__label">{{
               equipos.label | titlecase
@@ -245,7 +211,6 @@
         </div>
       </div>
       <!--Equipos end-->
-
       <!--form array beginning-->
       <ng-container
         formArrayName="participantes"
@@ -295,7 +260,6 @@
         </div>
       </ng-container>
       <!--form array end-->
-
       <div class="group">
         <button type="submit" class="btn">Enviar</button>
       </div>
