@@ -28,7 +28,7 @@ export const formDynamic = {
       value: 'AM',
     },
     {
-      label: 'hospitalario2',
+      label: 'hospitalario',
       type: 'radio',
       value: 'HO',
     },
@@ -43,6 +43,32 @@ export const formDynamic = {
       label: 'MAYTATOT',
       type: 'checkbox',
       value: '002',
+    },
+  ],
+  otros: [
+    {
+      label: 'emergenciasadasd',
+      type: 'checkbox',
+      value: '1',
+      control: 'cq_es_emer',
+    },
+    {
+      label: 'OrdenRqx',
+      type: 'checkbox',
+      value: '1',
+      control: 'cq_orden_rqx',
+    },
+    {
+      label: 'OrdenIQX',
+      type: 'checkbox',
+      value: '1',
+      control: 'cq_orden_cq',
+    },
+    {
+      label: 'EnfermeaNeo',
+      type: 'checkbox',
+      value: '1',
+      control: 'cq_enfer',
     },
   ],
 };

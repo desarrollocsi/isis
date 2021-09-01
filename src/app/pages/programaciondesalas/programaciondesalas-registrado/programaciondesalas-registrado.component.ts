@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 import { ProgramaciondesalasService } from '../services';
 
@@ -15,6 +15,7 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   especialidades$: Observable<any>;
   intervenciones$: Observable<any>;
   medicos$: Observable<any>;
+  personales$: Observable<any>;
   anestesias$: Observable<any>;
   form$: Observable<any>;
   form: FormGroup;
@@ -24,11 +25,11 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   }
 
   get equiposMedicos(): FormArray {
-    return this.form.get('equipos') as FormArray;
+    return this.form.get('equiposMedicos') as FormArray;
   }
 
   get cirujano() {
-    return this.participantes.at(0).get('descripcionPersonal');
+    return this.participantes.at(0).get('pl_codper');
   }
 
   get tiempoDeIntervencion() {
@@ -70,8 +71,14 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
       area: [null],
       estancia: [null],
       cq_pedido: [null],
+
+      // cq_es_emer: [null],
+      // cq_orden_rqx: [null],
+      // cq_orden_cq: [null],
+      // cq_enfer: [null],
+
       participantes: this.fb.array([]),
-      equipos: this.fb.array([]),
+      equiposMedicos: this.fb.array([]),
     });
 
     this.camas$ = this.programacionDeSalasServices.getCamas();
@@ -105,26 +112,28 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   }
 
   setParticipantes(data: string) {
+    const { cq_codiqx, cq_tiempo } = JSON.parse(data);
     this.participantes.clear();
-    const { codigo, tiempo } = JSON.parse(data);
-    const participantes =
-      this.programacionDeSalasServices.getParticipantes(codigo);
-    participantes.map((data) => {
-      data['descripcionPersonal'] = null;
-      this.participantes.push(this.fb.group(data));
-    });
-
-    this.tiempoDeIntervencion.reset({ value: tiempo, disabled: true });
-    this.codigoIntervencion.setValue(codigo);
+    this.programacionDeSalasServices
+      .getParticipantes(cq_codiqx)
+      .subscribe((data: any) => {
+        data.map((val: any) => {
+          val['pl_codper'] = null;
+          this.participantes.push(this.fb.group(val));
+        });
+      });
+    this.tiempoDeIntervencion.reset(cq_tiempo);
+    this.codigoIntervencion.setValue(cq_codiqx);
+    this.personales$ = this.programacionDeSalasServices.getPersonales();
   }
 
-  setAsignacionCirujano(codigo: string) {
-    this.cirujano.reset({ value: codigo, disabled: true });
+  setAsignacionCirujano(codigoMedico: string) {
+    this.cirujano.reset(codigoMedico);
   }
 
   agregarEquipoMedico(checked: boolean, { value }) {
-    const equiposMedicos = { codigo: value, estado: 1 };
-    checked && this.equiposMedicos.push(this.fb.group(equiposMedicos));
+    checked &&
+      this.equiposMedicos.push(this.fb.group({ codigo: value, estado: 1 }));
     !checked && this.deleteEquiposMedicos(value);
   }
 
@@ -133,6 +142,11 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
       ({ codigo }) => codigo === codigoDeEquipoMedico
     );
     this.equiposMedicos.removeAt(indice);
+  }
+
+  chanceCheckbox(checked: boolean, { control, value }) {
+    checked && this.form.addControl(control, new FormControl(value));
+    !checked && this.form.removeControl(control);
   }
 
   onSubmit() {

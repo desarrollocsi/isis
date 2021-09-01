@@ -37,7 +37,7 @@
               [value]="intervencion | json"
               *ngFor="let intervencion of intervenciones$ | async"
             >
-              {{ intervencion.descripcion | titlecase }}
+              {{ intervencion.cq_nomint | titlecase }}
             </option>
           </select>
         </div>
@@ -70,7 +70,7 @@
               [value]="intervencion.codigo"
               *ngFor="let intervencion of intervenciones$ | async"
             >
-              {{ intervencion.descripcion | titlecase }}
+              {{ intervencion.cq_nomint | titlecase }}
             </option>
           </select>
         </div>
@@ -85,7 +85,7 @@
               [value]="intervencion.codigo"
               *ngFor="let intervencion of intervenciones$ | async"
             >
-              {{ intervencion.descripcion | titlecase }}
+              {{ intervencion.cq_nomint | titlecase }}
             </option>
           </select>
         </div>
@@ -97,10 +97,10 @@
           >
             <option value="null">Seleccionar anestesias</option>
             <option
-              [value]="anestesia.codigo"
+              [value]="anestesia.an_tipane"
               *ngFor="let anestesia of anestesias$ | async"
             >
-              {{ anestesia.descripcion | titlecase }}
+              {{ anestesia.an_nombre | titlecase }}
             </option>
           </select>
         </div>
@@ -133,7 +133,7 @@
             formControlName="tiempo"
             placeholder=" "
           />
-          <label class="label-control">Tiempo</label>
+          <label class="label-control">Tiempo <small>(min)</small></label>
         </div>
         <div class="group">
           <input
@@ -187,7 +187,9 @@
               [id]="x.label"
               formControlName="estancia"
             />
-            <label [for]="x.label" class="checkbox__label">{{ x.label }}</label>
+            <label [for]="x.label" class="checkbox__label">{{
+              x.label | titlecase
+            }}</label>
           </ng-container>
         </div>
       </div>
@@ -211,6 +213,26 @@
         </div>
       </div>
       <!--Equipos end-->
+      <!--Otros beginning-->
+      <h1>Otros</h1>
+      <div *ngIf="form$ | async as form">
+        <div class="container__checkbox">
+          <ng-container *ngFor="let otro of form.otros">
+            <input
+              [type]="otro.type"
+              class="checkbox__input"
+              [id]="otro.label"
+              [value]="otro.value"
+              (change)="chanceCheckbox($event.target.checked,otro)"
+            />
+            <label [for]="otro.label" class="checkbox__label">{{
+              otro.label | titlecase
+            }}</label>
+          </ng-container>
+        </div>
+      </div>
+
+      <!--Otros end-->
       <!--form array beginning-->
       <ng-container
         formArrayName="participantes"
@@ -230,14 +252,14 @@
                   <div class="group mr_02rem">
                     <select
                       class="input-control input-select"
-                      formControlName="descripcionPersonal"
+                      formControlName="pl_codper"
                     >
                       <option [value]="null">Seleccionar personal</option>
                       <option
-                        [value]="medico.codigo"
-                        *ngFor="let medico of medicos$ | async"
+                        [value]="personal.codigo"
+                        *ngFor="let personal of personales$ | async"
                       >
-                        {{ medico.nombre | titlecase }}
+                        {{ personal.nombre | titlecase }}
                       </option>
                     </select>
                   </div>

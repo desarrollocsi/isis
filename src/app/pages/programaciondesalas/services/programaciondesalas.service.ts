@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
-import {
-  data,
-  especialidades,
-  camas,
-  medicos,
-  intervenciones,
-  anestesia,
-  participantes,
-} from '../db/db';
+import { data, especialidades, camas, medicos } from '../db/db';
 
 import { formDynamic } from '../db/form__dynamic';
 
@@ -36,29 +28,26 @@ export class ProgramaciondesalasService {
   }
 
   getIntervenciones(codigoDeEspecialidad: string) {
-    return of(
-      intervenciones.filter(
-        (intervenciones) =>
-          intervenciones.codigoEspecialidad === codigoDeEspecialidad
-      )
+    return this.http.get(
+      `http://127.0.0.1:8000/intervencion/${codigoDeEspecialidad}/`
     );
   }
 
   getAnestesia() {
-    return of(anestesia);
+    return this.http.get(`http://127.0.0.1:8000/anestesia`);
   }
 
-  getParticipantes(codigo: string) {
-    return participantes.filter(
-      (participantes) => participantes.codigo === codigo
+  getParticipantes(codigoIntervencion: string) {
+    return this.http.get(
+      `http://127.0.0.1:8000/participantes/${codigoIntervencion}/`
     );
+  }
+
+  getPersonales() {
+    return this.http.get('http://127.0.0.1:8000/personales');
   }
 
   getFormDynamic() {
     return of(formDynamic);
-  }
-
-  getTest() {
-    return this.http.get('http://127.0.0.1:8000/programacion/0000007555');
   }
 }
