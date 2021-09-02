@@ -47,7 +47,7 @@ export const formDynamic = {
   ],
   otros: [
     {
-      label: 'emergenciasadasd',
+      label: 'emergencia',
       type: 'checkbox',
       value: '1',
       control: 'cq_es_emer',

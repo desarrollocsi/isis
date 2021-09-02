@@ -176,40 +176,42 @@
       </div>
       <!--row 5 end-->
       <!--Estancia beginning-->
-      <h1>Estancia</h1>
-      <div *ngIf="form$ | async as atenciones">
-        <div class="container__checkbox">
-          <ng-container *ngFor="let x of atenciones.estancias">
-            <input
-              type="radio"
-              class="checkbox__input"
-              [value]="x.value"
-              [id]="x.label"
-              formControlName="estancia"
-            />
-            <label [for]="x.label" class="checkbox__label">{{
-              x.label | titlecase
-            }}</label>
-          </ng-container>
+      <div class="row__item">
+        <div class="group h__70">
+          <h1>Estancia</h1>
+          <div class="container__checkbox" *ngIf="form$ | async as atenciones">
+            <ng-container *ngFor="let x of atenciones.estancias">
+              <input
+                type="radio"
+                class="checkbox__input"
+                [value]="x.value"
+                [id]="x.label"
+                formControlName="estancia"
+              />
+              <label [for]="x.label" class="checkbox__label">{{
+                x.label | titlecase
+              }}</label>
+            </ng-container>
+          </div>
         </div>
-      </div>
-      <!--Estancia end-->
-      <!--Equipos medicos beginning -->
-      <h1>Equipos Medicos</h1>
-      <div *ngIf="form$ | async as form">
-        <div class="container__checkbox">
-          <ng-container *ngFor="let equipos of form.equipoMedicos">
-            <input
-              [type]="equipos.type"
-              class="checkbox__input"
-              [id]="equipos.label"
-              [value]="equipos.value"
-              (change)="agregarEquipoMedico($event.target.checked, equipos)"
-            />
-            <label [for]="equipos.label" class="checkbox__label">{{
-              equipos.label | titlecase
-            }}</label>
-          </ng-container>
+        <!--Estancia end-->
+        <!--Equipos medicos beginning -->
+        <div class="group">
+          <h1>Equipos Medicos</h1>
+          <div class="container__checkbox" *ngIf="form$ | async as form">
+            <ng-container *ngFor="let equipos of form.equipoMedicos">
+              <input
+                [type]="equipos.type"
+                class="checkbox__input"
+                [id]="equipos.label"
+                [value]="equipos.value"
+                (change)="agregarEquipoMedico($event.target.checked, equipos)"
+              />
+              <label [for]="equipos.label" class="checkbox__label">{{
+                equipos.label | titlecase
+              }}</label>
+            </ng-container>
+          </div>
         </div>
       </div>
       <!--Equipos end-->
@@ -223,7 +225,7 @@
               class="checkbox__input"
               [id]="otro.label"
               [value]="otro.value"
-              (change)="chanceCheckbox($event.target.checked,otro)"
+              (change)="chanceCheckbox($event.target.checked, otro)"
             />
             <label [for]="otro.label" class="checkbox__label">{{
               otro.label | titlecase
@@ -231,14 +233,13 @@
           </ng-container>
         </div>
       </div>
-
       <!--Otros end-->
       <!--form array beginning-->
       <ng-container
         formArrayName="participantes"
         *ngIf="participantes.controls.length > 0"
       >
-        <div class="row__item">
+        <div>
           <fieldset class="animate__animated animate__fadeIn w__100">
             <h1>Participantes</h1>
             <div *ngFor="let _ of participantes.controls; index as indice">
@@ -267,18 +268,36 @@
               </ng-container>
             </div>
           </fieldset>
-          <!-- <fieldset class="animate__animated animate__fadeIn w__100">
+          <fieldset class="animate__animated animate__fadeIn w__100">
             <h1>Disponibilidad de salas</h1>
-            <div>
-              <span>Sala 01</span>
+
+            <div class="container__acordion">
+              <input
+                type="checkbox"
+                id="sala01"
+                class="checkbox__input"
+                (change)="acordionSala($event.target.checked, '01')"
+              />
+              <label
+                for="sala01"
+                class="item__acordion animate__animated animate__fadeIn"
+                >Sala 01</label
+              >
+
+              <div class="grid-container" *ngIf="sala">
+                <div
+                  class="grid__items"
+                  [class.status__ocupado]="salas.estado"
+                  *ngFor="let salas of salas$ | async"
+                >
+                  {{ salas.hora }}
+                </div>
+              </div>
+
+              <button class="item__acordion">Sala 02</button>
+              <button class="item__acordion">Sala 03</button>
             </div>
-            <div>
-              <span>Sala 02</span>
-            </div>
-            <div>
-              <span>Sala 03</span>
-            </div>
-          </fieldset> -->
+          </fieldset>
         </div>
       </ng-container>
       <!--form array end-->

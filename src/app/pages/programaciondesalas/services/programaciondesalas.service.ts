@@ -47,6 +47,12 @@ export class ProgramaciondesalasService {
     return this.http.get('http://127.0.0.1:8000/personales');
   }
 
+
+  getSalas(){
+    return this.http.get('http://127.0.0.1:8000/sala');
+  }
+
+
   getFormDynamic() {
     return of(formDynamic);
   }

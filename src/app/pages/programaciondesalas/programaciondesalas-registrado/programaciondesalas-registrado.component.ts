@@ -19,6 +19,8 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   anestesias$: Observable<any>;
   form$: Observable<any>;
   form: FormGroup;
+  salas$: Observable<any>;
+  sala: boolean = false;
 
   get participantes(): FormArray {
     return this.form.get('participantes') as FormArray;
@@ -71,12 +73,6 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
       area: [null],
       estancia: [null],
       cq_pedido: [null],
-
-      // cq_es_emer: [null],
-      // cq_orden_rqx: [null],
-      // cq_orden_cq: [null],
-      // cq_enfer: [null],
-
       participantes: this.fb.array([]),
       equiposMedicos: this.fb.array([]),
     });
@@ -85,6 +81,8 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     this.especialidades$ = this.programacionDeSalasServices.getEspecialidades();
     this.anestesias$ = this.programacionDeSalasServices.getAnestesia();
     this.form$ = this.programacionDeSalasServices.getFormDynamic();
+
+    this.programacionDeSalasServices.getSalas().subscribe(console.log);
   }
 
   camposReset() {
@@ -147,6 +145,11 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   chanceCheckbox(checked: boolean, { control, value }) {
     checked && this.form.addControl(control, new FormControl(value));
     !checked && this.form.removeControl(control);
+  }
+
+  acordionSala(checked: boolean, numeroDeSala: string) {
+    this.sala = checked;
+    this.salas$ = this.programacionDeSalasServices.getSalas();
   }
 
   onSubmit() {
