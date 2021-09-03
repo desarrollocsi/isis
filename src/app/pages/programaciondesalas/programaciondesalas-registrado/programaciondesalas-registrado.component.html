@@ -4,7 +4,7 @@
       <!--row 1 beginning-->
       <div class="row__item">
         <div class="group">
-          <select class="input-control input-select" formControlName="cama">
+          <select class="input-control input-select" formControlName="cq_cama">
             <option value="null">seleccionar camas</option>
             <option [value]="cama.codigo" *ngFor="let cama of camas$ | async">
               {{ cama.descripcionCorto }}
@@ -15,7 +15,7 @@
           <select
             class="input-control input-select"
             (change)="changeMedicoIntervecion($event.target.value)"
-            formControlName="especialidad"
+            formControlName="se_codigo"
           >
             <option value="null">Seleccionar especialidad</option>
             <option
@@ -63,11 +63,11 @@
         <div class="group">
           <select
             class="input-control input-select"
-            formControlName="intervencion2"
+            formControlName="cq_codiqx2"
           >
             <option value="null">Seleccionar intervencion 2</option>
             <option
-              [value]="intervencion.codigo"
+              [value]="intervencion.cq_codiqx"
               *ngFor="let intervencion of intervenciones$ | async"
             >
               {{ intervencion.cq_nomint | titlecase }}
@@ -78,11 +78,11 @@
         <div class="group">
           <select
             class="input-control input-select"
-            formControlName="intervencion3"
+            formControlName="cq_codiqx3"
           >
             <option value="null">Seleccionar intervencion 3</option>
             <option
-              [value]="intervencion.codigo"
+              [value]="intervencion.cq_codiqx"
               *ngFor="let intervencion of intervenciones$ | async"
             >
               {{ intervencion.cq_nomint | titlecase }}
@@ -121,7 +121,7 @@
           <input
             type="text"
             class="input-control"
-            formControlName="semana"
+            formControlName="cq_numsema"
             placeholder=" "
           />
           <label class="label-control">N° Semana</label>
@@ -139,7 +139,7 @@
           <input
             type="text"
             class="input-control"
-            formControlName="antibiotico"
+            formControlName="cq_antibio"
             placeholder=" "
           />
           <label class="label-control">Antibiotico</label>
@@ -156,7 +156,7 @@
               class="checkbox__input"
               [value]="f.value"
               [id]="f.label"
-              formControlName="area"
+              formControlName="cq_areapre"
             />
             <label [for]="f.label" class="checkbox__label">{{ f.label }}</label>
           </ng-container>
@@ -186,7 +186,7 @@
                 class="checkbox__input"
                 [value]="x.value"
                 [id]="x.label"
-                formControlName="estancia"
+                formControlName="cq_estancia"
               />
               <label [for]="x.label" class="checkbox__label">{{
                 x.label | titlecase

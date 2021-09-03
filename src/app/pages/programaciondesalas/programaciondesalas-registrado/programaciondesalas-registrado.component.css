@@ -224,6 +224,10 @@ fieldset:last-child {
   cursor: pointer;
 }
 
+.grid__items:hover {
+  background-color: red;
+}
+
 .status__ocupado {
   background-color: #887c7c;
   color: #fff;

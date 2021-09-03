@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { FormdinamicoRoutingModule } from '../../formdinamico/formdinamico-routing.module';
 
 import { ProgramaciondesalasService } from '../services';
 
@@ -43,7 +44,11 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   }
 
   get codigoIntervencion() {
-    return this.form.get('intervencion1');
+    return this.form.get('cq_codiqx');
+  }
+
+  get participantesData() {
+    return this.participantes.value;
   }
 
   get forms() {
@@ -59,19 +64,21 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      cama: [null],
-      especialidad: [null],
+      sa_codsal: [null],
+      cq_cama: [null],
+      se_codigo: [null],
+      cq_numhis: ['100000'],
       medico: [{ value: null, disabled: true }],
-      intervencion1: [{ value: null, disabled: true }],
-      intervencion2: [{ value: null, disabled: true }],
-      intervencion3: [{ value: null, disabled: true }],
+      cq_codiqx: [{ value: null, disabled: true }],
+      cq_codiqx2: [{ value: null, disabled: true }],
+      cq_codiqx3: [{ value: null, disabled: true }],
       anestesia: [null],
       petitori: [null],
-      semana: [null],
+      cq_numsema: [null],
       tiempo: [null],
-      antibiotico: [null],
-      area: [null],
-      estancia: [null],
+      cq_antibio: [null],
+      cq_areapre: [null],
+      cq_estancia: [null],
       cq_pedido: [null],
       participantes: this.fb.array([]),
       equiposMedicos: this.fb.array([]),
@@ -81,15 +88,13 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     this.especialidades$ = this.programacionDeSalasServices.getEspecialidades();
     this.anestesias$ = this.programacionDeSalasServices.getAnestesia();
     this.form$ = this.programacionDeSalasServices.getFormDynamic();
-
-    this.programacionDeSalasServices.getSalas().subscribe(console.log);
   }
 
   camposReset() {
     this.intervencion.reset({ value: null, disabled: false });
-    this.forms.intervencion1.reset({ value: null, disabled: false });
-    this.forms.intervencion2.reset({ value: null, disabled: false });
-    this.forms.intervencion3.reset({ value: null, disabled: false });
+    this.forms.cq_codiqx.reset({ value: null, disabled: false });
+    this.forms.cq_codiqx2.reset({ value: null, disabled: false });
+    this.forms.cq_codiqx3.reset({ value: null, disabled: false });
     this.forms.medico.reset({ value: null, disabled: false });
   }
 
@@ -130,8 +135,7 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   }
 
   agregarEquipoMedico(checked: boolean, { value }) {
-    checked &&
-      this.equiposMedicos.push(this.fb.group({ codigo: value, estado: 1 }));
+    checked && this.equiposMedicos.push(this.fb.group({ de_codequi: value }));
     !checked && this.deleteEquiposMedicos(value);
   }
 
@@ -150,9 +154,12 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
   acordionSala(checked: boolean, numeroDeSala: string) {
     this.sala = checked;
     this.salas$ = this.programacionDeSalasServices.getSalas();
+    this.forms.sa_codsal.setValue(numeroDeSala);
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.programacionDeSalasServices
+      .postRegistroDeProgramacion(this.form.value)
+      .subscribe(console.log);
   }
 }
