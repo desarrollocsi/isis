@@ -6,18 +6,20 @@
     <div class="cell">Paciente</div>
     <div class="cell cell__20">&nbsp;</div>
   </div>
-  <div class="row__body" *ngFor="let programacion of programaciones$ | async">
-    <div class="cell cell__20">{{ programacion.sala }}</div>
-    <div class="cell cell__20">{{ programacion.diahora | slice: 1:5 }}</div>
-    <div class="cell cell__50">{{ programacion.cirujano | titlecase }}</div>
+  <div class="row__body" *ngFor="let agendaSoap of agendaSoaps$ | async">
+    <div class="cell cell__20">{{ agendaSoap.sala }}</div>
+    <div class="cell cell__20">{{ agendaSoap.diahora | slice: 1:5 }}</div>
+    <div class="cell cell__50">{{ agendaSoap.cirujano | titlecase }}</div>
     <div class="cell cell__text__left">
-      {{ programacion.paciente | titlecase }}
+      {{ agendaSoap.paciente | titlecase }}
     </div>
     <div class="cell cell__20">
       <img
         src="../../../../assets/icons/settings__option.svg"
         class="actions__icons"
+        (click)="views(agendaSoap)"
       />
     </div>
   </div>
 </div>
+<app-programaciondesalas-modal></app-programaciondesalas-modal>

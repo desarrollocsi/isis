@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { programacion } from '../db/db';
 import { ProgramacionModel } from '../db/programacion.model';
+
+import { ProgramaciondesalasService } from '../services/programaciondesalas.service';
+import { IntermedaryService } from '../../../core/services';
+
 import * as moment from 'moment';
 
 @Component({
@@ -11,13 +15,27 @@ import * as moment from 'moment';
 })
 export class ProgramaciondesalasListadoComponent implements OnInit {
   programaciones$: Observable<ProgramacionModel[]>;
+  agendaSoaps$: Observable<any>;
   fecha: string;
-  constructor() {}
+  constructor(
+    private ProgramaciondesalasService: ProgramaciondesalasService,
+    private IntermedaryService: IntermedaryService
+  ) {}
 
   ngOnInit(): void {
     this.programaciones$ = of(programacion);
     moment.locale('es');
     this.fecha = moment().format('dddd DD, MMMM YYYY');
+    this.getAgendaSoap();
+  }
+
+  getAgendaSoap() {
+    this.agendaSoaps$ =
+      this.ProgramaciondesalasService.getAgendaSoap('2021-04-16');
+  }
+
+  views(data: any) {
+    this.IntermedaryService.modal.next(data);
   }
 
   onUpdate({ codigo }: ProgramacionModel) {

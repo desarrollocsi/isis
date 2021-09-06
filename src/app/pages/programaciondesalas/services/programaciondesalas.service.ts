@@ -11,6 +11,10 @@ import { formDynamic } from '../db/form__dynamic';
 export class ProgramaciondesalasService {
   constructor(private http: HttpClient) {}
 
+  getAgendaSoap(fecha: string) {
+    return this.http.get(`http://127.0.0.1:8000/agendasoap/${fecha}`);
+  }
+
   getEspecialidades() {
     return of(especialidades);
   }
