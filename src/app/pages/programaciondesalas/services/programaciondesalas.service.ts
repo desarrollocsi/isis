@@ -59,6 +59,12 @@ export class ProgramaciondesalasService {
     return of(formDynamic);
   }
 
+  getProgramacionDeSalas(codigoProgramacion: string) {
+    return this.http.get(
+      `http://127.0.0.1:8000/programacion/${codigoProgramacion}/`
+    );
+  }
+
   postRegistroDeProgramacion(data: any) {
     return this.http.post('http://127.0.0.1:8000/programaciones', data);
   }

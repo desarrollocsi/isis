@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FormdinamicoRoutingModule } from '../../formdinamico/formdinamico-routing.module';
+import { filter, switchMap } from 'rxjs/operators';
 
+import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
 
 @Component({
@@ -57,7 +57,8 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private programacionDeSalasServices: ProgramaciondesalasService
+    private programacionDeSalasServices: ProgramaciondesalasService,
+    private IntermedaryService: IntermedaryService
   ) {}
 
   intervencion = new FormControl({ value: null, disabled: true });
@@ -88,6 +89,20 @@ export class ProgramaciondesalasRegistradoComponent implements OnInit {
     this.especialidades$ = this.programacionDeSalasServices.getEspecialidades();
     this.anestesias$ = this.programacionDeSalasServices.getAnestesia();
     this.form$ = this.programacionDeSalasServices.getFormDynamic();
+    this.getProgramacionData();
+  }
+
+  getProgramacionData() {
+    this.IntermedaryService._codigoProgramacion
+      .pipe(
+        filter((codigoDeProgramacion: string) => codigoDeProgramacion != ''),
+        switchMap((codigoDeProgramacion: string) =>
+          this.programacionDeSalasServices.getProgramacionDeSalas(
+            codigoDeProgramacion
+          )
+        )
+      )
+      .subscribe((data) => this.form.patchValue(data));
   }
 
   camposReset() {

@@ -43,6 +43,13 @@ export class IntermedaryService {
   private dataDynamic = new BehaviorSubject<string>('');
   _dataDynamic = this.dataDynamic.asObservable();
 
+  private codigoProgramacion = new BehaviorSubject<string>('');
+  _codigoProgramacion = this.codigoProgramacion.asObservable();
+
+  getCodigoProgramacion(codigoProgramacion: string) {
+    this.codigoProgramacion.next(codigoProgramacion);
+  }
+
   getMenus(data: any) {
     this.menus.next(data);
   }

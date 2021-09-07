@@ -8,7 +8,10 @@
 />
 
 <div class="modal">
-  <div class="modal-wrap" *ngIf="programacionData as programacion">
+  <div
+    class="modal-wrap"
+    *ngIf="programacionData as programacion; let i = index"
+  >
     <div class="modal-head">
       <span class="modal-title">{{ programacion.sala }}</span>
     </div>
@@ -16,41 +19,52 @@
       <div class="group__list">
         <div class="list__item">
           <span class="w__30">Paciente</span
-          ><span>{{ programacion.paciente | titlecase }}</span>
+          ><span class="w__70">{{ programacion.paciente | titlecase }}</span>
         </div>
         <div class="list__item">
-          <span>Cirujano</span
-          ><span>{{ programacion.cirujano | titlecase }}</span>
+          <span class="w__30">Cirujano</span
+          ><span class="w__70">{{ programacion.cirujano | titlecase }}</span>
         </div>
         <div class="list__item">
-          <span>Intervencion</span
-          ><span>{{ programacion.intervencion | titlecase }}</span>
+          <span class="w__30">Intervencion</span
+          ><span class="w__70">{{
+            programacion.intervencion | titlecase
+          }}</span>
         </div>
         <div class="list__item">
-          <span>anestesia</span
-          ><span>{{ programacion.anestesia | titlecase }}</span>
+          <span class="w__30">anestesia</span
+          ><span class="w__70">{{ programacion.anestesia | titlecase }}</span>
         </div>
         <div class="list__item">
-          <span>Cama</span><span>{{ programacion.cama }}</span>
+          <span class="w__30">Cama</span
+          ><span class="w__70">{{ programacion.cama }}</span>
         </div>
         <div class="list__item">
-          <span>Edad</span><span>{{ programacion.edad }}</span>
+          <span class="w__30">Edad</span
+          ><span class="w__70">{{ programacion.edad }}</span>
         </div>
         <div class="list__item">
-          <span>Semanas</span><span>{{ programacion.semanas }}</span>
+          <span class="w__30">Semanas</span
+          ><span class="w__70">{{ programacion.semanas }}</span>
         </div>
         <div class="list__item">
-          <span>cq_fecha</span
-          ><span>{{ programacion.cq_fecha | date: "shortTime" }}</span>
+          <span class="w__30">Fecha</span
+          ><span class="w__70">{{
+            programacion.cq_fecha | date: "shortTime"
+          }}</span>
         </div>
         <div class="list__item">
-          <span>cq_hoinpr</span
-          ><span>{{ programacion.cq_hoinpr | date: "shortTime" }}</span>
+          <span class="w__30">Hora</span
+          ><span class="w__70">{{
+            programacion.cq_hoinpr | date: "shortTime"
+          }}</span>
         </div>
         <div class="list__item">
-          <span>cq_numhis</span><span>{{ programacion.cq_numhis }}</span>
+          <span class="w__30">Historia</span
+          ><span class="w__70">{{ programacion.cq_numhis }}</span>
         </div>
       </div>
+      <button (click)="update(programacion)">Modificar</button>
     </div>
   </div>
 </div>

@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
@@ -13,7 +15,10 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
   isModal: boolean = false;
   programacionData: [] = [];
 
-  constructor(private IntermedaryService: IntermedaryService) {}
+  constructor(
+    private IntermedaryService: IntermedaryService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.IntermedaryService.modal
@@ -25,6 +30,12 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
 
   onCloseModal() {
     this.isModal = false;
+  }
+
+  update({ cq_numope }) {
+    this.onCloseModal();
+    this.router.navigate(['home/programaciondesalas/registrar']);
+    this.IntermedaryService.getCodigoProgramacion(cq_numope);
   }
 
   ngOnDestroy(): void {
