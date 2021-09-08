@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { programacion } from '../db/db';
 import { ProgramacionModel } from '../db/programacion.model';
 
 import { ProgramaciondesalasService } from '../services/programaciondesalas.service';
+
 import { IntermedaryService } from '../../../core/services';
 
 import * as moment from 'moment';
@@ -30,8 +33,11 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
   }
 
   getAgendaSoap() {
-    this.agendaSoaps$ =
-      this.ProgramaciondesalasService.getAgendaSoap('2021-04-16');
+    this.agendaSoaps$ = this.IntermedaryService._fecha.pipe(
+      switchMap((fecha: string) =>
+        this.ProgramaciondesalasService.getAgendaSoap(fecha)
+      )
+    );
   }
 
   views(data: any) {

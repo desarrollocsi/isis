@@ -93,7 +93,7 @@
         <div class="group">
           <select
             class="input-control input-select"
-            formControlName="anestesia"
+            formControlName="an_tipane"
           >
             <option value="null">Seleccionar anestesias</option>
             <option
@@ -112,7 +112,7 @@
           <input
             type="text"
             class="input-control"
-            formControlName="petitori"
+            formControlName="cq_num_petito"
             placeholder=" "
           />
           <label class="label-control">N° petitorio</label>
@@ -276,23 +276,22 @@
                 type="checkbox"
                 id="sala01"
                 class="checkbox__input"
-                (change)="acordionSala($event.target.checked, '01')"
+                value="01"
+                (change)="acordionSala($event)"
               />
-              <label
-                for="sala01"
-                class="item__acordion animate__animated animate__fadeIn"
-                >Sala 01</label
-              >
-
-              <div class="grid-container" *ngIf="sala">
-                <div
-                  class="grid__items"
-                  [class.status__ocupado]="salas.estado"
-                  *ngFor="let salas of salas$ | async"
-                >
-                  {{ salas.hora }}
+              <label for="sala01" class="item__acordion">Sala 01</label>
+              <ng-container *ngIf="sala">
+                <div class="grid-container">
+                  <div
+                    class="grid__items"
+                    (click)="setTiempo(salas)"
+                    [class.status__ocupado]="salas.estado"
+                    *ngFor="let salas of salas$ | async"
+                  >
+                    {{ salas.hora }}
+                  </div>
                 </div>
-              </div>
+              </ng-container>
 
               <button class="item__acordion">Sala 02</button>
               <button class="item__acordion">Sala 03</button>
