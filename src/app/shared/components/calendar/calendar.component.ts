@@ -43,6 +43,7 @@ export class CalendarComponent implements OnInit {
       .utc(`${year}-${month}-01`, 'YYYY-MM-DD')
       .endOf('month')
       .format('DD');
+
     const arrayDays = Object.keys([...Array(parseInt(endDay))]).map(
       (day: any) => {
         day = +day + 1;

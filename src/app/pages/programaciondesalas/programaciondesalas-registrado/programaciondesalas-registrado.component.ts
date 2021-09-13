@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { concatAll, filter, switchMap, take } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
 
 import * as moment from 'moment';
+
+import { calculoDeHora, obtenerIndice } from '../utils/util';
 
 @Component({
   selector: 'app-programaciondesalas-registrado',
@@ -22,9 +24,10 @@ export class ProgramaciondesalasRegistradoComponent
   medicos$: Observable<any>;
   personales$: Observable<any>;
   anestesias$: Observable<any>;
+  salas$: Observable<any>;
   form$: Observable<any>;
   form: FormGroup;
-  salas$: Observable<any>;
+  disponibilidadDeSalas$: Observable<any>;
   sala: boolean = false;
 
   get participantes(): FormArray {
@@ -76,16 +79,13 @@ export class ProgramaciondesalasRegistradoComponent
       se_codigo: [null],
       cq_numhis: ['100000'],
       medico: [{ value: null, disabled: true }],
-      // cq_codiqx: [{ value: null, disabled: true }],
-      // cq_codiqx2: [{ value: null, disabled: true }],
-      // cq_codiqx3: [{ value: null, disabled: true }],
-      cq_codiqx: [null],
-      cq_codiqx2: [null],
-      cq_codiqx3: [null],
+      cq_codiqx: [{ value: null, disabled: true }],
+      cq_codiqx2: [{ value: null, disabled: true }],
+      cq_codiqx3: [{ value: null, disabled: true }],
       an_tipane: [null],
       cq_num_petito: [null],
       cq_numsema: [null],
-      tiempo: [null],
+      tiempo: [{ value: null, disabled: true }],
       cq_antibio: [null],
       cq_areapre: [null],
       cq_estancia: [null],
@@ -105,6 +105,7 @@ export class ProgramaciondesalasRegistradoComponent
     this.especialidades$ = this.programacionDeSalasServices.getEspecialidades();
     this.anestesias$ = this.programacionDeSalasServices.getAnestesia();
     this.form$ = this.programacionDeSalasServices.getFormDynamic();
+    this.salas$ = this.programacionDeSalasServices.getSalas();
     this.getProgramacionData();
     this.IntermedaryService._fecha.subscribe((fecha: string) => {
       this.forms.cq_fecha.setValue(moment(fecha).format('YYYY-MM-DD HH:mm:ss'));
@@ -112,23 +113,16 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   getProgramacionData() {
-    this.IntermedaryService._codigoProgramacion
-      .pipe(
-        take(1),
-        filter((codigoDeProgramacion: string) => codigoDeProgramacion !== ''),
-        switchMap((codigoDeProgramacion: string) =>
-          this.programacionDeSalasServices.getProgramacionDeSalas(
-            codigoDeProgramacion
-          )
-        )
-      )
-      .subscribe((data: any) => {
-        this.personales$ = this.programacionDeSalasServices.getPersonales();
-        data.participantes.map((data: any) => {
-          this.participantes.push(this.fb.group(data));
-        });
+    this.IntermedaryService._dataDeProgramacionDeSalas
+      .pipe(take(1))
+      .subscribe((data) => {
         this.form.patchValue(data);
-        //this.camposReset();
+        //   this.personales$ = this.programacionDeSalasServices.getPersonales();
+        //   data.participantes.map((data: any) => {
+        //     this.participantes.push(this.fb.group(data));
+        //   });
+        //   this.form.patchValue(data);
+        //   //this.camposReset();
       });
   }
 
@@ -157,8 +151,10 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   setParticipantes(data: string) {
-    const { cq_codiqx, cq_tiempo } = JSON.parse(data);
     this.participantes.clear();
+    const { cq_codiqx, cq_tiempo } = JSON.parse(data);
+    this.tiempoDeIntervencion.reset(cq_tiempo);
+    this.codigoIntervencion.setValue(cq_codiqx);
     this.programacionDeSalasServices
       .getParticipantes(cq_codiqx)
       .subscribe((data: any) => {
@@ -167,13 +163,15 @@ export class ProgramaciondesalasRegistradoComponent
           this.participantes.push(this.fb.group(val));
         });
       });
-    this.tiempoDeIntervencion.reset(cq_tiempo);
-    this.codigoIntervencion.setValue(cq_codiqx);
+    // this.test();
+  }
+
+  test() {
     this.personales$ = this.programacionDeSalasServices.getPersonales();
   }
 
   setAsignacionCirujano(codigoMedico: string) {
-    this.cirujano.reset(codigoMedico);
+    this.cirujano.reset({ value: codigoMedico, disabled: true });
   }
 
   agregarEquipoMedico(checked: boolean, { value }) {
@@ -182,24 +180,21 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   deleteEquiposMedicos(codigoDeEquipoMedico: any) {
-    const indice = this.equiposMedicos.value.findIndex(
-      ({ codigo }) => codigo === codigoDeEquipoMedico
-    );
+    const indice = obtenerIndice({
+      data: this.equiposMedicos.value,
+      codigoDeEquipoMedico,
+    });
     this.equiposMedicos.removeAt(indice);
   }
 
   chanceCheckbox(checked: boolean, { control, value }) {
-    console.log(checked);
     checked && this.form.addControl(control, new FormControl(value));
     !checked && this.form.removeControl(control);
   }
 
-  acordionSala(checked: any, numeroDeSala: string) {
-    const salas = checked.target.value;
-    const isChecked = checked.target.checked;
-
-    this.sala = isChecked;
-    // this.salas$ = this.programacionDeSalasServices.getSalas(
+  acordionSala({ value, checked }: { value: string; checked: boolean }) {
+    this.sala = checked;
+    // this.disponibilidadDeSalas$ = this.programacionDeSalasServices.getDisponibilidadDeSalas(
     //   moment(this.forms.cq_fecha.value).format('YYYY-MM-DD'),
     //   numeroDeSala
     // );
@@ -208,25 +203,20 @@ export class ProgramaciondesalasRegistradoComponent
 
   setTiempo({ hora }) {
     this.forms.cq_hoinpr.setValue(hora);
-
-    const fechaHoraInicio = moment(
-      `2021-09-08 ${hora}`,
-      'YYYY-MM-DD HH:mm:ss'
-    ).format('YYYY-MM-DD HH:mm:ss');
-    const fechaHoraFin = moment(fechaHoraInicio)
-      .add(this.forms.tiempo.value, 'm')
-      .format('YYYY-MM-DD HH:mm:ss');
-    this.form.patchValue({
-      cq_hoinpr: fechaHoraInicio,
-      cq_hofipr: fechaHoraFin,
-    });
+    this.form.patchValue(
+      calculoDeHora({
+        hora,
+        tiempo: this.forms.tiempo.value,
+        fecha: this.forms.cq_fecha,
+      })
+    );
   }
 
   onSubmit() {
     // this.programacionDeSalasServices
     //   .postRegistroDeProgramacion(this.form.value)
     //   .subscribe(console.log);
-    console.log(this.form.value);
+    console.log(this.form.getRawValue());
   }
 
   ngOnDestroy(): void {

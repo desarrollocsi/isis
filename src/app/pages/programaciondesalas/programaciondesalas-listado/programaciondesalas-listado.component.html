@@ -13,13 +13,13 @@
     <div class="cell cell__text__left">
       {{ agendaSoap.paciente | titlecase }}
     </div>
-    <div class="cell cell__20">
+    <div class="cell cell__20" (click)="views(agendaSoap)">
       <img
         src="../../../../assets/icons/settings__option.svg"
         class="actions__icons"
-        (click)="views(agendaSoap)"
       />
     </div>
   </div>
 </div>
+
 <app-programaciondesalas-modal></app-programaciondesalas-modal>

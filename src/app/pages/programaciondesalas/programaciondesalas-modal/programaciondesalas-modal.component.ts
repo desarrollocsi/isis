@@ -2,8 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
+import { ProgramaciondesalasService } from '../services';
 
 @Component({
   selector: 'app-programaciondesalas-modal',
@@ -17,7 +18,8 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
 
   constructor(
     private IntermedaryService: IntermedaryService,
-    private router: Router
+    private router: Router,
+    private ProgramaciondesalasService: ProgramaciondesalasService
   ) {}
 
   ngOnInit(): void {
@@ -34,8 +36,12 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
 
   update({ cq_numope }) {
     this.onCloseModal();
+    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
+      (data) => {
+        this.IntermedaryService.getCodigoProgramacion(data);
+      }
+    );
     this.router.navigate(['home/programaciondesalas/registrar']);
-    this.IntermedaryService.getCodigoProgramacion(cq_numope);
   }
 
   ngOnDestroy(): void {

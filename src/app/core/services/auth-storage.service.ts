@@ -31,6 +31,14 @@ export class AuthStorageService {
     localStorage.setItem(`_modulo`, JSON.stringify(data));
   }
 
+  setPersonal(data: any) {
+    localStorage.setItem(`_personal`, JSON.stringify(data));
+  }
+
+  get personal() {
+    return JSON.parse(localStorage.getItem('_personal'));
+  }
+
   get idMedico() {
     return localStorage.getItem('_idmedico');
   }

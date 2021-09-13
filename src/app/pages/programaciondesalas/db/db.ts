@@ -1,9 +1,3 @@
-export const salas = [
-  { codigo: '01', descripcion: 'SALA OPERACIONES 01' },
-  { codigo: '02', descripcion: 'SALA OPERACIONES 02' },
-  { codigo: '03', descripcion: 'SALA DE PARTOS' },
-];
-
 export const programacion = [
   {
     codigo: '0000007795',

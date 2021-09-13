@@ -10,6 +10,7 @@
               {{ cama.descripcionCorto }}
             </option>
           </select>
+          <label class="label-control">Cama</label>
         </div>
         <div class="group">
           <select
@@ -25,6 +26,7 @@
               {{ especialidad.descripcion | titlecase }}
             </option>
           </select>
+          <label class="label-control">Especialidad</label>
         </div>
         <div class="group">
           <select
@@ -40,6 +42,7 @@
               {{ intervencion.cq_nomint | titlecase }}
             </option>
           </select>
+          <label class="label-control">Intervencion</label>
         </div>
         <div class="group">
           <select
@@ -55,6 +58,7 @@
               {{ medico.nombre | titlecase }}
             </option>
           </select>
+          <label class="label-control">Cirujano</label>
         </div>
       </div>
       <!--row 1 end-->
@@ -73,6 +77,7 @@
               {{ intervencion.cq_nomint | titlecase }}
             </option>
           </select>
+          <label class="label-control">Intervencion 2</label>
         </div>
 
         <div class="group">
@@ -88,6 +93,7 @@
               {{ intervencion.cq_nomint | titlecase }}
             </option>
           </select>
+          <label class="label-control">Intervencion 3</label>
         </div>
 
         <div class="group">
@@ -103,6 +109,7 @@
               {{ anestesia.an_nombre | titlecase }}
             </option>
           </select>
+          <label class="label-control">Anestesias</label>
         </div>
       </div>
       <!--row 2 end-->
@@ -147,6 +154,18 @@
       </div>
       <!--row 3 end-->
       <!--row 4 beginning-->
+      <div class="group textarea">
+        <textarea
+          rows="5"
+          cols="10"
+          class="input-control"
+          placeholder=" "
+          formControlName="cq_pedido"
+        ></textarea>
+        <label class="label-control">Motivo / Observaciones</label>
+      </div>
+      <!--row 4 end-->
+      <!--row 5 beginning-->
       <h1>Are de Preparacion</h1>
       <div *ngIf="form$ | async as areaPreparaciones">
         <div class="container__checkbox">
@@ -162,19 +181,8 @@
           </ng-container>
         </div>
       </div>
-      <!--row 4 end-->
-      <!--row 5 beginning-->
-      <div class="group textarea">
-        <textarea
-          rows="5"
-          cols="10"
-          class="input-control"
-          placeholder=" "
-          formControlName="cq_pedido"
-        ></textarea>
-        <label class="label-control">Motivo / Observaciones</label>
-      </div>
       <!--row 5 end-->
+
       <!--Estancia beginning-->
       <div class="row__item">
         <div class="group h__70">
@@ -269,15 +277,15 @@
             </div>
           </fieldset>
           <fieldset class="animate__animated animate__fadeIn w__100">
-            <h1>Disponibilidad de salas</h1>
+            <!-- <h1>Disponibilidad de salas</h1> -->
 
-            <div class="container__acordion">
+            <!-- <div class="container__acordion">
               <input
                 type="checkbox"
                 id="sala01"
                 class="checkbox__input"
                 value="01"
-                (change)="acordionSala($event)"
+                (change)="acordionSala($event.target)"
               />
               <label for="sala01" class="item__acordion">Sala 01</label>
               <ng-container *ngIf="sala">
@@ -295,13 +303,62 @@
 
               <button class="item__acordion">Sala 02</button>
               <button class="item__acordion">Sala 03</button>
-            </div>
+            </div> -->
           </fieldset>
         </div>
       </ng-container>
+
       <!--form array end-->
+      <fieldset>
+        <h1>Dato de la Programacion</h1>
+        <p></p>
+        <div class="row__item">
+          <div class="group">
+            <select
+              class="input-control input-select"
+              formControlName="sa_codsal"
+            >
+              <option value="null">---------------------</option>
+              <option
+                [value]="sala.sa_codsal"
+                *ngFor="let sala of salas$ | async"
+              >
+                {{ sala.sa_nombre | titlecase }}
+              </option>
+            </select>
+            <label class="label-control">Sala</label>
+          </div>
+          <div class="group">
+            <input
+              type="text"
+              class="input-control"
+              formControlName="cq_fecha"
+              placeholder=" "
+            />
+            <label class="label-control">Fecha</label>
+          </div>
+          <div class="group">
+            <input
+              type="text"
+              class="input-control"
+              formControlName="cq_hoinpr"
+              placeholder=" "
+            />
+            <label class="label-control">Hora Inicio</label>
+          </div>
+          <div class="group">
+            <input
+              type="text"
+              class="input-control"
+              formControlName="cq_hofipr"
+              placeholder=" "
+            />
+            <label class="label-control">Hora Fin</label>
+          </div>
+        </div>
+      </fieldset>
       <div class="group">
-        <button type="submit" class="btn">Enviar</button>
+        <button type="submit" class="btn">Guardar</button>
       </div>
     </div>
   </form>
