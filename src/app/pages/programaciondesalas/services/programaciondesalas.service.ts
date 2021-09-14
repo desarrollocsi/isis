@@ -69,7 +69,7 @@ export class ProgramaciondesalasService {
 
   getDisponibilidadDeSalas(fecha: string, sala: string) {
     return this.http.get(
-      `http://127.0.0.1:8000/disponibilidadsalas/${sala}/${fecha}`
+      `http://127.0.0.1:8000/disponibilidadsalas/${fecha}/${sala}`
     );
   }
 

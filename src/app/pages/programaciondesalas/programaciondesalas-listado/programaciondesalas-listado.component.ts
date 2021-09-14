@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
+
+import { ProgramaciondesalasService } from '../services/programaciondesalas.service';
+import { IntermedaryService } from '../../../core/services';
 
 import { programacion } from '../db/db';
 import { ProgramacionModel } from '../db/programacion.model';
-
-import { ProgramaciondesalasService } from '../services/programaciondesalas.service';
-
-import { IntermedaryService } from '../../../core/services';
 
 import * as moment from 'moment';
 
@@ -22,7 +22,8 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
   fecha: string;
   constructor(
     private ProgramaciondesalasService: ProgramaciondesalasService,
-    private IntermedaryService: IntermedaryService
+    private IntermedaryService: IntermedaryService,
+    private Router: Router
   ) {}
 
   ngOnInit(): void {
@@ -38,6 +39,10 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
         this.ProgramaciondesalasService.getAgendaSoap(fecha)
       )
     );
+  }
+
+  nextOpenRegistrar() {
+    this.Router.navigate(['home/programaciondesalas/registrar']);
   }
 
   views(data: any) {

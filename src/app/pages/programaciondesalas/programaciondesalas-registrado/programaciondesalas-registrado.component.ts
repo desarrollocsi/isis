@@ -1,14 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
-import { take, tap } from 'rxjs/operators';
+import { take, takeUntil, tap } from 'rxjs/operators';
 
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
 
 import * as moment from 'moment';
 
-import { calculoDeHora, obtenerIndice } from '../utils/util';
+import {
+  calculoDeHora,
+  obtenerIndice,
+  modificarDataDeProgramacionDeSalas,
+} from '../utils/util';
 
 @Component({
   selector: 'app-programaciondesalas-registrado',
@@ -29,6 +33,7 @@ export class ProgramaciondesalasRegistradoComponent
   form: FormGroup;
   disponibilidadDeSalas$: Observable<any>;
   sala: boolean = false;
+  isPanelTiempoProgramacion: boolean = false;
 
   get participantes(): FormArray {
     return this.form.get('participantes') as FormArray;
@@ -91,8 +96,8 @@ export class ProgramaciondesalasRegistradoComponent
       cq_estancia: [null],
       cq_pedido: [null],
       cq_fecha: [null],
-      cq_hoinpr: [null],
-      cq_hofipr: [null],
+      cq_hoinpr: [{ value: null, disabled: true }],
+      cq_hofipr: [{ value: null, disabled: true }],
       // cq_es_emer: [null],
       // cq_orden_rqx: [null],
       // cq_orden_cq: [null],
@@ -107,22 +112,34 @@ export class ProgramaciondesalasRegistradoComponent
     this.form$ = this.programacionDeSalasServices.getFormDynamic();
     this.salas$ = this.programacionDeSalasServices.getSalas();
     this.getProgramacionData();
-    this.IntermedaryService._fecha.subscribe((fecha: string) => {
-      this.forms.cq_fecha.setValue(moment(fecha).format('YYYY-MM-DD HH:mm:ss'));
-    });
+    this.fechaCalendario();
+  }
+
+  panelTiempoProgramacion() {
+    this.IntermedaryService.modal.next();
+    // this.isPanelTiempoProgramacion = true;
+  }
+
+  fechaCalendario() {
+    this.IntermedaryService._fecha
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((fecha: string) => {
+        this.forms.cq_fecha.setValue(
+          moment(fecha, 'YYYY-MM-DD').format('YYYY-MM-DD')
+        );
+      });
   }
 
   getProgramacionData() {
     this.IntermedaryService._dataDeProgramacionDeSalas
-      .pipe(take(1))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
-        this.form.patchValue(data);
-        //   this.personales$ = this.programacionDeSalasServices.getPersonales();
-        //   data.participantes.map((data: any) => {
-        //     this.participantes.push(this.fb.group(data));
-        //   });
-        //   this.form.patchValue(data);
-        //   //this.camposReset();
+        this.form.patchValue(modificarDataDeProgramacionDeSalas(data));
+        data.participantes.map((data: any) =>
+          this.participantes.push(this.fb.group(data))
+        );
+        this.camposReset();
+        this.personales$ = this.programacionDeSalasServices.getPersonales();
       });
   }
 
@@ -155,18 +172,19 @@ export class ProgramaciondesalasRegistradoComponent
     const { cq_codiqx, cq_tiempo } = JSON.parse(data);
     this.tiempoDeIntervencion.reset(cq_tiempo);
     this.codigoIntervencion.setValue(cq_codiqx);
+    this.listadoDeParticipantes(cq_codiqx);
+  }
+
+  listadoDeParticipantes(codigoDeIntervencion: string) {
     this.programacionDeSalasServices
-      .getParticipantes(cq_codiqx)
+      .getParticipantes(codigoDeIntervencion)
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {
         data.map((val: any) => {
           val['pl_codper'] = null;
           this.participantes.push(this.fb.group(val));
         });
       });
-    // this.test();
-  }
-
-  test() {
     this.personales$ = this.programacionDeSalasServices.getPersonales();
   }
 
@@ -216,7 +234,8 @@ export class ProgramaciondesalasRegistradoComponent
     // this.programacionDeSalasServices
     //   .postRegistroDeProgramacion(this.form.value)
     //   .subscribe(console.log);
-    console.log(this.form.getRawValue());
+    console.log(this.participantes.value);
+    // console.log(this.form.getRawValue());
   }
 
   ngOnDestroy(): void {

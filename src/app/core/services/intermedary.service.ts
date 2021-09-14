@@ -44,12 +44,10 @@ export class IntermedaryService {
   _dataDynamic = this.dataDynamic.asObservable();
 
   private dataDeProgramacionDeSalas = new Subject<any>();
-  _dataDeProgramacionDeSalas = this.dataDeProgramacionDeSalas
-    .asObservable()
-    .pipe(filter((data: any) => data !== null));
+  _dataDeProgramacionDeSalas = this.dataDeProgramacionDeSalas.asObservable();
 
-  getCodigoProgramacion(dataDeProgramacionDeSalas: any) {
-    this.dataDeProgramacionDeSalas.next(dataDeProgramacionDeSalas);
+  getCodigoProgramacion(data: any) {
+    this.dataDeProgramacionDeSalas.next(data);
   }
 
   getMenus(data: any) {

@@ -1,4 +1,4 @@
-<div class="container-form">
+<div class="container-form animate__animated animate__fadeIn">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <div class="card">
       <!--row 1 beginning-->
@@ -276,10 +276,10 @@
               </ng-container>
             </div>
           </fieldset>
-          <fieldset class="animate__animated animate__fadeIn w__100">
-            <!-- <h1>Disponibilidad de salas</h1> -->
+          <!-- <fieldset class="animate__animated animate__fadeIn w__100">
+            <h1>Disponibilidad de salas</h1> 
 
-            <!-- <div class="container__acordion">
+            <div class="container__acordion">
               <input
                 type="checkbox"
                 id="sala01"
@@ -303,22 +303,31 @@
 
               <button class="item__acordion">Sala 02</button>
               <button class="item__acordion">Sala 03</button>
-            </div> -->
-          </fieldset>
+            </div> 
+          </fieldset> -->
         </div>
       </ng-container>
 
       <!--form array end-->
-      <fieldset>
+      <fieldset
+        *ngIf="!isPanelTiempoProgramacion"
+        class="text__align cursor__pointer"
+        (click)="panelTiempoProgramacion()"
+      >
+        <span class="text__color">
+          <img src="../../../../assets//icons/add-plus.svg" />
+          Agregar tiempo de la intervencion
+        </span>
+      </fieldset>
+
+      <fieldset *ngIf="isPanelTiempoProgramacion">
         <h1>Dato de la Programacion</h1>
-        <p></p>
         <div class="row__item">
           <div class="group">
             <select
               class="input-control input-select"
               formControlName="sa_codsal"
             >
-              <option value="null">---------------------</option>
               <option
                 [value]="sala.sa_codsal"
                 *ngFor="let sala of salas$ | async"
@@ -330,25 +339,25 @@
           </div>
           <div class="group">
             <input
-              type="text"
+              type="date"
               class="input-control"
               formControlName="cq_fecha"
-              placeholder=" "
+              placeholder=""
             />
             <label class="label-control">Fecha</label>
           </div>
-          <div class="group">
+          <div class="group w__60">
             <input
-              type="text"
+              type="time"
               class="input-control"
               formControlName="cq_hoinpr"
               placeholder=" "
             />
             <label class="label-control">Hora Inicio</label>
           </div>
-          <div class="group">
+          <div class="group w__60">
             <input
-              type="text"
+              type="time"
               class="input-control"
               formControlName="cq_hofipr"
               placeholder=" "
@@ -358,8 +367,9 @@
         </div>
       </fieldset>
       <div class="group">
-        <button type="submit" class="btn">Guardar</button>
+        <button type="submit" class="btn">Registrar</button>
       </div>
     </div>
   </form>
 </div>
+<app-programaciondesalas-modal-salas></app-programaciondesalas-modal-salas>

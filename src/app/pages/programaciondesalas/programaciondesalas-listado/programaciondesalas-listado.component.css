@@ -140,6 +140,26 @@ td:nth-of-type(6):before {
     text-align: left;
   }
 
+  .btn {
+    padding: 1rem 2rem;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.3s ease;
+    border-radius: 2rem;
+    color: #000;
+    font-weight: 600;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .btn:hover {
+    background-color: #828282;
+    color: #fff;
+    box-shadow: 0 8px 6px -6px black;
+  }
+
   /**************************************************************/
   /* table,
   thead,

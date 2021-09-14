@@ -9,6 +9,7 @@ import { ProgramaciondesalasComponent } from './programaciondesalas.component';
 import { ProgramaciondesalasListadoComponent } from './programaciondesalas-listado/programaciondesalas-listado.component';
 import { ProgramaciondesalasRegistradoComponent } from './programaciondesalas-registrado/programaciondesalas-registrado.component';
 import { ProgramaciondesalasModalComponent } from './programaciondesalas-modal/programaciondesalas-modal.component';
+import { ProgramaciondesalasModalSalasComponent } from './programaciondesalas-modal-salas/programaciondesalas-modal-salas.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ProgramaciondesalasModalComponent } from './programaciondesalas-modal/p
     ProgramaciondesalasListadoComponent,
     ProgramaciondesalasRegistradoComponent,
     ProgramaciondesalasModalComponent,
+    ProgramaciondesalasModalSalasComponent,
   ],
   imports: [
     CommonModule,

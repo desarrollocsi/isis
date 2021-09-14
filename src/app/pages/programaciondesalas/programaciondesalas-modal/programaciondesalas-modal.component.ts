@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
 
@@ -24,7 +24,10 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.IntermedaryService.modal
-      .pipe(takeUntil(this.unsubscribe$))
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        filter((data) => data !== null)
+      )
       .subscribe((data: any) => {
         (this.programacionData = data), (this.isModal = true);
       });
