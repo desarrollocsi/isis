@@ -276,42 +276,18 @@
               </ng-container>
             </div>
           </fieldset>
-          <!-- <fieldset class="animate__animated animate__fadeIn w__100">
-            <h1>Disponibilidad de salas</h1> 
-
-            <div class="container__acordion">
-              <input
-                type="checkbox"
-                id="sala01"
-                class="checkbox__input"
-                value="01"
-                (change)="acordionSala($event.target)"
-              />
-              <label for="sala01" class="item__acordion">Sala 01</label>
-              <ng-container *ngIf="sala">
-                <div class="grid-container">
-                  <div
-                    class="grid__items"
-                    (click)="setTiempo(salas)"
-                    [class.status__ocupado]="salas.estado"
-                    *ngFor="let salas of salas$ | async"
-                  >
-                    {{ salas.hora }}
-                  </div>
-                </div>
-              </ng-container>
-
-              <button class="item__acordion">Sala 02</button>
-              <button class="item__acordion">Sala 03</button>
-            </div> 
-          </fieldset> -->
         </div>
       </ng-container>
 
       <!--form array end-->
       <fieldset
         *ngIf="!isPanelTiempoProgramacion"
-        class="text__align cursor__pointer"
+        class="
+          text__align
+          cursor__pointer
+          animate__animated animate__fadeIn
+          p-2
+        "
         (click)="panelTiempoProgramacion()"
       >
         <span class="text__color">
@@ -320,8 +296,16 @@
         </span>
       </fieldset>
 
-      <fieldset *ngIf="isPanelTiempoProgramacion">
-        <h1>Dato de la Programacion</h1>
+      <fieldset
+        *ngIf="isPanelTiempoProgramacion"
+        class="animate__animated: animate__fadeIn p-2"
+      >
+        <div class="row__head">
+          <span class="text__title">Dato de la Programacion</span>
+          <button class="btn__small" (click)="panelTiempoProgramacion()">
+            new
+          </button>
+        </div>
         <div class="row__item">
           <div class="group">
             <select
@@ -367,7 +351,7 @@
         </div>
       </fieldset>
       <div class="group">
-        <button type="submit" class="btn">Registrar</button>
+        <button type="submit" class="btn">{{ nameButton }}</button>
       </div>
     </div>
   </form>

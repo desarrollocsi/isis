@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subject } from 'rxjs';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
 
@@ -24,10 +24,7 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.IntermedaryService.modal
-      .pipe(
-        takeUntil(this.unsubscribe$),
-        filter((data) => data !== null)
-      )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data: any) => {
         (this.programacionData = data), (this.isModal = true);
       });
@@ -38,13 +35,17 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
   }
 
   update({ cq_numope }) {
-    this.onCloseModal();
     this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
       (data) => {
         this.IntermedaryService.getCodigoProgramacion(data);
+        this.ProgramaciondesalasService.httpDynamic.next({
+          verbo: 'PUT',
+          nameButton: 'Actualizar',
+        });
       }
     );
     this.router.navigate(['home/programaciondesalas/registrar']);
+    this.onCloseModal();
   }
 
   ngOnDestroy(): void {

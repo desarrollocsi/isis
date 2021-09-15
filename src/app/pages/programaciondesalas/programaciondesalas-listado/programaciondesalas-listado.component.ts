@@ -27,10 +27,8 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.programaciones$ = of(programacion);
-    moment.locale('es');
-    this.fecha = moment().format('dddd DD, MMMM YYYY');
     this.getAgendaSoap();
+    // this.IntermedaryService.refresh.subscribe((_) => this.getAgendaSoap());
   }
 
   getAgendaSoap() {

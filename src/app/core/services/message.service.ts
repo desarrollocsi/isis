@@ -7,31 +7,28 @@ import Swal from 'sweetalert2';
 export class MessageService {
   constructor() {}
 
-  MessageSucces(info: string) {
-    const message = `<h2>${info}</h2>`;
+  MessageSucces(message: string) {
     Swal.fire({
       icon: 'success',
-      html: message,
+      html: `<h2>${message}</h2>`,
       timer: 1500,
       showConfirmButton: false,
     });
   }
 
-  MessageInfo(info: string) {
-    const message = `<h1>${info}</h1>`;
+  MessageInfo(message: string) {
     Swal.fire({
       icon: 'info',
-      html: message,
+      html: `<h1>${message}</h1>`,
       timer: 1500,
       showConfirmButton: false,
     });
   }
 
   MessageError(info: string) {
-    const message = `<h1>${info}</h1>`;
     Swal.fire({
       icon: 'error',
-      html: message,
+      html: `<h1>${info}</h1>`,
       timer: 1500,
       showConfirmButton: false,
     });

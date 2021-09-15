@@ -14,12 +14,37 @@
     </div>
     <div class="modal-body modal-scroll-y">
       <div class="tab__head">
-        <button class="item__tab">Salas 01</button>
-        <button class="item__tab">Salas 02</button>
-        <button class="item__tab">Salas 03</button>
+        <button class="item__tab" (click)="getDisponibilidadDeSalas('01')">
+          Salas 01
+        </button>
+        <button class="item__tab" (click)="getDisponibilidadDeSalas('02')">
+          Salas 02
+        </button>
+        <button class="item__tab" (click)="getDisponibilidadDeSalas('03')">
+          Salas 03
+        </button>
       </div>
-      <div class="tab__body">
-        <h1>kjdgfks</h1>
+      <div class="tab__body modal-scroll-y">
+        <div class="container__data">
+          <ng-container
+            *ngFor="let disponibilidadDeSala of disponibilidadDeSalas"
+          >
+            <input
+              type="checkbox"
+              [id]="disponibilidadDeSala.hora"
+              [value]="disponibilidadDeSala | json"
+              (change)="selectTime($event.target)"
+            />
+            <label
+              class="item__data"
+              [class.valid__status]="
+                disponibilidadDeSala.estado || disponibilidadDeSala?.status
+              "
+              [for]="disponibilidadDeSala.hora"
+              >{{ disponibilidadDeSala.hora }}</label
+            >
+          </ng-container>
+        </div>
       </div>
     </div>
   </div>

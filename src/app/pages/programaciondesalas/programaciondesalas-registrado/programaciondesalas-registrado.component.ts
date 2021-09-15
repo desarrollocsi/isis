@@ -1,17 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { take, takeUntil, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
-import { IntermedaryService } from '../../../core/services';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { IntermedaryService, MessageService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
 
-import * as moment from 'moment';
-
 import {
-  calculoDeHora,
   obtenerIndice,
   modificarDataDeProgramacionDeSalas,
+  formatearFecha,
+  transformarData,
 } from '../utils/util';
 
 @Component({
@@ -34,6 +35,10 @@ export class ProgramaciondesalasRegistradoComponent
   disponibilidadDeSalas$: Observable<any>;
   sala: boolean = false;
   isPanelTiempoProgramacion: boolean = false;
+  nameButton: string = 'Registrar';
+  verbo: string = 'POST';
+
+  private readonly unsubscribe$: Subject<void> = new Subject();
 
   get participantes(): FormArray {
     return this.form.get('participantes') as FormArray;
@@ -67,19 +72,19 @@ export class ProgramaciondesalasRegistradoComponent
     return this.form.controls;
   }
 
-  private readonly unsubscribe$: Subject<void> = new Subject();
-
   constructor(
     private fb: FormBuilder,
     private programacionDeSalasServices: ProgramaciondesalasService,
-    private IntermedaryService: IntermedaryService
+    private IntermedaryService: IntermedaryService,
+    private MessageService: MessageService,
+    private Router: Router
   ) {}
 
   intervencion = new FormControl({ value: null, disabled: true });
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      sa_codsal: [null],
+      sa_codsal: [{ value: null, disabled: true }],
       cq_cama: [null],
       se_codigo: [null],
       cq_numhis: ['100000'],
@@ -95,7 +100,7 @@ export class ProgramaciondesalasRegistradoComponent
       cq_areapre: [null],
       cq_estancia: [null],
       cq_pedido: [null],
-      cq_fecha: [null],
+      cq_fecha: [{ value: null, disabled: true }],
       cq_hoinpr: [{ value: null, disabled: true }],
       cq_hofipr: [{ value: null, disabled: true }],
       // cq_es_emer: [null],
@@ -113,20 +118,50 @@ export class ProgramaciondesalasRegistradoComponent
     this.salas$ = this.programacionDeSalasServices.getSalas();
     this.getProgramacionData();
     this.fechaCalendario();
+    this.horarioDeProgramacion();
+    this.httpDynamic();
+  }
+
+  httpDynamic() {
+    this.programacionDeSalasServices.httpDynamic
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        ({ verbo, nameButton }: { verbo: string; nameButton: string }) => {
+          this.nameButton = nameButton;
+          this.verbo = verbo;
+        }
+      );
+  }
+
+  camposReset() {
+    this.intervencion.reset({ value: null, disabled: false });
+    this.forms.cq_codiqx.reset({ value: null, disabled: false });
+    this.forms.cq_codiqx2.reset({ value: null, disabled: false });
+    this.forms.cq_codiqx3.reset({ value: null, disabled: false });
+    this.forms.medico.reset({ value: null, disabled: false });
+  }
+
+  horarioDeProgramacion() {
+    this.programacionDeSalasServices.dataHorarioDeProgramacion
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => {
+        this.form.patchValue(data), (this.isPanelTiempoProgramacion = true);
+      });
   }
 
   panelTiempoProgramacion() {
-    this.IntermedaryService.modal.next();
-    // this.isPanelTiempoProgramacion = true;
+    this.forms.tiempo.value &&
+      this.IntermedaryService.modal.next(this.forms.tiempo.value);
+
+    !this.forms.tiempo.value &&
+      this.MessageService.MessageInfo('Ingresar intervencion');
   }
 
   fechaCalendario() {
     this.IntermedaryService._fecha
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((fecha: string) => {
-        this.forms.cq_fecha.setValue(
-          moment(fecha, 'YYYY-MM-DD').format('YYYY-MM-DD')
-        );
+        this.forms.cq_fecha.setValue(formatearFecha(fecha));
       });
   }
 
@@ -141,14 +176,6 @@ export class ProgramaciondesalasRegistradoComponent
         this.camposReset();
         this.personales$ = this.programacionDeSalasServices.getPersonales();
       });
-  }
-
-  camposReset() {
-    this.intervencion.reset({ value: null, disabled: false });
-    this.forms.cq_codiqx.reset({ value: null, disabled: false });
-    this.forms.cq_codiqx2.reset({ value: null, disabled: false });
-    this.forms.cq_codiqx3.reset({ value: null, disabled: false });
-    this.forms.medico.reset({ value: null, disabled: false });
   }
 
   changeMedicoIntervecion(codigoDeEspecialidad: string) {
@@ -210,32 +237,20 @@ export class ProgramaciondesalasRegistradoComponent
     !checked && this.form.removeControl(control);
   }
 
-  acordionSala({ value, checked }: { value: string; checked: boolean }) {
-    this.sala = checked;
-    // this.disponibilidadDeSalas$ = this.programacionDeSalasServices.getDisponibilidadDeSalas(
-    //   moment(this.forms.cq_fecha.value).format('YYYY-MM-DD'),
-    //   numeroDeSala
-    // );
-    // this.forms.sa_codsal.setValue(numeroDeSala);
-  }
-
-  setTiempo({ hora }) {
-    this.forms.cq_hoinpr.setValue(hora);
-    this.form.patchValue(
-      calculoDeHora({
-        hora,
-        tiempo: this.forms.tiempo.value,
-        fecha: this.forms.cq_fecha,
-      })
-    );
-  }
-
   onSubmit() {
-    // this.programacionDeSalasServices
-    //   .postRegistroDeProgramacion(this.form.value)
-    //   .subscribe(console.log);
-    console.log(this.participantes.value);
-    // console.log(this.form.getRawValue());
+    this.programacionDeSalasServices
+      .getApiDynamic({
+        verbo: this.verbo,
+        data: transformarData(this.form.getRawValue()),
+      })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => {
+          this.MessageService.MessageSucces(data.message),
+            this.Router.navigate(['home/programaciondesalas']);
+        },
+        (error: any) => this.MessageService.MessageError(error)
+      );
   }
 
   ngOnDestroy(): void {
