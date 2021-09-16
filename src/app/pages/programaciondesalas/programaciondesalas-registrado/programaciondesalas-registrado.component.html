@@ -3,9 +3,9 @@
     <div class="card">
       <!--row 1 beginning-->
       <div class="row__item">
-        <div class="group">
+        <div class="group w__40">
           <select class="input-control input-select" formControlName="cq_cama">
-            <option value="null">seleccionar camas</option>
+            <option value="null">seleccionar</option>
             <option [value]="cama.codigo" *ngFor="let cama of camas$ | async">
               {{ cama.descripcionCorto }}
             </option>
@@ -18,7 +18,7 @@
             (change)="changeMedicoIntervecion($event.target.value)"
             formControlName="se_codigo"
           >
-            <option value="null">Seleccionar especialidad</option>
+            <option value="null">Seleccionar</option>
             <option
               [value]="especialidad.codigo"
               *ngFor="let especialidad of especialidades$ | async"
@@ -31,18 +31,18 @@
         <div class="group">
           <select
             class="input-control input-select"
-            [formControl]="intervencion"
+            formControlName="cq_codiqx"
             (change)="setParticipantes($event.target.value)"
           >
-            <option value="null">Seleccionar intervencion</option>
+            <option value="null">Seleccionar</option>
             <option
-              [value]="intervencion | json"
+              [value]="intervencion.cq_codiqx"
               *ngFor="let intervencion of intervenciones$ | async"
             >
               {{ intervencion.cq_nomint | titlecase }}
             </option>
           </select>
-          <label class="label-control">Intervencion</label>
+          <label class="label-control">Intervencion principal</label>
         </div>
         <div class="group">
           <select
@@ -50,7 +50,7 @@
             formControlName="medico"
             (change)="setAsignacionCirujano($event.target.value)"
           >
-            <option value="null">Seleccionar medico</option>
+            <option value="null">Seleccionar</option>
             <option
               [value]="medico.codigo"
               *ngFor="let medico of medicos$ | async"
@@ -69,7 +69,7 @@
             class="input-control input-select"
             formControlName="cq_codiqx2"
           >
-            <option value="null">Seleccionar intervencion 2</option>
+            <option value="null">Seleccionar</option>
             <option
               [value]="intervencion.cq_codiqx"
               *ngFor="let intervencion of intervenciones$ | async"
@@ -85,7 +85,7 @@
             class="input-control input-select"
             formControlName="cq_codiqx3"
           >
-            <option value="null">Seleccionar intervencion 3</option>
+            <option value="null">Seleccionar</option>
             <option
               [value]="intervencion.cq_codiqx"
               *ngFor="let intervencion of intervenciones$ | async"
@@ -101,7 +101,7 @@
             class="input-control input-select"
             formControlName="an_tipane"
           >
-            <option value="null">Seleccionar anestesias</option>
+            <option value="null">Seleccionar</option>
             <option
               [value]="anestesia.an_tipane"
               *ngFor="let anestesia of anestesias$ | async"
@@ -288,7 +288,7 @@
           animate__animated animate__fadeIn
           p-2
         "
-        (click)="panelTiempoProgramacion()"
+        (click)="tiempoProgramacion()"
       >
         <span class="text__color">
           <img src="../../../../assets//icons/add-plus.svg" />
@@ -351,7 +351,9 @@
         </div>
       </fieldset>
       <div class="group">
-        <button type="submit" class="btn">{{ nameButton }}</button>
+        <button type="submit" class="btn">
+          {{ nameButton }}
+        </button>
       </div>
     </div>
   </form>

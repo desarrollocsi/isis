@@ -54,10 +54,17 @@ export class ProgramaciondesalasService {
     );
   }
 
-  getIntervenciones(codigoDeEspecialidad: string) {
-    return this.http.get(
-      `http://127.0.0.1:8000/intervencion/${codigoDeEspecialidad}/`
-    );
+  getIntervenciones({ parametro, keys }: { parametro: string; keys: string }) {
+    const END_POINT_INTERVENCION = {
+      ESPECIALIDAD: this.http.get(
+        `http://127.0.0.1:8000/intervencion/${parametro}/`
+      ),
+      CODIGO: this.http.get(
+        `http://127.0.0.1:8000/intervencionporcodigo/${parametro}/`
+      ),
+    };
+
+    return END_POINT_INTERVENCION[keys];
   }
 
   getAnestesia() {
@@ -100,7 +107,6 @@ export class ProgramaciondesalasService {
     const END_POINT = {
       PUT: this.http.get(`http://127.0.0.1:8000/anestesia`),
       POST: this.http.post('http://127.0.0.1:8000/programaciones', data),
-      // .pipe(tap((_) => this.IntermedaryService.refresh.next())),
     };
 
     return END_POINT[verbo];

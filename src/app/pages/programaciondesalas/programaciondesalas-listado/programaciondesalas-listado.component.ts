@@ -28,7 +28,6 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
 
   ngOnInit(): void {
     this.getAgendaSoap();
-    // this.IntermedaryService.refresh.subscribe((_) => this.getAgendaSoap());
   }
 
   getAgendaSoap() {

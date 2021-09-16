@@ -1,5 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Observable, Subject } from 'rxjs';
@@ -23,6 +29,7 @@ import {
 export class ProgramaciondesalasRegistradoComponent
   implements OnInit, OnDestroy
 {
+  disponibilidadDeSalas$: Observable<any>;
   camas$: Observable<any>;
   especialidades$: Observable<any>;
   intervenciones$: Observable<any>;
@@ -32,7 +39,6 @@ export class ProgramaciondesalasRegistradoComponent
   salas$: Observable<any>;
   form$: Observable<any>;
   form: FormGroup;
-  disponibilidadDeSalas$: Observable<any>;
   sala: boolean = false;
   isPanelTiempoProgramacion: boolean = false;
   nameButton: string = 'Registrar';
@@ -56,18 +62,6 @@ export class ProgramaciondesalasRegistradoComponent
     return this.form.get('tiempo');
   }
 
-  get cama() {
-    return this.form.get('cama').errors;
-  }
-
-  get codigoIntervencion() {
-    return this.form.get('cq_codiqx');
-  }
-
-  get participantesData() {
-    return this.participantes.value;
-  }
-
   get forms() {
     return this.form.controls;
   }
@@ -80,12 +74,10 @@ export class ProgramaciondesalasRegistradoComponent
     private Router: Router
   ) {}
 
-  intervencion = new FormControl({ value: null, disabled: true });
-
   ngOnInit(): void {
     this.form = this.fb.group({
       sa_codsal: [{ value: null, disabled: true }],
-      cq_cama: [null],
+      cq_cama: [null, Validators.required],
       se_codigo: [null],
       cq_numhis: ['100000'],
       medico: [{ value: null, disabled: true }],
@@ -93,7 +85,7 @@ export class ProgramaciondesalasRegistradoComponent
       cq_codiqx2: [{ value: null, disabled: true }],
       cq_codiqx3: [{ value: null, disabled: true }],
       an_tipane: [null],
-      cq_num_petito: [null],
+      cq_num_petito: [null, [Validators.required, Validators.minLength(2)]],
       cq_numsema: [null],
       tiempo: [{ value: null, disabled: true }],
       cq_antibio: [null],
@@ -122,23 +114,20 @@ export class ProgramaciondesalasRegistradoComponent
     this.httpDynamic();
   }
 
-  httpDynamic() {
-    this.programacionDeSalasServices.httpDynamic
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        ({ verbo, nameButton }: { verbo: string; nameButton: string }) => {
-          this.nameButton = nameButton;
-          this.verbo = verbo;
-        }
-      );
-  }
-
   camposReset() {
-    this.intervencion.reset({ value: null, disabled: false });
     this.forms.cq_codiqx.reset({ value: null, disabled: false });
     this.forms.cq_codiqx2.reset({ value: null, disabled: false });
     this.forms.cq_codiqx3.reset({ value: null, disabled: false });
     this.forms.medico.reset({ value: null, disabled: false });
+  }
+
+  httpDynamic() {
+    this.programacionDeSalasServices.httpDynamic
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(({ verbo, nameButton }) => {
+        this.nameButton = nameButton;
+        this.verbo = verbo;
+      });
   }
 
   horarioDeProgramacion() {
@@ -149,32 +138,34 @@ export class ProgramaciondesalasRegistradoComponent
       });
   }
 
-  panelTiempoProgramacion() {
-    this.forms.tiempo.value &&
-      this.IntermedaryService.modal.next(this.forms.tiempo.value);
-
+  tiempoProgramacion() {
     !this.forms.tiempo.value &&
       this.MessageService.MessageInfo('Ingresar intervencion');
+
+    this.forms.tiempo.value &&
+      this.IntermedaryService.modal.next(this.forms.tiempo.value);
   }
 
   fechaCalendario() {
     this.IntermedaryService._fecha
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((fecha: string) => {
-        this.forms.cq_fecha.setValue(formatearFecha(fecha));
-      });
+      .subscribe((fecha: string) =>
+        this.forms.cq_fecha.setValue(formatearFecha(fecha))
+      );
   }
 
   getProgramacionData() {
     this.IntermedaryService._dataDeProgramacionDeSalas
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
+        this.changeMedicoIntervecion(data.se_codigo);
         this.form.patchValue(modificarDataDeProgramacionDeSalas(data));
         data.participantes.map((data: any) =>
           this.participantes.push(this.fb.group(data))
         );
-        this.camposReset();
-        this.personales$ = this.programacionDeSalasServices.getPersonales();
+        this.setTiempoDeIntervencion(data.cq_codiqx);
+        this.setAsignacionCirujano(this.cirujano.value, true);
+        this.Personal();
       });
   }
 
@@ -190,19 +181,33 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   intervencionesPorEspecialidad(codigoDeEspecialidad: string) {
-    this.intervenciones$ =
-      this.programacionDeSalasServices.getIntervenciones(codigoDeEspecialidad);
+    this.intervenciones$ = this.programacionDeSalasServices.getIntervenciones({
+      parametro: codigoDeEspecialidad,
+      keys: 'ESPECIALIDAD',
+    });
   }
 
-  setParticipantes(data: string) {
-    this.participantes.clear();
-    const { cq_codiqx, cq_tiempo } = JSON.parse(data);
-    this.tiempoDeIntervencion.reset(cq_tiempo);
-    this.codigoIntervencion.setValue(cq_codiqx);
-    this.listadoDeParticipantes(cq_codiqx);
+  Personal() {
+    this.personales$ = this.programacionDeSalasServices.getPersonales();
+  }
+
+  setTiempoDeIntervencion(codigoDeIntervencion: string) {
+    this.programacionDeSalasServices
+      .getIntervenciones({ parametro: codigoDeIntervencion, keys: 'CODIGO' })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(({ cq_tiempo }) =>
+        this.tiempoDeIntervencion.reset({ value: cq_tiempo, disabled: true })
+      );
+  }
+
+  setParticipantes(codigoDeIntervencion: string) {
+    this.listadoDeParticipantes(codigoDeIntervencion);
+    this.setTiempoDeIntervencion(codigoDeIntervencion);
+    this.Personal();
   }
 
   listadoDeParticipantes(codigoDeIntervencion: string) {
+    this.participantes.clear();
     this.programacionDeSalasServices
       .getParticipantes(codigoDeIntervencion)
       .pipe(takeUntil(this.unsubscribe$))
@@ -212,11 +217,11 @@ export class ProgramaciondesalasRegistradoComponent
           this.participantes.push(this.fb.group(val));
         });
       });
-    this.personales$ = this.programacionDeSalasServices.getPersonales();
   }
 
-  setAsignacionCirujano(codigoMedico: string) {
+  setAsignacionCirujano(codigoMedico: string, isEdit: boolean = false) {
     this.cirujano.reset({ value: codigoMedico, disabled: true });
+    isEdit && this.forms.medico.reset({ value: codigoMedico, disabled: false });
   }
 
   agregarEquipoMedico(checked: boolean, { value }) {
@@ -224,7 +229,7 @@ export class ProgramaciondesalasRegistradoComponent
     !checked && this.deleteEquiposMedicos(value);
   }
 
-  deleteEquiposMedicos(codigoDeEquipoMedico: any) {
+  deleteEquiposMedicos(codigoDeEquipoMedico: string) {
     const indice = obtenerIndice({
       data: this.equiposMedicos.value,
       codigoDeEquipoMedico,
@@ -238,19 +243,24 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   onSubmit() {
-    this.programacionDeSalasServices
-      .getApiDynamic({
-        verbo: this.verbo,
-        data: transformarData(this.form.getRawValue()),
-      })
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (data: any) => {
-          this.MessageService.MessageSucces(data.message),
-            this.Router.navigate(['home/programaciondesalas']);
-        },
-        (error: any) => this.MessageService.MessageError(error)
-      );
+    // this.programacionDeSalasServices
+    //   .getApiDynamic({
+    //     verbo: this.verbo,
+    //     data: transformarData(this.form.getRawValue()),
+    //   })
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(
+    //     (data: any) => this.actionSuccess(data),
+    //     (error: any) => this.MessageService.MessageError(error)
+    //   );
+    console.log(this.verbo);
+    console.log(this.nameButton);
+    console.log(transformarData(this.form.getRawValue()));
+  }
+
+  actionSuccess({ message }: { message: string }) {
+    this.MessageService.MessageSucces(message),
+      this.Router.navigate(['home/programaciondesalas']);
   }
 
   ngOnDestroy(): void {
