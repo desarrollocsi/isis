@@ -243,16 +243,16 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   onSubmit() {
-    // this.programacionDeSalasServices
-    //   .getApiDynamic({
-    //     verbo: this.verbo,
-    //     data: transformarData(this.form.getRawValue()),
-    //   })
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     (data: any) => this.actionSuccess(data),
-    //     (error: any) => this.MessageService.MessageError(error)
-    //   );
+    this.programacionDeSalasServices
+      .getApiDynamic({
+        verbo: this.verbo,
+        data: transformarData(this.form.getRawValue()),
+      })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => this.actionSuccess(data),
+        (error: any) => this.MessageService.MessageError(error)
+      );
     console.log(this.verbo);
     console.log(this.nameButton);
     console.log(transformarData(this.form.getRawValue()));

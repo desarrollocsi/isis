@@ -20,18 +20,27 @@ export class HistoriaService {
   }
 
   apiDinamic(verbHttp: string, data: any) {
-    console.log(data);
-    switch (verbHttp) {
-      case 'POST': {
-        return this.http.post(`${environment.apiUrl}/historias/`, data);
-      }
-      case 'PUT': {
-        return this.http.put(
-          `${environment.apiUrl}/historias/${data.hc_numhis}`,
-          data
-        );
-      }
-    }
+    // switch (verbHttp) {
+    //   case 'POST': {
+    //     return this.http.post(`${environment.apiUrl}/historias/`, data);
+    //   }
+    //   case 'PUT': {
+    //     return this.http.put(
+    //       `${environment.apiUrl}/historias/${data.hc_numhis}`,
+    //       data
+    //     );
+    //   }
+    // }
+
+    const END_POINTS_DYNAMIC = {
+      POST: this.http.post(`${environment.apiUrl}/historias/`, data),
+      PUT: this.http.put(
+        `${environment.apiUrl}/historias/${data.hc_numhis}`,
+        data
+      ),
+    };
+
+    return END_POINTS_DYNAMIC[verbHttp];
   }
 
   /**********************/

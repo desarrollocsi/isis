@@ -103,6 +103,10 @@ export class ProgramaciondesalasService {
     );
   }
 
+  getSearchHistoria(text: string) {
+    return this.http.get(`http://127.0.0.1:8000/historia?search=${text}`);
+  }
+
   getApiDynamic({ verbo, data }) {
     const END_POINT = {
       PUT: this.http.get(`http://127.0.0.1:8000/anestesia`),
