@@ -1,6 +1,9 @@
 import * as moment from 'moment';
 
-export const formatearFecha = (fecha: string) =>
+export const formatearFechaDmy = (fecha: string) =>
+  moment(fecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+
+export const formatearFechaYmd = (fecha: string) =>
   moment(fecha, 'YYYY-MM-DD').format('YYYY-MM-DD');
 
 export const formatearFechaHora = (fecha: string, hora: string) =>
@@ -24,7 +27,7 @@ export const transformarData = (data: any) => {
 };
 
 export const modificarDataDeProgramacionDeSalas = (data: any) => {
-  data['cq_fecha'] = formatearFecha(data.cq_fecha);
+  data['cq_fecha'] = formatearFechaYmd(data.cq_fecha);
   data['cq_hoinpr'] = formatearHora(data.cq_hoinpr);
   data['cq_hofipr'] = formatearHora(data.cq_hofipr);
   return data;

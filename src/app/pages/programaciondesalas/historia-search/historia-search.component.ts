@@ -11,11 +11,31 @@ export class HistoriaSearchComponent implements OnInit {
   constructor(private ProgramaciondesalasService: ProgramaciondesalasService) {}
 
   isModal: boolean = true;
+  isSearch: boolean = true;
   dataProgramacion$: Observable<any>;
+  dataProgramacion: [] = [];
 
-  ngOnInit(): void {
-    this.dataProgramacion$ =
-      this.ProgramaciondesalasService.getSearchHistoria('VARGAS');
+  ngOnInit(): void {}
+
+  searchPaciente(searchText: string) {
+    this.ProgramaciondesalasService.getSearchHistoria(searchText).subscribe(
+      (data) => (this.dataProgramacion = data)
+    );
+  }
+
+  pacienteSeleccionado({ historia, nombreCompletoDelPaciente, edad }) {
+    const data = {
+      cq_numhis: historia,
+      cq_paciente: nombreCompletoDelPaciente,
+      cq_edad: edad,
+    };
+    this.ProgramaciondesalasService.datoDelpaciente.next(data);
+    this.isSearch = false;
+  }
+
+  habilitarSearch() {
+    this.isSearch = true;
+    this.dataProgramacion = [];
   }
 
   closeModal() {

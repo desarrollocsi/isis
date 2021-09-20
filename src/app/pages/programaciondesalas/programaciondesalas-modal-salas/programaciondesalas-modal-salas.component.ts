@@ -68,14 +68,18 @@ export class ProgramaciondesalasModalSalasComponent
       this.disponibilidadDeSalas[indice]['status'] = data.estado;
     });
 
+    this.envioDeLaHoraSeleccionada();
+    checked && this.closeModal();
+    this.tiempoDeProgramacion = [];
+  }
+
+  envioDeLaHoraSeleccionada() {
     this.ProgramaciondesalasService.dataHorarioDeProgramacion.next(
       generarObjectHoraDeProgramacion(
         this.tiempoDeProgramacion,
         this.numeroDeSala
       )
     );
-    this.tiempoDeProgramacion = [];
-    this.closeModal();
   }
 
   closeModal() {

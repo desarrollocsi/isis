@@ -11,6 +11,7 @@ import { ProgramaciondesalasRegistradoComponent } from './programaciondesalas-re
 import { ProgramaciondesalasModalComponent } from './programaciondesalas-modal/programaciondesalas-modal.component';
 import { ProgramaciondesalasModalSalasComponent } from './programaciondesalas-modal-salas/programaciondesalas-modal-salas.component';
 import { HistoriaSearchComponent } from './historia-search/historia-search.component';
+import { ProgramaciondesalasInformeoperatioroComponent } from './programaciondesalas-informeoperatioro/programaciondesalas-informeoperatioro.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HistoriaSearchComponent } from './historia-search/historia-search.compo
     ProgramaciondesalasModalComponent,
     ProgramaciondesalasModalSalasComponent,
     HistoriaSearchComponent,
+    ProgramaciondesalasInformeoperatioroComponent,
   ],
   imports: [
     CommonModule,

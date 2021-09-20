@@ -114,6 +114,10 @@
   box-shadow: 0 8px 6px -6px black;
 }
 
+.icon__button {
+  cursor: pointer;
+}
+
 /**********TABL2**********/
 .table__head,
 .table__body {

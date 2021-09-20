@@ -17,7 +17,7 @@ import { ProgramaciondesalasService } from '../services';
 import {
   obtenerIndice,
   modificarDataDeProgramacionDeSalas,
-  formatearFecha,
+  formatearFechaYmd,
   transformarData,
 } from '../utils/util';
 
@@ -80,6 +80,8 @@ export class ProgramaciondesalasRegistradoComponent
       cq_cama: [null, Validators.required],
       se_codigo: [null],
       cq_numhis: ['100000'],
+      cq_paciente: [null],
+      cq_edad: [null],
       medico: [{ value: null, disabled: true }],
       cq_codiqx: [{ value: null, disabled: true }],
       cq_codiqx2: [{ value: null, disabled: true }],
@@ -112,6 +114,7 @@ export class ProgramaciondesalasRegistradoComponent
     this.fechaCalendario();
     this.horarioDeProgramacion();
     this.httpDynamic();
+    this.datosDelPaciente();
   }
 
   camposReset() {
@@ -119,6 +122,12 @@ export class ProgramaciondesalasRegistradoComponent
     this.forms.cq_codiqx2.reset({ value: null, disabled: false });
     this.forms.cq_codiqx3.reset({ value: null, disabled: false });
     this.forms.medico.reset({ value: null, disabled: false });
+  }
+
+  datosDelPaciente() {
+    this.programacionDeSalasServices.datoDelpaciente.subscribe((data: any) => {
+      this.form.patchValue(data);
+    });
   }
 
   httpDynamic() {
@@ -150,7 +159,7 @@ export class ProgramaciondesalasRegistradoComponent
     this.IntermedaryService._fecha
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((fecha: string) =>
-        this.forms.cq_fecha.setValue(formatearFecha(fecha))
+        this.forms.cq_fecha.setValue(formatearFechaYmd(fecha))
       );
   }
 
@@ -243,16 +252,16 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   onSubmit() {
-    this.programacionDeSalasServices
-      .getApiDynamic({
-        verbo: this.verbo,
-        data: transformarData(this.form.getRawValue()),
-      })
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (data: any) => this.actionSuccess(data),
-        (error: any) => this.MessageService.MessageError(error)
-      );
+    // this.programacionDeSalasServices
+    //   .getApiDynamic({
+    //     verbo: this.verbo,
+    //     data: transformarData(this.form.getRawValue()),
+    //   })
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(
+    //     (data: any) => this.actionSuccess(data),
+    //     (error: any) => this.MessageService.MessageError(error)
+    //   );
     console.log(this.verbo);
     console.log(this.nameButton);
     console.log(transformarData(this.form.getRawValue()));

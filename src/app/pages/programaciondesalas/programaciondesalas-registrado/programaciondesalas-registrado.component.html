@@ -292,7 +292,7 @@
         (click)="tiempoProgramacion()"
       >
         <span class="text__color">
-          <img src="../../../../assets//icons/add-plus.svg" />
+          <img src="../../../../assets/icons/add-plus.svg" />
           Agregar tiempo de la intervencion
         </span>
       </fieldset>
@@ -303,9 +303,20 @@
       >
         <div class="row__head">
           <span class="text__title">Dato de la Programacion</span>
-          <button class="btn__small" (click)="panelTiempoProgramacion()">
-            new
-          </button>
+          <!-- <button
+            type="button"
+            class="btn__small"
+            (click)="tiempoProgramacion()"
+          >
+            Disponibilidad
+          </button> -->
+          <img
+            src="../../../../assets/icons/calendar.svg"
+            width="30"
+            height="30"
+            class="icon__button"
+            (click)="tiempoProgramacion()"
+          />
         </div>
         <div class="row__item">
           <div class="group">
