@@ -1,3 +1,4 @@
+import { formDynamic } from '../db/form__dynamic';
 import * as moment from 'moment';
 
 export const formatearFechaDmy = (fecha: string) =>
@@ -18,11 +19,12 @@ export const obtenerIndiceProgramacionSala = ({ data, hora }) =>
   data.findIndex((data: any) => data.hora === hora);
 
 export const obtenerIndice = ({ data, codigoDeEquipoMedico }) =>
-  data.findIndex(({ codigo }) => codigo === codigoDeEquipoMedico);
+  data.findIndex(({ de_codequi }) => de_codequi === codigoDeEquipoMedico);
 
 export const transformarData = (data: any) => {
   data['cq_hoinpr'] = formatearFechaHora(data.cq_fecha, data.cq_hoinpr);
   data['cq_hofipr'] = formatearFechaHora(data.cq_fecha, data.cq_hofipr);
+  data['cq_fecha'] = formatearFechaHora(data.cq_fecha, '00:00:00');
   return data;
 };
 
@@ -54,4 +56,11 @@ export const generarObjectHoraDeProgramacion = (
     cq_hoinpr: data[data.length - 1].hora,
     cq_hofipr: data[0].hora,
   };
+};
+
+export const isCheckbox = (keys: string, codigo: string) => {
+  let indice = formDynamic[keys].findIndex(
+    ({ value, control }) => value === codigo || control === codigo
+  );
+  formDynamic[keys][indice]['isChecked'] = true;
 };

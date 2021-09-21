@@ -19,6 +19,7 @@ import {
   modificarDataDeProgramacionDeSalas,
   formatearFechaYmd,
   transformarData,
+  isCheckbox,
 } from '../utils/util';
 
 @Component({
@@ -29,6 +30,7 @@ import {
 export class ProgramaciondesalasRegistradoComponent
   implements OnInit, OnDestroy
 {
+  private readonly unsubscribe$: Subject<void> = new Subject();
   disponibilidadDeSalas$: Observable<any>;
   camas$: Observable<any>;
   especialidades$: Observable<any>;
@@ -39,12 +41,11 @@ export class ProgramaciondesalasRegistradoComponent
   salas$: Observable<any>;
   form$: Observable<any>;
   form: FormGroup;
-  sala: boolean = false;
-  isPanelTiempoProgramacion: boolean = false;
   nameButton: string = 'Registrar';
   verbo: string = 'POST';
-
-  private readonly unsubscribe$: Subject<void> = new Subject();
+  sala: boolean = false;
+  isPanelTiempoProgramacion: boolean = false;
+  formDynamics: any;
 
   get participantes(): FormArray {
     return this.form.get('participantes') as FormArray;
@@ -76,10 +77,11 @@ export class ProgramaciondesalasRegistradoComponent
 
   ngOnInit(): void {
     this.form = this.fb.group({
+      cq_numope: [null],
       sa_codsal: [{ value: null, disabled: true }],
       cq_cama: [null, Validators.required],
       se_codigo: [null],
-      cq_numhis: ['100000'],
+      cq_numhis: [null],
       cq_paciente: [null],
       cq_edad: [null],
       medico: [{ value: null, disabled: true }],
@@ -97,10 +99,6 @@ export class ProgramaciondesalasRegistradoComponent
       cq_fecha: [{ value: null, disabled: true }],
       cq_hoinpr: [{ value: null, disabled: true }],
       cq_hofipr: [{ value: null, disabled: true }],
-      // cq_es_emer: [null],
-      // cq_orden_rqx: [null],
-      // cq_orden_cq: [null],
-      // cq_enfer: [null],
       participantes: this.fb.array([]),
       equiposMedicos: this.fb.array([]),
     });
@@ -115,6 +113,17 @@ export class ProgramaciondesalasRegistradoComponent
     this.horarioDeProgramacion();
     this.httpDynamic();
     this.datosDelPaciente();
+    this.formDynamic();
+  }
+
+  Personal() {
+    this.personales$ = this.programacionDeSalasServices.getPersonales();
+  }
+
+  formDynamic() {
+    this.programacionDeSalasServices.getFormDynamic().subscribe((data: any) => {
+      this.formDynamics = data;
+    });
   }
 
   camposReset() {
@@ -174,8 +183,28 @@ export class ProgramaciondesalasRegistradoComponent
         );
         this.setTiempoDeIntervencion(data.cq_codiqx);
         this.setAsignacionCirujano(this.cirujano.value, true);
+        this.isPanelTiempoProgramacion = true;
         this.Personal();
+        data.equiposMedicos.map(({ de_codequi }) => {
+          this.agregarEquipoMedico(true, { value: de_codequi });
+          isCheckbox('equipoMedicos', de_codequi);
+        });
+
+        const { cq_es_emer, cq_orden_rqx, cq_orden_cq, cq_enfer } = data;
+
+        this.formDynamics['otros'][0]['isChecked'] = this.test(cq_es_emer);
+        this.formDynamics['otros'][1]['isChecked'] = this.test(cq_orden_rqx);
+        this.formDynamics['otros'][2]['isChecked'] = this.test(cq_orden_cq);
+        this.formDynamics['otros'][3]['isChecked'] = this.test(cq_enfer);
+
+        this.formDynamics['otros'].map(({ value, control }) => {
+          this.chanceCheckbox(true, { value, control });
+        });
       });
+  }
+
+  test(value: string) {
+    return value === '1' ? true : false;
   }
 
   changeMedicoIntervecion(codigoDeEspecialidad: string) {
@@ -194,10 +223,6 @@ export class ProgramaciondesalasRegistradoComponent
       parametro: codigoDeEspecialidad,
       keys: 'ESPECIALIDAD',
     });
-  }
-
-  Personal() {
-    this.personales$ = this.programacionDeSalasServices.getPersonales();
   }
 
   setTiempoDeIntervencion(codigoDeIntervencion: string) {
@@ -252,19 +277,16 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   onSubmit() {
-    // this.programacionDeSalasServices
-    //   .getApiDynamic({
-    //     verbo: this.verbo,
-    //     data: transformarData(this.form.getRawValue()),
-    //   })
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     (data: any) => this.actionSuccess(data),
-    //     (error: any) => this.MessageService.MessageError(error)
-    //   );
-    console.log(this.verbo);
-    console.log(this.nameButton);
-    console.log(transformarData(this.form.getRawValue()));
+    this.programacionDeSalasServices
+      .getApiDynamic({
+        verbo: this.verbo,
+        data: transformarData(this.form.getRawValue()),
+      })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => this.actionSuccess(data),
+        (error: any) => this.MessageService.MessageError(error)
+      );
   }
 
   actionSuccess({ message }: { message: string }) {

@@ -130,6 +130,11 @@
 .mb__1rem {
   margin-bottom: 1rem;
 }
+
+.mb__05rem {
+  margin-bottom: 0.5rem;
+}
+
 /***INPUT***/
 
 .group {
@@ -143,7 +148,6 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
 .input-control {

@@ -1,10 +1,9 @@
 <div class="card mb__1rem">
-  <div class="group group__search">
-    <img
-      src="../../../../assets/icons/search__black.svg"
-      width="30"
-      height="30"
-    />
+  <div
+    class="group group__search"
+    [class.mb__05rem]="dataProgramacion.length > 0"
+    *ngIf="isSearch"
+  >
     <div class="group">
       <input
         #search
@@ -23,15 +22,25 @@
       <div class="table__item w__60">Nombre del paciente</div>
       <div class="table__item w__10 text__center">Edad</div>
       <div class="table__item w__10 text__center">Sexo</div>
+      <div class="table__item w__10 text__center">
+        <img
+          src="../../../../assets/icons/search__black.svg"
+          width="20"
+          height="20"
+        />
+      </div>
     </div>
     <div
       class="table__body"
-      *ngFor="let data of dataProgramacion"
+      *ngFor="let data of dataProgramacion | search: numeroDeHistoria"
       (click)="pacienteSeleccionado(data)"
     >
       <div class="table__item w__10 text__center">{{ data.historia }}</div>
-      <div class="table__item w__60">{{ data.nombreCompletoDelPaciente }}</div>
+      <div class="table__item w__60">
+        {{ data.nombreCompletoDelPaciente | titlecase }}
+      </div>
       <div class="table__item w__10 text__center">{{ data.edad }}</div>
+      <div class="table__item w__10 text__center">{{ data.sexo }}</div>
       <div class="table__item w__10 text__center">{{ data.sexo }}</div>
     </div>
   </ng-container>

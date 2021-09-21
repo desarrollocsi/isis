@@ -118,7 +118,10 @@ export class ProgramaciondesalasService {
 
   getApiDynamic({ verbo, data }) {
     const END_POINT = {
-      PUT: this.http.get(`http://127.0.0.1:8000/anestesia`),
+      PUT: this.http.put(
+        `http://127.0.0.1:8000/programacion/${data.cq_numope}/`,
+        data
+      ),
       POST: this.http.post('http://127.0.0.1:8000/programaciones', data),
     };
 

@@ -38,11 +38,13 @@ export const formDynamic = {
       label: 'MORCELADOR',
       type: 'checkbox',
       value: '001',
+      isChecked: false,
     },
     {
       label: 'MAYTATOT',
       type: 'checkbox',
       value: '002',
+      isChecked: false,
     },
   ],
   otros: [
@@ -51,24 +53,28 @@ export const formDynamic = {
       type: 'checkbox',
       value: '1',
       control: 'cq_es_emer',
+      isChecked: false,
     },
     {
       label: 'OrdenRqx',
       type: 'checkbox',
       value: '1',
       control: 'cq_orden_rqx',
+      isChecked: false,
     },
     {
       label: 'OrdenIQX',
       type: 'checkbox',
       value: '1',
       control: 'cq_orden_cq',
+      isChecked: false,
     },
     {
       label: 'EnfermeaNeo',
       type: 'checkbox',
       value: '1',
       control: 'cq_enfer',
+      isChecked: false,
     },
   ],
 };

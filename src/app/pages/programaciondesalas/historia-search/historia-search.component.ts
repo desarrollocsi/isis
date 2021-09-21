@@ -14,10 +14,13 @@ export class HistoriaSearchComponent implements OnInit {
   isSearch: boolean = true;
   dataProgramacion$: Observable<any>;
   dataProgramacion: [] = [];
+  numeroDeHistoria: number;
 
   ngOnInit(): void {}
 
   searchPaciente(searchText: string) {
+    this.dataProgramacion = [];
+    this.numeroDeHistoria = undefined;
     this.ProgramaciondesalasService.getSearchHistoria(searchText).subscribe(
       (data) => (this.dataProgramacion = data)
     );
@@ -25,12 +28,13 @@ export class HistoriaSearchComponent implements OnInit {
 
   pacienteSeleccionado({ historia, nombreCompletoDelPaciente, edad }) {
     const data = {
-      cq_numhis: historia,
+      cq_numhis: historia.toString().padStart(10, '0'),
       cq_paciente: nombreCompletoDelPaciente,
       cq_edad: edad,
     };
     this.ProgramaciondesalasService.datoDelpaciente.next(data);
     this.isSearch = false;
+    this.numeroDeHistoria = historia;
   }
 
   habilitarSearch() {

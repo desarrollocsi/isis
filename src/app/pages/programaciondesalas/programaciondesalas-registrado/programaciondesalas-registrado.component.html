@@ -168,28 +168,27 @@
       <!--row 4 end-->
       <!--row 5 beginning-->
       <h1>Are de Preparacion</h1>
-      <div *ngIf="form$ | async as areaPreparaciones">
-        <div class="container__checkbox">
-          <ng-container *ngFor="let f of areaPreparaciones.areaPreparaciones">
-            <input
-              type="radio"
-              class="checkbox__input"
-              [value]="f.value"
-              [id]="f.label"
-              formControlName="cq_areapre"
-            />
-            <label [for]="f.label" class="checkbox__label">{{ f.label }}</label>
-          </ng-container>
-        </div>
+      <div class="container__checkbox">
+        <ng-container *ngFor="let f of formDynamics.areaPreparaciones">
+          <input
+            type="radio"
+            class="checkbox__input"
+            [value]="f.value"
+            [id]="f.label"
+            formControlName="cq_areapre"
+          />
+          <label [for]="f.label" class="checkbox__label">{{ f.label }}</label>
+        </ng-container>
       </div>
+
       <!--row 5 end-->
 
       <!--Estancia beginning-->
       <div class="row__item">
         <div class="group h__70">
           <h1>Estancia</h1>
-          <div class="container__checkbox" *ngIf="form$ | async as atenciones">
-            <ng-container *ngFor="let x of atenciones.estancias">
+          <div class="container__checkbox">
+            <ng-container *ngFor="let x of formDynamics.estancias">
               <input
                 type="radio"
                 class="checkbox__input"
@@ -207,13 +206,14 @@
         <!--Equipos medicos beginning -->
         <div class="group">
           <h1>Equipos Medicos</h1>
-          <div class="container__checkbox" *ngIf="form$ | async as form">
-            <ng-container *ngFor="let equipos of form.equipoMedicos">
+          <div class="container__checkbox">
+            <ng-container *ngFor="let equipos of formDynamics.equipoMedicos">
               <input
                 [type]="equipos.type"
                 class="checkbox__input"
                 [id]="equipos.label"
                 [value]="equipos.value"
+                [checked]="equipos.isChecked"
                 (change)="agregarEquipoMedico($event.target.checked, equipos)"
               />
               <label [for]="equipos.label" class="checkbox__label">{{
@@ -226,22 +226,22 @@
       <!--Equipos end-->
       <!--Otros beginning-->
       <h1>Otros</h1>
-      <div *ngIf="form$ | async as form">
-        <div class="container__checkbox">
-          <ng-container *ngFor="let otro of form.otros">
-            <input
-              [type]="otro.type"
-              class="checkbox__input"
-              [id]="otro.label"
-              [value]="otro.value"
-              (change)="chanceCheckbox($event.target.checked, otro)"
-            />
-            <label [for]="otro.label" class="checkbox__label">{{
-              otro.label | titlecase
-            }}</label>
-          </ng-container>
-        </div>
+      <div class="container__checkbox">
+        <ng-container *ngFor="let otro of formDynamics.otros">
+          <input
+            [type]="otro.type"
+            class="checkbox__input"
+            [id]="otro.label"
+            [value]="otro.value"
+            [checked]="otro.isChecked"
+            (change)="chanceCheckbox($event.target.checked, otro)"
+          />
+          <label [for]="otro.label" class="checkbox__label">{{
+            otro.label | titlecase
+          }}</label>
+        </ng-container>
       </div>
+
       <!--Otros end-->
       <!--form array beginning-->
       <ng-container
@@ -303,13 +303,6 @@
       >
         <div class="row__head">
           <span class="text__title">Dato de la Programacion</span>
-          <!-- <button
-            type="button"
-            class="btn__small"
-            (click)="tiempoProgramacion()"
-          >
-            Disponibilidad
-          </button> -->
           <img
             src="../../../../assets/icons/calendar.svg"
             width="30"

@@ -1,5 +1,5 @@
 <div class="container">
-  <h1 class="title__h1">Reporte de Sala de Operaciones</h1>
+  <h1 class="title__h1 text__color">Reporte de Sala de Operaciones</h1>
   <div class="container__data">
     <div class="container__group w__50 mr_1rem">
       <div class="content__head">
@@ -31,8 +31,55 @@
     </div>
     <div class="content__body">
       <div class="row">
-        <textarea></textarea>
-        <textarea></textarea>
+        <div class="group">
+          <input type="text" class="input-control" placeholder=" " />
+          <div class="label-control">Diagnosticos Pre-Operatorio</div>
+        </div>
+        <div class="group">
+          <input type="text" class="input-control" placeholder=" " />
+          <div class="label-control">Diagnosticos Post-Operatorio</div>
+        </div>
+        <div class="group textarea">
+          <textarea
+            class="input-control"
+            placeholder=" "
+            rows="5"
+            cols="10"
+          ></textarea>
+          <div class="label-control">Procedimientos</div>
+        </div>
+        <div class="group textarea">
+          <textarea
+            class="input-control"
+            placeholder=" "
+            rows="5"
+            cols="10"
+          ></textarea>
+          <div class="label-control">Hallazgos</div>
+        </div>
+        <div class="group textarea">
+          <textarea
+            class="input-control"
+            placeholder=" "
+            rows="5"
+            cols="10"
+          ></textarea>
+          <div class="label-control">Complicationes</div>
+        </div>
+        <div class="group">
+          <input type="text" class="input-control" placeholder=" " />
+          <div class="label-control">Anatomia Patologica</div>
+        </div>
+        <div class="group">
+          <input type="text" class="input-control" placeholder=" " />
+          <div class="label-control">Sangrado aprox</div>
+        </div>
+        <input type="radio" id="completo" name="gasa" />
+        <label for="completo">Completo</label>
+        <input type="radio" id="incompleto" name="gasa" />
+        <label for="incompleto">Incompleto</label>
+        <input type="radio" id="ninguna" name="gasa" />
+        <label for="ninguna">N/A</label>
       </div>
     </div>
   </div>
