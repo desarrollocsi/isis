@@ -178,13 +178,15 @@ export class ProgramaciondesalasRegistradoComponent
       .subscribe((data) => {
         this.changeMedicoIntervecion(data.se_codigo);
         this.form.patchValue(modificarDataDeProgramacionDeSalas(data));
-        data.participantes.map((data: any) =>
-          this.participantes.push(this.fb.group(data))
-        );
+        this.listadoDeParticipantes(data.cq_codiqx);
         this.setTiempoDeIntervencion(data.cq_codiqx);
-        this.setAsignacionCirujano(this.cirujano.value, true);
-        this.isPanelTiempoProgramacion = true;
-        this.Personal();
+        // setTimeout(() => {
+        //   this.participantes.patchValue(data.participantes);
+        //   this.setAsignacionCirujano(this.cirujano.value, true);
+        // }, 1000);
+
+        // this.isPanelTiempoProgramacion = true;
+        //this.Personal();
         data.equiposMedicos.map(({ de_codequi }) => {
           this.agregarEquipoMedico(true, { value: de_codequi });
           isCheckbox('equipoMedicos', de_codequi);
@@ -248,6 +250,7 @@ export class ProgramaciondesalasRegistradoComponent
       .subscribe((data: any) => {
         data.map((val: any) => {
           val['pl_codper'] = null;
+          val['sa_codsal'] = null;
           this.participantes.push(this.fb.group(val));
         });
       });
@@ -277,16 +280,17 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   onSubmit() {
-    this.programacionDeSalasServices
-      .getApiDynamic({
-        verbo: this.verbo,
-        data: transformarData(this.form.getRawValue()),
-      })
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        (data: any) => this.actionSuccess(data),
-        (error: any) => this.MessageService.MessageError(error)
-      );
+    console.log(transformarData(this.form.getRawValue()));
+    // this.programacionDeSalasServices
+    //   .getApiDynamic({
+    //     verbo: this.verbo,
+    //     data: transformarData(this.form.getRawValue()),
+    //   })
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(
+    //     (data: any) => this.actionSuccess(data),
+    //     (error: any) => this.MessageService.MessageError(error)
+    //   );
   }
 
   actionSuccess({ message }: { message: string }) {

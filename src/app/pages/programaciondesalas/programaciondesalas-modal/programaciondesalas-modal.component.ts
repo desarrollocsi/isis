@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Subject } from 'rxjs';
+import { pipe, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
@@ -35,15 +35,15 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
   }
 
   update({ cq_numope }) {
-    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
-      (data) => {
+    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope)
+      // .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((data) => {
         this.IntermedaryService.getCodigoProgramacion(data);
         this.ProgramaciondesalasService.httpDynamic.next({
           verbo: 'PUT',
           nameButton: 'Actualizar',
         });
-      }
-    );
+      });
     this.router.navigate(['home/programaciondesalas/registrar']);
     this.onCloseModal();
   }
