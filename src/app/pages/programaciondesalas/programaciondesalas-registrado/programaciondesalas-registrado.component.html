@@ -167,7 +167,7 @@
       </div>
       <!--row 4 end-->
       <!--row 5 beginning-->
-      <h1>Are de Preparacion</h1>
+      <h1 class="text__title">Are de Preparacion</h1>
       <div class="container__checkbox">
         <ng-container *ngFor="let f of formDynamics.areaPreparaciones">
           <input
@@ -186,7 +186,7 @@
       <!--Estancia beginning-->
       <div class="row__item">
         <div class="group h__70">
-          <h1>Estancia</h1>
+          <h1 class="text__title">Estancia</h1>
           <div class="container__checkbox">
             <ng-container *ngFor="let x of formDynamics.estancias">
               <input
@@ -205,7 +205,7 @@
         <!--Estancia end-->
         <!--Equipos medicos beginning -->
         <div class="group">
-          <h1>Equipos Medicos</h1>
+          <h1 class="text__title">Equipos Medicos</h1>
           <div class="container__checkbox">
             <ng-container *ngFor="let equipos of formDynamics.equipoMedicos">
               <input
@@ -225,7 +225,7 @@
       </div>
       <!--Equipos end-->
       <!--Otros beginning-->
-      <h1>Otros</h1>
+      <h1 class="text__title">Otros</h1>
       <div class="container__checkbox">
         <ng-container *ngFor="let otro of formDynamics.otros">
           <input
@@ -250,7 +250,7 @@
       >
         <div>
           <fieldset class="animate__animated animate__fadeIn w__100">
-            <h1>Participantes</h1>
+            <h1 class="text__title">Participantes</h1>
             <div *ngFor="let _ of participantes.controls; index as indice">
               <ng-container [formGroupName]="indice">
                 <div class="container__card animate__animated animate__fadeIn">

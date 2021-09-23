@@ -182,7 +182,7 @@
 }
 
 .card__title {
-  font-weight: 600;
+  font-weight: 400;
   color: #828282;
 }
 
@@ -312,15 +312,11 @@ fieldset:last-child {
 }
 
 .text__title {
-  color: rgb(1, 162, 114);
+  color: #828282;
   font-weight: 600;
 }
 
 @media (min-width: 768px) and (min-width: 992px) {
-  /* .card {
-    width: 50%;
-  } */
-
   .w__100 {
     width: 100%;
   }

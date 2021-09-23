@@ -32,13 +32,24 @@ export class ProgramaciondesalasModalSalasComponent
 
   ngOnInit(): void {
     this.IntermedaryService.modal.subscribe((minuto: any) => {
-      (this.isModal = true), (this.minutoDeIntervencion = minuto);
+      (this.isModal = true),
+        (this.minutoDeIntervencion = minuto),
+        this.getDisponibilidadDeSalas();
     });
     this.IntermedaryService._fecha.subscribe(
       (fecha: string) => (this.fecha = fecha)
     );
+  }
 
-    this.getDisponibilidadDeSalas();
+  get activeSala01() {
+    return this.numeroDeSala === '01';
+  }
+  get activeSala02() {
+    return this.numeroDeSala === '02';
+  }
+
+  get activeSala03() {
+    return this.numeroDeSala === '03';
   }
 
   getDisponibilidadDeSalas(numeroDeSala: string = '01') {

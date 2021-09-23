@@ -14,14 +14,26 @@
     </div>
     <div class="modal-body modal-scroll-y">
       <div class="tab__head">
-        <button class="item__tab" (click)="getDisponibilidadDeSalas('01')">
-          Salas 01
+        <button
+          class="item__tab"
+          [class.item__tab__active]="activeSala01"
+          (click)="getDisponibilidadDeSalas('01')"
+        >
+          Sala operaciones 1
         </button>
-        <button class="item__tab" (click)="getDisponibilidadDeSalas('02')">
-          Salas 02
+        <button
+          class="item__tab"
+          [class.item__tab__active]="activeSala02"
+          (click)="getDisponibilidadDeSalas('02')"
+        >
+          Sala operaciones 2
         </button>
-        <button class="item__tab" (click)="getDisponibilidadDeSalas('03')">
-          Salas 03
+        <button
+          class="item__tab"
+          [class.item__tab__active]="activeSala03"
+          (click)="getDisponibilidadDeSalas('03')"
+        >
+          Sala de partos
         </button>
       </div>
       <div class="tab__body modal-scroll-y">

@@ -67,6 +67,14 @@ export class ProgramaciondesalasRegistradoComponent
     return this.form.controls;
   }
 
+  get isPut() {
+    return this.verbo === 'PUT';
+  }
+
+  get isPost() {
+    return this.verbo === 'POST';
+  }
+
   constructor(
     private fb: FormBuilder,
     private programacionDeSalasServices: ProgramaciondesalasService,
@@ -96,6 +104,10 @@ export class ProgramaciondesalasRegistradoComponent
       cq_areapre: [null],
       cq_estancia: [null],
       cq_pedido: [null],
+      cq_es_emer: [null],
+      cq_orden_rqx: [null],
+      cq_orden_cq: [null],
+      cq_enfer: [null],
       cq_fecha: [{ value: null, disabled: true }],
       cq_hoinpr: [{ value: null, disabled: true }],
       cq_hofipr: [{ value: null, disabled: true }],
@@ -180,32 +192,29 @@ export class ProgramaciondesalasRegistradoComponent
         this.form.patchValue(modificarDataDeProgramacionDeSalas(data));
         this.listadoDeParticipantes(data.cq_codiqx);
         this.setTiempoDeIntervencion(data.cq_codiqx);
-        // setTimeout(() => {
-        //   this.participantes.patchValue(data.participantes);
-        //   this.setAsignacionCirujano(this.cirujano.value, true);
-        // }, 1000);
+        this.isPanelTiempoProgramacion = true;
+        setTimeout(() => {
+          this.participantes.patchValue(data.participantes);
+          this.setAsignacionCirujano(this.cirujano.value, true);
+        }, 1000);
 
-        // this.isPanelTiempoProgramacion = true;
-        //this.Personal();
+        this.Personal();
         data.equiposMedicos.map(({ de_codequi }) => {
           this.agregarEquipoMedico(true, { value: de_codequi });
           isCheckbox('equipoMedicos', de_codequi);
         });
-
-        const { cq_es_emer, cq_orden_rqx, cq_orden_cq, cq_enfer } = data;
-
-        this.formDynamics['otros'][0]['isChecked'] = this.test(cq_es_emer);
-        this.formDynamics['otros'][1]['isChecked'] = this.test(cq_orden_rqx);
-        this.formDynamics['otros'][2]['isChecked'] = this.test(cq_orden_cq);
-        this.formDynamics['otros'][3]['isChecked'] = this.test(cq_enfer);
-
-        this.formDynamics['otros'].map(({ value, control }) => {
-          this.chanceCheckbox(true, { value, control });
-        });
+        this.setCheckbox(data);
       });
   }
 
-  test(value: string) {
+  setCheckbox({ cq_es_emer, cq_orden_rqx, cq_orden_cq, cq_enfer }) {
+    this.formDynamics['otros'][0]['isChecked'] = this.isValue(cq_es_emer);
+    this.formDynamics['otros'][1]['isChecked'] = this.isValue(cq_orden_rqx);
+    this.formDynamics['otros'][2]['isChecked'] = this.isValue(cq_orden_cq);
+    this.formDynamics['otros'][3]['isChecked'] = this.isValue(cq_enfer);
+  }
+
+  isValue(value: string) {
     return value === '1' ? true : false;
   }
 
@@ -250,7 +259,6 @@ export class ProgramaciondesalasRegistradoComponent
       .subscribe((data: any) => {
         data.map((val: any) => {
           val['pl_codper'] = null;
-          val['sa_codsal'] = null;
           this.participantes.push(this.fb.group(val));
         });
       });
@@ -275,22 +283,21 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   chanceCheckbox(checked: boolean, { control, value }) {
-    checked && this.form.addControl(control, new FormControl(value));
-    !checked && this.form.removeControl(control);
+    this.form.get(control).reset(checked ? value : '0');
   }
 
   onSubmit() {
     console.log(transformarData(this.form.getRawValue()));
-    // this.programacionDeSalasServices
-    //   .getApiDynamic({
-    //     verbo: this.verbo,
-    //     data: transformarData(this.form.getRawValue()),
-    //   })
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     (data: any) => this.actionSuccess(data),
-    //     (error: any) => this.MessageService.MessageError(error)
-    //   );
+    this.programacionDeSalasServices
+      .getApiDynamic({
+        verbo: this.verbo,
+        data: transformarData(this.form.getRawValue()),
+      })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        (data: any) => this.actionSuccess(data),
+        (error: any) => this.MessageService.MessageError(error)
+      );
   }
 
   actionSuccess({ message }: { message: string }) {
