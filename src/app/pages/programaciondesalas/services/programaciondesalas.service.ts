@@ -21,6 +21,7 @@ export class ProgramaciondesalasService {
   private __dataHorarioDeProgramacion = new Subject<any>();
   private __httpDynamic = new Subject<any>();
   private __datoDelPaciente = new Subject<any>();
+  private __historia = new Subject<any>();
   /**/
 
   get datoDelpaciente() {
@@ -33,6 +34,10 @@ export class ProgramaciondesalasService {
 
   get httpDynamic() {
     return this.__httpDynamic;
+  }
+
+  get historia() {
+    return this.__historia;
   }
 
   getAgendaSoap(fecha: string) {
@@ -108,12 +113,20 @@ export class ProgramaciondesalasService {
     );
   }
 
-  getSearchHistoria(text: string) {
-    return this.http.get(`http://127.0.0.1:8000/historia?search=${text}`).pipe(
-      map((value: any) => {
-        return value.map((data: any) => new Paciente(data));
-      })
-    );
+  getSearchPaciente(text: string) {
+    return this.http
+      .get(`http://127.0.0.1:8000/searchpaciente?search=${text}`)
+      .pipe(map(this.moldearData));
+  }
+
+  getPaciente(numeroDeHistoria: string) {
+    return this.http
+      .get(`http://127.0.0.1:8000/historia/${numeroDeHistoria}/`)
+      .pipe(map((value: any) => new Paciente(value)));
+  }
+
+  moldearData(data: any) {
+    return data.map((value: any) => new Paciente(value));
   }
 
   getApiDynamic({ verbo, data }) {

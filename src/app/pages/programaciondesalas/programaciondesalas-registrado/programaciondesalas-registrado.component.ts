@@ -188,6 +188,7 @@ export class ProgramaciondesalasRegistradoComponent
     this.IntermedaryService._dataDeProgramacionDeSalas
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
+        this.programacionDeSalasServices.historia.next(data.cq_numhis);
         this.changeMedicoIntervecion(data.se_codigo);
         this.form.patchValue(modificarDataDeProgramacionDeSalas(data));
         this.listadoDeParticipantes(data.cq_codiqx);

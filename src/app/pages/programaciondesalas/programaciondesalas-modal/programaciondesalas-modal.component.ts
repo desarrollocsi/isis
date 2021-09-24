@@ -35,16 +35,26 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
   }
 
   update({ cq_numope }) {
-    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope)
-      // .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data) => {
+    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
+      (data) => {
         this.IntermedaryService.getCodigoProgramacion(data);
         this.ProgramaciondesalasService.httpDynamic.next({
           verbo: 'PUT',
           nameButton: 'Actualizar',
         });
-      });
+      }
+    );
     this.router.navigate(['home/programaciondesalas/registrar']);
+    this.onCloseModal();
+  }
+
+  informenOperatorio({ cq_numope }: { cq_numope: string }) {
+    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
+      (data) => {
+        this.IntermedaryService.getCodigoProgramacion(data);
+      }
+    );
+    this.router.navigate(['home/programaciondesalas/informeoperatorio']);
     this.onCloseModal();
   }
 

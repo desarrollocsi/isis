@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services/';
 import {
@@ -24,18 +25,20 @@ export class ProgramaciondesalasModalSalasComponent
 
   disponibilidadDeSalas: any = [];
   tiempoDeProgramacion: any = [];
-
+  private readonly unsubscribe$: Subject<void> = new Subject();
   constructor(
     private IntermedaryService: IntermedaryService,
     private ProgramaciondesalasService: ProgramaciondesalasService
   ) {}
 
   ngOnInit(): void {
-    this.IntermedaryService.modal.subscribe((minuto: any) => {
-      (this.isModal = true),
-        (this.minutoDeIntervencion = minuto),
-        this.getDisponibilidadDeSalas();
-    });
+    this.IntermedaryService.modal
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((minuto: any) => {
+        (this.isModal = true),
+          (this.minutoDeIntervencion = minuto),
+          this.getDisponibilidadDeSalas();
+      });
     this.IntermedaryService._fecha.subscribe(
       (fecha: string) => (this.fecha = fecha)
     );
@@ -97,5 +100,8 @@ export class ProgramaciondesalasModalSalasComponent
     this.isModal = false;
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
 }

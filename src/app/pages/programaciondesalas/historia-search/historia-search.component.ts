@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 import { Observable } from 'rxjs/internal/Observable';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { ProgramaciondesalasService } from '../services/';
 
 @Component({
@@ -7,21 +9,35 @@ import { ProgramaciondesalasService } from '../services/';
   templateUrl: './historia-search.component.html',
   styleUrls: ['./historia-search.component.css'],
 })
-export class HistoriaSearchComponent implements OnInit {
+export class HistoriaSearchComponent implements OnInit, OnDestroy {
+  private readonly unsubscribe$: Subject<void> = new Subject();
+
   constructor(private ProgramaciondesalasService: ProgramaciondesalasService) {}
 
   isModal: boolean = true;
   isSearch: boolean = true;
   dataProgramacion$: Observable<any>;
-  dataProgramacion: [] = [];
+  dataProgramacion: any = [];
   numeroDeHistoria: number;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.ProgramaciondesalasService.historia
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        switchMap((historia: string) =>
+          this.ProgramaciondesalasService.getPaciente(historia)
+        )
+      )
+      .subscribe((data) => {
+        console.log(data);
+        this.dataProgramacion.push(data), (this.isSearch = false);
+      });
+  }
 
   searchPaciente(searchText: string) {
     this.dataProgramacion = [];
     this.numeroDeHistoria = undefined;
-    this.ProgramaciondesalasService.getSearchHistoria(searchText).subscribe(
+    this.ProgramaciondesalasService.getSearchPaciente(searchText).subscribe(
       (data) => (this.dataProgramacion = data)
     );
   }
@@ -42,7 +58,8 @@ export class HistoriaSearchComponent implements OnInit {
     this.dataProgramacion = [];
   }
 
-  closeModal() {
-    this.isModal = false;
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

@@ -17,18 +17,29 @@
   </div>
 
   <ng-container *ngIf="dataProgramacion.length > 0">
+    <div class="container__title mb__05rem">
+      <div class="text__title">Datos del paciente</div>
+      <button class="btn__icon" (click)="habilitarSearch()">
+        <svg
+          id="Capa_1"
+          class="icon__svg"
+          enable-background="new 0 0 515.558 515.558"
+          viewBox="0 0 515.558 515.558"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="currentColor"
+        >
+          <path
+            d="m378.344 332.78c25.37-34.645 40.545-77.2 40.545-123.333 0-115.484-93.961-209.445-209.445-209.445s-209.444 93.961-209.444 209.445 93.961 209.445 209.445 209.445c46.133 0 88.692-15.177 123.337-40.547l137.212 137.212 45.564-45.564c0-.001-137.214-137.213-137.214-137.213zm-168.899 21.667c-79.958 0-145-65.042-145-145s65.042-145 145-145 145 65.042 145 145-65.043 145-145 145z"
+          />
+        </svg>
+      </button>
+    </div>
+
     <div class="table__head">
       <div class="table__item w__10 text__center">Historia</div>
       <div class="table__item w__60">Nombre del paciente</div>
-      <div class="table__item w__10 text__center">Edad</div>
-      <div class="table__item w__10 text__center">Sexo</div>
-      <div class="table__item w__10 text__center">
-        <img
-          src="../../../../assets/icons/search__black.svg"
-          width="20"
-          height="20"
-        />
-      </div>
+      <div class="table__item w__10 text__center invisible">Edad</div>
+      <div class="table__item w__10 text__center invisible">Sexo</div>
     </div>
     <div
       class="table__body"
@@ -39,9 +50,12 @@
       <div class="table__item w__60">
         {{ data.nombreCompletoDelPaciente | titlecase }}
       </div>
-      <div class="table__item w__10 text__center">{{ data.edad }}</div>
-      <div class="table__item w__10 text__center">{{ data.sexo }}</div>
-      <div class="table__item w__10 text__center">{{ data.sexo }}</div>
+      <div class="table__item w__10 text__center invisible">
+        {{ data.edad }}
+      </div>
+      <div class="table__item w__10 text__center invisible">
+        {{ data.sexo }}
+      </div>
     </div>
   </ng-container>
 </div>

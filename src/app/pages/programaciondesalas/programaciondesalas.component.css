@@ -1,12 +1,27 @@
 .container__flex {
   display: flex;
+  flex-direction: column;
 }
 
-.row__30 {
-  width: 30%;
+.w__100 {
+  width: 100%;
 }
 
-.row__70 {
-  width: 70%;
-  padding: 0 1rem;
+.mb__1rem {
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) and (min-width: 992px) {
+  .container__flex {
+    flex-direction: row;
+  }
+
+  .row__30 {
+    width: 30%;
+  }
+
+  .row__70 {
+    width: 70%;
+    padding: 0 1rem;
+  }
 }

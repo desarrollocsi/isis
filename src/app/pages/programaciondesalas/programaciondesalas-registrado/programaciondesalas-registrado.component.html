@@ -4,7 +4,7 @@
     <div class="card">
       <!--row 1 beginning-->
       <div class="row__item">
-        <div class="group w__40">
+        <div class="group">
           <select class="input-control input-select" formControlName="cq_cama">
             <option value="null">seleccionar</option>
             <option [value]="cama.codigo" *ngFor="let cama of camas$ | async">
@@ -168,7 +168,7 @@
       <!--row 4 end-->
       <!--row 5 beginning-->
       <h1 class="text__title">Are de Preparacion</h1>
-      <div class="container__checkbox">
+      <div class="container__checkbox flex__direction_column">
         <ng-container *ngFor="let f of formDynamics.areaPreparaciones">
           <input
             type="radio"
@@ -177,56 +177,57 @@
             [id]="f.label"
             formControlName="cq_areapre"
           />
-          <label [for]="f.label" class="checkbox__label">{{ f.label }}</label>
+          <label [for]="f.label" class="checkbox__label border__b1">{{
+            f.label
+          }}</label>
+        </ng-container>
+      </div>
+      <!--row 5 end-->
+      <!--Estancia beginning-->
+      <!-- <div class="row__item"> -->
+
+      <h1 class="text__title">Estancia</h1>
+      <div class="container__checkbox">
+        <ng-container *ngFor="let x of formDynamics.estancias">
+          <input
+            type="radio"
+            class="checkbox__input"
+            [value]="x.value"
+            [id]="x.label"
+            formControlName="cq_estancia"
+          />
+          <label [for]="x.label" class="checkbox__label">{{
+            x.label | titlecase
+          }}</label>
         </ng-container>
       </div>
 
-      <!--row 5 end-->
+      <!--Estancia end-->
+      <!--Equipos medicos beginning -->
 
-      <!--Estancia beginning-->
-      <div class="row__item">
-        <div class="group h__70">
-          <h1 class="text__title">Estancia</h1>
-          <div class="container__checkbox">
-            <ng-container *ngFor="let x of formDynamics.estancias">
-              <input
-                type="radio"
-                class="checkbox__input"
-                [value]="x.value"
-                [id]="x.label"
-                formControlName="cq_estancia"
-              />
-              <label [for]="x.label" class="checkbox__label">{{
-                x.label | titlecase
-              }}</label>
-            </ng-container>
-          </div>
-        </div>
-        <!--Estancia end-->
-        <!--Equipos medicos beginning -->
-        <div class="group">
-          <h1 class="text__title">Equipos Medicos</h1>
-          <div class="container__checkbox">
-            <ng-container *ngFor="let equipos of formDynamics.equipoMedicos">
-              <input
-                [type]="equipos.type"
-                class="checkbox__input"
-                [id]="equipos.label"
-                [value]="equipos.value"
-                [checked]="equipos.isChecked"
-                (change)="agregarEquipoMedico($event.target.checked, equipos)"
-              />
-              <label [for]="equipos.label" class="checkbox__label">{{
-                equipos.label | titlecase
-              }}</label>
-            </ng-container>
-          </div>
-        </div>
+      <h1 class="text__title">Equipos Medicos</h1>
+      <div class="container__checkbox">
+        <ng-container *ngFor="let equipos of formDynamics.equipoMedicos">
+          <input
+            [type]="equipos.type"
+            class="checkbox__input"
+            [id]="equipos.label"
+            [value]="equipos.value"
+            [checked]="equipos.isChecked"
+            (change)="agregarEquipoMedico($event.target.checked, equipos)"
+          />
+          <label [for]="equipos.label" class="checkbox__label">{{
+            equipos.label | titlecase
+          }}</label>
+        </ng-container>
       </div>
+
+      <!-- </div> -->
       <!--Equipos end-->
       <!--Otros beginning-->
+
       <h1 class="text__title">Otros</h1>
-      <div class="container__checkbox">
+      <div class="container__checkbox flex__direction_column">
         <ng-container *ngFor="let otro of formDynamics.otros">
           <input
             [type]="otro.type"
@@ -236,130 +237,135 @@
             [checked]="otro.isChecked"
             (change)="chanceCheckbox($event.target.checked, otro)"
           />
-          <label [for]="otro.label" class="checkbox__label">{{
+          <label [for]="otro.label" class="checkbox__label border__b1">{{
             otro.label | titlecase
           }}</label>
         </ng-container>
       </div>
-
       <!--Otros end-->
-      <!--form array beginning-->
-      <ng-container
-        formArrayName="participantes"
-        *ngIf="participantes.controls.length > 0"
-      >
-        <div>
-          <fieldset class="animate__animated animate__fadeIn w__100">
-            <h1 class="text__title">Participantes</h1>
-            <div *ngFor="let _ of participantes.controls; index as indice">
-              <ng-container [formGroupName]="indice">
-                <div class="container__card animate__animated animate__fadeIn">
-                  <div class="card__item">
-                    <lable class="card__title">{{
-                      participantes.value[indice].descripcion | titlecase
-                    }}</lable>
-                  </div>
-                  <div class="group mr_02rem">
-                    <select
-                      class="input-control input-select"
-                      formControlName="pl_codper"
-                    >
-                      <option [value]="null">Seleccionar personal</option>
-                      <option
-                        [value]="personal.codigo"
-                        *ngFor="let personal of personales$ | async"
-                      >
-                        {{ personal.nombre | titlecase }}
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </ng-container>
+    </div>
+    <!--form array beginning-->
+    <ng-container
+      formArrayName="participantes"
+      *ngIf="participantes.controls.length > 0"
+    >
+      <fieldset class="animate__animated animate__fadeIn w__100">
+        <h1 class="text__title">Participantes</h1>
+        <div *ngFor="let _ of participantes.controls; index as indice">
+          <ng-container [formGroupName]="indice">
+            <div class="container__card animate__animated animate__fadeIn">
+              <div class="group">
+                <select
+                  class="input-control input-select"
+                  formControlName="pl_codper"
+                >
+                  <option [value]="null">Seleccionar personal</option>
+                  <option
+                    [value]="personal.codigo"
+                    *ngFor="let personal of personales$ | async"
+                  >
+                    {{ personal.nombre | titlecase }}
+                  </option>
+                </select>
+                <label class="label-control">{{
+                  participantes.value[indice].descripcion | titlecase
+                }}</label>
+              </div>
             </div>
-          </fieldset>
-        </div>
-      </ng-container>
-
-      <!--form array end-->
-      <fieldset
-        *ngIf="!isPanelTiempoProgramacion"
-        class="
-          text__align
-          cursor__pointer
-          animate__animated animate__fadeIn
-          p-2
-        "
-        (click)="tiempoProgramacion()"
-      >
-        <span class="text__color">
-          <img src="../../../../assets/icons/add-plus.svg" />
-          Agregar tiempo de la intervencion
-        </span>
-      </fieldset>
-
-      <fieldset
-        *ngIf="isPanelTiempoProgramacion"
-        class="animate__animated: animate__fadeIn p-2"
-      >
-        <div class="row__head">
-          <span class="text__title">Dato de la Programacion</span>
-          <img
-            src="../../../../assets/icons/calendar.svg"
-            width="30"
-            height="30"
-            class="icon__button"
-            (click)="tiempoProgramacion()"
-          />
-        </div>
-        <div class="row__item">
-          <div class="group">
-            <select
-              class="input-control input-select"
-              formControlName="sa_codsal"
-            >
-              <option
-                [value]="sala.sa_codsal"
-                *ngFor="let sala of salas$ | async"
-              >
-                {{ sala.sa_nombre | titlecase }}
-              </option>
-            </select>
-            <label class="label-control">Sala</label>
-          </div>
-          <div class="group">
-            <input
-              type="date"
-              class="input-control"
-              formControlName="cq_fecha"
-              placeholder=""
-            />
-            <label class="label-control">Fecha</label>
-          </div>
-          <div class="group w__60">
-            <input
-              type="time"
-              class="input-control"
-              formControlName="cq_hoinpr"
-              placeholder=" "
-            />
-            <label class="label-control">Hora Inicio</label>
-          </div>
-          <div class="group w__60">
-            <input
-              type="time"
-              class="input-control"
-              formControlName="cq_hofipr"
-              placeholder=" "
-            />
-            <label class="label-control">Hora Fin</label>
-          </div>
+          </ng-container>
         </div>
       </fieldset>
-      <div class="group">
-        <button type="submit" class="btn">
-          {{ nameButton }}
+    </ng-container>
+
+    <!--form array end-->
+    <fieldset
+      *ngIf="!isPanelTiempoProgramacion"
+      class="animate__animated animate__fadeIn w__100"
+      (click)="tiempoProgramacion()"
+    >
+      <span class="text__color">
+        <img src="../../../../assets/icons/add-plus.svg" />
+        Agregar tiempo de la intervencion
+      </span>
+    </fieldset>
+
+    <fieldset
+      *ngIf="isPanelTiempoProgramacion"
+      class="animate__animated: animate__fadeIn w__100"
+    >
+      <div class="row__head">
+        <span class="text__title">Dato de la Programacion</span>
+        <button type="button" class="btn__icon" (click)="tiempoProgramacion()">
+          <svg
+            id="Capa_1"
+            enable-background="new 0 0 512 512"
+            class="icon__svg"
+            viewBox="0 0 512 512"
+            fill="currentColor"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g>
+              <path
+                d="m228.514 199.496c-16.002 0-29.021 13.019-29.021 29.021v25.931h-49.471c-16.002 0-29.021 13.019-29.021 29.021s13.019 29.021 29.021 29.021h78.493.001c16.001-.001 29.019-13.019 29.019-29.021v-54.952c0-16.003-13.019-29.021-29.021-29.021zm-92.513 83.972c0-7.731 6.29-14.021 14.021-14.021h49.471v14.021c0 5.083 1.317 9.862 3.622 14.021h-53.094c-7.73-.001-14.02-6.29-14.02-14.021zm106.534 0c0 7.731-6.29 14.021-14.021 14.021s-14.021-6.29-14.021-14.021v-54.952c0-7.731 6.29-14.021 14.021-14.021s14.021 6.29 14.021 14.021z"
+              />
+              <path
+                d="m407.963 0c-45.367 0-84.037 29.203-98.22 69.797-39.279-14.924-81.736-18.726-123.329-10.969-45.396 8.467-86.716 30.265-119.495 63.039-36.151 36.156-58.66 82.015-65.093 132.617-6.231 49.018 3.753 99.517 28.113 142.193 1.384 2.425 3.916 3.784 6.521 3.784 1.26 0 2.538-.318 3.711-.988 3.598-2.053 4.849-6.634 2.796-10.231-22.757-39.869-32.083-87.055-26.26-132.866 6.009-47.274 27.041-90.119 60.819-123.902 30.628-30.623 69.232-50.99 111.639-58.899 39.368-7.344 79.564-3.599 116.659 10.794-1.222 6.366-1.87 12.934-1.87 19.652 0 7.173.73 14.179 2.12 20.948-24.023-11.769-50.495-17.928-77.554-17.928-97.289 0-176.44 79.146-176.44 176.43s79.151 176.43 176.44 176.43c97.284 0 176.43-79.146 176.43-176.43 0-27.058-6.159-53.531-17.93-77.559 6.767 1.389 13.772 2.119 20.944 2.119 6.663 0 13.24-.628 19.668-1.855 14.388 37.091 18.13 77.28 10.787 116.644-7.911 42.407-28.281 81.011-58.908 111.638-40.333 40.33-93.956 62.542-150.993 62.542s-110.66-22.212-150.992-62.543c-6.661-6.66-12.922-13.8-18.611-21.22-2.521-3.288-7.228-3.909-10.516-1.389-3.287 2.521-3.909 7.229-1.389 10.516 6.087 7.939 12.786 15.577 19.909 22.7 43.165 43.164 100.555 66.936 161.599 66.936 61.043 0 118.433-23.772 161.598-66.937 32.777-32.777 54.579-74.098 63.047-119.494 7.758-41.584 3.959-84.036-10.96-123.311 8.993-3.134 17.559-7.509 25.485-13.084 3.388-2.383 4.203-7.062 1.819-10.449-2.382-3.388-7.061-4.202-10.449-1.819-14.996 10.548-32.665 16.124-51.095 16.124-49.08 0-89.01-39.93-89.01-89.01 0-49.086 39.93-89.02 89.01-89.02 49.086 0 89.02 39.934 89.02 89.02 0 19.56-6.224 38.12-18 53.673-2.5 3.303-1.85 8.007 1.452 10.507 3.303 2.5 8.006 1.85 10.507-1.452 13.765-18.181 21.041-39.872 21.041-62.728 0-57.357-46.663-104.02-104.02-104.02zm-45.558 197.506-9.86 5.693c-3.587 2.071-4.816 6.658-2.745 10.245 1.389 2.406 3.91 3.751 6.502 3.751 1.272 0 2.562-.325 3.743-1.006l11.879-6.859c10.671 20.611 16.755 43.302 17.831 66.637h-28.039c-4.142 0-7.5 3.358-7.5 7.5s3.358 7.5 7.5 7.5h28.053c-1.099 23.923-7.429 46.503-17.872 66.621l-11.852-6.843c-3.588-2.072-8.175-.843-10.245 2.745-2.071 3.587-.842 8.174 2.745 10.245l11.835 6.833c-12.567 19.535-29.229 36.196-48.764 48.763l-6.833-11.835c-2.072-3.587-6.659-4.816-10.245-2.745-3.587 2.071-4.816 6.658-2.745 10.245l6.843 11.852c-20.119 10.442-42.698 16.772-66.621 17.871v-28.052c0-4.142-3.358-7.5-7.5-7.5s-7.5 3.358-7.5 7.5v28.052c-23.923-1.1-46.502-7.43-66.62-17.872l6.842-11.85c2.071-3.587.842-8.174-2.745-10.245-3.588-2.072-8.174-.842-10.245 2.745l-6.832 11.834c-19.535-12.567-36.197-29.228-48.765-48.761l11.836-6.834c3.587-2.071 4.816-6.658 2.745-10.245s-6.66-4.815-10.245-2.745l-11.853 6.844c-10.443-20.119-16.774-42.699-17.873-66.622h28.056c4.142 0 7.5-3.358 7.5-7.5s-3.358-7.5-7.5-7.5h-28.057c1.1-23.923 7.431-46.502 17.875-66.621l11.851 6.842c1.181.682 2.471 1.006 3.743 1.006 2.592 0 5.113-1.345 6.502-3.751 2.071-3.587.842-8.174-2.745-10.245l-11.833-6.832c12.568-19.533 29.229-36.193 48.764-48.759l6.831 11.831c1.389 2.406 3.91 3.751 6.502 3.751 1.272 0 2.562-.324 3.743-1.006 3.587-2.071 4.816-6.658 2.745-10.245l-6.84-11.847c20.118-10.441 42.696-16.771 66.618-17.871v28.047c0 4.142 3.358 7.5 7.5 7.5s7.5-3.358 7.5-7.5v-28.033c23.338 1.074 46.029 7.157 66.636 17.827l-6.857 11.877c-2.071 3.587-.842 8.174 2.745 10.245 1.181.682 2.471 1.006 3.743 1.006 2.592 0 5.113-1.346 6.502-3.751l5.693-9.86c10.183 20.812 27.115 37.743 47.928 47.927z"
+              />
+              <path
+                d="m462.065 49.094-15.887-7.869c-4.251-2.11-9.069-2.437-13.565-.922-4.495 1.515-8.132 4.69-10.242 8.943l-25.345 51.136-8.26-13.815c-2.436-4.074-6.31-6.956-10.91-8.113-4.598-1.158-9.375-.454-13.449 1.981l-15.226 9.1c-8.4 5.029-11.149 15.956-6.126 24.357l30.177 50.477c3.219 5.383 9.008 8.652 15.235 8.652.233 0 .468-.005.703-.014l21.392-.843c6.502-.256 12.332-4.037 15.209-9.858l37.104-74.839c0-.001.001-.001.001-.002l7.214-14.562c4.352-8.774.755-19.453-8.025-23.809zm-5.415 17.146-44.324 89.412c-.445.9-1.348 1.485-2.356 1.524l-21.393.843c-1.015.035-1.952-.477-2.472-1.348l-30.176-50.476c-.781-1.307-.352-3.007.952-3.788l15.222-9.097c.51-.305 1.007-.394 1.414-.394.277 0 .512.041.679.083.414.104 1.184.406 1.696 1.264l15.314 25.612c1.408 2.354 3.974 3.748 6.732 3.645 2.742-.108 5.206-1.705 6.424-4.164l31.447-63.448c.443-.893 1.188-1.256 1.593-1.392.405-.137 1.216-.299 2.113.146l15.887 7.87c1.366.679 1.927 2.34 1.248 3.708z"
+              />
+            </g>
+          </svg>
         </button>
       </div>
+      <div class="row__item">
+        <div class="group">
+          <select
+            class="input-control input-select"
+            formControlName="sa_codsal"
+          >
+            <option
+              [value]="sala.sa_codsal"
+              *ngFor="let sala of salas$ | async"
+            >
+              {{ sala.sa_nombre | titlecase }}
+            </option>
+          </select>
+          <label class="label-control">Sala</label>
+        </div>
+        <div class="group">
+          <input
+            type="date"
+            class="input-control"
+            formControlName="cq_fecha"
+            placeholder=""
+          />
+          <label class="label-control">Fecha</label>
+        </div>
+        <div class="group">
+          <input
+            type="time"
+            class="input-control"
+            formControlName="cq_hoinpr"
+            placeholder=" "
+          />
+          <label class="label-control">Hora Inicio</label>
+        </div>
+        <div class="group">
+          <input
+            type="time"
+            class="input-control"
+            formControlName="cq_hofipr"
+            placeholder=" "
+          />
+          <label class="label-control">Hora Fin</label>
+        </div>
+      </div>
+    </fieldset>
+    <div class="group">
+      <button type="submit" class="btn">
+        {{ nameButton }}
+      </button>
     </div>
   </form>
 </div>
