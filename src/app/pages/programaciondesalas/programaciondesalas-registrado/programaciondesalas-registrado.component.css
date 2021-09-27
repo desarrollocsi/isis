@@ -308,6 +308,10 @@ fieldset {
     flex-direction: row;
   }
 
+  .w__50{
+    width: 50%;
+  }
+
   .w__100 {
     width: 100%;
   }

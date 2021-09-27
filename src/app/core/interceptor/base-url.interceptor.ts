@@ -4,7 +4,6 @@ import {
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpErrorResponse,
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
@@ -26,7 +25,7 @@ export class BaseUrlInterceptor implements HttpInterceptor {
         if (err instanceof ErrorEvent) {
           errorMessage = `Client-side error: ${err.error.message}`;
         } else {
-          errorMessage = `Server-side error: ${err.status} ${err.message}`;
+          errorMessage = `Server-side error: ${err.status} ${err.error.message}`;
         }
         this.MS.MessageError(errorMessage);
         return throwError(errorMessage);

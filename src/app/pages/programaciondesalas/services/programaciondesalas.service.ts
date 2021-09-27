@@ -129,6 +129,10 @@ export class ProgramaciondesalasService {
     return data.map((value: any) => new Paciente(value));
   }
 
+  postInformeOperatorio(data: any) {
+    return this.http.post('http://127.0.0.1:8000/informeoperatorio', data);
+  }
+
   getApiDynamic({ verbo, data }) {
     const END_POINT = {
       PUT: this.http.put(

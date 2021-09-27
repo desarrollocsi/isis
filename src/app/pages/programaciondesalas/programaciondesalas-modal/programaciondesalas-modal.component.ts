@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { pipe, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
@@ -34,7 +33,7 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
     this.isModal = false;
   }
 
-  update({ cq_numope }) {
+  update({ cq_numope }: { cq_numope: string }) {
     this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
       (data) => {
         this.IntermedaryService.getCodigoProgramacion(data);

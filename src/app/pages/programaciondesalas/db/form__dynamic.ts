@@ -77,4 +77,24 @@ export const formDynamic = {
       isChecked: false,
     },
   ],
+  gasas: [
+    {
+      label: 'Completo',
+      value: 'C',
+      control: 'cq_contgas',
+      isChecked: false,
+    },
+    {
+      label: 'Incompleto',
+      value: 'I',
+      control: 'cq_contgas',
+      isChecked: false,
+    },
+    {
+      label: 'N/A',
+      value: 'N',
+      control: 'cq_contgas',
+      isChecked: false,
+    },
+  ],
 };

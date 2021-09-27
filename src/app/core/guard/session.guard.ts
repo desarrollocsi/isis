@@ -19,7 +19,6 @@ export class SessionGuard implements CanLoad {
     | boolean
     | UrlTree {
     const auth = this.AUS.ValidacionUsuario;
-    console.log(auth);
     if (auth) {
       // this.router.navigate(['modulos']);
       // return false;

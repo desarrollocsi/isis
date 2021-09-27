@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container animate__animated animate__fadeIn">
   <h1 class="title__h1 text__color">Reporte de Sala de Operaciones</h1>
   <div class="container__data" *ngIf="programacionSalas$ | async as datas">
     <div class="container__group w__50 mr_1rem">
@@ -6,7 +6,14 @@
         <span class="text__title">Datos Personales</span>
       </div>
       <div class="content__body">
-        {{ datas.cq_paciente }}
+        <ul>
+          <li>{{ datas.cq_numhis }}</li>
+          <li>{{ datas.cq_paciente | titlecase }}</li>
+          <li>{{ datas.cq_edad }}</li>
+          <li>{{ datas.cq_hoinpr }}</li>
+          <li>{{ datas.cq_hofipr }}</li>
+          <li>{{ datas.cq_fecha }}</li>
+        </ul>
       </div>
     </div>
     <div class="container__group w__50">
@@ -26,57 +33,96 @@
       <span class="text__title">Diagnosticos</span>
     </div>
     <div class="content__body">
-      <div class="row">
-        <div class="group">
-          <input type="text" class="input-control" placeholder=" " />
-          <div class="label-control">Diagnosticos Pre-Operatorio</div>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+          <div class="group">
+            <input
+              type="text"
+              class="input-control"
+              formControlName="cq_diag_pre_ope"
+              placeholder=" "
+            />
+            <div class="label-control">Diagnosticos Pre-Operatorio</div>
+          </div>
+
+          <div class="group">
+            <input
+              type="text"
+              class="input-control"
+              formControlName="cq_diag_pos_ope"
+              placeholder=" "
+            />
+            <div class="label-control">Diagnosticos Post-Operatorio</div>
+          </div>
+
+          <div class="group textarea">
+            <textarea
+              class="input-control"
+              placeholder=" "
+              rows="5"
+              cols="10"
+              formControlName="cq_diag_procedimientos"
+            ></textarea>
+            <div class="label-control">Procedimientos</div>
+          </div>
+          <div class="group textarea">
+            <textarea
+              class="input-control"
+              placeholder=" "
+              rows="5"
+              cols="10"
+              formControlName="cq_diag_hallazgos"
+            ></textarea>
+            <div class="label-control">Hallazgos</div>
+          </div>
+          <div class="group textarea">
+            <textarea
+              class="input-control"
+              placeholder=" "
+              rows="5"
+              cols="10"
+              formControlName="cq_diag_complicaciones"
+            ></textarea>
+            <div class="label-control">Complicaciones</div>
+          </div>
+          <div class="group">
+            <input
+              type="text"
+              class="input-control"
+              placeholder=" "
+              formControlName="cq_patolo"
+            />
+            <div class="label-control">Anatomia Patologica</div>
+          </div>
+          <div class="group">
+            <input
+              type="text"
+              class="input-control"
+              placeholder=" "
+              formControlName="cq_diag_sang_aprox"
+            />
+            <div class="label-control">Sangrado aprox (ml.)</div>
+          </div>
+          <fieldset>
+            <h1 class="text__secondary">Conteo de Gasas</h1>
+            <div class="container__checkbox">
+              <ng-container *ngFor="let data of radioDynamic$ | async">
+                <input
+                  type="radio"
+                  class="checkbox__input"
+                  [id]="data.label"
+                  [value]="data.value"
+                  [formControlName]="data.control"
+                />
+                <label [for]="data.label" class="checkbox__label">{{
+                  data.label
+                }}</label>
+              </ng-container>
+            </div>
+          </fieldset>
         </div>
-        <div class="group">
-          <input type="text" class="input-control" placeholder=" " />
-          <div class="label-control">Diagnosticos Post-Operatorio</div>
-        </div>
-        <div class="group textarea">
-          <textarea
-            class="input-control"
-            placeholder=" "
-            rows="5"
-            cols="10"
-          ></textarea>
-          <div class="label-control">Procedimientos</div>
-        </div>
-        <div class="group textarea">
-          <textarea
-            class="input-control"
-            placeholder=" "
-            rows="5"
-            cols="10"
-          ></textarea>
-          <div class="label-control">Hallazgos</div>
-        </div>
-        <div class="group textarea">
-          <textarea
-            class="input-control"
-            placeholder=" "
-            rows="5"
-            cols="10"
-          ></textarea>
-          <div class="label-control">Complicationes</div>
-        </div>
-        <div class="group">
-          <input type="text" class="input-control" placeholder=" " />
-          <div class="label-control">Anatomia Patologica</div>
-        </div>
-        <div class="group">
-          <input type="text" class="input-control" placeholder=" " />
-          <div class="label-control">Sangrado aprox</div>
-        </div>
-        <input type="radio" id="completo" name="gasa" />
-        <label for="completo">Completo</label>
-        <input type="radio" id="incompleto" name="gasa" />
-        <label for="incompleto">Incompleto</label>
-        <input type="radio" id="ninguna" name="gasa" />
-        <label for="ninguna">N/A</label>
-      </div>
+        <button class="btn">Registrar</button>
+      </form>
     </div>
   </div>
 </div>

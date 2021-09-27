@@ -29,8 +29,8 @@ export class MessageService {
     Swal.fire({
       icon: 'error',
       html: `<h1>${info}</h1>`,
-      timer: 1500,
-      showConfirmButton: false,
+      // timer: 2500,
+      showConfirmButton: true,
     });
   }
 }
