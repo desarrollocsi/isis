@@ -1,0 +1,47 @@
+<h2 class="text__subtitle">{{ fecha$ | async }}</h2>
+<div class="container__body">
+  <div class="tab__head">
+    <button
+      class="item__tab"
+      [class.item__tab__active]="activeSala01"
+      (click)="getDisponibilidadDeSalas('01')"
+    >
+      Sala operaciones 1
+    </button>
+    <button
+      class="item__tab"
+      [class.item__tab__active]="activeSala02"
+      (click)="getDisponibilidadDeSalas('02')"
+    >
+      Sala operaciones 2
+    </button>
+    <button
+      class="item__tab"
+      [class.item__tab__active]="activeSala03"
+      (click)="getDisponibilidadDeSalas('03')"
+    >
+      Sala de partos
+    </button>
+  </div>
+  <div class="tab__body">
+    <div class="container__data container__scroll__y">
+      <ng-container *ngFor="let disponibilidadDeSala of disponibilidadDeSalas">
+        <input
+          class="item__checkbox"
+          type="checkbox"
+          [id]="disponibilidadDeSala.hora"
+          [value]="disponibilidadDeSala | json"
+          (change)="selectTime($event.target)"
+        />
+        <label
+          class="item__data"
+          [class.valid__status]="
+            disponibilidadDeSala.estado || disponibilidadDeSala?.status
+          "
+          [for]="disponibilidadDeSala.hora"
+          >{{ disponibilidadDeSala.hora }}</label
+        >
+      </ng-container>
+    </div>
+  </div>
+</div>

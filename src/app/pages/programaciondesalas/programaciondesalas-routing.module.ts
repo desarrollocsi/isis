@@ -4,6 +4,7 @@ import { ProgramaciondesalasComponent } from './programaciondesalas.component';
 import { ProgramaciondesalasListadoComponent } from './programaciondesalas-listado/programaciondesalas-listado.component';
 import { ProgramaciondesalasInformeoperatioroComponent } from './programaciondesalas-informeoperatioro/programaciondesalas-informeoperatioro.component';
 import { ProgramaciondesalasRegistradoComponent } from './programaciondesalas-registrado/programaciondesalas-registrado.component';
+import { ProgramaciondesalasReprogramarComponent } from './programaciondesalas-reprogramar/programaciondesalas-reprogramar.component';
 
 const routes: Routes = [
   {
@@ -12,6 +13,10 @@ const routes: Routes = [
     children: [
       { path: '', component: ProgramaciondesalasListadoComponent },
       { path: 'registrar', component: ProgramaciondesalasRegistradoComponent },
+      {
+        path: 'reprogramar',
+        component: ProgramaciondesalasReprogramarComponent,
+      },
     ],
   },
   {

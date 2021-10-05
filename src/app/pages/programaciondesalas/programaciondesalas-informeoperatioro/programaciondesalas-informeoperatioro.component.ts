@@ -64,10 +64,8 @@ export class ProgramaciondesalasInformeoperatioroComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
-
-    // this.ProgramaciondesalasService.postInformeOperatorio(
-    //   this.form.value
-    // ).subscribe(console.log);
+    this.ProgramaciondesalasService.postInformeOperatorio(
+      this.form.value
+    ).subscribe(console.log);
   }
 }

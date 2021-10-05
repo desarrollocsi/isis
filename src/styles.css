@@ -48,6 +48,29 @@ body {
   background: #555;
 }
 
+.btn {
+  border: none;
+  font-weight: 600;
+  border-radius: 2rem;
+  outline: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn {
+  padding: 1rem 0;
+  font-size: 18px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #828282;
+  color: #fff;
+  box-shadow: 0 8px 6px -6px black;
+}
+
 @media (min-width: 768px) and (min-width: 992px) {
   .container {
     padding: 6rem;

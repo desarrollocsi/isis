@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
 import { ProgramaciondesalasService } from '../services/programaciondesalas.service';
 import { IntermedaryService } from '../../../core/services';
-
-import { programacion } from '../db/db';
 import { ProgramacionModel } from '../db/programacion.model';
-
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-programaciondesalas-listado',
@@ -38,7 +34,7 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     );
   }
 
-  nextOpenRegistrar() {
+  onRegistrar() {
     this.Router.navigate(['home/programaciondesalas/registrar']);
   }
 
@@ -46,11 +42,28 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     this.IntermedaryService.modal.next(data);
   }
 
-  onUpdate({ codigo }: ProgramacionModel) {
-    console.log(codigo);
+  onUpdate({ cq_numope }: { cq_numope: string }) {
+    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
+      (data: any) => {
+        this.IntermedaryService.getCodigoProgramacion(data);
+        this.ProgramaciondesalasService.httpDynamic.next({
+          verbo: 'PUT',
+          nameButton: 'Actualizar',
+        });
+      }
+    );
+    this.Router.navigate(['home/programaciondesalas/registrar']);
   }
 
-  onDelete({ codigo }: ProgramacionModel) {
-    console.log(codigo);
+  onInformeOperatorio({ cq_numope }) {
+    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
+      (data) => this.IntermedaryService.getCodigoProgramacion(data)
+    );
+    this.Router.navigate(['home/programaciondesalas/informeoperatorio']);
+  }
+
+  onReprogramar(data: any) {
+    this.ProgramaciondesalasService.getDataProgramacion(data);
+    this.Router.navigate(['home/programaciondesalas/reprogramar']);
   }
 }

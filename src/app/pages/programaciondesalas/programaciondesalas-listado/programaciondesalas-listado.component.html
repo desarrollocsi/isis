@@ -1,26 +1,42 @@
-<button class="btn" (click)="nextOpenRegistrar()">+Agregar</button>
-<div class="table animate__animated animate__fadeIn">
-  <div class="row__header">
-    <div class="cell cell__20">Sala</div>
-    <div class="cell cell__20">Hora</div>
-    <div class="cell cell__50">Cirujano</div>
-    <div class="cell">Paciente</div>
-    <div class="cell cell__20">&nbsp;</div>
-  </div>
-  <div class="row__body" *ngFor="let agendaSoap of agendaSoaps$ | async">
-    <div class="cell cell__20">{{ agendaSoap.sala }}</div>
-    <div class="cell cell__20">{{ agendaSoap.diahora | slice: 1:5 }}</div>
-    <div class="cell cell__50">{{ agendaSoap.cirujano | titlecase }}</div>
-    <div class="cell cell__text__left">
-      {{ agendaSoap.paciente | titlecase }}
+<div class="animate__animated animate__fadeIn">
+  <button class="btn" (click)="onRegistrar()">+Agregar</button>
+  <div class="table">
+    <div class="row__header">
+      <div class="cell cell__20">Sala</div>
+      <div class="cell cell__20">Hora</div>
+      <div class="cell cell__50">Cirujano</div>
+      <div class="cell">Paciente</div>
+      <div class="cell cell__20">Estado</div>
+      <div class="cell cell__20">&nbsp;</div>
     </div>
-    <div class="cell cell__20" (click)="views(agendaSoap)">
-      <img
-        src="../../../../assets/icons/settings__option.svg"
-        class="actions__icons"
-      />
+    <div class="row__body" *ngFor="let agendaSoap of agendaSoaps$ | async">
+      <div class="cell cell__20">{{ agendaSoap.sala }}</div>
+      <div class="cell cell__20">{{ agendaSoap.diahora | slice: 1:5 }}</div>
+      <div class="cell cell__50">{{ agendaSoap.cirujano | titlecase }}</div>
+      <div class="cell cell__text__left">
+        {{ agendaSoap.paciente | titlecase }}
+      </div>
+      <div class="cell cell__20">
+        {{ agendaSoap.cq_estado | programmingStatus }}
+      </div>
+      <div class="cell cell__20 dropdown">
+        <img
+          src="../../../../assets/icons/settings__option.svg"
+          class="actions__icons"
+        />
+        <div class="dropdown__content">
+          <div class="dropdown__item" (click)="onUpdate(agendaSoap)">
+            <h1>Editar</h1>
+          </div>
+          <div class="dropdown__item" (click)="onReprogramar(agendaSoap)">
+            <h1>Reprogramar</h1>
+          </div>
+          <div class="dropdown__item" (click)="onInformeOperatorio(agendaSoap)">
+            <h1>Informe Operatorio</h1>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
 <app-programaciondesalas-modal></app-programaciondesalas-modal>

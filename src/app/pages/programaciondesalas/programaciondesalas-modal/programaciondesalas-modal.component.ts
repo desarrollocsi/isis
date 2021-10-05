@@ -49,11 +49,15 @@ export class ProgramaciondesalasModalComponent implements OnInit, OnDestroy {
 
   informenOperatorio({ cq_numope }: { cq_numope: string }) {
     this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
-      (data) => {
-        this.IntermedaryService.getCodigoProgramacion(data);
-      }
+      (data) => this.IntermedaryService.getCodigoProgramacion(data)
     );
     this.router.navigate(['home/programaciondesalas/informeoperatorio']);
+    this.onCloseModal();
+  }
+
+  Reprogramacion(data: any) {
+    this.ProgramaciondesalasService.getDataProgramacion(data);
+    this.router.navigate(['home/programaciondesalas/reprogramar']);
     this.onCloseModal();
   }
 

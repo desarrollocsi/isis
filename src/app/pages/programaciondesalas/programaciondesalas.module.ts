@@ -12,6 +12,8 @@ import { ProgramaciondesalasModalComponent } from './programaciondesalas-modal/p
 import { ProgramaciondesalasModalSalasComponent } from './programaciondesalas-modal-salas/programaciondesalas-modal-salas.component';
 import { HistoriaSearchComponent } from './historia-search/historia-search.component';
 import { ProgramaciondesalasInformeoperatioroComponent } from './programaciondesalas-informeoperatioro/programaciondesalas-informeoperatioro.component';
+import { ProgramaciondesalasReprogramarComponent } from './programaciondesalas-reprogramar/programaciondesalas-reprogramar.component';
+import { ProgramaciondesalasDisponibilidaddesalasComponent } from './programaciondesalas-disponibilidaddesalas/programaciondesalas-disponibilidaddesalas.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { ProgramaciondesalasInformeoperatioroComponent } from './programaciondes
     ProgramaciondesalasModalSalasComponent,
     HistoriaSearchComponent,
     ProgramaciondesalasInformeoperatioroComponent,
+    ProgramaciondesalasReprogramarComponent,
+    ProgramaciondesalasDisponibilidaddesalasComponent,
   ],
   imports: [
     CommonModule,

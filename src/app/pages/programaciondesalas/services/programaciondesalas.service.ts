@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { especialidades, camas, medicos } from '../db/db';
 import { Paciente } from '../models';
 
@@ -22,7 +22,21 @@ export class ProgramaciondesalasService {
   private __httpDynamic = new Subject<any>();
   private __datoDelPaciente = new Subject<any>();
   private __historia = new Subject<any>();
+  private data = new BehaviorSubject<any>(null);
+  __data = this.data.asObservable();
+
+  private tiempoDeIntervencion = new BehaviorSubject<string>(null);
+  __tiempoDeIntervencion$ = this.tiempoDeIntervencion.asObservable();
+
   /**/
+
+  getDataProgramacion(data: any) {
+    this.data.next(data);
+  }
+
+  gettiempoDeIntervencion({ tiempo }) {
+    this.tiempoDeIntervencion.next(tiempo);
+  }
 
   get datoDelpaciente() {
     return this.__datoDelPaciente;
@@ -143,5 +157,12 @@ export class ProgramaciondesalasService {
     };
 
     return END_POINT[verbo];
+  }
+
+  getReprogramacion(data: any) {
+    return this.http.put(
+      `http://127.0.0.1:8000/programacionreprogramacion/${data.cq_numope}/`,
+      data
+    );
   }
 }

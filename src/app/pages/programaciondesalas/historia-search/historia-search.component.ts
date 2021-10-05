@@ -29,7 +29,6 @@ export class HistoriaSearchComponent implements OnInit, OnDestroy {
         )
       )
       .subscribe((data) => {
-        console.log(data);
         this.dataProgramacion.push(data), (this.isSearch = false);
       });
   }

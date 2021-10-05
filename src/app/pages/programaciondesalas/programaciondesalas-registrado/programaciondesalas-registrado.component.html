@@ -1,3 +1,6 @@
+<h1 class="title__h1 text__color animate__animated animate__fadeIn">
+  {{ title }}
+</h1>
 <app-historia-search></app-historia-search>
 <div class="container-form animate__animated animate__fadeIn">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
@@ -283,7 +286,7 @@
       class="animate__animated animate__fadeIn w__100"
       (click)="tiempoProgramacion()"
     >
-      <span class="text__color">
+      <span class="text__subtitle">
         <img src="../../../../assets/icons/add-plus.svg" />
         Agregar tiempo de la intervencion
       </span>
@@ -291,7 +294,7 @@
 
     <fieldset
       *ngIf="isPanelTiempoProgramacion"
-      class="animate__animated: animate__fadeIn w__100"
+      class="animate__animated animate__fadeIn w__100"
     >
       <div class="row__head">
         <span class="text__title">Dato de la Programacion</span>
@@ -333,7 +336,7 @@
           </select>
           <label class="label-control">Sala</label>
         </div>
-        <div class="group">
+        <div class="group mr_05rem">
           <input
             type="date"
             class="input-control"

@@ -183,7 +183,7 @@ nav .content .links {
   z-index: 1;
   opacity: 0;
   visibility: hidden;
-  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  box-shadow: 0 10px 25px rgba(127, 128, 129, 0.2);
   border: 1px solid #dadce0;
 }
 

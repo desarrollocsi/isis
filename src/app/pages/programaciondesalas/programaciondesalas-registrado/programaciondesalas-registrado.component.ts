@@ -1,16 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
 import { IntermedaryService, MessageService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services';
 
@@ -75,6 +67,12 @@ export class ProgramaciondesalasRegistradoComponent
     return this.verbo === 'POST';
   }
 
+  get title() {
+    return this.isPost
+      ? 'Registro de Programacion'
+      : 'Actualizar de Programacion';
+  }
+
   constructor(
     private fb: FormBuilder,
     private programacionDeSalasServices: ProgramaciondesalasService,
@@ -104,10 +102,10 @@ export class ProgramaciondesalasRegistradoComponent
       cq_areapre: [null],
       cq_estancia: [null],
       cq_pedido: [null],
-      cq_es_emer: [null],
-      cq_orden_rqx: [null],
-      cq_orden_cq: [null],
-      cq_enfer: [null],
+      cq_es_emer: ['0'],
+      cq_orden_rqx: ['0'],
+      cq_orden_cq: ['0'],
+      cq_enfer: ['0'],
       cq_fecha: [{ value: null, disabled: true }],
       cq_hoinpr: [{ value: null, disabled: true }],
       cq_hofipr: [{ value: null, disabled: true }],
@@ -198,7 +196,6 @@ export class ProgramaciondesalasRegistradoComponent
           this.participantes.patchValue(data.participantes);
           this.setAsignacionCirujano(this.cirujano.value, true);
         }, 1000);
-
         this.Personal();
         data.equiposMedicos.map(({ de_codequi }) => {
           this.agregarEquipoMedico(true, { value: de_codequi });

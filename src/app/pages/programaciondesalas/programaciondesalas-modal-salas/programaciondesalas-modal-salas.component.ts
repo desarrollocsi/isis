@@ -34,9 +34,9 @@ export class ProgramaciondesalasModalSalasComponent
   ngOnInit(): void {
     this.IntermedaryService.modal
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((minuto: any) => {
+      .subscribe((minutoDeIntervencion: any) => {
         (this.isModal = true),
-          (this.minutoDeIntervencion = minuto),
+          (this.minutoDeIntervencion = minutoDeIntervencion),
           this.getDisponibilidadDeSalas();
       });
     this.IntermedaryService._fecha.subscribe(
@@ -91,7 +91,8 @@ export class ProgramaciondesalasModalSalasComponent
     this.ProgramaciondesalasService.dataHorarioDeProgramacion.next(
       generarObjectHoraDeProgramacion(
         this.tiempoDeProgramacion,
-        this.numeroDeSala
+        this.numeroDeSala,
+        this.fecha
       )
     );
   }

@@ -16,12 +16,12 @@
     flex-direction: row;
   }
 
-  .row__30 {
-    width: 30%;
+  .row__25 {
+    width: 25%;
   }
 
-  .row__70 {
-    width: 70%;
+  .row__100 {
+    width: 100%;
     padding: 0 1rem;
   }
 }

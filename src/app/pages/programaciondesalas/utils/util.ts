@@ -1,6 +1,9 @@
 import { formDynamic } from '../db/form__dynamic';
 import * as moment from 'moment';
 
+export const formatearFechaDescripcion = (fecha: string) =>
+  moment(fecha, 'YYYY-MM-DD').format('LL');
+
 export const formatearFechaDmy = (fecha: string) =>
   moment(fecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
 
@@ -49,9 +52,11 @@ export const tiempoSeleccionado = ({ minuto, hora, checked }) => {
 
 export const generarObjectHoraDeProgramacion = (
   data: any,
-  numeroDeSala: string
+  numeroDeSala: string,
+  fecha: any
 ) => {
   return {
+    cq_fecha: fecha,
     sa_codsal: numeroDeSala,
     cq_hoinpr: data[data.length - 1].hora,
     cq_hofipr: data[0].hora,
