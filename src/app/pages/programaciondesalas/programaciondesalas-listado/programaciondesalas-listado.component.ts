@@ -16,6 +16,8 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
   programaciones$: Observable<ProgramacionModel[]>;
   agendaSoaps$: Observable<any>;
   fecha: string;
+  datas: any = [];
+
   constructor(
     private ProgramaciondesalasService: ProgramaciondesalasService,
     private IntermedaryService: IntermedaryService,
@@ -38,21 +40,27 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     this.Router.navigate(['home/programaciondesalas/registrar']);
   }
 
-  views(data: any) {
-    this.IntermedaryService.modal.next(data);
+  action(data: any) {
+    this.ProgramaciondesalasService.gethttpDynamic(data);
+  }
+
+  dataProgramacion(codigoDeProgramacion: string) {
+    this.ProgramaciondesalasService.getProgramacionDeSalas(
+      codigoDeProgramacion
+    ).subscribe((data: any) =>
+      this.IntermedaryService.getCodigoProgramacion(data)
+    );
+    this.Router.navigate(['home/programaciondesalas/registrar']);
   }
 
   onUpdate({ cq_numope }: { cq_numope: string }) {
-    this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
-      (data: any) => {
-        this.IntermedaryService.getCodigoProgramacion(data);
-        this.ProgramaciondesalasService.httpDynamic.next({
-          verbo: 'PUT',
-          nameButton: 'Actualizar',
-        });
-      }
-    );
-    this.Router.navigate(['home/programaciondesalas/registrar']);
+    this.dataProgramacion(cq_numope);
+    this.action({ verbo: 'PUT', nameButton: 'Actualizar' });
+  }
+
+  onReprogramar({ cq_numope }: { cq_numope: string }) {
+    this.action({ verbo: 'PUT', nameButton: 'Reprogramar' });
+    this.dataProgramacion(cq_numope);
   }
 
   onInformeOperatorio({ cq_numope }) {
@@ -60,10 +68,5 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
       (data) => this.IntermedaryService.getCodigoProgramacion(data)
     );
     this.Router.navigate(['home/programaciondesalas/informeoperatorio']);
-  }
-
-  onReprogramar(data: any) {
-    this.ProgramaciondesalasService.getDataProgramacion(data);
-    this.Router.navigate(['home/programaciondesalas/reprogramar']);
   }
 }

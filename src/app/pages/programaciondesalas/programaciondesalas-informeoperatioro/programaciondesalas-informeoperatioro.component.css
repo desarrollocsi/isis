@@ -1,3 +1,24 @@
+.row__item {
+  display: flex;
+  flex-direction: column;
+}
+
+.container__content {
+  position: absolute;
+  top: 100%;
+  z-index: 2;
+  background-color: #fff;
+  height: 250px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.body__item {
+  cursor: pointer;
+  border-bottom: 1px solid #dadce0;
+  padding: 0.5rem;
+}
+
 .container__data {
   display: flex;
   justify-content: space-around;
@@ -39,13 +60,8 @@
   font-weight: 600;
 }
 
-.title__h1 {
-  text-align: center;
-  font-size: 2rem;
-}
-
 .text__color {
-  color: #f0c882;
+  color: #828282;
 }
 
 /********/
@@ -177,12 +193,11 @@ fieldset {
   margin: 0;
 }
 
-.title__h1 {
-}
-.text__color {
-}
-
 @media (min-width: 768px) and (min-width: 992px) {
+  .row__item {
+    flex-direction: row;
+  }
+
   .container__data {
     flex-direction: row;
   }

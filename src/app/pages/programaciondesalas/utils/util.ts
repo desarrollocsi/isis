@@ -69,3 +69,6 @@ export const isCheckbox = (keys: string, codigo: string) => {
   );
   formDynamic[keys][indice]['isChecked'] = true;
 };
+
+export const isValueCheckbox = (value: string) =>
+  value === '1' ? true : false;

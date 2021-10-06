@@ -6,7 +6,7 @@ import { Paciente } from '../models';
 
 import { formDynamic } from '../db/form__dynamic';
 import { AuthStorageService, IntermedaryService } from '../../../core/services';
-import { map, tap } from 'rxjs/operators';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -14,12 +14,11 @@ import { map, tap } from 'rxjs/operators';
 export class ProgramaciondesalasService {
   constructor(
     private http: HttpClient,
-    private AuthStorageService: AuthStorageService,
-    private IntermedaryService: IntermedaryService
+    private AuthStorageService: AuthStorageService
   ) {}
 
   private __dataHorarioDeProgramacion = new Subject<any>();
-  private __httpDynamic = new Subject<any>();
+
   private __datoDelPaciente = new Subject<any>();
   private __historia = new Subject<any>();
   private data = new BehaviorSubject<any>(null);
@@ -27,6 +26,11 @@ export class ProgramaciondesalasService {
 
   private tiempoDeIntervencion = new BehaviorSubject<string>(null);
   __tiempoDeIntervencion$ = this.tiempoDeIntervencion.asObservable();
+
+  private httpDynamic = new BehaviorSubject<{}>(null);
+  __httpDynamic$ = this.httpDynamic
+    .asObservable()
+    .pipe(filter((data: any) => data !== null));
 
   /**/
 
@@ -38,16 +42,16 @@ export class ProgramaciondesalasService {
     this.tiempoDeIntervencion.next(tiempo);
   }
 
+  gethttpDynamic(parametro: {}) {
+    return this.httpDynamic.next(parametro);
+  }
+
   get datoDelpaciente() {
     return this.__datoDelPaciente;
   }
 
   get dataHorarioDeProgramacion() {
     return this.__dataHorarioDeProgramacion;
-  }
-
-  get httpDynamic() {
-    return this.__httpDynamic;
   }
 
   get historia() {
@@ -106,9 +110,9 @@ export class ProgramaciondesalasService {
       return of(this.AuthStorageService.personal);
     }
 
-    // return this.http
-    //   .get('http://127.0.0.1:8000/personales')
-    //   .pipe(tap((data: any) => this.AuthStorageService.setPersonal(data)));
+    return this.http
+      .get('http://127.0.0.1:8000/personales')
+      .pipe(tap((data: any) => this.AuthStorageService.setPersonal(data)));
   }
 
   getDisponibilidadDeSalas({ fecha, numeroDeSala }) {
@@ -157,6 +161,10 @@ export class ProgramaciondesalasService {
     };
 
     return END_POINT[verbo];
+  }
+
+  getSearchCie(search: string) {
+    return this.http.get(`http://127.0.0.1:8000/searchcie?search=${search}`);
   }
 
   getReprogramacion(data: any) {

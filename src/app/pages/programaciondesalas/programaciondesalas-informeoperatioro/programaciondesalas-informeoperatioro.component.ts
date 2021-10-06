@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  tap,
+} from 'rxjs/operators';
 import { IntermedaryService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services/';
 import { formDynamic } from '../db/form__dynamic';
@@ -19,6 +25,8 @@ export class ProgramaciondesalasInformeoperatioroComponent implements OnInit {
   programacionSalas$: Observable<any>;
   radioDynamic$: Observable<any>;
   form: FormGroup;
+  search$ = new Subject<string>();
+  searchCie$: Observable<any>;
 
   get gasas() {
     return this.form.get('cq_contgas');
@@ -46,6 +54,7 @@ export class ProgramaciondesalasInformeoperatioroComponent implements OnInit {
 
     this.dataDeProgramacionDeSalas();
     this.radioDynamic();
+    this.searchCie();
   }
 
   radioDynamic() {
@@ -61,6 +70,26 @@ export class ProgramaciondesalasInformeoperatioroComponent implements OnInit {
 
   patch({ sa_codsal, cq_numope }): void {
     this.form.patchValue({ sa_codsal, cq_numope });
+  }
+
+  search({ value }) {
+    this.search$.next(value);
+  }
+
+  searchCie() {
+    this.searchCie$ = this.search$.pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap((search: string) =>
+        this.ProgramaciondesalasService.getSearchCie(search)
+      )
+    );
+  }
+
+  selectCie({ codigo, descripcion }, event: any) {
+    console.log(event);
+    const data = `${codigo} - ${descripcion}`;
+    this.form.get('cq_diag_pre_ope').setValue(data);
   }
 
   onSubmit() {

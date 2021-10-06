@@ -73,7 +73,7 @@
             value="1"
             id="coe"
             formControlName="a1"
-            (change)="onCheckbox($event, 'AREA')"
+            (change)="onCheckbox($event.target, 'AREA')"
           />
           <label for="coe" class="checkbox_label">
             C.O
@@ -85,7 +85,7 @@
             value="2"
             id="co"
             formControlName="a2"
-            (change)="onCheckbox($event, 'AREA')"
+            (change)="onCheckbox($event.target, 'AREA')"
           />
           <label for="co" class="checkbox_label"
             >C.Q
@@ -97,7 +97,7 @@
             value="3"
             id="hosp"
             formControlName="a3"
-            (change)="onCheckbox($event, 'AREA')"
+            (change)="onCheckbox($event.target, 'AREA')"
           />
           <label for="hosp" class="checkbox_label"
             >HOSP
@@ -109,7 +109,7 @@
             value="4"
             id="neo"
             formControlName="a4"
-            (change)="onCheckbox($event, 'AREA')"
+            (change)="onCheckbox($event.target, 'AREA')"
           />
           <label for="neo" class="checkbox_label">
             NEO
@@ -121,7 +121,7 @@
             value="5"
             id="consultorios"
             formControlName="a5"
-            (change)="onCheckbox($event, 'AREA')"
+            (change)="onCheckbox($event.target, 'AREA')"
           />
           <label for="consultorios" class="checkbox_label">
             CONS
@@ -133,7 +133,7 @@
             value="6"
             id="otro"
             formControlName="a6"
-            (change)="onCheckbox($event, 'AREA')"
+            (change)="onCheckbox($event.target, 'AREA')"
           />
           <label for="otro" class="checkbox_label">Otros</label>
         </div>
@@ -157,7 +157,7 @@
             value="1"
             id="medico"
             formControlName="c1"
-            (change)="onCheckbox($event, 'COLABORADOR')"
+            (change)="onCheckbox($event.target, 'COLABORADOR')"
           />
           <label for="medico" class="checkbox_label">Medico</label>
           <input
@@ -166,7 +166,7 @@
             value="2"
             id="enfermera"
             formControlName="c2"
-            (change)="onCheckbox($event, 'COLABORADOR')"
+            (change)="onCheckbox($event.target, 'COLABORADOR')"
           />
           <label for="enfermera" class="checkbox_label">Enfermera</label>
           <input
@@ -175,7 +175,7 @@
             value="3"
             id="obstetrica"
             formControlName="c3"
-            (change)="onCheckbox($event, 'COLABORADOR')"
+            (change)="onCheckbox($event.target, 'COLABORADOR')"
           />
           <label for="obstetrica" class="checkbox_label">Obstetrica</label>
           <input
@@ -184,7 +184,7 @@
             value="4"
             id="tecenfermera"
             formControlName="c4"
-            (change)="onCheckbox($event, 'COLABORADOR')"
+            (change)="onCheckbox($event.target, 'COLABORADOR')"
           />
           <label for="tecenfermera" class="checkbox_label">Tecnica</label>
           <input
@@ -193,7 +193,7 @@
             value="5"
             id="otros"
             formControlName="c5"
-            (change)="onCheckbox($event, 'COLABORADOR')"
+            (change)="onCheckbox($event.target, 'COLABORADOR')"
           />
           <label for="otros" class="checkbox_label">Otros</label>
         </div>

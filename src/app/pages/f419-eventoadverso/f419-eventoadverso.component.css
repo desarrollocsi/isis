@@ -22,8 +22,7 @@
   width: 100%;
   padding: 2rem 2rem;
   border-radius: 2rem;
-  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
-  border: 1px solid #dadce0;
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 .card-head {

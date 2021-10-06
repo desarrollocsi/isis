@@ -12,6 +12,7 @@ import {
   formatearFechaYmd,
   transformarData,
   isCheckbox,
+  isValueCheckbox,
 } from '../utils/util';
 
 @Component({
@@ -37,6 +38,7 @@ export class ProgramaciondesalasRegistradoComponent
   verbo: string = 'POST';
   sala: boolean = false;
   isPanelTiempoProgramacion: boolean = false;
+  isReprogramacion: boolean = false;
   formDynamics: any;
 
   get participantes(): FormArray {
@@ -67,12 +69,6 @@ export class ProgramaciondesalasRegistradoComponent
     return this.verbo === 'POST';
   }
 
-  get title() {
-    return this.isPost
-      ? 'Registro de Programacion'
-      : 'Actualizar de Programacion';
-  }
-
   constructor(
     private fb: FormBuilder,
     private programacionDeSalasServices: ProgramaciondesalasService,
@@ -95,7 +91,7 @@ export class ProgramaciondesalasRegistradoComponent
       cq_codiqx2: [{ value: null, disabled: true }],
       cq_codiqx3: [{ value: null, disabled: true }],
       an_tipane: [null],
-      cq_num_petito: [null, [Validators.required, Validators.minLength(2)]],
+      cq_num_petito: [null],
       cq_numsema: [null],
       tiempo: [{ value: null, disabled: true }],
       cq_antibio: [null],
@@ -106,6 +102,7 @@ export class ProgramaciondesalasRegistradoComponent
       cq_orden_rqx: ['0'],
       cq_orden_cq: ['0'],
       cq_enfer: ['0'],
+      cq_indrep: ['0'],
       cq_fecha: [{ value: null, disabled: true }],
       cq_hoinpr: [{ value: null, disabled: true }],
       cq_hofipr: [{ value: null, disabled: true }],
@@ -118,7 +115,6 @@ export class ProgramaciondesalasRegistradoComponent
     this.anestesias$ = this.programacionDeSalasServices.getAnestesia();
     this.form$ = this.programacionDeSalasServices.getFormDynamic();
     this.salas$ = this.programacionDeSalasServices.getSalas();
-    this.getProgramacionData();
     this.fechaCalendario();
     this.horarioDeProgramacion();
     this.httpDynamic();
@@ -144,18 +140,26 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   datosDelPaciente() {
-    this.programacionDeSalasServices.datoDelpaciente.subscribe((data: any) => {
-      this.form.patchValue(data);
-    });
+    this.programacionDeSalasServices.datoDelpaciente.subscribe((data: any) =>
+      this.form.patchValue(data)
+    );
   }
 
   httpDynamic() {
-    this.programacionDeSalasServices.httpDynamic
+    this.programacionDeSalasServices.__httpDynamic$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(({ verbo, nameButton }) => {
+      .subscribe(({ verbo, nameButton }: any) => {
         this.nameButton = nameButton;
         this.verbo = verbo;
+        verbo === 'PUT' && this.getProgramacionData();
       });
+  }
+
+  Reprogramacion() {
+    this.isReprogramacion = this.nameButton === 'Reprogramar';
+    this.form.get('cq_hoinpr').reset({ value: null, disabled: true });
+    this.form.get('cq_hofipr').reset({ value: null, disabled: true });
+    this.form.get('sa_codsal').reset({ value: null, disabled: true });
   }
 
   horarioDeProgramacion() {
@@ -202,18 +206,15 @@ export class ProgramaciondesalasRegistradoComponent
           isCheckbox('equipoMedicos', de_codequi);
         });
         this.setCheckbox(data);
+        this.nameButton === 'Reprogramar' && this.Reprogramacion();
       });
   }
 
   setCheckbox({ cq_es_emer, cq_orden_rqx, cq_orden_cq, cq_enfer }) {
-    this.formDynamics['otros'][0]['isChecked'] = this.isValue(cq_es_emer);
-    this.formDynamics['otros'][1]['isChecked'] = this.isValue(cq_orden_rqx);
-    this.formDynamics['otros'][2]['isChecked'] = this.isValue(cq_orden_cq);
-    this.formDynamics['otros'][3]['isChecked'] = this.isValue(cq_enfer);
-  }
-
-  isValue(value: string) {
-    return value === '1' ? true : false;
+    this.formDynamics['otros'][0]['isChecked'] = isValueCheckbox(cq_es_emer);
+    this.formDynamics['otros'][1]['isChecked'] = isValueCheckbox(cq_orden_rqx);
+    this.formDynamics['otros'][2]['isChecked'] = isValueCheckbox(cq_orden_cq);
+    this.formDynamics['otros'][3]['isChecked'] = isValueCheckbox(cq_enfer);
   }
 
   changeMedicoIntervecion(codigoDeEspecialidad: string) {

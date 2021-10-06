@@ -53,9 +53,11 @@ export class F419EventoadversoComponent implements OnInit {
     return this.form.controls;
   }
 
-  onCheckbox(event: any, opcion: string) {
-    const checked = event.target.checked;
-    const value = event.target.value;
+  onCheckbox({ checked, value }, opcion: string) {
+    const DETALLE = {
+      AREA: '',
+      COLABORADOR: '',
+    };
 
     switch (opcion) {
       case 'AREA': {

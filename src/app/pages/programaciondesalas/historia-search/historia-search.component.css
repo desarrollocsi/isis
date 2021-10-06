@@ -123,13 +123,12 @@
   margin-bottom: 10px;
   border-radius: 2rem;
   padding: 1rem;
-  margin-bottom: 1.5rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }
 
 /**MARGIN**/
 .mb__1rem {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .mb__05rem {
