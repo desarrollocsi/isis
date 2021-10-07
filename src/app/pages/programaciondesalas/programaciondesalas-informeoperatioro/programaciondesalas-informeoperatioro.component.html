@@ -1,5 +1,5 @@
 <div class="container animate__animated animate__fadeIn">
-  <h1 class="text__color">Reporte de Sala de Operaciones</h1>
+  <h1 class="title__h1 text__color">Reporte de Sala de Operaciones</h1>
   <div class="container__data" *ngIf="programacionSalas$ | async as datas">
     <div class="container__group w__50 mr_1rem">
       <div class="content__head">
@@ -38,39 +38,41 @@
           <div class="row__item">
             <div class="group">
               <input
-                type="text"
+                type="search"
                 class="input-control"
                 formControlName="cq_diag_pre_ope"
                 placeholder=" "
                 (keyup)="search($event.target)"
               />
               <div class="label-control">Diagnosticos Pre-Operatorio</div>
-              <ng-container *ngIf="searchCie$ | async as searchCies">
-                <div class="container__content">
-                  <div
-                    class="body__item"
-                    *ngFor="let searchCie of searchCies"
-                    (click)="selectCie(searchCie, $event)"
-                  >
-                    {{ searchCie.codigo }} - {{ searchCie.descripcion }}
-                  </div>
-                </div>
+              <ng-container *ngIf="diagnosticosPre">
+                <app-cie-search
+                  [data]="searchCie$"
+                  (selectCie)="onSelectCie($event)"
+                ></app-cie-search>
               </ng-container>
             </div>
 
             <div class="group">
               <input
-                type="text"
+                type="search"
                 class="input-control"
                 formControlName="cq_diag_pos_ope"
                 placeholder=" "
+                (keyup)="search($event.target)"
               />
               <div class="label-control">Diagnosticos Post-Operatorio</div>
+              <ng-container *ngIf="diagnosticosPos">
+                <app-cie-search
+                  [data]="searchCie$"
+                  (selectCie)="onSelectCie($event)"
+                ></app-cie-search>
+              </ng-container>
             </div>
           </div>
           <div class="group textarea">
             <textarea
-              class="input-control"
+              class="input-control p-1"
               placeholder=" "
               rows="5"
               cols="10"
@@ -80,7 +82,7 @@
           </div>
           <div class="group textarea">
             <textarea
-              class="input-control"
+              class="input-control p-1"
               placeholder=" "
               rows="5"
               cols="10"
@@ -90,7 +92,7 @@
           </div>
           <div class="group textarea">
             <textarea
-              class="input-control"
+              class="input-control p-1"
               placeholder=" "
               rows="5"
               cols="10"

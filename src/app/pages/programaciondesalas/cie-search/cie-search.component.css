@@ -1,0 +1,15 @@
+.container__content {
+  position: absolute;
+  top: 100%;
+  z-index: 2;
+  background-color: #fff;
+  height: 250px;
+  overflow-y: scroll;
+  width: 100%;
+}
+
+.body__item {
+  cursor: pointer;
+  border-bottom: 1px solid #dadce0;
+  padding: 0.5rem;
+}

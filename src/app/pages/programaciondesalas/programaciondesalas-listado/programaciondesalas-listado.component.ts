@@ -65,7 +65,10 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
 
   onInformeOperatorio({ cq_numope }) {
     this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
-      (data) => this.IntermedaryService.getCodigoProgramacion(data)
+      (data: any) => {
+        this.IntermedaryService.getCodigoProgramacion(data);
+        this.ProgramaciondesalasService.getDataInformenOperatorio(cq_numope);
+      }
     );
     this.Router.navigate(['home/programaciondesalas/informeoperatorio']);
   }

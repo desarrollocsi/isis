@@ -1,0 +1,11 @@
+<ng-container *ngIf="data | async as searchCies">
+  <div class="container__content">
+    <div
+      class="body__item"
+      *ngFor="let searchCie of searchCies"
+      (click)="onSelectCie(searchCie)"
+    >
+      {{ searchCie.codigo }} - {{ searchCie.descripcion }}
+    </div>
+  </div>
+</ng-container>

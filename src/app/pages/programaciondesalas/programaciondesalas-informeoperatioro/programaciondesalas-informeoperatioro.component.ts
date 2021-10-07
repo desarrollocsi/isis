@@ -1,41 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
-  filter,
   switchMap,
+  takeUntil,
   tap,
 } from 'rxjs/operators';
-import { IntermedaryService } from '../../../core/services';
+import { IntermedaryService, MessageService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services/';
 import { formDynamic } from '../db/form__dynamic';
-
-interface Gasas {
-  value: string;
-}
 
 @Component({
   selector: 'app-programaciondesalas-informeoperatioro',
   templateUrl: './programaciondesalas-informeoperatioro.component.html',
   styleUrls: ['./programaciondesalas-informeoperatioro.component.css'],
 })
-export class ProgramaciondesalasInformeoperatioroComponent implements OnInit {
+export class ProgramaciondesalasInformeoperatioroComponent
+  implements OnInit, OnDestroy
+{
   programacionSalas$: Observable<any>;
   radioDynamic$: Observable<any>;
   form: FormGroup;
-  search$ = new Subject<string>();
+  search$ = new Subject<any>();
   searchCie$: Observable<any>;
-
+  control: string;
+  verbo: string = 'POST';
+  private readonly unsubscribe$: Subject<void> = new Subject();
   get gasas() {
     return this.form.get('cq_contgas');
+  }
+
+  get diagnosticosPre() {
+    return this.control === 'cq_diag_pre_ope';
+  }
+
+  get diagnosticosPos() {
+    return this.control === 'cq_diag_pos_ope';
   }
 
   constructor(
     private fb: FormBuilder,
     private IntermedaryService: IntermedaryService,
-    private ProgramaciondesalasService: ProgramaciondesalasService
+    private ProgramaciondesalasService: ProgramaciondesalasService,
+    private MessageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -55,25 +64,38 @@ export class ProgramaciondesalasInformeoperatioroComponent implements OnInit {
     this.dataDeProgramacionDeSalas();
     this.radioDynamic();
     this.searchCie();
+    this.getDataInformenOperatoio();
   }
 
   radioDynamic() {
     this.radioDynamic$ = of(formDynamic.gasas);
   }
 
+  getDataInformenOperatoio() {
+    this.ProgramaciondesalasService.__dataInformenOperatorio$
+      .pipe(
+        takeUntil(this.unsubscribe$),
+        switchMap((codigo: string) =>
+          this.ProgramaciondesalasService.getInformenOperatorio(codigo)
+        )
+      )
+      .subscribe((data) => {
+        this.form.patchValue(data);
+        this.verbo = 'PUT';
+      });
+  }
+
   dataDeProgramacionDeSalas() {
     this.programacionSalas$ =
       this.IntermedaryService._dataDeProgramacionDeSalas.pipe(
-        tap((data) => this.patch(data))
+        tap(({ sa_codsal, cq_numope }) =>
+          this.form.patchValue({ sa_codsal, cq_numope })
+        )
       );
   }
 
-  patch({ sa_codsal, cq_numope }): void {
-    this.form.patchValue({ sa_codsal, cq_numope });
-  }
-
-  search({ value }) {
-    this.search$.next(value);
+  search(event: any) {
+    (this.control = event.attributes[2].value), this.search$.next(event.value);
   }
 
   searchCie() {
@@ -86,15 +108,26 @@ export class ProgramaciondesalasInformeoperatioroComponent implements OnInit {
     );
   }
 
-  selectCie({ codigo, descripcion }, event: any) {
-    console.log(event);
-    const data = `${codigo} - ${descripcion}`;
-    this.form.get('cq_diag_pre_ope').setValue(data);
+  onSelectCie(value: string) {
+    this.form.get(this.control).setValue(value);
   }
 
   onSubmit() {
-    this.ProgramaciondesalasService.postInformeOperatorio(
-      this.form.value
-    ).subscribe(console.log);
+    this.ProgramaciondesalasService.InformeOperatorio(
+      this.form.value,
+      this.verbo
+    ).subscribe(
+      (data: any) => this.action(data),
+      (error: any) => this.MessageService.MessageInfo(error)
+    );
+  }
+
+  action({ message }: { message: string }) {
+    this.MessageService.MessageSucces(message);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

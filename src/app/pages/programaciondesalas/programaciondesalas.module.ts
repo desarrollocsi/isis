@@ -12,7 +12,7 @@ import { ProgramaciondesalasRegistradoComponent } from './programaciondesalas-re
 import { ProgramaciondesalasModalSalasComponent } from './programaciondesalas-modal-salas/programaciondesalas-modal-salas.component';
 import { HistoriaSearchComponent } from './historia-search/historia-search.component';
 import { ProgramaciondesalasInformeoperatioroComponent } from './programaciondesalas-informeoperatioro/programaciondesalas-informeoperatioro.component';
-import { ProgramaciondesalasDisponibilidaddesalasComponent } from './programaciondesalas-disponibilidaddesalas/programaciondesalas-disponibilidaddesalas.component';
+import { CieSearchComponent } from './cie-search/cie-search.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +23,7 @@ import { ProgramaciondesalasDisponibilidaddesalasComponent } from './programacio
     ProgramaciondesalasModalSalasComponent,
     HistoriaSearchComponent,
     ProgramaciondesalasInformeoperatioroComponent,
-    ProgramaciondesalasDisponibilidaddesalasComponent,
+    CieSearchComponent,
   ],
   imports: [
     CommonModule,

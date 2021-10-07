@@ -247,6 +247,13 @@ td:nth-of-type(6):before {
   height: 20px;
 }
 
+.img__icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.3;
+  margin-right: 0.7rem;
+}
+
 /*********dropdown*********/
 
 .dropdown {
@@ -262,8 +269,8 @@ td:nth-of-type(6):before {
   z-index: 1;
   min-width: 200px;
   height: auto;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  padding: 1rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  padding: 1rem 0;
 }
 
 .dropdown:hover .dropdown__content {
@@ -271,6 +278,17 @@ td:nth-of-type(6):before {
 }
 
 .dropdown__item {
-  text-align: left;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.dropdown__item:hover {
+  background-color: #f0c882;
+}
+
+.dropdown__item:hover .img__icon {
+  opacity: 1;
 }

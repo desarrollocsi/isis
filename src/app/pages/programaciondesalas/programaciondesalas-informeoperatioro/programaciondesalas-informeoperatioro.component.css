@@ -64,6 +64,11 @@
   color: #828282;
 }
 
+.title__h1 {
+  text-align: center;
+  font-size: 2rem;
+}
+
 /********/
 
 .group {
@@ -84,12 +89,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  padding: 1.2rem;
+  padding: 0 1.2rem;
   border-radius: 2rem;
   border: 1px solid #dadce0;
   outline: none;
   background: none;
   z-index: 1;
+}
+
+.p-1 {
+  padding: 1.2rem;
 }
 
 .label-control {

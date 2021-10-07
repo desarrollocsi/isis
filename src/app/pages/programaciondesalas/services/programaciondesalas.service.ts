@@ -32,7 +32,15 @@ export class ProgramaciondesalasService {
     .asObservable()
     .pipe(filter((data: any) => data !== null));
 
+  private dataInformenOperatorio = new BehaviorSubject<string>(null);
+  __dataInformenOperatorio$ = this.dataInformenOperatorio
+    .asObservable()
+    .pipe(filter((data: any) => data !== null));
   /**/
+
+  getDataInformenOperatorio(codigo: string) {
+    this.dataInformenOperatorio.next(codigo);
+  }
 
   getDataProgramacion(data: any) {
     this.data.next(data);
@@ -147,10 +155,6 @@ export class ProgramaciondesalasService {
     return data.map((value: any) => new Paciente(value));
   }
 
-  postInformeOperatorio(data: any) {
-    return this.http.post('http://127.0.0.1:8000/informeoperatorio', data);
-  }
-
   getApiDynamic({ verbo, data }) {
     const END_POINT = {
       PUT: this.http.put(
@@ -172,5 +176,23 @@ export class ProgramaciondesalasService {
       `http://127.0.0.1:8000/programacionreprogramacion/${data.cq_numope}/`,
       data
     );
+  }
+
+  getInformenOperatorio(codigo: string) {
+    return this.http.get(
+      `http://127.0.0.1:8000/informeoperatoriodata/${codigo}/`
+    );
+  }
+
+  InformeOperatorio(data: any, keys: any) {
+    const END_POINT = {
+      PUT: this.http.put(
+        `http://127.0.0.1:8000/informeoperatoriodata/${data.cq_numope}/`,
+        data
+      ),
+      POST: this.http.post('http://127.0.0.1:8000/informeoperatorio', data),
+    };
+
+    return END_POINT[keys];
   }
 }
