@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -39,7 +39,9 @@ export class ProgramaciondesalasRegistradoComponent
   sala: boolean = false;
   isPanelTiempoProgramacion: boolean = false;
   isReprogramacion: boolean = false;
+  isSuspender: boolean = false;
   formDynamics: any;
+  default: boolean = true;
 
   get participantes(): FormArray {
     return this.form.get('participantes') as FormArray;
@@ -61,12 +63,20 @@ export class ProgramaciondesalasRegistradoComponent
     return this.form.controls;
   }
 
-  get isPut() {
-    return this.verbo === 'PUT';
+  get programar() {
+    return this.nameButton === 'Registrar';
   }
 
-  get isPost() {
-    return this.verbo === 'POST';
+  get reprogramar() {
+    return this.nameButton === 'Reprogramar';
+  }
+
+  get suspender() {
+    return this.nameButton === 'Suspender';
+  }
+
+  get actualizar() {
+    return this.nameButton === 'Actualizar';
   }
 
   constructor(
@@ -81,7 +91,7 @@ export class ProgramaciondesalasRegistradoComponent
     this.form = this.fb.group({
       cq_numope: [null],
       sa_codsal: [{ value: null, disabled: true }],
-      cq_cama: [null, Validators.required],
+      cq_cama: [null],
       se_codigo: [null],
       cq_numhis: [null],
       cq_paciente: [null],
@@ -103,9 +113,13 @@ export class ProgramaciondesalasRegistradoComponent
       cq_orden_cq: ['0'],
       cq_enfer: ['0'],
       cq_indrep: ['0'],
+      cq_glosa_repro: [null],
       cq_fecha: [{ value: null, disabled: true }],
       cq_hoinpr: [{ value: null, disabled: true }],
       cq_hofipr: [{ value: null, disabled: true }],
+      cq_estado: ['1'],
+      cq_motivo_suspen: [null],
+      cq_estd_suspendida: [null],
       participantes: this.fb.array([]),
       equiposMedicos: this.fb.array([]),
     });
@@ -155,11 +169,26 @@ export class ProgramaciondesalasRegistradoComponent
       });
   }
 
+  formDisable() {
+    this.forms.cq_cama.disable();
+    this.forms.se_codigo.disable();
+    this.forms.cq_codiqx.disable();
+    this.forms.medico.disable();
+    this.forms.cq_codiqx2.disable();
+    this.forms.cq_codiqx3.disable();
+    this.forms.an_tipane.disable();
+    this.forms.cq_num_petito.disable();
+    this.forms.cq_numsema.disable();
+    this.forms.tiempo.disable();
+    this.forms.cq_antibio.disable();
+    this.forms.cq_pedido.disable();
+  }
+
   Reprogramacion() {
-    this.isReprogramacion = this.nameButton === 'Reprogramar';
-    this.form.get('cq_hoinpr').reset({ value: null, disabled: true });
-    this.form.get('cq_hofipr').reset({ value: null, disabled: true });
-    this.form.get('sa_codsal').reset({ value: null, disabled: true });
+    this.forms.cq_indrep.reset('1');
+    this.forms.cq_hoinpr.reset({ value: null, disabled: true });
+    this.forms.cq_hofipr.reset({ value: null, disabled: true });
+    this.forms.sa_codsal.reset({ value: null, disabled: true });
   }
 
   horarioDeProgramacion() {
@@ -198,7 +227,7 @@ export class ProgramaciondesalasRegistradoComponent
         this.isPanelTiempoProgramacion = true;
         setTimeout(() => {
           this.participantes.patchValue(data.participantes);
-          this.setAsignacionCirujano(this.cirujano.value, true);
+          this.setAsignacionCirujano(this.cirujano.value);
         }, 1000);
         this.Personal();
         data.equiposMedicos.map(({ de_codequi }) => {
@@ -206,7 +235,12 @@ export class ProgramaciondesalasRegistradoComponent
           isCheckbox('equipoMedicos', de_codequi);
         });
         this.setCheckbox(data);
-        this.nameButton === 'Reprogramar' && this.Reprogramacion();
+        if (this.reprogramar) this.Reprogramacion(), this.formDisable();
+        if (this.suspender) {
+          this.forms.cq_estado.reset('3');
+          this.forms.cq_estd_suspendida.reset('1');
+          this.formDisable();
+        }
       });
   }
 
@@ -263,9 +297,12 @@ export class ProgramaciondesalasRegistradoComponent
       });
   }
 
-  setAsignacionCirujano(codigoMedico: string, isEdit: boolean = false) {
+  setAsignacionCirujano(codigoMedico: string) {
     this.cirujano.reset({ value: codigoMedico, disabled: true });
-    isEdit && this.forms.medico.reset({ value: codigoMedico, disabled: false });
+    this.forms.medico.reset({
+      value: codigoMedico,
+      disabled: !this.actualizar,
+    });
   }
 
   agregarEquipoMedico(checked: boolean, { value }) {
@@ -300,8 +337,8 @@ export class ProgramaciondesalasRegistradoComponent
   }
 
   actionSuccess({ message }: { message: string }) {
-    this.MessageService.MessageSucces(message),
-      this.Router.navigate(['home/programaciondesalas']);
+    this.MessageService.MessageSucces(message), 0;
+    this.Router.navigate(['home/programaciondesalas']);
   }
 
   ngOnDestroy(): void {

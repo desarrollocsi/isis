@@ -63,11 +63,17 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     this.dataProgramacion(cq_numope);
   }
 
-  onInformeOperatorio({ cq_numope }) {
+  onSuspender({ cq_numope }: { cq_numope: string }) {
+    this.action({ verbo: 'PUT', nameButton: 'Suspender' });
+    this.dataProgramacion(cq_numope);
+  }
+
+  onInformeOperatorio({ cq_numope, inf_ope }) {
     this.ProgramaciondesalasService.getProgramacionDeSalas(cq_numope).subscribe(
       (data: any) => {
         this.IntermedaryService.getCodigoProgramacion(data);
-        this.ProgramaciondesalasService.getDataInformenOperatorio(cq_numope);
+        inf_ope &&
+          this.ProgramaciondesalasService.getDataInformenOperatorio(cq_numope);
       }
     );
     this.Router.navigate(['home/programaciondesalas/informeoperatorio']);

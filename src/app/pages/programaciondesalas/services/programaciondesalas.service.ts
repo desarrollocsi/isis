@@ -5,7 +5,7 @@ import { especialidades, camas, medicos } from '../db/db';
 import { Paciente } from '../models';
 
 import { formDynamic } from '../db/form__dynamic';
-import { AuthStorageService, IntermedaryService } from '../../../core/services';
+import { AuthStorageService } from '../../../core/services';
 import { filter, map, tap } from 'rxjs/operators';
 
 @Injectable({
@@ -21,6 +21,7 @@ export class ProgramaciondesalasService {
 
   private __datoDelPaciente = new Subject<any>();
   private __historia = new Subject<any>();
+  private __closeSearch = new Subject<boolean>();
   private data = new BehaviorSubject<any>(null);
   __data = this.data.asObservable();
 
@@ -56,6 +57,10 @@ export class ProgramaciondesalasService {
 
   get datoDelpaciente() {
     return this.__datoDelPaciente;
+  }
+
+  get closeSearch() {
+    return this.__closeSearch;
   }
 
   get dataHorarioDeProgramacion() {

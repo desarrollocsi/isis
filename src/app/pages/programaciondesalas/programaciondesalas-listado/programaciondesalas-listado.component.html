@@ -6,7 +6,7 @@
       <div class="cell cell__20">Hora</div>
       <div class="cell cell__50">Cirujano</div>
       <div class="cell">Paciente</div>
-      <div class="cell cell__20">Estado</div>
+      <div class="cell cell__30">Estado</div>
       <div class="cell cell__20">&nbsp;</div>
     </div>
     <div class="row__body" *ngFor="let agendaSoap of agendaSoaps$ | async">
@@ -16,7 +16,7 @@
       <div class="cell cell__text__left">
         {{ agendaSoap.paciente | titlecase }}
       </div>
-      <div class="cell cell__20">
+      <div class="cell cell__30">
         {{ agendaSoap.cq_estado | programmingStatus }}
       </div>
       <div class="cell cell__20 dropdown">
@@ -32,6 +32,10 @@
           <div class="dropdown__item" (click)="onReprogramar(agendaSoap)">
             <img src="../../../../assets/icons/clock.png" class="img__icon" />
             <span>Reprogramar</span>
+          </div>
+          <div class="dropdown__item" (click)="onSuspender(agendaSoap)">
+            <img src="../../../../assets/icons/clock.png" class="img__icon" />
+            <span>Suspender</span>
           </div>
           <div class="dropdown__item" (click)="onInformeOperatorio(agendaSoap)">
             <img

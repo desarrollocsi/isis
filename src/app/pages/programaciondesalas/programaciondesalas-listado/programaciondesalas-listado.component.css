@@ -231,6 +231,11 @@ td:nth-of-type(6):before {
   width: 20%;
 }
 
+.table .row__header .cell__30,
+.table .row__body .cell__30 {
+  width: 30%;
+}
+
 .table .row__header .cell__50,
 .table .row__body .cell__50 {
   width: 50%;

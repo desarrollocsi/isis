@@ -1,11 +1,30 @@
-<ng-container *ngIf="data | async as searchCies">
-  <div class="container__content">
-    <div
-      class="body__item"
-      *ngFor="let searchCie of searchCies"
-      (click)="onSelectCie(searchCie)"
-    >
-      {{ searchCie.codigo }} - {{ searchCie.descripcion }}
+<ng-container *ngIf="searchCies">
+  <div
+    class="container__content animate__animated"
+    [class.animate__fadeInDown]="isCLose"
+    [class.animate__fadeOutDown]="!isCLose"
+  >
+    <div class="container__icon">
+      <img
+        src="../../../../assets/icons/close.png"
+        class="img__icon"
+        (click)="close()"
+      />
+    </div>
+    <div class="table__head">
+      <div class="table__item w__10">codigo</div>
+      <div class="table__item w__100">descripcion</div>
+    </div>
+
+    <div class="container__table" [class.scrool__y]="isScroll">
+      <div
+        class="table__body"
+        *ngFor="let searchCie of searchCies"
+        (click)="onSelectCie(searchCie)"
+      >
+        <div class="table__item w__10">{{ searchCie.codigo }}</div>
+        <div class="table__item w__100">{{ searchCie.descripcion }}</div>
+      </div>
     </div>
   </div>
 </ng-container>

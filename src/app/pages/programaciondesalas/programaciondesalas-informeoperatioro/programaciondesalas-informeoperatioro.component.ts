@@ -65,6 +65,9 @@ export class ProgramaciondesalasInformeoperatioroComponent
     this.radioDynamic();
     this.searchCie();
     this.getDataInformenOperatoio();
+    this.ProgramaciondesalasService.closeSearch.subscribe(
+      (isClose: Boolean) => (this.control = '')
+    );
   }
 
   radioDynamic() {

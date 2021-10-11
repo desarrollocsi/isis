@@ -47,7 +47,7 @@
               <div class="label-control">Diagnosticos Pre-Operatorio</div>
               <ng-container *ngIf="diagnosticosPre">
                 <app-cie-search
-                  [data]="searchCie$"
+                  [data]="searchCie$ | async"
                   (selectCie)="onSelectCie($event)"
                 ></app-cie-search>
               </ng-container>
@@ -64,7 +64,7 @@
               <div class="label-control">Diagnosticos Post-Operatorio</div>
               <ng-container *ngIf="diagnosticosPos">
                 <app-cie-search
-                  [data]="searchCie$"
+                  [data]="searchCie$ | async"
                   (selectCie)="onSelectCie($event)"
                 ></app-cie-search>
               </ng-container>
