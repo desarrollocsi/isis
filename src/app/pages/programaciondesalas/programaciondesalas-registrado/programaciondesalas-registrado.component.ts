@@ -238,7 +238,7 @@ export class ProgramaciondesalasRegistradoComponent
         if (this.reprogramar) this.Reprogramacion(), this.formDisable();
         if (this.suspender) {
           this.forms.cq_estado.reset('3');
-          this.forms.cq_estd_suspendida.reset('1');
+          // this.forms.cq_estd_suspendida.reset('1');
           this.formDisable();
         }
       });

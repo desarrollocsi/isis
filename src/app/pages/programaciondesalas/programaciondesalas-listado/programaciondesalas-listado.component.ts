@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 
 import { ProgramaciondesalasService } from '../services/programaciondesalas.service';
 import { IntermedaryService } from '../../../core/services';
@@ -17,6 +17,7 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
   agendaSoaps$: Observable<any>;
   fecha: string;
   datas: any = [];
+  reprogramacion: string;
 
   constructor(
     private ProgramaciondesalasService: ProgramaciondesalasService,

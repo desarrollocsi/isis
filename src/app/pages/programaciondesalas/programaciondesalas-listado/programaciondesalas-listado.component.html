@@ -1,48 +1,72 @@
 <div class="animate__animated animate__fadeIn">
   <button class="btn" (click)="onRegistrar()">+Agregar</button>
-  <div class="table">
-    <div class="row__header">
-      <div class="cell cell__20">Sala</div>
-      <div class="cell cell__20">Hora</div>
-      <div class="cell cell__50">Cirujano</div>
+  <div class="table__desktop">
+    <div class="row__header__desktop">
+      <div class="cell">Sala</div>
+      <div class="cell">Hora</div>
+      <div class="cell">Cirujano</div>
       <div class="cell">Paciente</div>
-      <div class="cell cell__30">Estado</div>
-      <div class="cell cell__20">&nbsp;</div>
+      <div class="cell">Estado</div>
+      <div class="cell">&nbsp;</div>
     </div>
-    <div class="row__body" *ngFor="let agendaSoap of agendaSoaps$ | async">
-      <div class="cell cell__20">{{ agendaSoap.sala }}</div>
-      <div class="cell cell__20">{{ agendaSoap.diahora | slice: 1:5 }}</div>
-      <div class="cell cell__50">{{ agendaSoap.cirujano | titlecase }}</div>
-      <div class="cell cell__text__left">
-        {{ agendaSoap.paciente | titlecase }}
+    <div class="table" *ngFor="let agendaSoap of agendaSoaps$ | async">
+      <div class="row__header">
+        <div class="cell">Sala</div>
+        <div class="cell">Hora</div>
+        <div class="cell">Cirujano</div>
+        <div class="cell">Paciente</div>
+        <div class="cell">Estado</div>
+        <div class="cell">&nbsp;</div>
       </div>
-      <div class="cell cell__30">
-        {{ agendaSoap.cq_estado | programmingStatus }}
-      </div>
-      <div class="cell cell__20 dropdown">
-        <img
-          src="../../../../assets/icons/settings__option.svg"
-          class="actions__icons"
-        />
-        <div class="dropdown__content">
-          <div class="dropdown__item" (click)="onUpdate(agendaSoap)">
-            <img src="../../../../assets/icons/pen.png" class="img__icon" />
-            <span>Editar</span>
-          </div>
-          <div class="dropdown__item" (click)="onReprogramar(agendaSoap)">
-            <img src="../../../../assets/icons/clock.png" class="img__icon" />
-            <span>Reprogramar</span>
-          </div>
-          <div class="dropdown__item" (click)="onSuspender(agendaSoap)">
-            <img src="../../../../assets/icons/clock.png" class="img__icon" />
-            <span>Suspender</span>
-          </div>
-          <div class="dropdown__item" (click)="onInformeOperatorio(agendaSoap)">
-            <img
-              src="../../../../assets/icons/new-document.png"
-              class="img__icon"
-            />
-            <span>Inf. Operatorio</span>
+      <div class="row__body">
+        <div class="cell">{{ agendaSoap.sala }}</div>
+        <div class="cell">{{ agendaSoap.diahora }}</div>
+        <div class="cell cell__scroll">
+          {{ agendaSoap.cirujano | titlecase }}
+        </div>
+        <div class="cell cell__scroll">
+          {{ agendaSoap.paciente | titlecase }}
+        </div>
+        {{ reprogramacion }}
+        <div
+          class="cell"
+          [class.status__success]="agendaSoap.cq_estado === '1'"
+          [class.status__warning]="agendaSoap.cq_estado === '2'"
+          [class.status__danger]="agendaSoap.cq_estado === '3'"
+        >
+          {{ agendaSoap.cq_estado | programmingStatus: agendaSoap }}
+        </div>
+        <div class="cell dropdown">
+          <img
+            src="../../../../assets/icons/settings__option.svg"
+            class="actions__icons"
+          />
+          <div class="dropdown__content">
+            <div class="dropdown__item" (click)="onUpdate(agendaSoap)">
+              <img src="../../../../assets/icons/pen.png" class="img__icon" />
+              <span>Editar</span>
+            </div>
+            <div class="dropdown__item" (click)="onReprogramar(agendaSoap)">
+              <img src="../../../../assets/icons/clock.png" class="img__icon" />
+              <span>Reprogramar</span>
+            </div>
+            <div class="dropdown__item" (click)="onSuspender(agendaSoap)">
+              <img
+                src="../../../../assets/icons/no-stopping.png"
+                class="img__icon"
+              />
+              <span>Suspender</span>
+            </div>
+            <div
+              class="dropdown__item"
+              (click)="onInformeOperatorio(agendaSoap)"
+            >
+              <img
+                src="../../../../assets/icons/new-document.png"
+                class="img__icon"
+              />
+              <span>Inf. Operatorio</span>
+            </div>
           </div>
         </div>
       </div>

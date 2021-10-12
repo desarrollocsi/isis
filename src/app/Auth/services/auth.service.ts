@@ -16,6 +16,11 @@ export class AuthService {
     return this.http.post(this.URL, data);
   }
 
+
+  test(){
+    return this.http.get('http://192.168.10.139:8000/anestesia')
+  }
+
   // handleError(error:any) {
   //   let errorMessage = '';
   //   if (error.error instanceof ErrorEvent) {

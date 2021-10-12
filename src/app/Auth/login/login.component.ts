@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { AuthService } from '../services/auth.service';
 import { AuthStorageService, IntermedaryService } from '../../core/services';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,12 +21,14 @@ export class LoginComponent implements OnInit {
   ) {}
 
   form: FormGroup;
+  data$: Observable<any>;
 
   ngOnInit(): void {
     this.form = this.fb.group({
       username: [null, Validators.required],
       password: [null, Validators.required],
     });
+    this.data$ = this.AS.test();
   }
 
   get f() {

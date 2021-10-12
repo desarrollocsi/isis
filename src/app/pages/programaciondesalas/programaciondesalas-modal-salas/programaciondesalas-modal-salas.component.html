@@ -6,11 +6,11 @@
   [checked]="isModal"
   (click)="closeModal()"
 />
-
 <div class="modal">
   <div class="modal-wrap">
     <div class="modal-head">
       <span class="modal-title">Disponibilidad de salas</span>
+      <span class="modal-title" (click)="closeModal()">X</span>
     </div>
     <div class="modal-body modal-scroll-y">
       <div class="tab__head">

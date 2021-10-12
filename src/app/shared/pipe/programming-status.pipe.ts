@@ -4,7 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'programmingStatus',
 })
 export class ProgrammingStatusPipe implements PipeTransform {
-  transform(value: string, ...args: unknown[]): string {
+  transform(value: string, { cq_indrep }: { cq_indrep: string }): string {
+    const reprogramacion = cq_indrep === '1' ? 'Reprogramado' : null;
+
     const STATUS = {
       '0': 'Anulado',
       '1': 'Programado',
@@ -12,6 +14,6 @@ export class ProgrammingStatusPipe implements PipeTransform {
       '3': 'Suspendida',
     };
 
-    return STATUS[value];
+    return reprogramacion || STATUS[value];
   }
 }
