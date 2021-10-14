@@ -1,18 +1,24 @@
-<div class="container">
-  <div class="card">
-    <div class="card-head">F419</div>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <div class="container-form">
-        <div class="group">
+<div class="container w__70">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card">
+      <div class="card-head">
+        <div class="title__h1 text__color">F419</div>
+        <div class="title__h1 text__color">
+          REPORTE DE INCIDENCIA/EVENTO ADVERSO
+        </div>
+        <div class="title__h1 text__color">ASISTENCIAL</div>
+      </div>
+
+      <div class="row__item">
+        <div class="group mr_05rem">
           <input
             type="date"
             class="input-control"
             placeholder=" "
             formControlName="fecha"
           />
-          <label class="label-control">Fecha</label>
+          <label class="label-control">Fecha I/A</label>
         </div>
-
         <div class="group">
           <input
             type="text"
@@ -23,196 +29,182 @@
           <label class="label-control">N° de historia</label>
         </div>
       </div>
-
       <div class="group textarea">
         <textarea
           rows="5"
           cols="10"
           class="input-control"
           placeholder=" "
-          formControlName="descripcion"
+          formControlName="glosa"
         ></textarea>
-        <label for="" class="label-control">Descripción de la F419 </label>
-      </div>
-      <fieldset class="fieldset-group">
-        <legend>Turno</legend>
-        <div class="container-checkbox">
-          <input
-            type="radio"
-            class="checkbox_input"
-            value="1"
-            id="manana"
-            formControlName="turno"
-          />
-          <label for="manana" class="checkbox_label">Mañana</label>
-          <input
-            type="radio"
-            class="checkbox_input"
-            value="2"
-            id="tarde"
-            formControlName="turno"
-          />
-          <label for="tarde" class="checkbox_label">Tarde</label>
-          <input
-            type="radio"
-            class="checkbox_input"
-            value="3"
-            id="noche"
-            formControlName="turno"
-          />
-          <label for="noche" class="checkbox_label">Noche</label>
-        </div>
-      </fieldset>
-
-      <fieldset class="fieldset-group">
-        <legend>Área Asociada</legend>
-        <div class="container-checkbox">
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="1"
-            id="coe"
-            formControlName="a1"
-            (change)="onCheckbox($event.target, 'AREA')"
-          />
-          <label for="coe" class="checkbox_label">
-            C.O
-            <span class="tooltip">Centro Obstétrico</span>
-          </label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="2"
-            id="co"
-            formControlName="a2"
-            (change)="onCheckbox($event.target, 'AREA')"
-          />
-          <label for="co" class="checkbox_label"
-            >C.Q
-            <span class="tooltip">Centro Quirúrgico</span>
-          </label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="3"
-            id="hosp"
-            formControlName="a3"
-            (change)="onCheckbox($event.target, 'AREA')"
-          />
-          <label for="hosp" class="checkbox_label"
-            >HOSP
-            <span class="tooltip">Hospitalización</span>
-          </label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="4"
-            id="neo"
-            formControlName="a4"
-            (change)="onCheckbox($event.target, 'AREA')"
-          />
-          <label for="neo" class="checkbox_label">
-            NEO
-            <span class="tooltip">Neonatología</span>
-          </label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="5"
-            id="consultorios"
-            formControlName="a5"
-            (change)="onCheckbox($event.target, 'AREA')"
-          />
-          <label for="consultorios" class="checkbox_label">
-            CONS
-            <span class="tooltip">Consulta Externa</span>
-          </label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="6"
-            id="otro"
-            formControlName="a6"
-            (change)="onCheckbox($event.target, 'AREA')"
-          />
-          <label for="otro" class="checkbox_label">Otros</label>
-        </div>
-      </fieldset>
-      <div class="group animate__animated animate__fadeIn" *ngIf="otrosArea">
-        <input
-          type="text"
-          class="input-control"
-          placeholder=" "
-          [formControl]="otroArea"
-        />
-        <label class="label-control">Otra area</label>
+        <label class="label-control">Descripción de la F419 </label>
       </div>
 
-      <fieldset class="fieldset-group">
-        <legend>Colaborador involucrado</legend>
-        <div class="container-checkbox">
+      <div class="title__head text__color">Area asociada</div>
+      <div class="container__checkbox">
+        <div class="checkbox__tiem">
           <input
             type="checkbox"
-            class="checkbox_input"
-            value="1"
-            id="medico"
-            formControlName="c1"
-            (change)="onCheckbox($event.target, 'COLABORADOR')"
+            id="Centro obstetrico y emergencia"
+            (change)="addDetail($event.target)"
+            value="01"
+            class="checkbox__input"
           />
-          <label for="medico" class="checkbox_label">Medico</label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="2"
-            id="enfermera"
-            formControlName="c2"
-            (change)="onCheckbox($event.target, 'COLABORADOR')"
-          />
-          <label for="enfermera" class="checkbox_label">Enfermera</label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="3"
-            id="obstetrica"
-            formControlName="c3"
-            (change)="onCheckbox($event.target, 'COLABORADOR')"
-          />
-          <label for="obstetrica" class="checkbox_label">Obstetrica</label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="4"
-            id="tecenfermera"
-            formControlName="c4"
-            (change)="onCheckbox($event.target, 'COLABORADOR')"
-          />
-          <label for="tecenfermera" class="checkbox_label">Tecnica</label>
-          <input
-            type="checkbox"
-            class="checkbox_input"
-            value="5"
-            id="otros"
-            formControlName="c5"
-            (change)="onCheckbox($event.target, 'COLABORADOR')"
-          />
-          <label for="otros" class="checkbox_label">Otros</label>
+          <label for="Centro obstetrico y emergencia" class="label__"
+            >Centro obstetrico y emergencia</label
+          >
         </div>
-      </fieldset>
-      <div
-        class="group animate__animated animate__fadeIn"
-        *ngIf="otrosColaborador"
-      >
-        <input
-          type="text"
-          class="input-control"
-          placeholder=" "
-          [formControl]="otroColaborador"
-        />
-        <label class="label-control">Otra Colaborador</label>
+
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Neonatologia"
+            (change)="addDetail($event.target)"
+            value="02"
+            class="checkbox__input"
+          />
+          <label for="Neonatologia" class="label__">Neonatologia</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Centro Quirurgico"
+            (change)="addDetail($event.target)"
+            value="03"
+            class="checkbox__input"
+          />
+          <label for="Centro Quirurgico" class="label__"
+            >Centro Quirurgico</label
+          >
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Consultorios Externo / Vacunación"
+            (change)="addDetail($event.target)"
+            value="04"
+            class="checkbox__input"
+          />
+          <label for="Consultorios Externo / Vacunación" class="label__"
+            >Consultorios Externo / Vacunación</label
+          >
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Hospitalización"
+            (change)="addDetail($event.target)"
+            value="05"
+            class="checkbox__input"
+          />
+          <label for="Hospitalización" class="label__">Hospitalización</label>
+        </div>
       </div>
-      <div class="group">
-        <button type="submit" class="btn">Enviar</button>
+      <div class="title__head text__color">
+        Areas de diagnostico y apoyo clinico
       </div>
-    </form>
-  </div>
+      <div class="container__checkbox">
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Laboratorio"
+            (change)="addDetail($event.target)"
+            value="06"
+            class="checkbox__input"
+          />
+          <label for="Laboratorio" class="label__">Laboratorio</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Patologia"
+            (change)="addDetail($event.target)"
+            value="07"
+            class="checkbox__input"
+          />
+          <label for="Patologia" class="label__">Patologia</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Rayos x"
+            (change)="addDetail($event.target)"
+            value="08"
+            class="checkbox__input"
+          />
+          <label for="Rayos x" class="label__">Rayos x</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Ecografia"
+            (change)="addDetail($event.target)"
+            value="09"
+            class="checkbox__input"
+          />
+          <label for="Ecografia" class="label__">Ecografia</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Farmacia"
+            (change)="addDetail($event.target)"
+            value="10"
+            class="checkbox__input"
+          />
+          <label for="Farmacia" class="label__">Farmacia</label>
+        </div>
+      </div>
+      <div class="title__head text__color">
+        Areas de diagnostico y apoyo clinico
+      </div>
+      <div class="container__checkbox">
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Médico"
+            (change)="addDetail($event.target)"
+            value="11"
+            class="checkbox__input"
+          />
+          <label for="Médico" class="label__">Médico</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Enfermera"
+            (change)="addDetail($event.target)"
+            value="12"
+            class="checkbox__input"
+          />
+          <label for="Enfermera" class="label__">Enfermera</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Obstétricas"
+            (change)="addDetail($event.target)"
+            value="13"
+            class="checkbox__input"
+          />
+          <label for="Obstétricas" class="label__">Obstétricas</label>
+        </div>
+        <div class="checkbox__tiem">
+          <input
+            type="checkbox"
+            id="Tec. de Enfermería"
+            (change)="addDetail($event.target)"
+            value="14"
+            class="checkbox__input"
+          />
+          <label for="Tec. de Enfermería" class="label__"
+            >Tec. de Enfermería</label
+          >
+        </div>
+      </div>
+    </div>
+    <div class="group">
+      <button type="submit" class="btn">Enviar</button>
+    </div>
+  </form>
 </div>

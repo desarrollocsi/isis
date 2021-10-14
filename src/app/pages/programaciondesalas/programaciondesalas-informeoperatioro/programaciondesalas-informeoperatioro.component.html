@@ -136,6 +136,11 @@
                 }}</label>
               </ng-container>
             </div>
+            <ng-container *ngIf="submit && cq_contgas.invalid">
+              <div *ngIf="cq_contgas.errors?.required">
+                Seleccionar el tipo de gasas
+              </div>
+            </ng-container>
           </fieldset>
         </div>
         <button class="btn">Registrar</button>

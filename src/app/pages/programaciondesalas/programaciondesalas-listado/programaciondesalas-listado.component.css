@@ -1,3 +1,38 @@
+.card,
+.container__layout {
+  border-radius: 2rem;
+}
+
+.container__layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 65vh;
+  padding: 0 1rem;
+  border: 2px solid #dadce0;
+  border-style: dashed;
+  border-radius: 2rem;
+}
+
+.title__h1 {
+  color: #828282;
+  opacity: 0.5;
+  text-align: center;
+}
+
+/******************************/
+.card {
+  width: 100%;
+  background-color: #fff;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/************BOTON******************/
 .btn {
   padding: 1rem 2rem;
   border: none;
@@ -84,6 +119,13 @@
   height: 20px;
   opacity: 0.3;
   margin-right: 0.7rem;
+}
+
+.icon__lg {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1.5rem;
+  opacity: 0.3;
 }
 
 /*********dropdown*********/
@@ -215,5 +257,13 @@
   .btn {
     width: 20%;
     margin-bottom: 1rem;
+  }
+
+  .card {
+    max-width: 450px;
+  }
+
+  .w__50 {
+    width: 50%;
   }
 }

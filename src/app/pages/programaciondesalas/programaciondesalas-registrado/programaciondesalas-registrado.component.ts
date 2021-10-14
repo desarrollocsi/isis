@@ -201,7 +201,7 @@ export class ProgramaciondesalasRegistradoComponent
 
   tiempoProgramacion() {
     !this.forms.tiempo.value &&
-      this.MessageService.MessageInfo('Ingresar intervencion');
+      this.MessageService.MessageInfo('Ingresar intervencion Principal');
 
     this.forms.tiempo.value &&
       this.IntermedaryService.modal.next(this.forms.tiempo.value);
@@ -238,7 +238,6 @@ export class ProgramaciondesalasRegistradoComponent
         if (this.reprogramar) this.Reprogramacion(), this.formDisable();
         if (this.suspender) {
           this.forms.cq_estado.reset('3');
-          // this.forms.cq_estd_suspendida.reset('1');
           this.formDisable();
         }
       });

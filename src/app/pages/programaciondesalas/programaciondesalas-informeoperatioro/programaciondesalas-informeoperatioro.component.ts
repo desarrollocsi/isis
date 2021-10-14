@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, of, Subject } from 'rxjs';
 import {
   debounceTime,
@@ -27,6 +27,7 @@ export class ProgramaciondesalasInformeoperatioroComponent
   searchCie$: Observable<any>;
   control: string;
   verbo: string = 'POST';
+  submit: Boolean = false;
   private readonly unsubscribe$: Subject<void> = new Subject();
   get gasas() {
     return this.form.get('cq_contgas');
@@ -38,6 +39,10 @@ export class ProgramaciondesalasInformeoperatioroComponent
 
   get diagnosticosPos() {
     return this.control === 'cq_diag_pos_ope';
+  }
+
+  get cq_contgas() {
+    return this.form.get('cq_contgas');
   }
 
   constructor(
@@ -58,7 +63,7 @@ export class ProgramaciondesalasInformeoperatioroComponent
       cq_diag_pos_ope: [null],
       cq_patolo: [null],
       cq_diag_sang_aprox: [null],
-      cq_contgas: [null],
+      cq_contgas: [null, [Validators.required]],
     });
 
     this.dataDeProgramacionDeSalas();
@@ -116,6 +121,9 @@ export class ProgramaciondesalasInformeoperatioroComponent
   }
 
   onSubmit() {
+    this.submit = true;
+    if (this.form.invalid) return;
+
     this.ProgramaciondesalasService.InformeOperatorio(
       this.form.value,
       this.verbo

@@ -83,7 +83,7 @@
                 {{ intervencion.cq_nomint | titlecase }}
               </option>
             </select>
-            <label class="label-control">Intervencion 2</label>
+            <label class="label-control">Intervencion 2 (opcional)</label>
           </div>
 
           <div class="group">
@@ -99,7 +99,7 @@
                 {{ intervencion.cq_nomint | titlecase }}
               </option>
             </select>
-            <label class="label-control">Intervencion 3</label>
+            <label class="label-control">Intervencion 3 (opcional)</label>
           </div>
 
           <div class="group">
@@ -115,7 +115,7 @@
                 {{ anestesia.an_nombre | titlecase }}
               </option>
             </select>
-            <label class="label-control">Anestesias</label>
+            <label class="label-control">Anestesia</label>
           </div>
         </div>
         <!--row 2 end-->
@@ -168,7 +168,7 @@
             placeholder=" "
             formControlName="cq_pedido"
           ></textarea>
-          <label class="label-control">Motivo / Observaciones</label>
+          <label class="label-control">Motivo / Observaciones (opcional)</label>
         </div>
         <!--row 4 end-->
         <!--row 5 beginning-->
@@ -207,7 +207,7 @@
           </div>
           <!--Estancia end-->
           <!--Equipos medicos beginning -->
-          <h1 class="text__title">Equipos Medicos</h1>
+          <h1 class="text__title">Equipos Medicos (opcional)</h1>
           <div class="container__checkbox">
             <ng-container *ngFor="let equipos of formDynamics.equipoMedicos">
               <input
@@ -225,7 +225,7 @@
           </div>
           <!--Equipos end-->
           <!--Otros beginning-->
-          <h1 class="text__title">Otros</h1>
+          <h1 class="text__title">Otros (opcional)</h1>
           <div class="container__checkbox flex__direction_column">
             <ng-container *ngFor="let otro of formDynamics.otros">
               <input
