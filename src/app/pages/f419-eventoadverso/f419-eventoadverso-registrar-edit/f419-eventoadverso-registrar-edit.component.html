@@ -1,1 +1,303 @@
-<p>f419-eventoadverso-registrar-edit works!</p>
+<h1 class="text__title text__color mbt_3">{{ title | titlecase }}</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <div class="card">
+    <div class="row__item" [class.mb_1]="historia || fecha">
+      <div class="group mr_05" [class.mb_3]="fecha" [class.mb_1]="fecha">
+        <input
+          type="date"
+          class="input__control"
+          placeholder=" "
+          formControlName="fecha"
+          [class.valid]="f.fecha.valid"
+          [class.input__invalid]="fecha"
+        />
+        <label
+          class="label__control"
+          [class.invalid__warning]="fecha"
+          [class.valid__success]="f.fecha.valid"
+          >Fecha I/A</label
+        >
+        <div class="invalid animate__animated animate__fadeIn" *ngIf="fecha">
+          <span *ngIf="f.fecha.errors?.required">
+            <svg
+              aria-hidden="true"
+              class="message-text"
+              fill="currentColor"
+              focusable="false"
+              width="16px"
+              height="16px"
+              viewBox="0 0 24 24"
+              xmlns="https://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              ></path>
+            </svg>
+            Se requiere la fecha de la I/A
+          </span>
+        </div>
+      </div>
+      <div class="group" [class.mb_3]="historia" [class.mb_1]="historia">
+        <input
+          type="number"
+          class="input__control"
+          placeholder=" "
+          formControlName="historia"
+          [class.valid]="f.historia.valid"
+          [class.input__invalid]="historia"
+        />
+        <label
+          class="label__control"
+          [class.invalid__warning]="historia"
+          [class.valid__success]="f.historia.valid"
+          >Historia</label
+        >
+        <div class="invalid animate__animated animate__fadeIn" *ngIf="historia">
+          <span *ngIf="f.historia.errors?.required">
+            <svg
+              aria-hidden="true"
+              class="message-text"
+              fill="currentColor"
+              focusable="false"
+              width="16px"
+              height="16px"
+              viewBox="0 0 24 24"
+              xmlns="https://www.w3.org/2000/svg"
+            >
+              <path
+                d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+              ></path>
+            </svg>
+            Se requiere la Historia
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="group group__textarea" [class.mb_2_5]="glosa">
+      <textarea
+        cols="30"
+        rows="10"
+        class="input__control"
+        placeholder=" "
+        formControlName="glosa"
+        [class.valid]="f.glosa.valid"
+        [class.input__invalid]="glosa"
+      ></textarea>
+      <label
+        class="label__control"
+        [class.invalid__warning]="glosa"
+        [class.valid__success]="f.glosa.valid"
+        >Descripcion</label
+      >
+      <div class="invalid animate__animated animate__fadeIn" *ngIf="glosa">
+        <span *ngIf="f.glosa.errors?.required">
+          <svg
+            aria-hidden="true"
+            class="message-text"
+            fill="currentColor"
+            focusable="false"
+            width="16px"
+            height="16px"
+            viewBox="0 0 24 24"
+            xmlns="https://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+            ></path>
+          </svg>
+          Se requiere la descripcion de la I/A
+        </span>
+      </div>
+    </div>
+
+    <h1>Turnos</h1>
+    <div class="container__radio" [class.mb__0]="turno">
+      <input
+        type="radio"
+        id="Mañana"
+        class="input__radio"
+        formControlName="turno"
+        value="01"
+      /><label for="Mañana" class="label__radio">Mañana</label>
+      <input
+        type="radio"
+        id="Tarde"
+        class="input__radio"
+        formControlName="turno"
+        value="02"
+      /><label for="Tarde" class="label__radio">Tarde</label>
+      <input
+        type="radio"
+        id="Noche"
+        class="input__radio"
+        formControlName="turno"
+        value="03"
+      /><label for="Noche" class="label__radio">Noche</label>
+    </div>
+    <div
+      class="invalid__container animate__animated animate__fadeIn"
+      *ngIf="turno"
+    >
+      <span *ngIf="f.turno.errors?.required">
+        <svg
+          aria-hidden="true"
+          class="message-text"
+          fill="currentColor"
+          focusable="false"
+          width="16px"
+          height="16px"
+          viewBox="0 0 24 24"
+          xmlns="https://www.w3.org/2000/svg"
+        >
+          <path
+            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+          ></path>
+        </svg>
+        se requiere el turno
+      </span>
+    </div>
+  </div>
+
+  <div class="row__item mb_1">
+    <div class="container__checkbox">
+      <h2 class="title__subtitle text__color">Área Asociada a la I/A</h2>
+      <input
+        type="checkbox"
+        id="Centro obstetrico y emergencia"
+        (change)="addDetail($event.target)"
+        value="01"
+        class="input__checkbox"
+      />
+      <label class="label__checkbox" for="Centro obstetrico y emergencia"
+        >Centro obstetrico y emergencia</label
+      >
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        class="input__checkbox"
+        value="02"
+        id="Neonatologia"
+      />
+      <label class="label__checkbox" for="Neonatologia">Neonatologia</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        class="input__checkbox"
+        id="Centro Quirurgico"
+        value="03"
+      />
+      <label class="label__checkbox" for="Centro Quirurgico"
+        >Centro Quirurgico</label
+      >
+      <input
+        type="checkbox"
+        class="input__checkbox"
+        (change)="addDetail($event.target)"
+        id="Consultorios Externo / Vacunación"
+        value="04"
+      />
+      <label class="label__checkbox" for="Consultorios Externo / Vacunación"
+        >Consultorios Externo / Vacunación</label
+      >
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="05"
+        class="input__checkbox"
+        id="Hospitalización"
+      />
+      <label class="label__checkbox" for="Hospitalización"
+        >Hospitalización</label
+      >
+      <div *ngIf=""></div>
+    </div>
+    <div class="container__checkbox">
+      <h2 class="title__subtitle text__color">
+        Areas de diagnostico y apoyo clinico
+      </h2>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="06"
+        class="input__checkbox"
+        id="Laboratorio"
+      />
+      <label class="label__checkbox" for="Laboratorio">Laboratorio</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="07"
+        class="input__checkbox"
+        id="Patologia"
+      />
+      <label class="label__checkbox" for="Patologia">Patologia</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="08"
+        class="input__checkbox"
+        id="Rayos x"
+      />
+      <label class="label__checkbox" for="Rayos x">Rayos x</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="09"
+        class="input__checkbox"
+        id="Ecografia"
+      />
+      <label class="label__checkbox" for="Ecografia">Ecografia</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="10"
+        class="input__checkbox"
+        id="Farmacia"
+      />
+      <label class="label__checkbox" for="Farmacia">Farmacia</label>
+    </div>
+    <div class="container__checkbox">
+      <h2 class="title__subtitle text__color">
+        Colaborador involucrado al I/A
+      </h2>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="11"
+        class="input__checkbox"
+        id="Medico"
+      />
+      <label class="label__checkbox" for="Medico">Médico</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="12"
+        class="input__checkbox"
+        id="Enfermera"
+      />
+      <label class="label__checkbox" for="Enfermera">Enfermera</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="13"
+        class="input__checkbox"
+        id="Obstétricas"
+      />
+      <label class="label__checkbox" for="Obstétricas">Obstétricas</label>
+      <input
+        type="checkbox"
+        (change)="addDetail($event.target)"
+        value="14"
+        class="input__checkbox"
+        id="Tec. de Enfermeria"
+      />
+      <label class="label__checkbox" for="Tec. de Enfermeria"
+        >Tec. de Enfermería</label
+      >
+    </div>
+  </div>
+
+  <div class="group">
+    <button class="btn">Enviar</button>
+  </div>
+</form>

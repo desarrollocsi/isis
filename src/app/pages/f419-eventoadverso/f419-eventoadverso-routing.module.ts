@@ -6,7 +6,7 @@ import { F419EventoadversoRegistrarEditComponent } from './f419-eventoadverso-re
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'f419',
     component: F419EventoadversoComponent,
     children: [
       { path: '', component: F419EventoadversoListadoComponent },
