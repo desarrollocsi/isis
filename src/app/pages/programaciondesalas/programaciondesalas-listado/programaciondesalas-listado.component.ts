@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { switchMap, tap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 
 import { ProgramaciondesalasService } from '../services/programaciondesalas.service';
 import { IntermedaryService } from '../../../core/services';
@@ -37,10 +37,6 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     );
   }
 
-  onRegistrar() {
-    this.Router.navigate(['home/programaciondesalas/registrar']);
-  }
-
   action(data: any) {
     this.ProgramaciondesalasService.gethttpDynamic(data);
   }
@@ -51,6 +47,11 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     ).subscribe((data: any) =>
       this.IntermedaryService.getCodigoProgramacion(data)
     );
+    this.Router.navigate(['home/programaciondesalas/registrar']);
+  }
+
+  onRegistrar() {
+    this.action({ verbo: 'POST', nameButton: 'Registrar' });
     this.Router.navigate(['home/programaciondesalas/registrar']);
   }
 

@@ -6,14 +6,24 @@
         <span class="text__title">Datos Personales</span>
       </div>
       <div class="content__body">
-        <ul>
-          <li>{{ datas.cq_numhis }}</li>
-          <li>{{ datas.cq_paciente | titlecase }}</li>
-          <li>{{ datas.cq_edad }}</li>
-          <li>{{ datas.cq_hoinpr }}</li>
-          <li>{{ datas.cq_hofipr }}</li>
-          <li>{{ datas.cq_fecha }}</li>
-        </ul>
+        <div class="table">
+          <div class="row__header">
+            <div class="cell">Historia</div>
+            <div class="cell">Paciente</div>
+            <div class="cell">Edad</div>
+            <div class="cell">Hora Inicio</div>
+            <div class="cell">Hora Fin</div>
+            <div class="cell">Fecha</div>
+          </div>
+          <div class="row__body">
+            <div class="cell">{{ datas.historia }}</div>
+            <div class="cell">{{ datas.paciente | titlecase }}</div>
+            <div class="cell">{{ datas.edad }}</div>
+            <div class="cell">{{ datas.inicioDeProgramacion }}</div>
+            <div class="cell">{{ datas.finDeProgramacion }}</div>
+            <div class="cell">{{ datas.fechaDeProgramacion }}</div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="container__group w__50">

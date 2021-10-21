@@ -4,6 +4,7 @@ import { Observable, of, Subject } from 'rxjs';
 import {
   debounceTime,
   distinctUntilChanged,
+  map,
   switchMap,
   takeUntil,
   tap,
@@ -11,6 +12,7 @@ import {
 import { IntermedaryService, MessageService } from '../../../core/services';
 import { ProgramaciondesalasService } from '../services/';
 import { formDynamic } from '../db/form__dynamic';
+import { InformeOperatorio } from '../models/';
 
 @Component({
   selector: 'app-programaciondesalas-informeoperatioro',
@@ -98,7 +100,8 @@ export class ProgramaciondesalasInformeoperatioroComponent
       this.IntermedaryService._dataDeProgramacionDeSalas.pipe(
         tap(({ sa_codsal, cq_numope }) =>
           this.form.patchValue({ sa_codsal, cq_numope })
-        )
+        ),
+        map((data) => new InformeOperatorio(data))
       );
   }
 

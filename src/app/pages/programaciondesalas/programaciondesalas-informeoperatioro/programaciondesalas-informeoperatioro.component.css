@@ -202,6 +202,52 @@ fieldset {
   margin: 0;
 }
 
+/*********************TABLE***********************/
+.table {
+  display: flex;
+  width: 100%;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+}
+
+.row__header,
+.row__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.row__header {
+  width: 40%;
+}
+
+.row__body {
+  width: 60%;
+}
+
+.row__header .cell,
+.row__body .cell {
+  text-align: center;
+  padding: 0.5rem;
+  height: 35px;
+  margin-bottom: 0.5rem;
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.row__body .cell {
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
+}
+
+.row__header .cell,
+.row__header__desktop .cell {
+  color: #fff;
+  background-color: #828282;
+  font-weight: 600;
+  border-top-left-radius: 2rem;
+  border-bottom-left-radius: 2rem;
+}
+
 @media (min-width: 768px) and (min-width: 992px) {
   .row__item {
     flex-direction: row;
