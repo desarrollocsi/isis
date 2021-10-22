@@ -9,7 +9,11 @@ import {
   takeUntil,
   tap,
 } from 'rxjs/operators';
-import { IntermedaryService, MessageService } from '../../../core/services';
+import {
+  IntermedaryService,
+  MessageService,
+  AuthStorageService,
+} from '../../../core/services';
 import { ProgramaciondesalasService } from '../services/';
 import { formDynamic } from '../db/form__dynamic';
 import { InformeOperatorio } from '../models/';
@@ -51,7 +55,8 @@ export class ProgramaciondesalasInformeoperatioroComponent
     private fb: FormBuilder,
     private IntermedaryService: IntermedaryService,
     private ProgramaciondesalasService: ProgramaciondesalasService,
-    private MessageService: MessageService
+    private MessageService: MessageService,
+    private AuthStorageService: AuthStorageService
   ) {}
 
   ngOnInit(): void {
@@ -98,7 +103,7 @@ export class ProgramaciondesalasInformeoperatioroComponent
   dataDeProgramacionDeSalas() {
     this.programacionSalas$ =
       this.IntermedaryService._dataDeProgramacionDeSalas.pipe(
-        tap(({ sa_codsal, cq_numope }) =>
+        tap(({ sa_codsal: { sa_codsal }, cq_numope }) =>
           this.form.patchValue({ sa_codsal, cq_numope })
         ),
         map((data) => new InformeOperatorio(data))
@@ -125,15 +130,16 @@ export class ProgramaciondesalasInformeoperatioroComponent
 
   onSubmit() {
     this.submit = true;
+    console.log(this.form.value);
     if (this.form.invalid) return;
 
-    this.ProgramaciondesalasService.InformeOperatorio(
-      this.form.value,
-      this.verbo
-    ).subscribe(
-      (data: any) => this.action(data),
-      (error: any) => this.MessageService.MessageInfo(error)
-    );
+    // this.ProgramaciondesalasService.InformeOperatorio(
+    //   this.form.value,
+    //   this.verbo
+    // ).subscribe(
+    //   (data: any) => this.action(data),
+    //   (error: any) => this.MessageService.MessageInfo(error)
+    // );
   }
 
   action({ message }: { message: string }) {

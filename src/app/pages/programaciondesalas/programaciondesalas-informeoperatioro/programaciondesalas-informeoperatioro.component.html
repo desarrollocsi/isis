@@ -3,7 +3,7 @@
   <div class="container__data" *ngIf="programacionSalas$ | async as datas">
     <div class="container__group w__50 mr_1rem">
       <div class="content__head">
-        <span class="text__title">Datos Personales</span>
+        <span class="text__title">Datos de la programacion</span>
       </div>
       <div class="content__body">
         <div class="table">
@@ -31,8 +31,13 @@
         <span class="text__title">Personal de sala</span>
       </div>
       <div class="content__body">
-        <div *ngFor="let x of datas.participantes">
-          <h1>{{ x.cq_codpar }}</h1>
+        <div class="container__content" *ngFor="let detalle of datas.detalles">
+          <div class="item__content w__40">
+            {{ detalle.cq_codpar | titlecase }}
+          </div>
+          <div class="item__content w__60">
+            {{ detalle.pl_codper | personal | titlecase }}
+          </div>
         </div>
       </div>
     </div>

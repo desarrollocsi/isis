@@ -7,14 +7,16 @@ import { CalendarComponent } from './components/calendar/calendar.component';
 import { ToasterComponent } from './components/toaster/toaster.component';
 import { SearchPipe } from './pipe/search.pipe';
 import { ProgrammingStatusPipe } from './pipe/programming-status.pipe';
+import { PersonalPipe } from './pipe/personal.pipe';
 
 @NgModule({
   declarations: [
     ModulesComponent,
     CalendarComponent,
     ToasterComponent,
-    SearchPipe,
     ProgrammingStatusPipe,
+    SearchPipe,
+    PersonalPipe,
   ],
   imports: [CommonModule, SharedRoutingModule],
   exports: [
@@ -22,6 +24,7 @@ import { ProgrammingStatusPipe } from './pipe/programming-status.pipe';
     ToasterComponent,
     SearchPipe,
     ProgrammingStatusPipe,
+    PersonalPipe,
   ],
 })
 export class SharedModule {}

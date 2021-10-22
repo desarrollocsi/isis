@@ -1,4 +1,5 @@
 import { formatearHora, formatearFechaDescripcion } from '../utils/';
+import { AuthStorageService } from '../../../core/services';
 
 export class InformeOperatorio {
   public historia: number;
@@ -7,7 +8,7 @@ export class InformeOperatorio {
   public horaInicio: string;
   public horaFin: string;
   public fecha: string;
-  public participantes: [];
+  public detalles: [];
 
   constructor({
     cq_numhis,
@@ -16,7 +17,7 @@ export class InformeOperatorio {
     cq_hoinpr,
     cq_hofipr,
     cq_fecha,
-    participantes,
+    detalle,
   }) {
     this.historia = +cq_numhis;
     this.paciente = cq_paciente;
@@ -24,7 +25,7 @@ export class InformeOperatorio {
     this.horaInicio = cq_hoinpr;
     this.horaFin = cq_hofipr;
     this.fecha = cq_fecha;
-    this.participantes = participantes;
+    this.detalles = detalle;
   }
 
   get inicioDeProgramacion() {

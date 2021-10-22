@@ -148,6 +148,12 @@ export class ProgramaciondesalasService {
     );
   }
 
+  getProgramacionDeSalasData(codigoProgramacion: string) {
+    return this.http.get(
+      `http://127.0.0.1:8000/programacionview/${codigoProgramacion}/`
+    );
+  }
+
   getSearchPaciente(text: string) {
     return this.http
       .get(`http://127.0.0.1:8000/searchpaciente?search=${text}`)
