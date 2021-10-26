@@ -130,16 +130,14 @@ export class ProgramaciondesalasInformeoperatioroComponent
 
   onSubmit() {
     this.submit = true;
-    console.log(this.form.value);
     if (this.form.invalid) return;
-
-    // this.ProgramaciondesalasService.InformeOperatorio(
-    //   this.form.value,
-    //   this.verbo
-    // ).subscribe(
-    //   (data: any) => this.action(data),
-    //   (error: any) => this.MessageService.MessageInfo(error)
-    // );
+    this.ProgramaciondesalasService.InformeOperatorio(
+      this.form.value,
+      this.verbo
+    ).subscribe(
+      (data: any) => this.action(data),
+      (error: any) => this.MessageService.MessageInfo(error)
+    );
   }
 
   action({ message }: { message: string }) {

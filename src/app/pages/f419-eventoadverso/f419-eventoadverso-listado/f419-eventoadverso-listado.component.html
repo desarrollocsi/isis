@@ -1,1 +1,42 @@
-<p>f419-eventoadverso-listado works!</p>
+<h1 class="title__h1 text__color">{{ title | titlecase }}</h1>
+<div class="containner__button">
+  <button type="button" class="btn w__15" (click)="onRegistrar()">
+    +agregar
+  </button>
+</div>
+<div class="table__desktop animate__animated animate__fadeIn">
+  <div class="row__header__desktop">
+    <div class="cell">Fecha</div>
+    <div class="cell">Historia</div>
+    <div class="cell">Turno</div>
+    <div class="cell">Usuario</div>
+    <div class="cell">&nbsp;</div>
+  </div>
+  <div class="table" *ngFor="let dataIncidencia of dataIncidencia$ | async">
+    <div class="row__header">
+      <div class="cell">Fecha</div>
+      <div class="cell">Historia</div>
+      <div class="cell">Turno</div>
+      <div class="cell">Usuario</div>
+      <div class="cell">&nbsp;</div>
+    </div>
+    <div class="row__body">
+      <div class="cell">{{ dataIncidencia.fecha }}</div>
+      <div class="cell">{{ dataIncidencia.historia }}</div>
+      <div class="cell">{{ dataIncidencia.turno }}</div>
+      <div class="cell">{{ dataIncidencia.usuario | titlecase }}</div>
+      <div class="cell dropdown">
+        <img
+          src="../../../../assets/icons/settings__option.svg"
+          class="actions__icons"
+        />
+        <div class="dropdown__content">
+          <div class="dropdown__item" (click)="onUpdate(dataIncidencia)">
+            <img src="../../../../assets/icons/pen.png" class="img__icon" />
+            <span>Editar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

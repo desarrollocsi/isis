@@ -1,5 +1,9 @@
 <h1 class="text__title text__color mbt_3">{{ title | titlecase }}</h1>
-<form [formGroup]="form" (ngSubmit)="onSubmit()">
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="animate__animated animate__fadeIn"
+>
   <div class="card">
     <div class="row__item" [class.mb_1]="historia || fecha">
       <div class="group mr_05" [class.mb_3]="fecha" [class.mb_1]="fecha">
@@ -117,21 +121,21 @@
         id="Mañana"
         class="input__radio"
         formControlName="turno"
-        value="01"
+        value="1"
       /><label for="Mañana" class="label__radio">Mañana</label>
       <input
         type="radio"
         id="Tarde"
         class="input__radio"
         formControlName="turno"
-        value="02"
+        value="2"
       /><label for="Tarde" class="label__radio">Tarde</label>
       <input
         type="radio"
         id="Noche"
         class="input__radio"
         formControlName="turno"
-        value="03"
+        value="3"
       /><label for="Noche" class="label__radio">Noche</label>
     </div>
     <div
@@ -163,10 +167,11 @@
       <h2 class="title__subtitle text__color">Área Asociada a la I/A</h2>
       <input
         type="checkbox"
-        id="Centro obstetrico y emergencia"
         (change)="addDetail($event.target)"
-        value="01"
         class="input__checkbox"
+        value="01"
+        data-tipo="01"
+        id="Centro obstetrico y emergencia"
       />
       <label class="label__checkbox" for="Centro obstetrico y emergencia"
         >Centro obstetrico y emergencia</label
@@ -176,6 +181,7 @@
         (change)="addDetail($event.target)"
         class="input__checkbox"
         value="02"
+        data-tipo="01"
         id="Neonatologia"
       />
       <label class="label__checkbox" for="Neonatologia">Neonatologia</label>
@@ -183,18 +189,20 @@
         type="checkbox"
         (change)="addDetail($event.target)"
         class="input__checkbox"
-        id="Centro Quirurgico"
         value="03"
+        data-tipo="01"
+        id="Centro Quirurgico"
       />
       <label class="label__checkbox" for="Centro Quirurgico"
         >Centro Quirurgico</label
       >
       <input
         type="checkbox"
-        class="input__checkbox"
         (change)="addDetail($event.target)"
-        id="Consultorios Externo / Vacunación"
+        class="input__checkbox"
         value="04"
+        data-tipo="01"
+        id="Consultorios Externo / Vacunación"
       />
       <label class="label__checkbox" for="Consultorios Externo / Vacunación"
         >Consultorios Externo / Vacunación</label
@@ -202,14 +210,14 @@
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="05"
         class="input__checkbox"
+        value="05"
+        data-tipo="01"
         id="Hospitalización"
       />
       <label class="label__checkbox" for="Hospitalización"
         >Hospitalización</label
       >
-      <div *ngIf=""></div>
     </div>
     <div class="container__checkbox">
       <h2 class="title__subtitle text__color">
@@ -220,38 +228,43 @@
         (change)="addDetail($event.target)"
         value="06"
         class="input__checkbox"
+        data-tipo="02"
         id="Laboratorio"
       />
       <label class="label__checkbox" for="Laboratorio">Laboratorio</label>
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="07"
         class="input__checkbox"
+        value="07"
+        data-tipo="02"
         id="Patologia"
       />
       <label class="label__checkbox" for="Patologia">Patologia</label>
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="08"
         class="input__checkbox"
+        value="08"
+        data-tipo="02"
         id="Rayos x"
       />
       <label class="label__checkbox" for="Rayos x">Rayos x</label>
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="09"
         class="input__checkbox"
+        value="09"
+        data-tipo="02"
         id="Ecografia"
       />
       <label class="label__checkbox" for="Ecografia">Ecografia</label>
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="10"
         class="input__checkbox"
+        value="10"
+        data-tipo="02"
         id="Farmacia"
       />
       <label class="label__checkbox" for="Farmacia">Farmacia</label>
@@ -263,32 +276,36 @@
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="11"
         class="input__checkbox"
+        value="11"
+        data-tipo="03"
         id="Medico"
       />
       <label class="label__checkbox" for="Medico">Médico</label>
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="12"
         class="input__checkbox"
+        value="12"
+        data-tipo="03"
         id="Enfermera"
       />
       <label class="label__checkbox" for="Enfermera">Enfermera</label>
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="13"
         class="input__checkbox"
+        value="13"
+        data-tipo="03"
         id="Obstétricas"
       />
       <label class="label__checkbox" for="Obstétricas">Obstétricas</label>
       <input
         type="checkbox"
         (change)="addDetail($event.target)"
-        value="14"
         class="input__checkbox"
+        value="14"
+        data-tipo="03"
         id="Tec. de Enfermeria"
       />
       <label class="label__checkbox" for="Tec. de Enfermeria"
