@@ -405,7 +405,61 @@
         </div>
       </ng-container>
       <!--Suspender end-->
-
+      <!--Acto Quirúrgico-->
+      <fieldset
+        class="animate__animated animate__fadeIn w__100"
+        *ngIf="actoQuirurgico"
+      >
+        <div class="row__item">
+          <div class="w__100 mr__05">
+            <h1 class="mb__1r text__align">Hora Ejecutada</h1>
+            <div class="flex flex__direction_column">
+              <div class="group">
+                <input
+                  type="time"
+                  class="input-control"
+                  formControlName="cq_hoinre"
+                  placeholder=" "
+                />
+                <label class="label-control">Inicio</label>
+              </div>
+              <div class="group">
+                <input
+                  type="time"
+                  class="input-control"
+                  formControlName="cq_hofire"
+                  placeholder=" "
+                />
+                <label class="label-control">Fin</label>
+              </div>
+            </div>
+          </div>
+          <div class="w__100">
+            <h1 class="mb__1r text__align">Hora Efectiva</h1>
+            <div class="flex flex__direction_column">
+              <div class="group">
+                <input
+                  type="time"
+                  class="input-control"
+                  formControlName="cq_hoinej"
+                  placeholder=" "
+                />
+                <label class="label-control">Inicio</label>
+              </div>
+              <div class="group">
+                <input
+                  type="time"
+                  class="input-control"
+                  formControlName="cq_hofiej"
+                  placeholder=" "
+                />
+                <label class="label-control">Fin</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </fieldset>
+      <!--Acto Quirúrgico end-->
       <div class="group">
         <button type="submit" class="btn">
           {{ nameButton }}

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -79,6 +79,10 @@ export class ProgramaciondesalasRegistradoComponent
     return this.nameButton === 'Actualizar';
   }
 
+  get actoQuirurgico() {
+    return this.nameButton === 'Acto quirurgico';
+  }
+
   constructor(
     private fb: FormBuilder,
     private programacionDeSalasServices: ProgramaciondesalasService,
@@ -120,6 +124,10 @@ export class ProgramaciondesalasRegistradoComponent
       cq_estado: ['1'],
       cq_motivo_suspen: [null],
       cq_estd_suspendida: [null],
+      cq_hoinre: [null],
+      cq_hofire: [null],
+      cq_hoinej: [null],
+      cq_hofiej: [null],
       participantes: this.fb.array([]),
       equiposMedicos: this.fb.array([]),
     });
@@ -240,7 +248,13 @@ export class ProgramaciondesalasRegistradoComponent
           this.forms.cq_estado.reset('3');
           this.formDisable();
         }
+
+        this.actoQuirurgico && this.formDisable();
       });
+  }
+
+  setActoQuirurgico() {
+    this.formDisable();
   }
 
   setCheckbox({ cq_es_emer, cq_orden_rqx, cq_orden_cq, cq_enfer }) {

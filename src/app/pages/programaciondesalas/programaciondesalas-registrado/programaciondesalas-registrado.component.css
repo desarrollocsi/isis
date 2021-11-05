@@ -186,6 +186,10 @@
   margin-bottom: 0.2rem;
 }
 
+.mb__1r {
+  margin-bottom: 1.5rem;
+}
+
 .card__item {
   width: 50%;
   display: flex;
@@ -232,6 +236,9 @@ fieldset {
   align-items: center;
 }
 /***FLEX****/
+.flex {
+  display: flex;
+}
 
 .flex__direction_column {
   flex-direction: column;
@@ -305,6 +312,11 @@ fieldset {
 }
 
 @media (min-width: 768px) and (min-width: 992px) {
+  /*MARGIN*/
+  .mr__05 {
+    margin-right: 0.5rem;
+  }
+
   .group {
     margin-right: 0.5rem;
   }
@@ -327,9 +339,5 @@ fieldset {
 
   .h__70 {
     height: 70px;
-  }
-
-  .row__item {
-    display: flex;
   }
 }

@@ -70,6 +70,11 @@ export class ProgramaciondesalasListadoComponent implements OnInit {
     this.dataProgramacion(cq_numope);
   }
 
+  onActoQuirurgico({ cq_numope }) {
+    this.action({ verbo: 'PUT', nameButton: 'Acto quirurgico' });
+    this.dataProgramacion(cq_numope);
+  }
+
   onInformeOperatorio({ cq_numope, inf_ope }) {
     this.ProgramaciondesalasService.getProgramacionDeSalasData(
       cq_numope

@@ -14,7 +14,7 @@
 /************FONT****************/
 .text__title {
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2em;
 }
 
 .text__color {
@@ -23,6 +23,15 @@
 
 .title__subtitle {
   margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.text__subtitle {
+  font-size: 1.5em;
+  margin-bottom: 1.5rem;
+}
+
+.text__center {
   text-align: center;
 }
 
@@ -169,6 +178,12 @@
   transition: 1s;
 }
 /************Status***************/
+
+.container__erros {
+  display: flex;
+  align-items: center;
+}
+
 .valid {
   border: 0.1rem solid #009b6e;
 }
@@ -221,6 +236,46 @@
 
 .mbt_3 {
   margin: 3rem 0;
+}
+
+.ml__05 {
+  margin-left: 0.5rem;
+}
+/***************ACORDEON******************/
+.container__acordeon {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+  border-radius: 2rem;
+  cursor: pointer;
+  background: #fafbfc;
+  border: 1px solid #dae2e6;
+  font-weight: 600;
+  transition: 0.4s;
+}
+
+.acordeon__body {
+  display: none;
+  margin: 1rem 0;
+  padding: 1rem;
+}
+
+.acordeon__head {
+  cursor: pointer;
+  height: auto;
+}
+
+.input__checkbox:checked + .acordeon__head {
+  color: #009b6e;
+}
+
+.input__checkbox:checked ~ .acordeon__body {
+  display: flex;
+  border-radius: 2rem;
+  height: auto;
+  flex-direction: column;
 }
 
 @media (min-width: 768px) and (min-width: 992px) {

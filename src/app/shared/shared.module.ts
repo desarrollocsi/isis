@@ -8,6 +8,7 @@ import { ToasterComponent } from './components/toaster/toaster.component';
 import { SearchPipe } from './pipe/search.pipe';
 import { ProgrammingStatusPipe } from './pipe/programming-status.pipe';
 import { PersonalPipe } from './pipe/personal.pipe';
+import { StatusDinamicoPipe } from './pipe/status-dinamico.pipe';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { PersonalPipe } from './pipe/personal.pipe';
     ProgrammingStatusPipe,
     SearchPipe,
     PersonalPipe,
+    StatusDinamicoPipe,
   ],
   imports: [CommonModule, SharedRoutingModule],
   exports: [
@@ -25,6 +27,7 @@ import { PersonalPipe } from './pipe/personal.pipe';
     SearchPipe,
     ProgrammingStatusPipe,
     PersonalPipe,
+    StatusDinamicoPipe,
   ],
 })
 export class SharedModule {}

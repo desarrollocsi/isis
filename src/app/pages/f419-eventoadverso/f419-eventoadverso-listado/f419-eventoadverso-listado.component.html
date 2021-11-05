@@ -1,4 +1,4 @@
-<h1 class="title__h1 text__color">{{ title | titlecase }}</h1>
+<h1 class="title__h1 text__color">{{ title }}</h1>
 <div class="containner__button">
   <button type="button" class="btn w__15" (click)="onRegistrar()">
     +agregar
@@ -6,34 +6,77 @@
 </div>
 <div class="table__desktop animate__animated animate__fadeIn">
   <div class="row__header__desktop">
-    <div class="cell">Fecha</div>
+    <div class="cell">Fecha I/EA</div>
+    <div class="cell">Area</div>
     <div class="cell">Historia</div>
     <div class="cell">Turno</div>
     <div class="cell">Usuario</div>
+    <div class="cell">Fecha registro</div>
+    <div class="cell">Estado I/EA</div>
     <div class="cell">&nbsp;</div>
   </div>
   <div class="table" *ngFor="let dataIncidencia of dataIncidencia$ | async">
     <div class="row__header">
-      <div class="cell">Fecha</div>
+      <div class="cell">Fecha I/EA</div>
+      <div class="cell">Area</div>
       <div class="cell">Historia</div>
       <div class="cell">Turno</div>
+
       <div class="cell">Usuario</div>
+      <div class="cell">Fecha registro</div>
+      <div class="cell">Estado I/EA</div>
       <div class="cell">&nbsp;</div>
     </div>
     <div class="row__body">
-      <div class="cell">{{ dataIncidencia.fecha }}</div>
+      <div class="cell">{{ dataIncidencia.fecha_incidencia }}</div>
+      <div class="cell">{{ dataIncidencia.reporta_area }}</div>
       <div class="cell">{{ dataIncidencia.historia }}</div>
-      <div class="cell">{{ dataIncidencia.turno }}</div>
-      <div class="cell">{{ dataIncidencia.usuario | titlecase }}</div>
+      <div class="cell">
+        {{ dataIncidencia.turno | statusDinamico: "turno" }}
+      </div>
+
+      <div class="cell">{{ dataIncidencia.usuario_registro | titlecase }}</div>
+      <div class="cell">{{ dataIncidencia.fecha_registro | date }}</div>
+      <div
+        class="cell"
+        [class.status__success]="dataIncidencia.estado === '3'"
+        [class.status__warning]="dataIncidencia.estado === '2'"
+        [class.status__danger]="dataIncidencia.estado === '1'"
+      >
+        {{ dataIncidencia.estado | statusDinamico: "status" | titlecase }}
+      </div>
       <div class="cell dropdown">
         <img
           src="../../../../assets/icons/settings__option.svg"
           class="actions__icons"
         />
         <div class="dropdown__content">
-          <div class="dropdown__item" (click)="onUpdate(dataIncidencia)">
+          <div class="dropdown__item">
+            <img src="../../../../assets/icons/view.png" class="img__icon" />
+            <span>Views</span>
+          </div>
+
+          <div
+            class="dropdown__item"
+            (click)="onUpdate(dataIncidencia)"
+            *ngIf="dataIncidencia.estado !== '2'"
+          >
             <img src="../../../../assets/icons/pen.png" class="img__icon" />
             <span>Editar</span>
+          </div>
+          <div
+            class="dropdown__item dropdown__bt"
+            (click)="onUpdateStatus(dataIncidencia, 2)"
+          >
+            <img src="../../../../assets/icons/pen.png" class="img__icon" />
+            <span>En proceso</span>
+          </div>
+          <div
+            class="dropdown__item"
+            (click)="onUpdateStatus(dataIncidencia, 3)"
+          >
+            <img src="../../../../assets/icons/pen.png" class="img__icon" />
+            <span>Ejecutado</span>
           </div>
         </div>
       </div>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { SharedModule } from '../../shared/shared.module';
 
 import { F419EventoadversoRoutingModule } from './f419-eventoadverso-routing.module';
 import { F419EventoadversoComponent } from './f419-eventoadverso.component';
@@ -19,6 +20,7 @@ import { F419EventoadversoRegistrarEditComponent } from './f419-eventoadverso-re
     F419EventoadversoRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
   ],
 })
 export class F419EventoadversoModule {}

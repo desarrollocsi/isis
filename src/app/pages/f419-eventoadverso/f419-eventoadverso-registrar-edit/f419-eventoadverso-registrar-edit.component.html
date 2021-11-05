@@ -1,4 +1,4 @@
-<h1 class="text__title text__color mbt_3">{{ title | titlecase }}</h1>
+<h1 class="text__title text__color mbt_3">{{ nameButton }} {{ title }}</h1>
 <form
   [formGroup]="form"
   (ngSubmit)="onSubmit()"
@@ -11,18 +11,21 @@
           type="date"
           class="input__control"
           placeholder=" "
-          formControlName="fecha"
-          [class.valid]="f.fecha.valid"
+          formControlName="fecha_incidencia"
+          [class.valid]="f.fecha_incidencia.valid"
           [class.input__invalid]="fecha"
         />
         <label
           class="label__control"
           [class.invalid__warning]="fecha"
-          [class.valid__success]="f.fecha.valid"
-          >Fecha I/A</label
+          [class.valid__success]="f.fecha_incidencia.valid"
+          >Fecha I/EA</label
         >
         <div class="invalid animate__animated animate__fadeIn" *ngIf="fecha">
-          <span *ngIf="f.fecha.errors?.required">
+          <span
+            *ngIf="f.fecha_incidencia.errors?.required"
+            class="container__erros"
+          >
             <svg
               aria-hidden="true"
               class="message-text"
@@ -37,7 +40,7 @@
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
               ></path>
             </svg>
-            Se requiere la fecha de la I/A
+            <span class="ml__05">Se requiere la fecha de la I/A</span>
           </span>
         </div>
       </div>
@@ -57,7 +60,7 @@
           >Historia</label
         >
         <div class="invalid animate__animated animate__fadeIn" *ngIf="historia">
-          <span *ngIf="f.historia.errors?.required">
+          <span *ngIf="f.historia.errors?.required" class="container__erros">
             <svg
               aria-hidden="true"
               class="message-text"
@@ -72,7 +75,7 @@
                 d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
               ></path>
             </svg>
-            Se requiere la Historia
+            <span class="ml__05">Se requiere la Historia</span>
           </span>
         </div>
       </div>
@@ -94,7 +97,7 @@
         >Descripcion</label
       >
       <div class="invalid animate__animated animate__fadeIn" *ngIf="glosa">
-        <span *ngIf="f.glosa.errors?.required">
+        <span *ngIf="f.glosa.errors?.required" class="container__erros">
           <svg
             aria-hidden="true"
             class="message-text"
@@ -109,7 +112,45 @@
               d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
             ></path>
           </svg>
-          Se requiere la descripcion de la I/A
+          <span class="ml__05">Se requiere la descripcion de la I/A</span>
+        </span>
+      </div>
+    </div>
+    <div class="group" [class.mb_2_5]="reportaArea">
+      <input
+        type="text"
+        class="input__control"
+        placeholder=" "
+        formControlName="reporta_area"
+        [class.valid]="f.reporta_area.valid"
+        [class.input__invalid]="reportaArea"
+      />
+      <label
+        class="label__control"
+        [class.invalid__warning]="reportaArea"
+        [class.valid__success]="f.reporta_area.valid"
+        >Area que Reporta</label
+      >
+      <div
+        class="invalid animate__animated animate__fadeIn"
+        *ngIf="reportaArea"
+      >
+        <span *ngIf="f.reporta_area.errors?.required" class="container__erros">
+          <svg
+            aria-hidden="true"
+            class="message-text"
+            fill="currentColor"
+            focusable="false"
+            width="16px"
+            height="16px"
+            viewBox="0 0 24 24"
+            xmlns="https://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+            ></path>
+          </svg>
+          <span class="ml__05">Se requiere el area que reporta</span>
         </span>
       </div>
     </div>
@@ -142,7 +183,7 @@
       class="invalid__container animate__animated animate__fadeIn"
       *ngIf="turno"
     >
-      <span *ngIf="f.turno.errors?.required">
+      <span *ngIf="f.turno.errors?.required" class="container__erros">
         <svg
           aria-hidden="true"
           class="message-text"
@@ -157,164 +198,60 @@
             d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
           ></path>
         </svg>
-        Se requiere el turno
+        <span class="ml__05">Se requiere el turno</span>
       </span>
     </div>
   </div>
 
+  <h1 class="text__subtitle text__center text__color">Involucrados I/EA</h1>
   <div class="row__item mb_1">
-    <div class="container__checkbox">
-      <h2 class="title__subtitle text__color">Área Asociada a la I/A</h2>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="01"
-        data-tipo="01"
-        id="Centro obstetrico y emergencia"
-      />
-      <label class="label__checkbox" for="Centro obstetrico y emergencia"
-        >Centro obstetrico y emergencia</label
-      >
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="02"
-        data-tipo="01"
-        id="Neonatologia"
-      />
-      <label class="label__checkbox" for="Neonatologia">Neonatologia</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="03"
-        data-tipo="01"
-        id="Centro Quirurgico"
-      />
-      <label class="label__checkbox" for="Centro Quirurgico"
-        >Centro Quirurgico</label
-      >
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="04"
-        data-tipo="01"
-        id="Consultorios Externo / Vacunación"
-      />
-      <label class="label__checkbox" for="Consultorios Externo / Vacunación"
-        >Consultorios Externo / Vacunación</label
-      >
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="05"
-        data-tipo="01"
-        id="Hospitalización"
-      />
-      <label class="label__checkbox" for="Hospitalización"
-        >Hospitalización</label
-      >
-    </div>
-    <div class="container__checkbox">
+    <div
+      class="container__checkbox"
+      *ngFor="let involucrado of involucrados$ | async"
+    >
       <h2 class="title__subtitle text__color">
-        Areas de diagnostico y apoyo clinico
+        {{ involucrado.descripcion | titlecase }}
       </h2>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        value="06"
-        class="input__checkbox"
-        data-tipo="02"
-        id="Laboratorio"
-      />
-      <label class="label__checkbox" for="Laboratorio">Laboratorio</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="07"
-        data-tipo="02"
-        id="Patologia"
-      />
-      <label class="label__checkbox" for="Patologia">Patologia</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="08"
-        data-tipo="02"
-        id="Rayos x"
-      />
-      <label class="label__checkbox" for="Rayos x">Rayos x</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="09"
-        data-tipo="02"
-        id="Ecografia"
-      />
-      <label class="label__checkbox" for="Ecografia">Ecografia</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="10"
-        data-tipo="02"
-        id="Farmacia"
-      />
-      <label class="label__checkbox" for="Farmacia">Farmacia</label>
+      <ng-container *ngFor="let detalle of involucrado.detalles">
+        <input
+          type="checkbox"
+          (change)="addDetail($event.target, detalle)"
+          class="input__checkbox"
+          [id]="detalle.descripcion"
+          [formControlName]="detalle.id"
+        />
+        <label class="label__checkbox" [for]="detalle.descripcion">{{
+          detalle.descripcion | titlecase
+        }}</label>
+      </ng-container>
     </div>
-    <div class="container__checkbox">
-      <h2 class="title__subtitle text__color">
-        Colaborador involucrado al I/A
-      </h2>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="11"
-        data-tipo="03"
-        id="Medico"
-      />
-      <label class="label__checkbox" for="Medico">Médico</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="12"
-        data-tipo="03"
-        id="Enfermera"
-      />
-      <label class="label__checkbox" for="Enfermera">Enfermera</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="13"
-        data-tipo="03"
-        id="Obstétricas"
-      />
-      <label class="label__checkbox" for="Obstétricas">Obstétricas</label>
-      <input
-        type="checkbox"
-        (change)="addDetail($event.target)"
-        class="input__checkbox"
-        value="14"
-        data-tipo="03"
-        id="Tec. de Enfermeria"
-      />
-      <label class="label__checkbox" for="Tec. de Enfermeria"
-        >Tec. de Enfermería</label
-      >
-    </div>
+  </div>
+  <div
+    *ngIf="involucrados"
+    class="
+      invalid__container
+      animate__animated animate__fadeIn
+      container__erros
+    "
+  >
+    <svg
+      aria-hidden="true"
+      class="message-text"
+      fill="currentColor"
+      focusable="false"
+      width="16px"
+      height="16px"
+      viewBox="0 0 24 24"
+      xmlns="https://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"
+      ></path>
+    </svg>
+    <span class="ml__05">Seleccionar al menos un involucrado para I/EA</span>
   </div>
 
   <div class="group">
-    <button class="btn">Enviar</button>
+    <button class="btn">{{ nameButton }}</button>
   </div>
 </form>
