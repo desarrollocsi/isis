@@ -15,7 +15,10 @@
     <div class="cell">Estado I/EA</div>
     <div class="cell">&nbsp;</div>
   </div>
-  <div class="table" *ngFor="let dataIncidencia of dataIncidencia$ | async">
+  <div
+    class="table"
+    *ngFor="let dataIncidencia of dataIncidencia$ | async; index as i"
+  >
     <div class="row__header">
       <div class="cell">Fecha I/EA</div>
       <div class="cell">Area</div>
@@ -46,11 +49,19 @@
         {{ dataIncidencia.estado | statusDinamico: "status" | titlecase }}
       </div>
       <div class="cell dropdown">
-        <img
-          src="../../../../assets/icons/settings__option.svg"
-          class="actions__icons"
+        <input
+          type="checkbox"
+          name="settings"
+          class="input__checkbox"
+          id="{{ 'settings' + i }}"
         />
-        <div class="dropdown__content">
+        <label for="{{ 'settings' + i }}" class="label__control">
+          <img
+            src="../../../../assets/icons/settings__option.svg"
+            class="actions__icons"
+          />
+        </label>
+        <div class="dropdown__content animate__animated animate__fadeIn">
           <div class="dropdown__item">
             <img src="../../../../assets/icons/view.png" class="img__icon" />
             <span>Views</span>
@@ -59,7 +70,7 @@
           <div
             class="dropdown__item"
             (click)="onUpdate(dataIncidencia)"
-            *ngIf="dataIncidencia.estado !== '2'"
+            *ngIf="dataIncidencia.estado === '1'"
           >
             <img src="../../../../assets/icons/pen.png" class="img__icon" />
             <span>Editar</span>

@@ -248,7 +248,6 @@ export class ProgramaciondesalasRegistradoComponent
           this.forms.cq_estado.reset('3');
           this.formDisable();
         }
-
         this.actoQuirurgico && this.formDisable();
       });
   }

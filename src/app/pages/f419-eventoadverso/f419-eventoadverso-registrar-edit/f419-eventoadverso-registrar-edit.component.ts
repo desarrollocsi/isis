@@ -29,6 +29,7 @@ export class F419EventoadversoRegistrarEditComponent
   involucrados$: Observable<any>;
   verb: string = 'POST';
   nameButton: string = 'Registrar';
+  formDisabled: boolean = true;
   private readonly unsubscribe$: Subject<void> = new Subject();
   constructor(
     private fb: FormBuilder,
@@ -101,9 +102,6 @@ export class F419EventoadversoRegistrarEditComponent
     this.involucrados$ = this.F419Service.getInvolucradosIEA().pipe(
       tap((data: any) => this.addControl(data))
     );
-
-    console.log(this.detalles.length);
-    console.log(this.f.turno.invalid);
   }
 
   addControl(data: any) {
