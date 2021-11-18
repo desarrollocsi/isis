@@ -35,7 +35,7 @@
       <div class="cell">{{ dataIncidencia.reporta_area }}</div>
       <div class="cell">{{ dataIncidencia.historia }}</div>
       <div class="cell">
-        {{ dataIncidencia.turno | statusDinamico: "turno" }}
+        {{ dataIncidencia.turno | statusDinamico: "turno" | titlecase }}
       </div>
 
       <div class="cell">{{ dataIncidencia.usuario_registro | titlecase }}</div>

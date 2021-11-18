@@ -18,14 +18,12 @@ export class ProgramaciondesalasService {
   ) {}
 
   /**SUBJECT**/
-
   private __dataHorarioDeProgramacion = new Subject<any>();
   private __datoDelPaciente = new Subject<any>();
   private __historia = new Subject<any>();
   private __closeSearch = new Subject<boolean>();
 
   /**BEHAVIORSUBJECT**/
-
   private data = new BehaviorSubject<any>(null);
   __data = this.data.asObservable();
 
@@ -75,12 +73,15 @@ export class ProgramaciondesalasService {
     return this.__historia;
   }
 
+  URL: string = 'http://192.168.10.139:4000';
+  // URL:string='http://127.0.0.1:8000'
+
   getAgendaSoap(fecha: string) {
-    return this.http.get(`http://127.0.0.1:8000/agendasoap/${fecha}`);
+    return this.http.get(`${this.URL}/agendasoap/${fecha}`);
   }
 
   getSalas() {
-    return this.http.get('http://127.0.0.1:8000/salas');
+    return this.http.get(`${this.URL}/salas`);
   }
 
   getEspecialidades() {
@@ -101,25 +102,19 @@ export class ProgramaciondesalasService {
 
   getIntervenciones({ parametro, keys }: { parametro: string; keys: string }) {
     const END_POINT_INTERVENCION = {
-      ESPECIALIDAD: this.http.get(
-        `http://127.0.0.1:8000/intervencion/${parametro}/`
-      ),
-      CODIGO: this.http.get(
-        `http://127.0.0.1:8000/intervencionporcodigo/${parametro}/`
-      ),
+      ESPECIALIDAD: this.http.get(`${this.URL}/intervencion/${parametro}/`),
+      CODIGO: this.http.get(`${this.URL}/intervencionporcodigo/${parametro}/`),
     };
 
     return END_POINT_INTERVENCION[keys];
   }
 
   getAnestesia() {
-    return this.http.get(`http://127.0.0.1:8000/anestesia`);
+    return this.http.get(`${this.URL}/anestesia`);
   }
 
   getParticipantes(codigoIntervencion: string) {
-    return this.http.get(
-      `http://127.0.0.1:8000/participantes/${codigoIntervencion}/`
-    );
+    return this.http.get(`${this.URL}/participantes/${codigoIntervencion}/`);
   }
 
   getPersonales() {
@@ -128,13 +123,13 @@ export class ProgramaciondesalasService {
     }
 
     return this.http
-      .get('http://127.0.0.1:8000/personales')
+      .get(`${this.URL}/personales`)
       .pipe(tap((data: any) => this.AuthStorageService.setPersonal(data)));
   }
 
   getDisponibilidadDeSalas({ fecha, numeroDeSala }) {
     return this.http.get(
-      `http://127.0.0.1:8000/disponibilidadsalas/${fecha}/${numeroDeSala}`
+      `${this.URL}/disponibilidadsalas/${fecha}/${numeroDeSala}`
     );
   }
 
@@ -143,26 +138,22 @@ export class ProgramaciondesalasService {
   }
 
   getProgramacionDeSalas(codigoProgramacion: string) {
-    return this.http.get(
-      `http://127.0.0.1:8000/programacion/${codigoProgramacion}/`
-    );
+    return this.http.get(`${this.URL}/programacion/${codigoProgramacion}/`);
   }
 
   getProgramacionDeSalasData(codigoProgramacion: string) {
-    return this.http.get(
-      `http://127.0.0.1:8000/programacionview/${codigoProgramacion}/`
-    );
+    return this.http.get(`${this.URL}/programacionview/${codigoProgramacion}/`);
   }
 
   getSearchPaciente(text: string) {
     return this.http
-      .get(`http://127.0.0.1:8000/searchpaciente?search=${text}`)
+      .get(`${this.URL}/searchpaciente?search=${text}`)
       .pipe(map(this.moldearData));
   }
 
   getPaciente(numeroDeHistoria: string) {
     return this.http
-      .get(`http://127.0.0.1:8000/historia/${numeroDeHistoria}/`)
+      .get(`${this.URL}/historia/${numeroDeHistoria}/`)
       .pipe(map((value: any) => new Paciente(value)));
   }
 
@@ -172,40 +163,35 @@ export class ProgramaciondesalasService {
 
   getApiDynamic({ verbo, data }) {
     const END_POINT = {
-      PUT: this.http.put(
-        `http://127.0.0.1:8000/programacion/${data.cq_numope}/`,
-        data
-      ),
-      POST: this.http.post('http://127.0.0.1:8000/programaciones', data),
+      PUT: this.http.put(`${this.URL}/programacion/${data.cq_numope}/`, data),
+      POST: this.http.post('${this.URL}/programaciones', data),
     };
 
     return END_POINT[verbo];
   }
 
   getSearchCie(search: string) {
-    return this.http.get(`http://127.0.0.1:8000/searchcie?search=${search}`);
+    return this.http.get(`${this.URL}/searchcie?search=${search}`);
   }
 
   getReprogramacion(data: any) {
     return this.http.put(
-      `http://127.0.0.1:8000/programacionreprogramacion/${data.cq_numope}/`,
+      `${this.URL}/programacionreprogramacion/${data.cq_numope}/`,
       data
     );
   }
 
   getInformenOperatorio(codigo: string) {
-    return this.http.get(
-      `http://127.0.0.1:8000/informeoperatoriodata/${codigo}/`
-    );
+    return this.http.get(`${this.URL}/informeoperatoriodata/${codigo}/`);
   }
 
   InformeOperatorio(data: any, keys: any) {
     const END_POINT = {
       PUT: this.http.put(
-        `http://127.0.0.1:8000/informeoperatoriodata/${data.cq_numope}/`,
+        `${this.URL}/informeoperatoriodata/${data.cq_numope}/`,
         data
       ),
-      POST: this.http.post('http://127.0.0.1:8000/informeoperatorio', data),
+      POST: this.http.post(`${this.URL}/informeoperatorio`, data),
     };
 
     return END_POINT[keys];

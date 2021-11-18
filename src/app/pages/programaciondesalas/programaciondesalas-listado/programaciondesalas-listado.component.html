@@ -53,10 +53,12 @@
               {{ agendaSoap.cq_estado | programmingStatus: agendaSoap }}
             </div>
             <div class="cell dropdown">
-              <img
-                src="../../../../assets/icons/settings__option.svg"
-                class="actions__icons"
-              />
+              <label class="label__control">
+                <img
+                  src="../../../../assets/icons/settings__option.svg"
+                  class="actions__icons"
+                />
+              </label>
               <div class="dropdown__content">
                 <div class="dropdown__item" (click)="onUpdate(agendaSoap)">
                   <img

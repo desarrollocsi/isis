@@ -178,6 +178,7 @@ input[type="checkbox"] {
     border-radius: 0;
     /* border-bottom: 1px solid #dadce0; */
     border-bottom: 1px solid rgba(243, 244, 246, 1);
+    background-color: #fff;
   }
 
   .table:hover {

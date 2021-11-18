@@ -123,6 +123,15 @@
   border: 1px solid #fe7b12;
 }
 
+.input-control::placeholder {
+  visibility: hidden;
+}
+
+.input-control:focus::placeholder {
+  visibility: visible;
+  opacity: 0.5;
+}
+
 /**********************/
 .container__checkbox {
   width: 100%;

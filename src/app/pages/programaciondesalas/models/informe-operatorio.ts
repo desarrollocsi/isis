@@ -1,5 +1,4 @@
 import { formatearHora, formatearFechaDescripcion } from '../utils/';
-import { AuthStorageService } from '../../../core/services';
 
 export class InformeOperatorio {
   public historia: number;
