@@ -248,7 +248,7 @@
   flex-direction: column;
   padding: 1rem;
   margin-bottom: 0.5rem;
-  text-align: center;
+  text-align: left;
   border-radius: 2rem;
   cursor: pointer;
   background: #fafbfc;
@@ -257,15 +257,16 @@
   transition: 0.4s;
 }
 
+.acordeon__head {
+  cursor: pointer;
+  height: auto;
+  padding: 0 1rem;
+}
+
 .acordeon__body {
   display: none;
   margin: 1rem 0;
   padding: 1rem;
-}
-
-.acordeon__head {
-  cursor: pointer;
-  height: auto;
 }
 
 .input__checkbox:checked + .acordeon__head {
@@ -279,7 +280,16 @@
   flex-direction: column;
 }
 
+.mr__05 {
+  margin-right: 0.5rem;
+}
+
 @media (min-width: 768px) and (min-width: 992px) {
+  .input__checkbox:checked ~ .acordeon__body {
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
   .row__item {
     flex-direction: row;
   }

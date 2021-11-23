@@ -203,7 +203,7 @@
     </div>
   </div>
 
-  <h1 class="text__subtitle text__center text__color">Involucrados I/EA</h1>
+  <!-- <h1 class="text__subtitle text__center text__color">Involucrados I/EA</h1>
   <div class="row__item mb_1">
     <div
       class="container__checkbox"
@@ -249,6 +249,35 @@
       ></path>
     </svg>
     <span class="ml__05">Seleccionar al menos un involucrado para I/EA</span>
+  </div> -->
+
+  <div
+    class="container__acordeon"
+    *ngFor="let involucrado of involucrados$ | async"
+  >
+    <input
+      type="checkbox"
+      class="input__checkbox"
+      [id]="involucrado.descripcion"
+    />
+    <label class="acordeon__head" [for]="involucrado.descripcion">
+      {{ involucrado.descripcion | titlecase }}
+    </label>
+
+    <div class="acordeon__body">
+      <ng-container *ngFor="let detalle of involucrado.detalles">
+        <input
+          type="checkbox"
+          (change)="addDetail($event.target, detalle)"
+          class="input__checkbox"
+          [id]="detalle.descripcion"
+          [formControlName]="detalle.id"
+        />
+        <label class="label__checkbox mr__05" [for]="detalle.descripcion">{{
+          detalle.descripcion | titlecase
+        }}</label>
+      </ng-container>
+    </div>
   </div>
 
   <div class="group">
