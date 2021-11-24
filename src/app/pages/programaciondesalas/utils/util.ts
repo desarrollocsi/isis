@@ -1,5 +1,4 @@
 import { formDynamic } from '../db/form__dynamic';
-
 import * as moment from 'moment';
 
 export const formatearFechaDescripcion = (fecha: string) =>
