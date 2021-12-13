@@ -5,13 +5,15 @@ import {
   FormControl,
   FormGroup,
   Validators,
+  AsyncValidatorFn,
+  AbstractControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { F419Service } from '../services';
 import { MessageService } from '../../../core/services';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil, tap } from 'rxjs/operators';
+import { map, takeUntil, tap } from 'rxjs/operators';
 
 import * as moment from 'moment';
 
@@ -30,6 +32,7 @@ export class F419EventoadversoRegistrarEditComponent
   verb: string = 'POST';
   nameButton: string = 'Registrar';
   formDisabled: boolean = true;
+  messageAsyncrono: string;
   private readonly unsubscribe$: Subject<void> = new Subject();
   constructor(
     private fb: FormBuilder,
@@ -64,6 +67,13 @@ export class F419EventoadversoRegistrarEditComponent
   get historia() {
     return (
       this.f.historia.invalid &&
+      (this.f.historia.dirty || this.f.historia.touched)
+    );
+  }
+
+  get historiaAsync() {
+    return (
+      this.f.historia.hasError('status') &&
       (this.f.historia.dirty || this.f.historia.touched)
     );
   }
@@ -168,4 +178,21 @@ export class F419EventoadversoRegistrarEditComponent
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+}
+
+export function validacionHistoria(api: any): AsyncValidatorFn {
+  return (control: AbstractControl) => {
+    return api
+      .getPaciente(control.value)
+      .pipe(
+        map(({ hc_numhis, hc_apemat, hc_apepat, hc_nombre }) =>
+          hc_numhis
+            ? {
+                status: true,
+                message: `${hc_nombre} ${hc_apepat} ${hc_apemat}`,
+              }
+            : { status: false, message: 'La historia ingresada no es correcta' }
+        )
+      );
+  };
 }

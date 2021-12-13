@@ -73,8 +73,8 @@ export class ProgramaciondesalasService {
     return this.__historia;
   }
 
-  URL: string = 'http://192.168.10.139:4000';
-  // URL:string='http://127.0.0.1:8000'
+  //URL: string = 'http://192.168.10.139:4000';
+  URL: string = 'http://127.0.0.1:8000';
 
   getAgendaSoap(fecha: string) {
     return this.http.get(`${this.URL}/agendasoap/${fecha}`);
@@ -164,7 +164,7 @@ export class ProgramaciondesalasService {
   getApiDynamic({ verbo, data }) {
     const END_POINT = {
       PUT: this.http.put(`${this.URL}/programacion/${data.cq_numope}/`, data),
-      POST: this.http.post('${this.URL}/programaciones', data),
+      POST: this.http.post(`${this.URL}/programaciones`, data),
     };
 
     return END_POINT[verbo];

@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { F419Service } from '../services';
+import { perfilMenu } from '../db/db';
 
 @Component({
   selector: 'app-f419-eventoadverso-listado',
@@ -11,6 +13,8 @@ import { F419Service } from '../services';
 export class F419EventoadversoListadoComponent implements OnInit {
   dataIncidencia$: Observable<any>;
   title: string = 'Listado F419 Reporte de I/EA - Asistencial';
+  perfil: string;
+  datas$: Observable<any>;
   constructor(private F419Service: F419Service, private Router: Router) {}
 
   ngOnInit(): void {
@@ -59,5 +63,21 @@ export class F419EventoadversoListadoComponent implements OnInit {
       reporta_area,
       usuario_registro,
     }).subscribe(console.log);
+  }
+
+  onPerfil(rol: string) {
+    const indice = perfilMenu.findIndex(({ perfil }) => perfil === rol);
+    this.datas$ = of(perfilMenu[indice].menu).pipe(
+      map((data) => data.filter(({ status }) => status === true))
+    );
+  }
+
+  dropdownDynamic({ method, id }, data: any) {
+    const METHOD_DYNAMIC = {
+      onUpdateStatus: () => this.onUpdateStatus(data, id),
+      onUpdate: () => this.onUpdate(data),
+    };
+
+    METHOD_DYNAMIC[method]();
   }
 }

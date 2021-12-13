@@ -9,17 +9,17 @@ export class StatusDinamicoPipe implements PipeTransform {
       {
         title: 'status',
         opcion: {
-          '1': 'PENDIENTE',
-          '2': 'EN PROCESO',
-          '3': 'EJECUTADO',
+          1: 'PENDIENTE',
+          2: 'EN PROCESO',
+          3: 'EJECUTADO',
         },
       },
       {
         title: 'turno',
         opcion: {
-          '1': 'MAÑANA',
-          '2': 'TARDE',
-          '3': 'NOCHE',
+          1: 'MAÑANA',
+          2: 'TARDE',
+          3: 'NOCHE',
         },
       },
     ];

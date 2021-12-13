@@ -1,5 +1,11 @@
 <h1 class="title__h1 text__color">{{ title }}</h1>
 <div class="containner__button">
+  <button type="button" class="btn w__15" (click)="onPerfil('usuario')">
+    usuario
+  </button>
+  <button type="button" class="btn w__15" (click)="onPerfil('admin')">
+    admin
+  </button>
   <button type="button" class="btn w__15" (click)="onRegistrar()">
     +agregar
   </button>
@@ -42,9 +48,9 @@
       <div class="cell">{{ dataIncidencia.fecha_registro | date }}</div>
       <div
         class="cell"
-        [class.status__success]="dataIncidencia.estado === '3'"
-        [class.status__warning]="dataIncidencia.estado === '2'"
-        [class.status__danger]="dataIncidencia.estado === '1'"
+        [class.status__success]="dataIncidencia.estado === 3"
+        [class.status__warning]="dataIncidencia.estado === 2"
+        [class.status__danger]="dataIncidencia.estado === 1"
       >
         {{ dataIncidencia.estado | statusDinamico: "status" | titlecase }}
       </div>
@@ -61,33 +67,15 @@
             class="actions__icons"
           />
         </label>
-        <div class="dropdown__content animate__animated animate__fadeIn">
-          <div class="dropdown__item">
-            <img src="../../../../assets/icons/view.png" class="img__icon" />
-            <span>Views</span>
-          </div>
 
+        <div class="dropdown__content animate__animated animate__fadeIn">
           <div
             class="dropdown__item"
-            (click)="onUpdate(dataIncidencia)"
-            *ngIf="dataIncidencia.estado === '1'"
+            *ngFor="let data of datas$ | async"
+            (click)="dropdownDynamic(data, dataIncidencia)"
           >
-            <img src="../../../../assets/icons/pen.png" class="img__icon" />
-            <span>Editar</span>
-          </div>
-          <div
-            class="dropdown__item dropdown__bt"
-            (click)="onUpdateStatus(dataIncidencia, 2)"
-          >
-            <img src="../../../../assets/icons/pen.png" class="img__icon" />
-            <span>En proceso</span>
-          </div>
-          <div
-            class="dropdown__item"
-            (click)="onUpdateStatus(dataIncidencia, 3)"
-          >
-            <img src="../../../../assets/icons/pen.png" class="img__icon" />
-            <span>Ejecutado</span>
+            <img [src]="data.img" class="img__icon" />
+            <span>{{ data.nombre }}</span>
           </div>
         </div>
       </div>

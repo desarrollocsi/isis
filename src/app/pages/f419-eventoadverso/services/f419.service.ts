@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -13,6 +13,14 @@ export class F419Service {
   constructor(private http: HttpClient) {}
 
   /**ENDPOINTS**/
+
+  getPaciente(text: string) {
+    return this.http.get(`${this.URL}/historia/${text}/`);
+  }
+
+  getSearchPaciente(text: string) {
+    return this.http.get(`${this.URL}/searchpaciente?search=${text}`);
+  }
 
   getInvolucradosIEA() {
     return this.http.get(`${this.URL}/involucrados`);
