@@ -1,9 +1,19 @@
 <h1 class="title__h1 text__color">{{ title }}</h1>
 <div class="containner__button">
-  <button type="button" class="btn w__15" (click)="onPerfil('usuario')">
+  <div class="group">
+    <input
+      type="date"
+      class="input__control w__30"
+      placeholder=" "
+      (change)="getFecha($event.target.value)"
+    />
+    <label class="label__control">Fecha</label>
+  </div>
+
+  <button type="button" class="btn w__15" (click)="onPerfil('USUARIO')">
     usuario
   </button>
-  <button type="button" class="btn w__15" (click)="onPerfil('admin')">
+  <button type="button" class="btn w__15" (click)="onPerfil('ADMIN')">
     admin
   </button>
   <button type="button" class="btn w__15" (click)="onRegistrar()">
@@ -30,7 +40,6 @@
       <div class="cell">Area</div>
       <div class="cell">Historia</div>
       <div class="cell">Turno</div>
-
       <div class="cell">Usuario</div>
       <div class="cell">Fecha registro</div>
       <div class="cell">Estado I/EA</div>
@@ -61,7 +70,7 @@
           class="input__checkbox"
           id="{{ 'settings' + i }}"
         />
-        <label for="{{ 'settings' + i }}" class="label__control">
+        <label for="{{ 'settings' + i }}" class="label__checkbox">
           <img
             src="../../../../assets/icons/settings__option.svg"
             class="actions__icons"

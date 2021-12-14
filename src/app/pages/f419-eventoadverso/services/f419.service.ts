@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
@@ -26,8 +26,9 @@ export class F419Service {
     return this.http.get(`${this.URL}/involucrados`);
   }
 
-  getIncidencia() {
-    return this.http.get(`${this.URL}/incidencias`);
+  getIncidencia({ fecha, rol }) {
+    console.log({ fecha, rol });
+    return this.http.get(`${this.URL}/incidencias/${fecha}/${rol}`);
   }
 
   getIncidenciaDetail(id: number) {

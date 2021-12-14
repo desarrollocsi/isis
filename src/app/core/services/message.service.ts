@@ -10,9 +10,10 @@ export class MessageService {
   MessageSucces(message: string) {
     Swal.fire({
       icon: 'success',
-      html: `<h2>${message}</h2>`,
+      title: '¡¡Bien hecho!!',
+      text: `${message}`,
       timer: 1500,
-      showConfirmButton: false,
+      showConfirmButton: true,
     });
   }
 
@@ -27,8 +28,27 @@ export class MessageService {
   MessageError(message: string) {
     Swal.fire({
       icon: 'error',
-      html: `<h1>${message}</h1>`,
+      html: `${message}`,
       showConfirmButton: true,
+    });
+  }
+
+  MessageConfirm(data: any, api: any) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        api.updateStatusIncidencia(data).subscribe(
+          (data) => this.MessageSucces(data.message),
+          (error) => this.MessageError(error)
+        );
+      }
     });
   }
 }

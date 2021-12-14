@@ -1,6 +1,6 @@
 export const perfilMenu = [
   {
-    perfil: 'admin',
+    perfil: 'ADMIN',
     menu: [
       {
         nombre: 'Views',
@@ -38,7 +38,7 @@ export const perfilMenu = [
     ],
   },
   {
-    perfil: 'usuario',
+    perfil: 'USUARIO',
     menu: [
       {
         nombre: 'Editar',

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { F419Service } from '../services';
+import { MessageService } from '../../../core/services';
 import { perfilMenu } from '../db/db';
 
 @Component({
@@ -15,15 +16,28 @@ export class F419EventoadversoListadoComponent implements OnInit {
   title: string = 'Listado F419 Reporte de I/EA - Asistencial';
   perfil: string;
   datas$: Observable<any>;
-  constructor(private F419Service: F419Service, private Router: Router) {}
+
+  fecha$ = new Subject<{}>();
+
+  constructor(
+    private F419Service: F419Service,
+    private Router: Router,
+    private MessageService: MessageService
+  ) {}
+
+  getFecha(fecha: string) {
+    this.fecha$.next({ fecha, rol: localStorage.getItem('_rol') });
+  }
 
   ngOnInit(): void {
-    this.getIncidenciasList();
     this.F419Service.refresh.subscribe((_) => this.getIncidenciasList());
+    this.getIncidenciasList();
   }
 
   getIncidenciasList() {
-    this.dataIncidencia$ = this.F419Service.getIncidencia();
+    this.dataIncidencia$ = this.fecha$.pipe(
+      switchMap((paramet: any) => this.F419Service.getIncidencia(paramet))
+    );
   }
 
   onRegistrar() {
@@ -53,16 +67,19 @@ export class F419EventoadversoListadoComponent implements OnInit {
     },
     codigoStatus
   ) {
-    this.F419Service.updateStatusIncidencia({
-      id,
-      fecha_incidencia,
-      historia,
-      glosa,
-      turno,
-      estado: codigoStatus,
-      reporta_area,
-      usuario_registro,
-    }).subscribe(console.log);
+    this.MessageService.MessageConfirm(
+      {
+        id,
+        fecha_incidencia,
+        historia,
+        glosa,
+        turno,
+        estado: codigoStatus,
+        reporta_area,
+        usuario_registro,
+      },
+      this.F419Service
+    );
   }
 
   onPerfil(rol: string) {
@@ -70,6 +87,7 @@ export class F419EventoadversoListadoComponent implements OnInit {
     this.datas$ = of(perfilMenu[indice].menu).pipe(
       map((data) => data.filter(({ status }) => status === true))
     );
+    localStorage.setItem('_rol', rol);
   }
 
   dropdownDynamic({ method, id }, data: any) {

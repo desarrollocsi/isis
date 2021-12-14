@@ -118,12 +118,6 @@ export class F419EventoadversoRegistrarEditComponent
     data.map(({ detalles }) =>
       detalles.map(({ id }) => this.form.addControl(id, new FormControl(false)))
     );
-
-    this.form.addControl('usuario_actualizado', new FormControl('YVALDEZ'));
-    this.form.addControl(
-      'fecha_actualizado',
-      new FormControl(moment().format('YYYY-MM-DD HH:mm:ss'))
-    );
   }
 
   setFormData() {
@@ -132,13 +126,17 @@ export class F419EventoadversoRegistrarEditComponent
       .subscribe(({ verb, nameButton, data }) => {
         this.form.patchValue(data);
         data.detalles.map((detalle: any) => {
-          setTimeout(() => {
-            this.form.get(`${detalle.value}`).reset(true);
-          }, 300);
+          setTimeout(() => this.form.get(`${detalle.value}`).reset(true), 300);
           this.detalles.push(this.fb.group(detalle));
         });
         this.verb = verb;
         this.nameButton = nameButton;
+
+        this.form.addControl('usuario_actualizado', new FormControl('YVALDEZ'));
+        this.form.addControl(
+          'fecha_actualizado',
+          new FormControl(moment().format('YYYY-MM-DD HH:mm:ss'))
+        );
       });
   }
 
@@ -182,17 +180,15 @@ export class F419EventoadversoRegistrarEditComponent
 
 export function validacionHistoria(api: any): AsyncValidatorFn {
   return (control: AbstractControl) => {
-    return api
-      .getPaciente(control.value)
-      .pipe(
-        map(({ hc_numhis, hc_apemat, hc_apepat, hc_nombre }) =>
-          hc_numhis
-            ? {
-                status: true,
-                message: `${hc_nombre} ${hc_apepat} ${hc_apemat}`,
-              }
-            : { status: false, message: 'La historia ingresada no es correcta' }
-        )
-      );
+    return api.getPaciente(control.value).pipe(
+      map(({ hc_numhis, hc_apemat, hc_apepat, hc_nombre }) =>
+        hc_numhis
+          ? {
+              status: true,
+              message: `${hc_nombre} ${hc_apepat} ${hc_apemat}`,
+            }
+          : { status: false, message: 'La historia ingresada no es correcta' }
+      )
+    );
   };
 }
