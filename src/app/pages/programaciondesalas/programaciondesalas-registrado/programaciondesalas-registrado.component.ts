@@ -13,7 +13,7 @@ import {
   transformarData,
   isCheckbox,
   isValueCheckbox,
-} from '../utils/util';
+} from '../utils/utils';
 
 @Component({
   selector: 'app-programaciondesalas-registrado',

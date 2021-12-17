@@ -7,7 +7,7 @@ import {
   tiempoSeleccionado,
   obtenerIndiceProgramacionSala,
   generarObjectHoraDeProgramacion,
-} from '../utils/util';
+} from '../utils/utils';
 
 @Component({
   selector: 'app-programaciondesalas-modal-salas',

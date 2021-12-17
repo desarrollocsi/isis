@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { F419Service } from '../services';
 import { MessageService } from '../../../core/services';
 import { perfilMenu } from '../db/db';
+import { rulesParameters } from '../utils';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-f419-eventoadverso-listado',
@@ -15,9 +17,10 @@ export class F419EventoadversoListadoComponent implements OnInit {
   dataIncidencia$: Observable<any>;
   title: string = 'Listado F419 Reporte de I/EA - Asistencial';
   perfil: string;
-  datas$: Observable<any>;
+  dropdowns$: Observable<any>;
 
-  fecha$ = new Subject<{}>();
+  fecha$ = new BehaviorSubject<{}>(null);
+  __fecha = this.fecha$.asObservable();
 
   constructor(
     private F419Service: F419Service,
@@ -25,17 +28,18 @@ export class F419EventoadversoListadoComponent implements OnInit {
     private MessageService: MessageService
   ) {}
 
+  ngOnInit(): void {
+    this.F419Service.refresh.subscribe((_) => this.getIncidenciasList());
+    this.getIncidenciasList();
+    this.getFecha(moment().format('YYYY-MM-DD'));
+  }
+
   getFecha(fecha: string) {
     this.fecha$.next({ fecha, rol: localStorage.getItem('_rol') });
   }
 
-  ngOnInit(): void {
-    this.F419Service.refresh.subscribe((_) => this.getIncidenciasList());
-    this.getIncidenciasList();
-  }
-
   getIncidenciasList() {
-    this.dataIncidencia$ = this.fecha$.pipe(
+    this.dataIncidencia$ = this.__fecha.pipe(
       switchMap((paramet: any) => this.F419Service.getIncidencia(paramet))
     );
   }
@@ -44,13 +48,9 @@ export class F419EventoadversoListadoComponent implements OnInit {
     this.Router.navigate(['home/calidad/f419/registrar']);
   }
 
-  onUpdate({ id }) {
+  onUpdate({ id }, action: any) {
     this.F419Service.getIncidenciaDetail(id).subscribe((data: any) =>
-      this.F419Service.idIncidencia.next({
-        verb: 'PUT',
-        data,
-        nameButton: 'Actualizar',
-      })
+      this.F419Service.idIncidencia.next(rulesParameters(action, data))
     );
     this.Router.navigate(['home/calidad/f419/registrar']);
   }
@@ -83,17 +83,17 @@ export class F419EventoadversoListadoComponent implements OnInit {
   }
 
   onPerfil(rol: string) {
-    const indice = perfilMenu.findIndex(({ perfil }) => perfil === rol);
-    this.datas$ = of(perfilMenu[indice].menu).pipe(
-      map((data) => data.filter(({ status }) => status === true))
-    );
     localStorage.setItem('_rol', rol);
+    const indice = perfilMenu.findIndex(({ perfil }) => perfil === rol);
+    this.dropdowns$ = of(perfilMenu[indice].menu).pipe(
+      map((data: any) => data.filter(({ status }) => status === true))
+    );
   }
 
-  dropdownDynamic({ method, id }, data: any) {
+  dropdownDynamic({ method, id, action }, data: any) {
     const METHOD_DYNAMIC = {
       onUpdateStatus: () => this.onUpdateStatus(data, id),
-      onUpdate: () => this.onUpdate(data),
+      onUpdate: () => this.onUpdate(data, action),
     };
 
     METHOD_DYNAMIC[method]();

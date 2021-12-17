@@ -1,5 +1,5 @@
 import * as moment from 'moment';
-import { formatearFechaDmy } from '../utils/util';
+import { formatearFechaDmy } from '../utils/utils';
 
 export class Paciente {
   public historia: number;

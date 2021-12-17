@@ -1,3 +1,39 @@
+.container__layout {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.card {
+  width: 100%;
+  background-color: #fff;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  border-radius: 2rem;
+}
+
+.card:hover {
+  border: 1px solid #8cc8c8;
+  cursor: pointer;
+}
+
+.icon__lg {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 1.5rem;
+  opacity: 0.3;
+  user-select: none;
+}
+
+.card:hover > .icon__lg {
+  opacity: 0.6;
+}
+
 /**/
 .group {
   position: relative;
@@ -232,6 +268,12 @@ input[type="checkbox"] {
   background-color: #f8d7da;
 }
 
+/***/
+.title__h1 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
 @media (min-width: 768px) and (min-width: 992px) {
   .title__h1 {
     text-align: center;
@@ -245,7 +287,6 @@ input[type="checkbox"] {
     margin: 0;
     box-shadow: none;
     border-radius: 0;
-    /* border-bottom: 1px solid #dadce0; */
     border-bottom: 1px solid rgba(243, 244, 246, 1);
     background-color: #fff;
   }
@@ -303,11 +344,19 @@ input[type="checkbox"] {
     width: 100%;
   }
 
+  .card {
+    max-width: 450px;
+  }
+
   .w__15 {
     width: 15%;
   }
 
   .w__30 {
     width: 30%;
+  }
+
+  .w__50 {
+    width: 50%;
   }
 }

@@ -7,8 +7,8 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class F419Service {
-  //URL: string = 'http://192.168.10.139:4000';
-  URL: string = 'http://127.0.0.1:8000';
+  URL: string = 'http://192.168.10.139:4000';
+  //URL: string = 'http://127.0.0.1:8000';
 
   constructor(private http: HttpClient) {}
 
@@ -27,7 +27,6 @@ export class F419Service {
   }
 
   getIncidencia({ fecha, rol }) {
-    console.log({ fecha, rol });
     return this.http.get(`${this.URL}/incidencias/${fecha}/${rol}`);
   }
 

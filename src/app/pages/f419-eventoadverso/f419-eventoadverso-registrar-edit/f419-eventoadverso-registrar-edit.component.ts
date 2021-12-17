@@ -31,9 +31,10 @@ export class F419EventoadversoRegistrarEditComponent
   involucrados$: Observable<any>;
   verb: string = 'POST';
   nameButton: string = 'Registrar';
-  formDisabled: boolean = true;
   messageAsyncrono: string;
   private readonly unsubscribe$: Subject<void> = new Subject();
+  isDisabled: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private F419Service: F419Service,
@@ -100,23 +101,64 @@ export class F419EventoadversoRegistrarEditComponent
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [null],
-      fecha_incidencia: [null, [Validators.required]],
-      historia: [null, [Validators.required]],
-      glosa: [null, [Validators.required]],
-      turno: [null, [Validators.required]],
-      reporta_area: [null, [Validators.required]],
+      fecha_incidencia: [
+        { value: null, disabled: this.isDisabled },
+        [Validators.required],
+      ],
+      historia: [
+        { value: null, disabled: this.isDisabled },
+        [Validators.required],
+      ],
+      glosa: [
+        { value: null, disabled: this.isDisabled },
+        [Validators.required],
+      ],
+      turno: [
+        { value: null, disabled: this.isDisabled },
+        [Validators.required],
+      ],
+      reporta_area: [
+        { value: null, disabled: this.isDisabled },
+        [Validators.required],
+      ],
       usuario_registro: ['YVALDEZ'],
       detalles: this.fb.array([]),
     });
-    this.setFormData();
+
     this.involucrados$ = this.F419Service.getInvolucradosIEA().pipe(
       tap((data: any) => this.addControl(data))
     );
+    this.setFormData();
+  }
+
+  bloqueo() {
+    this.isDisabled = true;
   }
 
   addControl(data: any) {
     data.map(({ detalles }) =>
-      detalles.map(({ id }) => this.form.addControl(id, new FormControl(false)))
+      detalles.map(({ id }) =>
+        this.form.addControl(
+          id,
+          new FormControl({ value: false, disabled: this.isDisabled })
+        )
+      )
+    );
+  }
+
+  patchData(data: any) {
+    this.form.patchValue(data);
+    data.detalles.map((detalle: any) => {
+      setTimeout(() => this.form.get(`${detalle.value}`).reset(true), 300);
+      this.detalles.push(this.fb.group(detalle));
+    });
+  }
+
+  addFieldsUpdate() {
+    this.form.addControl('usuario_actualizado', new FormControl('YVALDEZ'));
+    this.form.addControl(
+      'fecha_actualizado',
+      new FormControl(moment().format('YYYY-MM-DD HH:mm:ss'))
     );
   }
 
@@ -124,19 +166,9 @@ export class F419EventoadversoRegistrarEditComponent
     this.F419Service.idIncidencia
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(({ verb, nameButton, data }) => {
-        this.form.patchValue(data);
-        data.detalles.map((detalle: any) => {
-          setTimeout(() => this.form.get(`${detalle.value}`).reset(true), 300);
-          this.detalles.push(this.fb.group(detalle));
-        });
+        if (['PUT', 'VIEWS'].includes(verb)) this.patchData(data);
         this.verb = verb;
         this.nameButton = nameButton;
-
-        this.form.addControl('usuario_actualizado', new FormControl('YVALDEZ'));
-        this.form.addControl(
-          'fecha_actualizado',
-          new FormControl(moment().format('YYYY-MM-DD HH:mm:ss'))
-        );
       });
   }
 
@@ -157,6 +189,7 @@ export class F419EventoadversoRegistrarEditComponent
 
   onSubmit() {
     this.submit = true;
+    console.log(this.form.value);
     if (this.form.invalid) return;
     this.F419Service.apiDynamic({
       verb: this.verb,

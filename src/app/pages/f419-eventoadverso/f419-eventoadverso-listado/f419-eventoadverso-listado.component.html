@@ -20,74 +20,89 @@
     +agregar
   </button>
 </div>
-<div class="table__desktop animate__animated animate__fadeIn">
-  <div class="row__header__desktop">
-    <div class="cell">Fecha I/EA</div>
-    <div class="cell">Area</div>
-    <div class="cell">Historia</div>
-    <div class="cell">Turno</div>
-    <div class="cell">Usuario</div>
-    <div class="cell">Fecha registro</div>
-    <div class="cell">Estado I/EA</div>
-    <div class="cell">&nbsp;</div>
-  </div>
-  <div
-    class="table"
-    *ngFor="let dataIncidencia of dataIncidencia$ | async; index as i"
-  >
-    <div class="row__header">
-      <div class="cell">Fecha I/EA</div>
-      <div class="cell">Area</div>
-      <div class="cell">Historia</div>
-      <div class="cell">Turno</div>
-      <div class="cell">Usuario</div>
-      <div class="cell">Fecha registro</div>
-      <div class="cell">Estado I/EA</div>
-      <div class="cell">&nbsp;</div>
+
+<ng-container *ngIf="dataIncidencia$ | async as datas">
+  <ng-container *ngIf="datas.message; else listadosDeIncidencias">
+    <div class="container__layout">
+      <div class="card" (click)="onRegistrar()">
+        <img src="../../../../assets/icons/new-document.png" class="icon__lg" />
+
+        <span>{{ datas.message }}</span>
+
+        <button type="button" class="btn w__50" (click)="onRegistrar()">
+          Agregar
+        </button>
+      </div>
     </div>
-    <div class="row__body">
-      <div class="cell">{{ dataIncidencia.fecha_incidencia }}</div>
-      <div class="cell">{{ dataIncidencia.reporta_area }}</div>
-      <div class="cell">{{ dataIncidencia.historia }}</div>
-      <div class="cell">
-        {{ dataIncidencia.turno | statusDinamico: "turno" | titlecase }}
+  </ng-container>
+  <ng-template #listadosDeIncidencias>
+    <div class="table__desktop animate__animated animate__fadeIn">
+      <div class="row__header__desktop">
+        <div class="cell">Fecha I/EA</div>
+        <div class="cell">Area</div>
+        <div class="cell">Historia</div>
+        <div class="cell">Turno</div>
+        <div class="cell">Usuario</div>
+        <div class="cell">Fecha registro</div>
+        <div class="cell">Estado I/EA</div>
+        <div class="cell">&nbsp;</div>
       </div>
+      <div class="table" *ngFor="let data of datas; index as i">
+        <div class="row__header">
+          <div class="cell">Fecha I/EA</div>
+          <div class="cell">Area</div>
+          <div class="cell">Historia</div>
+          <div class="cell">Turno</div>
+          <div class="cell">Usuario</div>
+          <div class="cell">Fecha registro</div>
+          <div class="cell">Estado I/EA</div>
+          <div class="cell">&nbsp;</div>
+        </div>
+        <div class="row__body">
+          <div class="cell">{{ data.fecha_incidencia }}</div>
+          <div class="cell">{{ data.reporta_area }}</div>
+          <div class="cell">{{ data.historia }}</div>
+          <div class="cell">
+            {{ data.turno | statusDinamico: "turno" | titlecase }}
+          </div>
 
-      <div class="cell">{{ dataIncidencia.usuario_registro | titlecase }}</div>
-      <div class="cell">{{ dataIncidencia.fecha_registro | date }}</div>
-      <div
-        class="cell"
-        [class.status__success]="dataIncidencia.estado === 3"
-        [class.status__warning]="dataIncidencia.estado === 2"
-        [class.status__danger]="dataIncidencia.estado === 1"
-      >
-        {{ dataIncidencia.estado | statusDinamico: "status" | titlecase }}
-      </div>
-      <div class="cell dropdown">
-        <input
-          type="checkbox"
-          name="settings"
-          class="input__checkbox"
-          id="{{ 'settings' + i }}"
-        />
-        <label for="{{ 'settings' + i }}" class="label__checkbox">
-          <img
-            src="../../../../assets/icons/settings__option.svg"
-            class="actions__icons"
-          />
-        </label>
-
-        <div class="dropdown__content animate__animated animate__fadeIn">
+          <div class="cell">{{ data.usuario_registro | titlecase }}</div>
+          <div class="cell">{{ data.fecha_registro | date }}</div>
           <div
-            class="dropdown__item"
-            *ngFor="let data of datas$ | async"
-            (click)="dropdownDynamic(data, dataIncidencia)"
+            class="cell"
+            [class.status__success]="data.estado === 3"
+            [class.status__warning]="data.estado === 2"
+            [class.status__danger]="data.estado === 1"
           >
-            <img [src]="data.img" class="img__icon" />
-            <span>{{ data.nombre }}</span>
+            {{ data.estado | statusDinamico: "status" | titlecase }}
+          </div>
+          <div class="cell dropdown">
+            <input
+              type="checkbox"
+              name="settings"
+              class="input__checkbox"
+              id="{{ 'settings' + i }}"
+            />
+            <label for="{{ 'settings' + i }}" class="label__checkbox">
+              <img
+                src="../../../../assets/icons/settings__option.svg"
+                class="actions__icons"
+              />
+            </label>
+
+            <div class="dropdown__content animate__animated animate__fadeIn">
+              <div
+                class="dropdown__item"
+                *ngFor="let dropdown of dropdowns$ | async"
+                (click)="dropdownDynamic(dropdown, data)"
+              >
+                <img [src]="dropdown.icon" class="img__icon" />
+                <span>{{ dropdown.nombre }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
+  </ng-template>
+</ng-container>

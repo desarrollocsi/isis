@@ -48,7 +48,7 @@
         <input
           type="text"
           class="input__control"
-          placeholder=" "
+          placeholder="Ingresar historia"
           formControlName="historia"
           [class.input__invalid]="historia"
           [class.valid]="f.historia.valid"
@@ -85,7 +85,7 @@
         cols="30"
         rows="10"
         class="input__control"
-        placeholder=" "
+        placeholder="Ingresa observacion si mueres "
         formControlName="glosa"
         [class.valid]="f.glosa.valid"
         [class.input__invalid]="glosa"
@@ -280,7 +280,7 @@
     </div>
   </div>
 
-  <div class="group">
+  <div class="group" *ngIf="nameButton">
     <button class="btn">{{ nameButton }}</button>
   </div>
 </form>
