@@ -287,6 +287,11 @@
   margin-right: 0.5rem;
 }
 
+.text__h5 {
+  font-size: 0.8em;
+  opacity: 0.5;
+}
+
 @media (min-width: 768px) and (min-width: 992px) {
   .container__acordeon {
     text-align: left;

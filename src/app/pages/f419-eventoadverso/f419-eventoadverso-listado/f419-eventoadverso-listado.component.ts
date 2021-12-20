@@ -32,6 +32,7 @@ export class F419EventoadversoListadoComponent implements OnInit {
     this.F419Service.refresh.subscribe((_) => this.getIncidenciasList());
     this.getIncidenciasList();
     this.getFecha(moment().format('YYYY-MM-DD'));
+    this.dropdownsMenu();
   }
 
   getFecha(fecha: string) {
@@ -84,7 +85,12 @@ export class F419EventoadversoListadoComponent implements OnInit {
 
   onPerfil(rol: string) {
     localStorage.setItem('_rol', rol);
-    const indice = perfilMenu.findIndex(({ perfil }) => perfil === rol);
+  }
+
+  dropdownsMenu() {
+    const indice = perfilMenu.findIndex(
+      ({ perfil }) => perfil === localStorage.getItem('_rol')
+    );
     this.dropdowns$ = of(perfilMenu[indice].menu).pipe(
       map((data: any) => data.filter(({ status }) => status === true))
     );

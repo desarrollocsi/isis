@@ -261,7 +261,8 @@
       [id]="involucrado.descripcion"
     />
     <label class="acordeon__head" [for]="involucrado.descripcion">
-      {{ involucrado.descripcion | titlecase }}
+      {{ involucrado.descripcion }}
+      <span class="text__h5">(puede marcar más de una)</span>
     </label>
 
     <div class="acordeon__body">
@@ -274,7 +275,7 @@
           [formControlName]="detalle.id"
         />
         <label class="label__checkbox mr__05" [for]="detalle.descripcion">{{
-          detalle.descripcion | titlecase
+          detalle.descripcion | title
         }}</label>
       </ng-container>
     </div>

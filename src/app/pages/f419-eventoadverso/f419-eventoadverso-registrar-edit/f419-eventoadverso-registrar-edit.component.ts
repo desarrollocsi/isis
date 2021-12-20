@@ -27,7 +27,7 @@ export class F419EventoadversoRegistrarEditComponent
 {
   form: FormGroup;
   submit: boolean = false;
-  title: string = 'F419 Reporte de I/EA - Asistencial';
+  title: string = 'F419 Reporte de I/EA';
   involucrados$: Observable<any>;
   verb: string = 'POST';
   nameButton: string = 'Registrar';

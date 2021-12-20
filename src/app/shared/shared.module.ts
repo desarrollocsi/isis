@@ -9,6 +9,7 @@ import { SearchPipe } from './pipe/search.pipe';
 import { ProgrammingStatusPipe } from './pipe/programming-status.pipe';
 import { PersonalPipe } from './pipe/personal.pipe';
 import { StatusDinamicoPipe } from './pipe/status-dinamico.pipe';
+import { TitlePipe } from './pipe/title.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { StatusDinamicoPipe } from './pipe/status-dinamico.pipe';
     SearchPipe,
     PersonalPipe,
     StatusDinamicoPipe,
+    TitlePipe,
   ],
   imports: [CommonModule, SharedRoutingModule],
   exports: [
@@ -28,6 +30,7 @@ import { StatusDinamicoPipe } from './pipe/status-dinamico.pipe';
     ProgrammingStatusPipe,
     PersonalPipe,
     StatusDinamicoPipe,
+    TitlePipe,
   ],
 })
 export class SharedModule {}
