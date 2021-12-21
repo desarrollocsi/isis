@@ -203,7 +203,44 @@
     </div>
   </div>
 
-  <!-- <h1 class="text__subtitle text__center text__color">Involucrados I/EA</h1>
+  <h1 class="text__subtitle text__center text__color">Involucrados I/EA</h1>
+  <div
+    class="container__acordeon"
+    *ngFor="let involucrado of involucrados$ | async"
+  >
+    <input
+      type="checkbox"
+      class="input__checkbox"
+      [id]="involucrado.descripcion"
+    />
+    <label class="acordeon__head" [for]="involucrado.descripcion">
+      {{ involucrado.descripcion | title }}
+      <span class="text__h5">(puede marcar más de una)</span>
+      <!-- <img src="../../../../assets/icons/check.png" class="img__icon" /> -->
+    </label>
+
+    <div class="acordeon__body">
+      <ng-container *ngFor="let detalle of involucrado.detalles">
+        <input
+          type="checkbox"
+          (change)="addDetail($event.target, detalle)"
+          class="input__checkbox"
+          [id]="detalle.descripcion"
+          [formControlName]="detalle.id"
+        />
+        <label class="label__checkbox mr__05" [for]="detalle.descripcion">{{
+          detalle.descripcion | title
+        }}</label>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="group" *ngIf="nameButton">
+    <button class="btn">{{ nameButton }}</button>
+  </div>
+</form>
+
+<!-- <h1 class="text__subtitle text__center text__color">Involucrados I/EA</h1>
   <div class="row__item mb_1">
     <div
       class="container__checkbox"
@@ -250,39 +287,3 @@
     </svg>
     <span class="ml__05">Seleccionar al menos un involucrado para I/EA</span>
   </div> -->
-  <h1 class="text__subtitle text__center text__color">Involucrados I/EA</h1>
-  <div
-    class="container__acordeon"
-    *ngFor="let involucrado of involucrados$ | async"
-  >
-    <input
-      type="checkbox"
-      class="input__checkbox"
-      [id]="involucrado.descripcion"
-    />
-    <label class="acordeon__head" [for]="involucrado.descripcion">
-      {{ involucrado.descripcion | title }}
-      <span class="text__h5">(puede marcar más de una)</span>
-      <!-- <img src="../../../../assets/icons/check.png" class="img__icon" /> -->
-    </label>
-
-    <div class="acordeon__body">
-      <ng-container *ngFor="let detalle of involucrado.detalles">
-        <input
-          type="checkbox"
-          (change)="addDetail($event.target, detalle)"
-          class="input__checkbox"
-          [id]="detalle.descripcion"
-          [formControlName]="detalle.id"
-        />
-        <label class="label__checkbox mr__05" [for]="detalle.descripcion">{{
-          detalle.descripcion | title
-        }}</label>
-      </ng-container>
-    </div>
-  </div>
-
-  <div class="group" *ngIf="nameButton">
-    <button class="btn">{{ nameButton }}</button>
-  </div>
-</form>
