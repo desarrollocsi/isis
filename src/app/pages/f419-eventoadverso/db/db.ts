@@ -6,12 +6,14 @@ export const perfilMenu = [
         nombre: 'Views',
         icon: '../../../../assets/icons/view.png',
         method: 'onUpdate',
+        action: 'VIEWS',
         status: true,
       },
       {
         nombre: 'Editar',
         icon: '../../../../assets/icons/pen.png',
         method: 'onUpdate',
+        action: 'EDIT',
         status: true,
       },
       {

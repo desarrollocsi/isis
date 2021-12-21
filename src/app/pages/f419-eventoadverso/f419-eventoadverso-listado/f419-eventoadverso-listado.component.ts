@@ -15,7 +15,7 @@ import * as moment from 'moment';
 })
 export class F419EventoadversoListadoComponent implements OnInit {
   dataIncidencia$: Observable<any>;
-  title: string = 'Listado F419 Reporte de I/EA - Asistencial';
+  title: string = 'Listado F419 Reporte de I/EA';
   perfil: string;
   dropdowns$: Observable<any>;
 

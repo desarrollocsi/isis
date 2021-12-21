@@ -166,9 +166,9 @@
   color: #fff;
 }
 
-.label__radio:hover {
+/* .label__radio:hover {
   background-color: #009b6e;
-}
+} */
 
 .label__radio:not(:last-of-type) {
   border-right: 1px solid #dcf0f4;
@@ -290,6 +290,14 @@
 .text__h5 {
   font-size: 0.8em;
   opacity: 0.5;
+}
+
+/*ICON*/
+.img__icon {
+  width: 20px;
+  height: 20px;
+  opacity: 0.3;
+  margin-right: 0.7rem;
 }
 
 @media (min-width: 768px) and (min-width: 992px) {
