@@ -1,4 +1,5 @@
 <h1 class="text__title text__color mbt_3">{{ nameButton }} {{ title }}</h1>
+
 <form
   [formGroup]="form"
   (ngSubmit)="onSubmit()"
@@ -85,7 +86,7 @@
         cols="30"
         rows="10"
         class="input__control"
-        placeholder="Ingresa observacion si mueres "
+        placeholder="Ingresa observación si mueres "
         formControlName="glosa"
         [class.valid]="f.glosa.valid"
         [class.input__invalid]="glosa"
@@ -94,7 +95,7 @@
         class="label__control"
         [class.invalid__warning]="glosa"
         [class.valid__success]="f.glosa.valid"
-        >Descripcion</label
+        >Descripción</label
       >
       <div class="invalid animate__animated animate__fadeIn" *ngIf="glosa">
         <span *ngIf="f.glosa.errors?.required" class="container__erros">
@@ -212,9 +213,10 @@
       type="checkbox"
       class="input__checkbox"
       [id]="involucrado.descripcion"
+      [checked]="isDisabledCheckBox"
     />
     <label class="acordeon__head" [for]="involucrado.descripcion">
-      {{ involucrado.descripcion | title }}
+      {{ involucrado.descripcion }}
       <span class="text__h5">(puede marcar más de una)</span>
       <!-- <img src="../../../../assets/icons/check.png" class="img__icon" /> -->
     </label>

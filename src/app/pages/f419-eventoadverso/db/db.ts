@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export const perfilMenu = [
   {
     perfil: 'ADMIN',
@@ -57,5 +59,16 @@ export const perfilMenu = [
         status: true,
       },
     ],
+  },
+];
+
+export const fieldsUpdate = [
+  {
+    fields: 'usuario_actualizado',
+    value: 'YVALDEZ',
+  },
+  {
+    fields: 'usuario_actualizado',
+    value: moment().format('YYYY-MM-DD HH:mm:ss'),
   },
 ];

@@ -14,6 +14,7 @@ import { F419Service } from '../services';
 import { MessageService } from '../../../core/services';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
+import { fieldsUpdate } from '../db/db';
 
 import * as moment from 'moment';
 
@@ -33,7 +34,7 @@ export class F419EventoadversoRegistrarEditComponent
   nameButton: string = 'Registrar';
   messageAsyncrono: string;
   private readonly unsubscribe$: Subject<void> = new Subject();
-  isDisabled: boolean = false;
+  isDisabledCheckBox: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -98,29 +99,18 @@ export class F419EventoadversoRegistrarEditComponent
     return this.detalles.length === 0 && this.submit;
   }
 
+  get isDisabled() {
+    return this.verb == 'VIEWS' ? true : false;
+  }
+
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [null],
-      fecha_incidencia: [
-        { value: null, disabled: this.isDisabled },
-        [Validators.required],
-      ],
-      historia: [
-        { value: null, disabled: this.isDisabled },
-        [Validators.required],
-      ],
-      glosa: [
-        { value: null, disabled: this.isDisabled },
-        [Validators.required],
-      ],
-      turno: [
-        { value: null, disabled: this.isDisabled },
-        [Validators.required],
-      ],
-      reporta_area: [
-        { value: null, disabled: this.isDisabled },
-        [Validators.required],
-      ],
+      fecha_incidencia: [null, [Validators.required]],
+      historia: [null, [Validators.required]],
+      glosa: [null, [Validators.required]],
+      turno: [null, [Validators.required]],
+      reporta_area: [null, [Validators.required]],
       usuario_registro: ['YVALDEZ'],
       detalles: this.fb.array([]),
     });
@@ -131,16 +121,12 @@ export class F419EventoadversoRegistrarEditComponent
     this.setFormData();
   }
 
-  bloqueo() {
-    this.isDisabled = true;
-  }
-
   addControl(data: any) {
     data.map(({ detalles }) =>
       detalles.map(({ id }) =>
         this.form.addControl(
           id,
-          new FormControl({ value: false, disabled: this.isDisabled })
+          new FormControl({ value: false, disabled: this.isDisabledCheckBox })
         )
       )
     );
@@ -155,20 +141,24 @@ export class F419EventoadversoRegistrarEditComponent
   }
 
   addFieldsUpdate() {
-    this.form.addControl('usuario_actualizado', new FormControl('YVALDEZ'));
-    this.form.addControl(
-      'fecha_actualizado',
-      new FormControl(moment().format('YYYY-MM-DD HH:mm:ss'))
+    fieldsUpdate.map(({ fields, value }) =>
+      this.form.addControl(fields, new FormControl(value))
     );
+  }
+
+  formDisabled() {
+    for (let key in this.form.value) this.form.get(`${key}`).disable();
+    this.isDisabledCheckBox = true;
   }
 
   setFormData() {
     this.F419Service.idIncidencia
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(({ verb, nameButton, data }) => {
-        if (['PUT', 'VIEWS'].includes(verb)) this.patchData(data);
         this.verb = verb;
         this.nameButton = nameButton;
+        if (['PUT', 'VIEWS'].includes(verb)) this.patchData(data);
+        ['VIEWS'].includes(verb) && this.formDisabled();
       });
   }
 
@@ -190,14 +180,14 @@ export class F419EventoadversoRegistrarEditComponent
   onSubmit() {
     this.submit = true;
     console.log(this.form.value);
-    if (this.form.invalid) return;
-    this.F419Service.apiDynamic({
-      verb: this.verb,
-      data: this.form.value,
-    }).subscribe(
-      (data: any) => this.onSuccess(data),
-      (error: any) => this.MessageService.MessageError(error)
-    );
+    // if (this.form.invalid) return;
+    // this.F419Service.apiDynamic({
+    //   verb: this.verb,
+    //   data: this.form.value,
+    // }).subscribe(
+    //   (data: any) => this.onSuccess(data),
+    //   (error: any) => this.MessageService.MessageError(error)
+    // );
   }
 
   onSuccess({ message }) {
