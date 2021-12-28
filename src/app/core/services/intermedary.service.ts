@@ -20,6 +20,9 @@ export class IntermedaryService {
   private dataActoMedico = new Subject<any>();
   _dataActoMedico = this.dataActoMedico.asObservable();
 
+  private dataReclamo = new Subject<any>();
+  _dataReclamo = this.dataReclamo.asObservable();
+
   private menus = new BehaviorSubject<any>(this.AUS.modulos || null);
   _menus = this.menus.asObservable().pipe(filter((data: any) => data !== null));
 
@@ -77,6 +80,10 @@ export class IntermedaryService {
 
   getDataActoMedico(id: any) {
     this.dataActoMedico.next(id);
+  }
+
+  setDataReclamo(re_cod: any) {
+    this.dataReclamo.next(re_cod);
   }
 
   /*********** GET*****************/

@@ -70,6 +70,12 @@ const routes: Routes = [
             (m) => m.ProgramaciondesalasModule
           ),
       },
+      {
+        path: 'reclamos',
+        loadChildren: () =>
+          import('./reclamos/reclamos.module').then((m) => m.ReclamosModule
+          ),
+      },
     ],
   },
 ];
