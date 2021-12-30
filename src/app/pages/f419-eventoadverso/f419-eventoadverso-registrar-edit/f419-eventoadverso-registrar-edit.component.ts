@@ -16,8 +16,6 @@ import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { fieldsUpdate } from '../db/db';
 
-import * as moment from 'moment';
-
 @Component({
   selector: 'app-f419-eventoadverso-registrar-edit',
   templateUrl: './f419-eventoadverso-registrar-edit.component.html',
@@ -27,13 +25,14 @@ export class F419EventoadversoRegistrarEditComponent
   implements OnInit, OnDestroy
 {
   form: FormGroup;
+  involucrados$: Observable<any>;
+  private readonly unsubscribe$: Subject<void> = new Subject();
+
   submit: boolean = false;
   title: string = 'F419 Reporte de I/EA';
-  involucrados$: Observable<any>;
   verb: string = 'POST';
   nameButton: string = 'Registrar';
   messageAsyncrono: string;
-  private readonly unsubscribe$: Subject<void> = new Subject();
   isDisabledCheckBox: boolean = false;
 
   constructor(
@@ -180,14 +179,14 @@ export class F419EventoadversoRegistrarEditComponent
   onSubmit() {
     this.submit = true;
     console.log(this.form.value);
-    // if (this.form.invalid) return;
-    // this.F419Service.apiDynamic({
-    //   verb: this.verb,
-    //   data: this.form.value,
-    // }).subscribe(
-    //   (data: any) => this.onSuccess(data),
-    //   (error: any) => this.MessageService.MessageError(error)
-    // );
+    if (this.form.invalid) return;
+    this.F419Service.apiDynamic({
+      verb: this.verb,
+      data: this.form.value,
+    }).subscribe(
+      (data: any) => this.onSuccess(data),
+      (error: any) => this.MessageService.MessageError(error)
+    );
   }
 
   onSuccess({ message }) {

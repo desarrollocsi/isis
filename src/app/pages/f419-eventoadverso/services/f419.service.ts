@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class F419Service {
-  URL: string = 'http://192.168.10.139:4000';
+  URL: string = 'http://apps2.clinicasantaisabel.com';
   //URL: string = 'http://127.0.0.1:8000';
 
   constructor(private http: HttpClient) {}

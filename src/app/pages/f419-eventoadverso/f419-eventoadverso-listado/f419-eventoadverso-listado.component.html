@@ -25,10 +25,8 @@
   <ng-container *ngIf="datas.message; else listadosDeIncidencias">
     <div class="container__layout">
       <div class="card" (click)="onRegistrar()">
-        <img src="../../../../assets/icons/new-document.png" class="icon__lg" />
-
+        <img src="assets/icons/new-document.png" class="icon__lg" />
         <span>{{ datas.message }}</span>
-
         <button type="button" class="btn w__50" (click)="onRegistrar()">
           Agregar
         </button>
@@ -85,7 +83,7 @@
             />
             <label for="{{ 'settings' + i }}" class="label__checkbox">
               <img
-                src="../../../../assets/icons/settings__option.svg"
+                src="assets/icons/settings__option.svg"
                 class="actions__icons"
               />
             </label>

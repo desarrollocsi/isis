@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://192.168.10.144:8002',
+  apiUrl: 'http://apps2.clinicasantaisabel.com',
 };
 
 /*
