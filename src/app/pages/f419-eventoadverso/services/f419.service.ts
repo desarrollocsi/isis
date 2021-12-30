@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -15,35 +16,35 @@ export class F419Service {
   /**ENDPOINTS**/
 
   getPaciente(text: string) {
-    return this.http.get(`${this.URL}/historia/${text}/`);
+    return this.http.get(`${environment.apiUrl}/historia/${text}/`);
   }
 
   getSearchPaciente(text: string) {
-    return this.http.get(`${this.URL}/searchpaciente?search=${text}`);
+    return this.http.get(`${environment.apiUrl}/searchpaciente?search=${text}`);
   }
 
   getInvolucradosIEA() {
-    return this.http.get(`${this.URL}/involucrados`);
+    return this.http.get(`${environment.apiUrl}/involucrados`);
   }
 
   getIncidencia({ fecha, rol }) {
-    return this.http.get(`${this.URL}/incidencias/${fecha}/${rol}`);
+    return this.http.get(`${environment.apiUrl}/incidencias/${fecha}/${rol}`);
   }
 
   getIncidenciaDetail(id: number) {
-    return this.http.get(`${this.URL}/incidencia/${id}/`);
+    return this.http.get(`${environment.apiUrl}/incidencia/${id}/`);
   }
 
   updateStatusIncidencia(data: any) {
     return this.http
-      .put(`${this.URL}/incidenciachancestatus/${data.id}/`, data)
+      .put(`${environment.apiUrl}/incidenciachancestatus/${data.id}/`, data)
       .pipe(tap((_) => this.refresh.next()));
   }
 
   apiDynamic({ verb, data }) {
     const END_POINT = {
-      POST: this.http.post(`${this.URL}/incidencias`, data),
-      PUT: this.http.put(`${this.URL}/incidencia/${data.id}/`, data),
+      POST: this.http.post(`${environment.apiUrl}/incidencias`, data),
+      PUT: this.http.put(`${environment.apiUrl}/incidencia/${data.id}/`, data),
     };
 
     return END_POINT[verb];

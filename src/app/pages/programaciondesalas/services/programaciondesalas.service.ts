@@ -7,6 +7,7 @@ import { Paciente } from '../models';
 import { formDynamic } from '../db/form__dynamic';
 import { AuthStorageService } from '../../../core/services';
 import { filter, map, tap } from 'rxjs/operators';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -73,15 +74,12 @@ export class ProgramaciondesalasService {
     return this.__historia;
   }
 
-  //URL: string = 'http://192.168.10.139:4000';
-  URL: string = 'http://127.0.0.1:8000';
-
   getAgendaSoap(fecha: string) {
-    return this.http.get(`${this.URL}/agendasoap/${fecha}`);
+    return this.http.get(`${environment.apiUrl}/agendasoap/${fecha}`);
   }
 
   getSalas() {
-    return this.http.get(`${this.URL}/salas`);
+    return this.http.get(`${environment.apiUrl}/salas`);
   }
 
   getEspecialidades() {
@@ -102,19 +100,25 @@ export class ProgramaciondesalasService {
 
   getIntervenciones({ parametro, keys }: { parametro: string; keys: string }) {
     const END_POINT_INTERVENCION = {
-      ESPECIALIDAD: this.http.get(`${this.URL}/intervencion/${parametro}/`),
-      CODIGO: this.http.get(`${this.URL}/intervencionporcodigo/${parametro}/`),
+      ESPECIALIDAD: this.http.get(
+        `${environment.apiUrl}/intervencion/${parametro}/`
+      ),
+      CODIGO: this.http.get(
+        `${environment.apiUrl}/intervencionporcodigo/${parametro}/`
+      ),
     };
 
     return END_POINT_INTERVENCION[keys];
   }
 
   getAnestesia() {
-    return this.http.get(`${this.URL}/anestesia`);
+    return this.http.get(`${environment.apiUrl}/anestesia`);
   }
 
   getParticipantes(codigoIntervencion: string) {
-    return this.http.get(`${this.URL}/participantes/${codigoIntervencion}/`);
+    return this.http.get(
+      `${environment.apiUrl}/participantes/${codigoIntervencion}/`
+    );
   }
 
   getPersonales() {
@@ -123,13 +127,13 @@ export class ProgramaciondesalasService {
     }
 
     return this.http
-      .get(`${this.URL}/personales`)
+      .get(`${environment.apiUrl}/personales`)
       .pipe(tap((data: any) => this.AuthStorageService.setPersonal(data)));
   }
 
   getDisponibilidadDeSalas({ fecha, numeroDeSala }) {
     return this.http.get(
-      `${this.URL}/disponibilidadsalas/${fecha}/${numeroDeSala}`
+      `${environment.apiUrl}/disponibilidadsalas/${fecha}/${numeroDeSala}`
     );
   }
 
@@ -138,22 +142,26 @@ export class ProgramaciondesalasService {
   }
 
   getProgramacionDeSalas(codigoProgramacion: string) {
-    return this.http.get(`${this.URL}/programacion/${codigoProgramacion}/`);
+    return this.http.get(
+      `${environment.apiUrl}/programacion/${codigoProgramacion}/`
+    );
   }
 
   getProgramacionDeSalasData(codigoProgramacion: string) {
-    return this.http.get(`${this.URL}/programacionview/${codigoProgramacion}/`);
+    return this.http.get(
+      `${environment.apiUrl}/programacionview/${codigoProgramacion}/`
+    );
   }
 
   getSearchPaciente(text: string) {
     return this.http
-      .get(`${this.URL}/searchpaciente?search=${text}`)
+      .get(`${environment.apiUrl}/searchpaciente?search=${text}`)
       .pipe(map(this.moldearData));
   }
 
   getPaciente(numeroDeHistoria: string) {
     return this.http
-      .get(`${this.URL}/historia/${numeroDeHistoria}/`)
+      .get(`${environment.apiUrl}/historia/${numeroDeHistoria}/`)
       .pipe(map((value: any) => new Paciente(value)));
   }
 
@@ -163,35 +171,40 @@ export class ProgramaciondesalasService {
 
   getApiDynamic({ verbo, data }) {
     const END_POINT = {
-      PUT: this.http.put(`${this.URL}/programacion/${data.cq_numope}/`, data),
-      POST: this.http.post(`${this.URL}/programaciones`, data),
+      PUT: this.http.put(
+        `${environment.apiUrl}/programacion/${data.cq_numope}/`,
+        data
+      ),
+      POST: this.http.post(`${environment.apiUrl}/programaciones`, data),
     };
 
     return END_POINT[verbo];
   }
 
   getSearchCie(search: string) {
-    return this.http.get(`${this.URL}/searchcie?search=${search}`);
+    return this.http.get(`${environment.apiUrl}/searchcie?search=${search}`);
   }
 
   getReprogramacion(data: any) {
     return this.http.put(
-      `${this.URL}/programacionreprogramacion/${data.cq_numope}/`,
+      `${environment.apiUrl}/programacionreprogramacion/${data.cq_numope}/`,
       data
     );
   }
 
   getInformenOperatorio(codigo: string) {
-    return this.http.get(`${this.URL}/informeoperatoriodata/${codigo}/`);
+    return this.http.get(
+      `${environment.apiUrl}/informeoperatoriodata/${codigo}/`
+    );
   }
 
   InformeOperatorio(data: any, keys: any) {
     const END_POINT = {
       PUT: this.http.put(
-        `${this.URL}/informeoperatoriodata/${data.cq_numope}/`,
+        `${environment.apiUrl}/informeoperatoriodata/${data.cq_numope}/`,
         data
       ),
-      POST: this.http.post(`${this.URL}/informeoperatorio`, data),
+      POST: this.http.post(`${environment.apiUrl}/informeoperatorio`, data),
     };
 
     return END_POINT[keys];
