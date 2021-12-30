@@ -1,0 +1,225 @@
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.flex-item{
+    display: flex;
+    flex-wrap: nowrap;
+    position: relative;
+    flex-grow: 1;
+    margin-bottom: 1em;
+    justify-content: space-around;
+}
+
+.card {
+    padding: 2rem;
+    border-radius: 2rem;
+    box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+    margin-bottom: 15px;
+    background-color: #fff;
+    border: 1px solid #dadce0;
+  }
+
+.input-control {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    padding: 0.5em 1.2em 0.5em 1.2em;
+    border-radius: 2rem;
+    border: 1px solid #dadce0;
+    outline: none;
+    background: none;
+    margin: 0 1em;
+}
+
+.label-control {
+    position: absolute;
+    top: 0.9rem;
+    left: 1.9rem;
+    background-color: #fff;
+    padding: 0 0.25rem;
+    color: #80868b;
+    transition: 0.5s;
+}
+
+.input-control:focus + .label-control {
+  top: -0.5rem;
+  left: 1.9rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.input-control:not(:placeholder-shown).input-control:not(:focus)
+  + .label-control {
+  top: -0.5rem;
+  left: 1.9rem;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.input-control:focus {
+  border: 1px solid #fe7b12;
+}
+
+.btn {
+    width: 120px;
+    height: 50px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: 0.3s;
+    margin: 0 0.5em;
+  }
+
+.btn:hover:enabled {
+  background-color: #009b6e;
+  color: #fff;
+  box-shadow: 0 8px 6px -6px black;
+}
+
+.table {
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
+  border-radius: 20px;
+}
+
+.row-header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #009b6e;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+}
+
+.row-header .cell {
+  text-align: center;
+  width: 100%;
+  color: #fff;
+  font-weight: 600;
+}
+
+.row-body {
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.row-body:hover {
+  border: 2px solid #fe7b12;
+  font-weight: 600;
+}
+
+.cell {
+  width: 100%;
+  text-align: center !important;
+  border: 0px;
+  padding: 10px
+}
+
+.cell .icon-action-svg {
+  cursor: pointer;
+}
+
+.icon-svg:hover {
+  color: #fe7b12;
+}
+
+.footer-pagination {
+  display: flex;
+  justify-content: center;
+  margin-right: 50px;
+}
+
+.Ac, .Co, .Ar{
+  background-color: #ceffce;
+}
+
+.btn {
+    width: 120px;
+    height: 50px;
+    outline: none;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 30px;
+    transition: 0.3s;
+    margin: 0 0.5em;
+}
+
+.btn:hover {
+    background-color: #009b6e;
+    color: #fff;
+    box-shadow: 0 8px 6px -6px black;
+}
+.container-content {
+  display: flex;
+}
+
+.card-p {
+  padding: 1%;
+  border-radius: 20px;
+  margin-bottom: 5px;
+}
+
+.card-option {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  border: 1px solid #dadce0;
+  padding: 20px;
+  text-align: center;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+@media only screen
+    and (max-width: 760px), (min-device-width: 768px)
+    and (max-device-width: 1024px)  {
+
+		/* Force table to not be like tables anymore */
+		table, thead, .cell, .row-body {
+			display: block;
+		}
+
+		/* Hide table headers (but not display: none;, for accessibility) */
+		.row-header {
+			position: absolute;
+			top: -9999px;
+			left: -9999px;
+		}
+
+    .row-body {
+      border-radius: 20px;
+      margin-bottom: 2em;
+      border: 1px solid #009b6e;
+    }
+
+		.row-body .cell  {
+  	  position: relative;
+      color: black;
+      text-align: left;
+      padding: 0 0 0 40%
+		}
+
+    .row-body .cell:before {
+        position: absolute;
+    top: 0px;
+    left: 0px;
+        width: 36%;
+    color: white;
+    background-color: #009b6e;
+    }
+
+    .cell:nth-of-type(1):before { content: "Periodo"; border-top-left-radius: 20px;}
+    .cell:nth-of-type(2):before { content: "Código"; }
+    .cell:nth-of-type(3):before { content: "Fecha"; }
+    .cell:nth-of-type(4):before { content: "Nombres y Apellidos";}
+    .cell:nth-of-type(5):before { content: "Documento"; }
+    .cell:nth-of-type(6):before { content: "Estado"; }
+    .cell:nth-of-type(7):before { content: "Resultado"; border-bottom-left-radius: 20px;}
+	}

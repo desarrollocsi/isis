@@ -1,0 +1,57 @@
+<div class="container animate__animated animate__fadeIn" >
+    <div class="card animate__animated animate__fadeIn" >
+        <div class="flex-container">
+            <div class="flex-item">
+                <input type="text" class="input-control" placeholder=" " id="buscar"
+                oninput="value = value.toUpperCase()" (keyup.enter)="cargalista($event.target.value)"/>
+                <label for="buscar" class="label-control">Buscar por nombres, apellidos, número de documento o periodo</label>
+            </div>
+        </div>
+        <div class="flex-container">
+            <div class="flex-item">
+                <div class="table animate__animated animate__fadeIn">
+                    <div class="row-header">
+                        <div class="cell">Periodo</div>
+                        <div class="cell">Código</div>
+                        <div class="cell">Fecha</div>
+                        <div class="cell">Nombres y Apellidos</div>
+                        <div class="cell">Documento</div>
+                        <div class="cell">Estado</div>
+                        <div class="cell">Resultado</div>
+                    </div>
+                        <div class="row-body animate__animated animate__fadeIn"
+                        (click)="pagesReclamo(reclamo.re_cod)"
+                        [ngClass]='(reclamo.desc_est || "Por Registrar").substring(0,2)'
+                        *ngFor="let reclamo of reclamos$ | async | paginate: { itemsPerPage: 10, currentPage: p}; index as i">
+                        <div class="cell">
+                            {{ reclamo.periodo }}
+                        </div>
+                        <div class="cell">
+                            {{ reclamo.re_cod }}
+                        </div>
+                        <div class="cell">
+                            {{ reclamo.fecha | date: 'dd/MM/yyyy' }}
+                        </div>
+                        <div class="cell">
+                            {{ reclamo.nombres_p+" "+reclamo.paterno_p+" "+reclamo.materno_p }}
+                        </div>
+                        <div class="cell">
+                            {{ reclamo.nro_documento_p }}
+                        </div>
+                        <div class="cell">
+                            {{ reclamo.desc_est || "Por Registrar" }}
+                        </div>
+                        <div class="cell">
+                            {{ reclamo.desc_res || "Por Registrar" }}
+                        </div>
+                    </div>
+                <div class="footer-pagination">
+                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="group-btn">
+        <button class="btn" routerLink="../registrar">+ Agregar</button>
+    </div>
+</div>
