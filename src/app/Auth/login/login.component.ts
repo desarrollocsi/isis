@@ -28,7 +28,6 @@ export class LoginComponent implements OnInit {
       username: [null, Validators.required],
       password: [null, Validators.required],
     });
-    this.data$ = this.AS.test();
   }
 
   get f() {
