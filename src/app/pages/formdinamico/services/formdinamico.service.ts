@@ -51,7 +51,7 @@ export class FormdinamicoService {
       this.router.navigate(['home']);
     }
 
-    return this.http.get(`${environment.apiUrl}/formularioall/${data.tabla}/`);
+    return this.http.get(`${environment.apiUrl}/formulario/${data.tabla}/`);
   }
 
   getApiDynamic(URL?: any, type?: string, data?: any) {

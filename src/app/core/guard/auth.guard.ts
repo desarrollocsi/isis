@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanLoad, Route, UrlSegment, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-
 import { AuthStorageService } from '../services/auth-storage.service';
 
 @Injectable({
@@ -19,12 +18,10 @@ export class AuthGuard implements CanLoad {
     | boolean
     | UrlTree {
     const auth = this.AS.ValidacionUsuario;
-
     if (!auth) {
       this.router.navigate(['']);
       return false;
     }
-
     return true;
   }
 }

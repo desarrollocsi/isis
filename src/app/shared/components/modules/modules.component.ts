@@ -23,6 +23,7 @@ export class ModulesComponent implements OnInit {
   }
 
   onHome(id: string) {
+    console.log(id);
     this.IS.getMenus(id);
     this.AS.setModulos(id);
     this.router.navigate(['home']);

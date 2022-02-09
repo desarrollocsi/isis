@@ -19,11 +19,14 @@ export class SessionGuard implements CanLoad {
     | boolean
     | UrlTree {
     const auth = this.AUS.ValidacionUsuario;
-    if (auth) {
-      // this.router.navigate(['modulos']);
-      // return false;
-    }
+    console.log(auth);
+    // if (!auth) {
+    //   //   return true;
+    //   this.router.navigate(['modulos']);
+    //   return false;
+    // }
     // this.router.navigate(['modulos']);
+    //  this.router.navigate(['modulos']);
     return true;
   }
 }

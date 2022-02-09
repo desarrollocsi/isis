@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard, SessionGuard } from './core/guard/';
+import { AuthGuard, RolesGuard } from './core/guard/';
 
 const routes: Routes = [
   {
     path: '',
-    canLoad: [SessionGuard],
     loadChildren: () => import('./Auth/auth.module').then((m) => m.AuthModule),
   },
   {
@@ -16,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    // canLoad: [AuthGuard],
+    canLoad: [AuthGuard, RolesGuard],
     loadChildren: () =>
       import('./pages/pages.module').then((m) => m.PagesModule),
   },

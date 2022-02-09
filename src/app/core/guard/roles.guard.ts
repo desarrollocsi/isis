@@ -26,10 +26,11 @@ export class RolesGuard implements CanLoad {
     | boolean
     | UrlTree {
     const rol = this.AUS.rol;
-    if (rol === 'SECRETARIA') {
-      this.router.navigate(['home/agendasecretaria']);
-      return false;
-    }
+
+    // if (rol === 'SUPERADMIN') {
+    //   this.router.navigate(['home/agendasecretaria']);
+    //   return false;
+    // }
 
     return true;
   }

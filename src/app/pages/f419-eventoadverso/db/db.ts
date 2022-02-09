@@ -2,7 +2,7 @@ import * as moment from 'moment';
 
 export const perfilMenu = [
   {
-    perfil: 'ADMIN',
+    perfil: 'SUPERADMIN',
     menu: [
       {
         nombre: 'Views',

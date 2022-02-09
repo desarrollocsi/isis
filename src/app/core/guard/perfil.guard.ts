@@ -24,12 +24,13 @@ export class PerfilGuard implements CanActivateChild {
     | boolean
     | UrlTree {
     const rol = this.AST.rol;
-    switch (rol) {
-      case 'SECRETARIA': {
-        this.router.navigate(['home/agendasecretaria']);
-        break;
-      }
-    }
+
+    const ROUTE_ROL = {
+      SECRETARIA: 'home/agendasecretaria',
+      SUPERADMIN: 'home/agendamedica',
+    };
+
+    this.router.navigate([ROUTE_ROL[rol]]);
 
     return true;
   }

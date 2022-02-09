@@ -1,11 +1,18 @@
 import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
+import { AuthStorageService } from './auth-storage.service';
+import { IntermedaryService } from './intermedary.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessageService {
-  constructor() {}
+  constructor(
+    private AST: AuthStorageService,
+    private IS: IntermedaryService,
+    private router: Router
+  ) {}
 
   MessageSucces(message: string) {
     Swal.fire({
@@ -33,22 +40,38 @@ export class MessageService {
     });
   }
 
-  MessageConfirm(data: any, api: any) {
+  // MessageConfirm(data: any, api: any) {
+  MessageConfirm({ data, title, icon, buttonText, cancelButton, key, api }) {
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
+      title,
+      text: '',
+      icon,
+      showCancelButton: cancelButton,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!',
+      confirmButtonText: buttonText,
     }).then((result) => {
       if (result.isConfirmed) {
-        api.updateStatusIncidencia(data).subscribe(
-          (data) => this.MessageSucces(data.message),
-          (error) => this.MessageError(error)
-        );
+        const METHOD_DYNAMIC = {
+          STATUS: () => this.updateStatus(api, data),
+          LOGOUT: () => this.logout(),
+        };
+
+        METHOD_DYNAMIC[key]();
       }
     });
+  }
+
+  updateStatus(api: any, data: any) {
+    api.updateStatusIncidencia(data).subscribe(
+      (data: any) => this.MessageSucces(data.message),
+      (error: any) => this.MessageError(error)
+    );
+  }
+
+  logout() {
+    this.AST.clearLocalstorage();
+    this.IS.getMenus(null);
+    this.router.navigate(['']);
   }
 }

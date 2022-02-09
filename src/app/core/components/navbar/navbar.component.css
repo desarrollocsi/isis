@@ -50,9 +50,11 @@ nav .content .links {
 }
 .content .links li a:hover,
 .content .links li label:hover {
-  background: #fe7b12;
+  /* background: #fe7b12; */
+  /* background: #f0c882; */
+  background: #009b6e;
   color: #fff;
-  border-radius: 2rem;
+  /* border-radius: 2rem; */
   cursor: pointer;
 }
 .wrapper .search-icon,
@@ -131,8 +133,8 @@ nav .content .links {
   opacity: 0;
   visibility: hidden;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
-  border: 1px solid #dadce0;
-  border-radius: 1.5rem;
+  /* border: 1px solid #dadce0; */
+  /* border-radius: 1.5rem; */
   cursor: pointer;
 }
 
@@ -178,13 +180,13 @@ nav .content .links {
   background-color: #f9f9f9;
   height: auto;
   min-width: 230px;
-  border-radius: 2rem;
+  /* border-radius: 2rem; */
   padding: 16px 10px;
   z-index: 1;
   opacity: 0;
   visibility: hidden;
   box-shadow: 0 10px 25px rgba(127, 128, 129, 0.2);
-  border: 1px solid #dadce0;
+  /* border: 1px solid #dadce0; */
 }
 
 .dropdown-content .dropdown-content-item {
@@ -201,7 +203,8 @@ nav .content .links {
 }
 
 .dropdown-content .dropdown-content-item:hover {
-  background: #fe7b12;
+  /* background: #fe7b12; */
+  background: #f0c882;
   color: #fff;
   border-radius: 2rem;
   cursor: pointer;

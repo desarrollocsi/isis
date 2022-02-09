@@ -92,7 +92,7 @@ export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   onData() {
     this.id
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data) => this.form.setValue(data));
+      .subscribe((data) => this.form.patchValue(data));
   }
 
   onRoute() {

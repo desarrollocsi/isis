@@ -2,25 +2,27 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  padding: 15px;
+  /* height: 100vh;
+  padding: 15px; */
 }
 
 .cards-list {
   width: 100%;
   display: flex;
+  /* flex-direction: column; */
   justify-content: center;
 }
 
 .card {
   margin: 0 20px;
-  width: 250px;
-  height: 250px;
-  border-radius: 3rem;
+  /* width: 250px;
+  height: 250px; */
+  border-radius: 2rem;
   box-shadow: 0 10px 25px rgba(92, 99, 105, 0.2);
   cursor: pointer;
   background-color: #fff;
   transition: 0.3s;
+  margin-bottom: 1.5rem;
 }
 
 .card:hover {

@@ -15,7 +15,8 @@ import * as moment from 'moment';
 })
 export class F419EventoadversoListadoComponent implements OnInit {
   dataIncidencia$: Observable<any>;
-  title: string = 'Listado F419 Reporte de I/EA';
+  title: string = 'Listado F419 de I/EA';
+  // title: string = 'Listado F419 Reporte de I/EA';
   perfil: string;
   dropdowns$: Observable<any>;
 
@@ -68,19 +69,28 @@ export class F419EventoadversoListadoComponent implements OnInit {
     },
     codigoStatus
   ) {
-    this.MessageService.MessageConfirm(
-      {
-        id,
-        fecha_incidencia,
-        historia,
-        glosa,
-        turno,
-        estado: codigoStatus,
-        reporta_area,
-        usuario_registro,
-      },
-      this.F419Service
-    );
+    let data = {
+      id,
+      fecha_incidencia,
+      historia,
+      glosa,
+      turno,
+      estado: codigoStatus,
+      reporta_area,
+      usuario_registro,
+    };
+
+    const PARAMENTS__DYNAMIC = {
+      data,
+      title: '¿Desea cambiar el estado de IE/A?',
+      icon: 'info',
+      buttonText: 'OK',
+      cancelButton: true,
+      key: 'STATUS',
+      api: this.F419Service,
+    };
+
+    this.MessageService.MessageConfirm(PARAMENTS__DYNAMIC);
   }
 
   onPerfil(rol: string) {

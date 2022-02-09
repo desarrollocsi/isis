@@ -3,16 +3,16 @@
     <input type="checkbox" id="show-search" />
     <input type="checkbox" id="show-menu" />
     <label for="show-menu" class="menu-icon">
-      <img src="../../../../assets/icons/square.svg" />
+      <img src="assets/icons/square.svg" />
     </label>
     <div class="content">
       <div class="logo">
-        <a routerLink="/home"
-          ><img src="../../../../assets/img/Logo-csi-color.svg" alt="home"
+        <a routerLink="/modulos"
+          ><img src="assets/img/Logo-csi-color.svg" alt="home" title="Modulos"
         /></a>
       </div>
       <ul class="links">
-        <li *ngFor="let menu of menus$ | async">
+        <li *ngFor="let menu of menus">
           <a
             class="desktop-link"
             routerLink="{{ menu.accion }}"
@@ -38,19 +38,19 @@
     <div class="user-perfil">
       <div class="dropdown">
         <span>
-          <img src="../../../../assets/icons/profile-user.svg" />
+          <img src="assets/icons/profile-user.svg" />
           {{ usuario }}
         </span>
         <div class="dropdown-content">
           <div class="dropdown-content-item">
             <div class="container-icon">
-              <img src="../../../../assets/icons/settings.svg" />
+              <img src="assets/icons/settings.svg" />
             </div>
             <div class="container-texto">Configuración</div>
           </div>
           <div class="dropdown-content-item" (click)="logout()">
             <div class="container-icon">
-              <img src="../../../../assets/icons/logout.svg" />
+              <img src="assets/icons/logout.svg" />
             </div>
             <div class="container-texto">Cerrar session</div>
           </div>

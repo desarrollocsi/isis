@@ -6,7 +6,7 @@
       (click)="onHome(module)"
     >
       <div class="card_image">
-        <img src="../../../../assets//icons//front-desk.svg" />
+        <img src="{{ 'assets/icons/' + module.icono }}" />
       </div>
       <div class="card_title">
         <p>{{ module.nombres | titlecase }}</p>

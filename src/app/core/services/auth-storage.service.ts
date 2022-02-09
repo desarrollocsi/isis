@@ -17,12 +17,12 @@ export class AuthStorageService {
   }
 
   setRol(data: any) {
-    localStorage.setItem('_rol', data.Rol[0].descripcion);
+    localStorage.setItem('_rol', data.Rol[0].nombre);
     this.setIdMedioc(data);
   }
 
   setIdMedioc(data: any) {
-    if (data.Rol[0].descripcion === 'MEDICO') {
+    if (data.Rol[0].nombre === 'MEDICO') {
       localStorage.setItem('_idmedico', data.User.id_medico);
     }
   }

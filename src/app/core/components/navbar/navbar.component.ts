@@ -1,9 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { filter, switchMap, tap } from 'rxjs/operators';
-import { AuthStorageService, IntermedaryService } from 'src/app/core/services';
+import { switchMap, tap } from 'rxjs/operators';
+import {
+  AuthStorageService,
+  IntermedaryService,
+  MessageService,
+} from 'src/app/core/services';
 
 @Component({
   selector: 'app-navbar',
@@ -11,10 +15,12 @@ import { AuthStorageService, IntermedaryService } from 'src/app/core/services';
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
+  @Input() menus: string;
   constructor(
     private AST: AuthStorageService,
     private IS: IntermedaryService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   menus$: Observable<any>;
@@ -33,8 +39,8 @@ export class NavbarComponent implements OnInit {
 
   onMenu() {
     this.menus$ = this.IS._menus.pipe(
-      tap(console.log),
-      switchMap((id: string) => this.AST.getMenu(id))
+      switchMap((id: string) => this.AST.getMenu(id)),
+      tap(console.log)
     );
   }
 
@@ -48,8 +54,16 @@ export class NavbarComponent implements OnInit {
   }
 
   logout() {
-    this.AST.clearLocalstorage();
-    this.IS.getMenus(null);
-    this.router.navigate(['']);
+    const PARAMENTS__DYNAMIC = {
+      data: null,
+      title: '¿Desea cerrar session?',
+      icon: 'info',
+      buttonText: 'OK',
+      cancelButton: true,
+      key: 'LOGOUT',
+      api: null,
+    };
+
+    this.messageService.MessageConfirm(PARAMENTS__DYNAMIC);
   }
 }

@@ -24,7 +24,7 @@ const routes: Routes = [
       },
       {
         path: 'agendamedica',
-        canActivateChild: [PerfilGuard],
+        // canActivateChild: [PerfilGuard],
         loadChildren: () =>
           import('./agendamedica/agendamedica.module').then(
             (m) => m.AgendamedicaModule
@@ -73,8 +73,7 @@ const routes: Routes = [
       {
         path: 'reclamos',
         loadChildren: () =>
-          import('./reclamos/reclamos.module').then((m) => m.ReclamosModule
-          ),
+          import('./reclamos/reclamos.module').then((m) => m.ReclamosModule),
       },
     ],
   },
