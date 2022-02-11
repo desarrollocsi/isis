@@ -91,7 +91,7 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
             resultado: [null],
             mot_concl_antic: [null],
             fecha_notif_result: moment().format('YYYY-MM-DD'),
-            fecha_result: moment().format('YYYY-MM-DD'),
+            fecha_result: [null],
             comunic_result: [null],
             creador: [null],
             creacion: [null],
@@ -224,12 +224,12 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        //console.log(this.form.value)
         Object.keys(this.form.controls).forEach(field => {
             let control = this.form.get(field);
             control.updateValueAndValidity();
         });
         this.form.markAllAsTouched();
+        console.log(this.form.value)
         if (this.form.valid) {
             if ([1,2].includes(this.campos.resultado.value) && this.medidas.length == 0) {
                 this.MS.MessageInfo("Falta registrar medidas")
@@ -245,18 +245,15 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
                 this.campos.materno.setValue(this.campos.materno_p.value)
             }
             if (this.VERB_HTTP == 'PUT') {
-                this.campos.modificacion.setValue(moment().format('YYYY-MM-DDThh:mm'));
                 this.campos.modificador.setValue(this.campos.usuario.value)
             } else {
                 this.campos.periodo.setValue(moment(this.campos.fecha.value).format('YYYYMM'))
-                this.campos.creacion.setValue(moment().format('YYYY-MM-DDThh:mm'));
                 this.campos.creador.setValue(this.campos.usuario.value)
             }
 
             this.RS.apidynamic('reclamos', this.VERB_HTTP, this.form.value)
                 .pipe(takeUntil(this.unsubscribe$))
                 .subscribe((data) => {
-                    console.log (data)
                     data['status'] ? this.MS.MessageSucces(data['message']) : this.MS.MessageError(data['message'])
                     /*this.router.navigate(['home/reclamos/']);*/
                 });

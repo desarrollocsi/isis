@@ -68,6 +68,7 @@
             placeholder=" "
             formControlName="nombres_p"
             maxlength="150"
+            oninput="value = value.toUpperCase()"
           />
           <label class="label-control">{{
             campos.tipo_documento_p.value != 11 ? "Nombres" : "Razón Social"
@@ -91,6 +92,7 @@
             formControlName="paterno_p"
             maxlength="150"
             [required]="campos.tipo_documento_p.value != 11"
+            oninput="value = value.toUpperCase()"
           />
           <label class="label-control">Apellido Paterno</label>
           <div
@@ -112,6 +114,7 @@
             formControlName="materno_p"
             maxlength="150"
             [required]="campos.tipo_documento_p.value != 11"
+            oninput="value = value.toUpperCase()"
           />
           <label class="label-control">Apellido Materno</label>
           <div
@@ -133,6 +136,7 @@
             formControlName="domicilio"
             maxlength="100"
             required
+            oninput="value = value.toUpperCase()"
           />
           <label class="label-control">Dirección</label>
           <div
@@ -296,6 +300,7 @@
               formControlName="nombres"
               maxlength="150"
               [required]="!afectada"
+              oninput="value = value.toUpperCase()"
             />
             <label class="label-control">{{
               campos.tipo_documento.value != 11 ? "Nombres" : "Razón Social"
@@ -320,6 +325,7 @@
                 formControlName="paterno"
                 maxlength="150"
                 [required]="!afectada && campos.tipo_documento.value != 11"
+                oninput="value = value.toUpperCase()"
               />
               <label class="label-control">Apellido Paterno</label>
               <div
@@ -341,6 +347,7 @@
                 formControlName="materno"
                 maxlength="150"
                 [required]="!afectada && campos.tipo_documento.value != 11"
+                oninput="value = value.toUpperCase()"
               />
               <label class="label-control">Apellido Materno</label>
               <div
@@ -713,6 +720,7 @@
               class="input-control"
               formControlName="fecha_result"
               [required]="campos.resultado.value != 0"
+              [ngValue]="this.value == '' ? null : this.value"
             />
             <label class="label-control">Fecha del Resultado</label>
             <div
@@ -787,9 +795,8 @@
                 type="date"
                 class="input-control"
                 formControlName="fecha_notif_result"
-                [required]="
-                  campos.estado.value == 1 || campos.estado.value == 6
-                "
+                [required]="campos.estado.value == 1 || campos.estado.value == 6"
+                [ngValue]="this.value == '' ? null : this.value"
               />
               <label class="label-control">Fecha de notificación</label>
               <div
