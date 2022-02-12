@@ -255,7 +255,7 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
                 .pipe(takeUntil(this.unsubscribe$))
                 .subscribe((data) => {
                     data['status'] ? this.MS.MessageSucces(data['message']) : this.MS.MessageError(data['message'])
-                    /*this.router.navigate(['home/reclamos/']);*/
+                    this.router.navigate(['home/reclamos/lista']);
                 });
         } else {
             for (let ele in this.form.controls) {

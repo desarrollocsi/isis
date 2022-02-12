@@ -720,7 +720,6 @@
               class="input-control"
               formControlName="fecha_result"
               [required]="campos.resultado.value != 0"
-              [ngValue]="this.value == '' ? null : this.value"
             />
             <label class="label-control">Fecha del Resultado</label>
             <div
@@ -796,7 +795,6 @@
                 class="input-control"
                 formControlName="fecha_notif_result"
                 [required]="campos.estado.value == 1 || campos.estado.value == 6"
-                [ngValue]="this.value == '' ? null : this.value"
               />
               <label class="label-control">Fecha de notificación</label>
               <div
