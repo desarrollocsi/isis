@@ -18,6 +18,10 @@ export class HttpService {
     );
   }
 
+  getMedicosTodos() {
+    return this.http.get(`${environment.apiUrl}/medicos/`);
+  }
+
   getTurnos() {
     return this.http.get(`${environment.apiUrl}/turnos/`);
   }

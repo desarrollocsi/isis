@@ -24,7 +24,7 @@
               {{ item.td_desc }}
             </option>
           </select>
-          <label class="label-control">Tipo de documento</label>
+          <label class="label-control" for="tipo_documento_p">Tipo de documento</label>
         </div>
 
         <div class="flex-item">
@@ -38,7 +38,7 @@
             [pattern]="pattern_doc_p"
             (input)="nrodocp_valid()"
           />
-          <label class="label-control">Número de documento</label>
+          <label class="label-control" for="tipo_documento_p">Número de documento</label>
           <div
             *ngIf="
               campos.nro_documento_p.invalid &&
@@ -70,7 +70,7 @@
             maxlength="150"
             oninput="value = value.toUpperCase()"
           />
-          <label class="label-control">{{
+          <label class="label-control" for="nombres_p">{{
             campos.tipo_documento_p.value != 11 ? "Nombres" : "Razón Social"
           }}</label>
           <div
@@ -84,49 +84,51 @@
           </div>
         </div>
 
-        <div class="flex-item">
-          <input
-            type="text"
-            class="input-control"
-            placeholder=" "
-            formControlName="paterno_p"
-            maxlength="150"
-            [required]="campos.tipo_documento_p.value != 11"
-            oninput="value = value.toUpperCase()"
-          />
-          <label class="label-control">Apellido Paterno</label>
-          <div
-            *ngIf="
-              campos.paterno_p.invalid &&
-              (campos.paterno_p.dirty || campos.paterno_p.touched)
-            "
-            class="{{ ImputError }}"
-          >
-            Campo requerido
-          </div>
-        </div>
+        <ng-container *ngIf="campos.tipo_documento_p.value != 11">
+            <div class="flex-item">
+            <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="paterno_p"
+                maxlength="150"
+                [required]="campos.tipo_documento_p.value != 11"
+                oninput="value = value.toUpperCase()"
+            />
+            <label class="label-control" for="paterno_p">Apellido Paterno</label>
+            <div
+                *ngIf="
+                campos.paterno_p.invalid &&
+                (campos.paterno_p.dirty || campos.paterno_p.touched)
+                "
+                class="{{ ImputError }}"
+            >
+                Campo requerido
+            </div>
+            </div>
 
-        <div class="flex-item">
-          <input
-            type="text"
-            class="input-control"
-            placeholder=" "
-            formControlName="materno_p"
-            maxlength="150"
-            [required]="campos.tipo_documento_p.value != 11"
-            oninput="value = value.toUpperCase()"
-          />
-          <label class="label-control">Apellido Materno</label>
-          <div
-            *ngIf="
-              campos.materno_p.invalid &&
-              (campos.materno_p.dirty || campos.materno_p.touched)
-            "
-            class="{{ ImputError }}"
-          >
-            Campo requerido
-          </div>
-        </div>
+            <div class="flex-item">
+            <input
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="materno_p"
+                maxlength="150"
+                [required]="campos.tipo_documento_p.value != 11"
+                oninput="value = value.toUpperCase()"
+            />
+            <label class="label-control" for="materno_p">Apellido Materno</label>
+            <div
+                *ngIf="
+                campos.materno_p.invalid &&
+                (campos.materno_p.dirty || campos.materno_p.touched)
+                "
+                class="{{ ImputError }}"
+            >
+                Campo requerido
+            </div>
+            </div>
+        </ng-container>
 
         <div class="flex-item flex2">
           <input
@@ -138,15 +140,9 @@
             required
             oninput="value = value.toUpperCase()"
           />
-          <label class="label-control">Dirección</label>
-          <div
-            *ngIf="
-              campos.domicilio.invalid &&
-              (campos.domicilio.dirty || campos.domicilio.touched)
-            "
-            class="{{ ImputError }}"
-          >
-            Campo requerida
+          <label class="label-control" for="domicilio">Dirección</label>
+          <div *ngIf="campos.domicilio.invalid && (campos.domicilio.dirty || campos.domicilio.touched)" class="{{ ImputError }}">
+            Campo requerido
           </div>
         </div>
 
@@ -159,7 +155,7 @@
             maxlength="30"
             pattern="^[0-9, ,*,-]{7,30}"
           />
-          <label class="label-control">Teléfono</label>
+          <label class="label-control" for="telefono">Teléfono</label>
           <div
             *ngIf="
               campos.telefono.invalid &&
@@ -190,7 +186,7 @@
             formControlName="email"
             maxlength="50"
           />
-          <label class="label-control">Correo Electrónico</label>
+          <label class="label-control" for="email">Correo Electrónico</label>
           <div
             *ngIf="
               campos.email.invalid &&
@@ -220,7 +216,7 @@
           [checked]="afectada"
           (change)="f_afectada($event)"
         />
-        <label>El usuario que presentó el reclamo es el afectado</label>
+        <label>El usuario que presenta el reclamo es el afectado</label>
         <br />
         <input
           type="checkbox"
@@ -228,10 +224,7 @@
           [checked]="campos.result_email.value == 1"
           (change)="f_result_email($event.target.checked ? 1 : 0)"
         />
-        <label
-          >El usuario autorizó la notificación del resultado del reclamo al
-          correo electrónico consignado
-        </label>
+        <label>El usuario autorizó la notificación del resultado del reclamo al correo electrónico consignado </label>
       </div>
     </div>
 
@@ -254,7 +247,7 @@
                 {{ item.td_desc }}
               </option>
             </select>
-            <label class="label-control">Tipo de documento</label>
+            <label class="label-control" for="tipo_documento">Tipo de documento</label>
           </div>
 
           <div class="flex-item">
@@ -269,7 +262,7 @@
               (input)="nrodoc_valid()"
               oninput="value = value.toUpperCase()"
             />
-            <label class="label-control">Número de documento</label>
+            <label class="label-control" for="nro_documento">Número de documento</label>
             <div
               *ngIf="
                 campos.nro_documento.invalid &&
@@ -302,7 +295,7 @@
               [required]="!afectada"
               oninput="value = value.toUpperCase()"
             />
-            <label class="label-control">{{
+            <label class="label-control" for="nombres">{{
               campos.tipo_documento.value != 11 ? "Nombres" : "Razón Social"
             }}</label>
             <div
@@ -327,7 +320,7 @@
                 [required]="!afectada && campos.tipo_documento.value != 11"
                 oninput="value = value.toUpperCase()"
               />
-              <label class="label-control">Apellido Paterno</label>
+              <label class="label-control" for="paterno">Apellido Paterno</label>
               <div
                 *ngIf="
                   campos.paterno.invalid &&
@@ -349,7 +342,7 @@
                 [required]="!afectada && campos.tipo_documento.value != 11"
                 oninput="value = value.toUpperCase()"
               />
-              <label class="label-control">Apellido Materno</label>
+              <label class="label-control" for="materno">Apellido Materno</label>
               <div
                 *ngIf="
                   campos.materno.invalid &&
@@ -370,11 +363,11 @@
       <div class="flex-container wrap">
         <div class="flex-item">
           <select class="input-control input-select" formControlName="medio">
-            <option [ngValue]="1">1-Virtual</option>
-            <option [ngValue]="2">2-Físico</option>
-            <option [ngValue]="3">3-Telefónica</option>
+            <option [ngValue]=1>1-Virtual</option>
+            <option [ngValue]=2>2-Físico</option>
+            <option [ngValue]=3>3-Telefónica</option>
           </select>
-          <label class="label-control">Medio de Presentación</label>
+          <label class="label-control" for="medio">Medio de Presentación</label>
         </div>
 
         <ng-container>
@@ -384,7 +377,7 @@
               class="input-control"
               formControlName="fecha"
             />
-            <label class="label-control">Fecha de presentación</label>
+            <label class="label-control" for="fecha">Fecha de presentación</label>
             <div
               *ngIf="
                 campos.fecha.invalid &&
@@ -402,7 +395,7 @@
             class="input-control input-select"
             formControlName="medio_recepcion"
           >
-            <option [ngValue]="null" hidden></option>
+            <option hidden></option>
             <option
               [ngValue]="item.mr_cod"
               *ngFor="let item of medios_recepcion$ | async"
@@ -410,18 +403,18 @@
               {{ item.mr_desc }}
             </option>
           </select>
-          <label class="label-control">Medio de Recepción</label>
+          <label class="label-control" for="medio_recepcion">Medio de Recepción</label>
         </div>
 
         <div class="flex-item">
           <input
             type="text"
             class="input-control"
-            placeholder=""
             formControlName="cod_fisico"
+            maxlength="15"
             [required]="campos.medio_recepcion.value == 2"
           />
-          <label class="label-control">N° Hoja de reclamación en salud</label>
+          <label class="label-control" for="cod_fisico">N° Hoja de reclamación en salud</label>
           <div
             *ngIf="
               campos.cod_fisico.invalid &&
@@ -441,7 +434,7 @@
             maxlength="1500"
             formControlName="detalle"
           ></textarea>
-          <label class="label-control">Detalle</label>
+          <label class="label-control" for="detalle">Detalle</label>
           <div
             *ngIf="
               campos.detalle.invalid &&
@@ -454,39 +447,59 @@
         </div>
       </div>
 
-      <div class="flex-container wrap">
-        <div class="flex-item">
-          <select class="input-control input-select" formControlName="servicio">
-            <option
-              [ngValue]="item.sr_cod"
-              *ngFor="let item of servicios$ | async"
-            >
-              {{ item.sr_desc }}
-            </option>
-          </select>
-          <label class="label-control"
-            >Servicio donde se efectuó el hecho que inicio el reclamo</label
-          >
-          <div
-            *ngIf="campos.servicio.invalid && campos.servicio.touched"
-            class="{{ ImputError }}"
-          >
-            Campo requerido
-          </div>
-        </div>
+        <div class="flex-container wrap">
+            <div class="flex-item">
+                <select class="input-control input-select" formControlName="servicio">
+                <option
+                    [ngValue]="item.sr_cod"
+                    *ngFor="let item of servicios$ | async"
+                >
+                    {{ item.sr_desc }}
+                </option>
+                </select>
+                <label class="label-control" for="servicio"
+                >Servicio donde se efectuó el hecho que inicio el reclamo</label
+                >
+                <div
+                *ngIf="campos.servicio.invalid && campos.servicio.touched"
+                class="{{ ImputError }}"
+                >
+                Campo requerido
+                </div>
+            </div>
 
-        <div class="flex-item">
-          <select
-            class="input-control input-select"
-            formControlName="compete"
-            (change)="getEstado(campos.compete.value)"
-          >
-            <option [ngValue]="1">Si</option>
-            <option [ngValue]="2">No</option>
-            <option [ngValue]="3">Compartida</option>
-          </select>
-          <label class="label-control">Compete</label>
-        </div>
+            <div class="flex-item">
+                <select class="input-control input-select" formControlName="especialidad">
+                    <option></option>
+                    <option [ngValue]="item.codigo" *ngFor="let item of especialidades$ | async">
+                        {{ item.descripcion }}
+                    </option>
+                </select>
+                <label class="label-control" for="especialidad">Especialidad</label>
+            </div>
+
+            <div class="flex-item">
+                <select class="input-control input-select" formControlName="medico">
+                  <option></option>
+									<option [ngValue]="item.codigo" *ngFor="let item of medicos$ | async">
+                        {{ item.descripcion }}
+                    </option>
+                </select>
+                <label class="label-control" for="medico">Médico</label>
+            </div>
+
+            <div class="flex-item">
+            <select
+                class="input-control input-select"
+                formControlName="compete"
+                (change)="getEstado(campos.compete.value)"
+            >
+                <option [ngValue]=1>Si</option>
+                <option [ngValue]=2>No</option>
+                <option [ngValue]=3>Compartida</option>
+            </select>
+            <label class="label-control" for="compete">Compete</label>
+            </div>
       </div>
     </div>
 
@@ -499,18 +512,18 @@
               class="input-control input-select"
               formControlName="derivado_tipo"
             >
-              <option [ngValue]="1">
+              <option [ngValue]=1>
                 IPRESS (Institucion Prestadora de Servicios de Salud)
               </option>
-              <option [ngValue]="2">
+              <option [ngValue]=2>
                 UGIPRESS (Unidad de Gestion de IPRESS)
               </option>
-              <option [ngValue]="3">
+              <option [ngValue]=3>
                 IAFAS (Institucion Administradora de Fondos de Aseguramiento en
                 Salud)
               </option>
             </select>
-            <label class="label-control">Tipo de Institución</label>
+            <label class="label-control" for="derivado_tipo">Tipo de Institución</label>
           </div>
           <div class="flex-item">
             <input
@@ -521,7 +534,7 @@
               maxlength="8"
               [required]="campos.compete.value == 2"
             />
-            <label class="label-control"
+            <label class="label-control" for="derivado_codigo"
               >Código IPRESS, UGIPRESS o IAFAS
             </label>
             <div
@@ -542,7 +555,7 @@
     <ng-container
       *ngIf="campos.compete.value == 1 || campos.compete.value == 3"
     >
-      <div class="card animate__animated animate__fadeIn">
+    <div class="card animate__animated animate__fadeIn">
         <h3>Clasisficación:</h3>
         <div class="flex-item">
           <select
@@ -557,7 +570,7 @@
               {{ item.cr_def_corta }}
             </option>
           </select>
-          <label class="label-control">Primer Clasificador</label>
+          <label class="label-control" for="clasificacion1">Primer Clasificador</label>
           <div
             *ngIf="
               campos.clasificacion1.invalid && campos.clasificacion1.touched
@@ -569,20 +582,20 @@
         </div>
 
         <div class="flex-item">
-          <select
-            class="input-control input-select"
-            formControlName="clasificacion2"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="item.cr_cod"
-              *ngFor="let item of clasificaciones$ | async"
+            <select
+              class="input-control input-select"
+              formControlName="clasificacion2"
             >
-              {{ item.cr_def_corta }}
-            </option>
-          </select>
-          <label class="label-control">Segundo Clasificador</label>
-        </div>
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="item.cr_cod"
+                *ngFor="let item of clasificaciones$ | async"
+              >
+                {{ item.cr_def_corta }}
+              </option>
+            </select>
+            <label class="label-control" for="clasificacion2">Segundo Clasificador</label>
+          </div>
 
         <div class="flex-item">
           <select
@@ -597,9 +610,9 @@
               {{ item.cr_def_corta }}
             </option>
           </select>
-          <label class="label-control">Tercer Clasificador</label>
+          <label class="label-control" for="clasificacion3">Tercer Clasificador</label>
         </div>
-      </div>
+    </div>
     </ng-container>
 
     <!--ESTADO-->
@@ -612,7 +625,7 @@
             formControlName="estado"
             (change)="getEtapaResultado(campos.estado.value)"
           >
-            <option [ngValue]="null" hidden></option>
+            <option hidden></option>
             <option
               [ngValue]="item.er_cod"
               *ngFor="let item of estados$ | async"
@@ -620,7 +633,7 @@
               {{ item.er_cod }}-{{ item.er_desc | titlecase }}
             </option>
           </select>
-          <label class="label-control">Estado</label>
+          <label class="label-control" for="estado">Estado</label>
           <div
             *ngIf="campos.estado.invalid && campos.estado.touched"
             class="{{ ImputError }}"
@@ -636,7 +649,7 @@
             formControlName="etapa"
             [required]="(etapas$ | async)?.length > 0"
           >
-            <option [ngValue]="null" hidden></option>
+            <option hidden></option>
             <option
               [ngValue]="item.etr_cod"
               *ngFor="let item of etapas$ | async"
@@ -644,7 +657,7 @@
               {{ item.etr_cod }}-{{ item.etr_desc }}
             </option>
           </select>
-          <label class="label-control">Etapa</label>
+          <label class="label-control" for="etapa">Etapa</label>
           <div
             *ngIf="campos.etapa.invalid && campos.etapa.touched"
             class="{{ ImputError }}"
@@ -673,7 +686,7 @@
                 campos.medio_recepcion.value == 6
               "
             />
-            <label class="label-control">Código del reclamo original</label>
+            <label class="label-control" for="codigo_original">Código del reclamo original</label>
             <div
               *ngIf="
                 campos.codigo_original.invalid && campos.codigo_original.touched
@@ -698,7 +711,7 @@
               formControlName="resultado"
               [required]="(resultados$ | async)?.length > 0"
             >
-              <option [ngValue]="null" hidden></option>
+              <option hidden></option>
               <option
                 [ngValue]="item.rr_cod"
                 *ngFor="let item of resultados$ | async"
@@ -706,7 +719,7 @@
                 {{ item.rr_cod }}-{{ item.rr_desc | titlecase }}
               </option>
             </select>
-            <label class="label-control">Resultado</label>
+            <label class="label-control" for="resultado">Resultado</label>
             <div
               *ngIf="campos.resultado.invalid && campos.resultado.touched"
               class="{{ ImputError }}"
@@ -714,21 +727,23 @@
               Campo requerido
             </div>
           </div>
-          <div class="flex-item">
-            <input
-              type="date"
-              class="input-control"
-              formControlName="fecha_result"
-              [required]="campos.resultado.value != 0"
-            />
-            <label class="label-control">Fecha del Resultado</label>
-            <div
-              *ngIf="campos.fecha_result.invalid && campos.fecha_result.touched"
-              class="{{ ImputError }}"
-            >
-              Campo requerido
+          <ng-container *ngIf="campos.resultado.value != 0">
+            <div class="flex-item">
+                <input
+                type="date"
+                class="input-control"
+                formControlName="fecha_result"
+                [required]="campos.resultado.value != 0"
+                />
+                <label class="label-control" for="fecha_result">Fecha del Resultado</label>
+                <div
+                *ngIf="campos.fecha_result.invalid && campos.fecha_result.touched"
+                class="{{ ImputError }}"
+                >
+                Campo requerido
+                </div>
             </div>
-          </div>
+        </ng-container>
 
           <ng-container *ngIf="campos.resultado.value == 5">
             <div class="flex-item">
@@ -740,13 +755,13 @@
                 formControlName="mot_concl_antic"
                 [required]="campos.resultado.value == 5"
               >
-                <option [ngValue]="1">1-Desentimiento escrito</option>
-                <option [ngValue]="2">2-Trato directo</option>
-                <option [ngValue]="3">3-Conciliación</option>
-                <option [ngValue]="4">4-Transacción extrajudicial</option>
-                <option [ngValue]="5">5-Laudo arbitral</option>
+                <option [ngValue]=1>1-Desentimiento escrito</option>
+                <option [ngValue]=2>2-Trato directo</option>
+                <option [ngValue]=3>3-Conciliación</option>
+                <option [ngValue]=4>4-Transacción extrajudicial</option>
+                <option [ngValue]=5>5-Laudo arbitral</option>
               </select>
-              <label class="label-control"
+              <label class="label-control" for="mot_concl_antic"
                 >Motivo de la conclusión anticipada</label
               >
               <div
@@ -771,13 +786,13 @@
                   campos.estado.value == 1 || campos.estado.value == 6
                 "
               >
-                <option [ngValue]="1">
+                <option [ngValue]=1>
                   Domicilio consignado en el libro de reclamaciones
                 </option>
-                <option [ngValue]="2">Correo electrónico</option>
-                <option [ngValue]="3">Otra dirección proporcionada</option>
+                <option [ngValue]=2>Correo electrónico</option>
+                <option [ngValue]=3>Otra dirección proporcionada</option>
               </select>
-              <label class="label-control"
+              <label class="label-control" for="comunic_result"
                 >Medio de comunicación del resultado</label
               >
               <div
@@ -796,7 +811,7 @@
                 formControlName="fecha_notif_result"
                 [required]="campos.estado.value == 1 || campos.estado.value == 6"
               />
-              <label class="label-control">Fecha de notificación</label>
+              <label class="label-control" for="fecha_notif_result">Fecha de notificación</label>
               <div
                 *ngIf="
                   campos.fecha_notif_result.invalid &&
@@ -831,25 +846,25 @@
                       "
                       formControlName="naturaleza"
                     >
-                      <option [ngValue]="1">
+                      <option [ngValue]=1>
                         1-Administrativa respecto a procesos propios de la IAFA
                       </option>
-                      <option [ngValue]="2">
+                      <option [ngValue]=2>
                         2-Administrativa respecto a procesos propios de la
                         IPRESS
                       </option>
-                      <option [ngValue]="3">
+                      <option [ngValue]=3>
                         3-Administrativa respecto a procesos propios de la
                         UGIPRESS
                       </option>
-                      <option [ngValue]="4">
+                      <option [ngValue]=4>
                         4-Asistencial (Prestacional)
                       </option>
-                      <option [ngValue]="5">
+                      <option [ngValue]=5>
                         5-Administrativa y Asistencial (Prestacional)
                       </option>
                     </select>
-                    <label class="label-control">Naturaleza de la medida</label>
+                    <label class="label-control" for="naturaleza">Naturaleza de la medida</label>
                   </div>
                   <div class="flex-item">
                     <select
@@ -859,21 +874,21 @@
                       "
                       formControlName="proceso"
                     >
-                      <option [ngValue]="1">1-Afiliación</option>
-                      <option [ngValue]="2">2-Acreditación</option>
-                      <option [ngValue]="3">
+                      <option [ngValue]=1>1-Afiliación</option>
+                      <option [ngValue]=2>2-Acreditación</option>
+                      <option [ngValue]=3>
                         3-Prestación de servicios en salud
                       </option>
-                      <option [ngValue]="4">
+                      <option [ngValue]=4>
                         4-Liquidación, cobro o pago al usuario por servicios
                         prestados
                       </option>
-                      <option [ngValue]="5">
+                      <option [ngValue]=5>
                         5-Contratación de servicios en salud de una IAFAS a una
                         IPRESS
                       </option>
                     </select>
-                    <label class="label-control"
+                    <label class="label-control" for="proceso"
                       >Proceso sobre el cual recae la medida</label
                     >
                   </div>
@@ -885,7 +900,7 @@
                       placeholder=" "
                       formControlName="descripcion"
                     ></textarea>
-                    <label class="label-control">Descripcion</label>
+                    <label class="label-control" for="descripcion">Descripcion</label>
                   </div>
                 </div>
 
@@ -896,7 +911,7 @@
                       class="input-control"
                       formControlName="fecha_implem"
                     />
-                    <label class="label-control"
+                    <label class="label-control" for="fecha_implem"
                       >Fecha de inicio de implementación</label
                     >
                   </div>
@@ -906,7 +921,7 @@
                       class="input-control"
                       formControlName="fecha_culm"
                     />
-                    <label class="label-control"
+                    <label class="label-control" for="fecha_culm"
                       >Fecha de culminación prevista</label
                     >
                   </div>

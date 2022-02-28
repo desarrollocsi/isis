@@ -10,7 +10,6 @@ import { ReclamosComponent } from './reclamos.component';
 import { ReclamosRegistrarComponent } from './reclamos-registrar/reclamos-registrar.component';
 import { ReclamosListComponent } from './reclamos-list/reclamos-list.component';
 import { ReclamosTramaComponent } from './reclamos-trama/reclamos-trama.component';
-
 @NgModule({
   declarations: [
     ReclamosComponent,
