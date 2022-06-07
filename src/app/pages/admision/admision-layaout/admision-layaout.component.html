@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="container__">
+    <div class="card">
+      <ng-container *ngIf="datas$ | async as datas">
+        <fieldset>
+          <legend><h2>Dato del paciente</h2></legend>
+          <app-admision-datosdelpacientes
+            [paciente]="datas.paciente"
+          ></app-admision-datosdelpacientes>
+        </fieldset>
+
+        <fieldset>
+          <legend><h2>Dato de la cita</h2></legend>
+          <app-admision-datosdelacita
+            [citas]="datas.citas"
+          ></app-admision-datosdelacita>
+        </fieldset>
+
+        <fieldset>
+          <legend><h2>Dato de la acreditacion</h2></legend>
+          <app-admision-acreditacion
+            [acreditacion]="datas.acreditacion"
+            (coberturas)="getCoberturas($event)"
+          ></app-admision-acreditacion>
+        </fieldset>
+        <fieldset *ngIf="isCobertura">
+          <legend><h2>Coberturas</h2></legend>
+
+          <app-admision-coberturas
+            [coberturas]="coberturas$ | async"
+          ></app-admision-coberturas>
+        </fieldset>
+      </ng-container>
+      <br />
+
+      <ng-container *ngIf="isAutorizacion">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <section>
+            <label>Cobertura</label>
+            <input type="text" formControlName="cobertura" />
+            <label>copago fijo</label>
+            <input type="text" formControlName="copago_fijo" />
+            <label>copago variable</label>
+            <input type="text" formControlName="copago_variable" />
+            <label>Numero de autorizacion</label>
+            <input type="text" formControlName="numero_autorizacion" />
+          </section>
+          <br />
+          <section>
+            <textarea
+              formControlName="observacion"
+              row="30"
+              cols="150"
+            ></textarea>
+          </section>
+          <br />
+          <br />
+          <button class="btn">Generar Admision</button>
+        </form>
+      </ng-container>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,24 @@
+<aside class="container__table">
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>COBERTURA</th>
+        <th>CF</th>
+        <th>CF</th>
+        <th>MSGOBS</th>
+        <th>MSGCONESPECIALES</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cobertura of coberturas; index as i">
+        <td>{{ i + 1 }}</td>
+        <td>{{ cobertura.CoTiCobertura }} {{ cobertura.CoSubTiCobertura }}</td>
+        <td>{{ cobertura.CoPagoFijo }}</td>
+        <td>{{ cobertura.CoPagoVariable }}%</td>
+        <td>{{ cobertura.MsgObs }}</td>
+        <td>{{ cobertura.MsgConEspeciales }}</td>
+      </tr>
+    </tbody>
+  </table>
+</aside>
