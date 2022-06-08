@@ -1,32 +1,42 @@
 <div class="container">
   <div class="container__">
     <div class="card">
+      <fieldset>
+        <input
+          type="text"
+          placeholder="Buscar paciente"
+          class="input__controlv2"
+          #search
+          (keyup.enter)="buscarPaciente(search.value)"
+        />
+      </fieldset>
       <ng-container *ngIf="datas$ | async as datas">
         <fieldset>
-          <legend><h2>Dato del paciente</h2></legend>
+          <legend><h2>DATO DEL PACIENTE</h2></legend>
           <app-admision-datosdelpacientes
             [paciente]="datas.paciente"
           ></app-admision-datosdelpacientes>
         </fieldset>
 
         <fieldset>
-          <legend><h2>Dato de la cita</h2></legend>
+          <legend><h2>DATO DE LA CITA</h2></legend>
           <app-admision-datosdelacita
             [citas]="datas.citas"
           ></app-admision-datosdelacita>
         </fieldset>
 
         <fieldset>
-          <legend><h2>Dato de la acreditacion</h2></legend>
+          <legend><h2>DATO DE LA ACREDITACION</h2></legend>
           <app-admision-acreditacion
             [acreditacion]="datas.acreditacion"
             (coberturas)="getCoberturas($event)"
           ></app-admision-acreditacion>
         </fieldset>
         <fieldset *ngIf="isCobertura">
-          <legend><h2>Coberturas</h2></legend>
+          <legend><h2>COBERTURAS</h2></legend>
 
           <app-admision-coberturas
+            (selectCoberturas)="getCoberturasSeleccionada($event)"
             [coberturas]="coberturas$ | async"
           ></app-admision-coberturas>
         </fieldset>
@@ -34,29 +44,71 @@
       <br />
 
       <ng-container *ngIf="isAutorizacion">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
-          <section>
-            <label>Cobertura</label>
-            <input type="text" formControlName="cobertura" />
-            <label>copago fijo</label>
-            <input type="text" formControlName="copago_fijo" />
-            <label>copago variable</label>
-            <input type="text" formControlName="copago_variable" />
-            <label>Numero de autorizacion</label>
-            <input type="text" formControlName="numero_autorizacion" />
-          </section>
-          <br />
-          <section>
-            <textarea
-              formControlName="observacion"
-              row="30"
-              cols="150"
-            ></textarea>
-          </section>
-          <br />
-          <br />
-          <button class="btn">Generar Admision</button>
-        </form>
+        <fieldset>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <section class="group__input">
+              <input
+                type="text"
+                formControlName="cobertura"
+                class="input__controlv2"
+              />
+              <input
+                type="text"
+                formControlName="copago_fijo"
+                class="input__controlv2"
+              />
+              <input
+                type="text"
+                formControlName="copago_variable"
+                class="input__controlv2"
+              />
+              <input
+                type="text"
+                formControlName="numero_autorizacion"
+                class="input__controlv2"
+              />
+            </section>
+
+            <section class="group__input">
+              <textarea
+                class="input__controlv2"
+                formControlName="observacion"
+                row="30"
+                cols="150"
+              ></textarea>
+            </section>
+            <section class="group__input">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="7">SERVICIO</th>
+                  </tr>
+                  <tr>
+                    <th>PROCEDIMIENTO</th>
+                    <th>PRECIO</th>
+                    <th>CF</th>
+                    <th>CV</th>
+                    <th>VALOR VENTA</th>
+                    <th>IGV</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>CONSULTA</td>
+                    <td>50.00</td>
+                    <td>50.00</td>
+                    <td>70%</td>
+                    <td>50.00</td>
+                    <td>9.00</td>
+                    <td>59.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <button class="btn">Generar Admision</button>
+          </form>
+        </fieldset>
       </ng-container>
     </div>
   </div>
