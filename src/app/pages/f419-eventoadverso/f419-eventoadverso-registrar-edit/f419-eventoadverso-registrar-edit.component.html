@@ -225,7 +225,7 @@
       <ng-container *ngFor="let detalle of involucrado.detalles">
         <input
           type="checkbox"
-          (change)="addDetail($event.target, detalle)"
+          (change)="addDetail($event.target['checked'], detalle)"
           class="input__checkbox"
           [id]="detalle.descripcion"
           [formControlName]="detalle.id"

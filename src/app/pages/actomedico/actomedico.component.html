@@ -165,10 +165,7 @@
                 <div class="card">
                   <div class="group">
                     <select
-                      class="
-                        input-control input-select
-                        animate__animated animate__fadeIn
-                      "
+                      class="input-control input-select animate__animated animate__fadeIn"
                       formControlName="idan"
                     >
                       <option [ngValue]="null">Seleccionar antecedente</option>
@@ -265,13 +262,7 @@
             <div *ngFor="let _ of diagnosticos.controls; index as i">
               <ng-container [formGroupName]="i">
                 <div class="card-cie animate__animated animate__fadeIn">
-                  <span class="card-title-cie">
-                    <span
-                      data-tooltip="{{ diagnosticos.value[i].descripcion }}"
-                    >
-                      <h2>{{ diagnosticos.value[i].codigo }}</h2>
-                    </span>
-                  </span>
+                  <span class="card-title-cie"> </span>
                   <span class="card-contenido-cie">
                     <div class="radio">
                       <input

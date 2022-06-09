@@ -64,7 +64,9 @@ export class ProgramaciondesalasModalSalasComponent
     });
   }
 
-  selectTime({ value, checked }: { value: string; checked: boolean }) {
+  selectTime(event: any) {
+    const { value, checked } = event.target as HTMLInputElement;
+
     const { hora, estado } = JSON.parse(value);
     if (estado) return;
 
