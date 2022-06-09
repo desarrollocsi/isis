@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, of, tap } from 'rxjs';
-import { PACIENTE } from '../data/';
+import { PACIENTE, DATAS } from '../data/';
 import { Cobertura } from '../models';
 
 @Component({
@@ -13,6 +13,7 @@ export class AdmisionLayaoutComponent implements OnInit {
   datas$: Observable<any>;
   form: FormGroup;
   coberturas$: Observable<any>;
+  searchPaciente$: Observable<any>;
 
   isCobertura: boolean = false;
   isAutorizacion: boolean = false;
@@ -35,8 +36,23 @@ export class AdmisionLayaoutComponent implements OnInit {
     this.getDatas();
   }
 
+  searchPacientesClear() {
+    this.searchPaciente$ = of([]);
+  }
+
   buscarPaciente(datoPaciente: string) {
-    console.log(datoPaciente);
+    if (datoPaciente.length === 0) {
+      this.searchPacientesClear();
+      return;
+    }
+
+    this.searchPaciente$ = of(
+      DATAS.filter((value) => value.includes(datoPaciente))
+    );
+  }
+
+  selectAcreditacion(paciente: string) {
+    this.searchPacientesClear();
   }
 
   getCoberturas(cobertura: any) {

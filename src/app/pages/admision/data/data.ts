@@ -18,3 +18,16 @@ export const PACIENTE = {
     consultorios: 'CONSULTORIOS 5000',
   },
 };
+
+export const DATAS = [
+  'yur adan valdez',
+  'yur adan valdez',
+  'yur adan valdez',
+  'yur adan valdez',
+  'yur adan valdez',
+  'yur adan valdez',
+  'yur adan valdez',
+  'adan valdez carazas',
+  'jim valdez carazas',
+  'estrella valdez carzas',
+];

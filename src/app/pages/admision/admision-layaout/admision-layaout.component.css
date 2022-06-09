@@ -20,6 +20,7 @@
   border: 1px solid #cbd5e1;
   border-radius: 0.5rem;
   outline: none;
+  text-transform: uppercase;
 }
 
 .textarea__control {
@@ -29,8 +30,13 @@
   outline: none;
 }
 
+.container__search {
+  position: relative;
+}
+
 fieldset {
   border: 0;
+  padding: 0 0 0.5rem 0;
 }
 
 table,
@@ -48,4 +54,25 @@ td,
 th {
   padding: 1rem;
   text-align: center;
+}
+
+.container__list {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.5rem;
+  position: absolute;
+  background-color: #fff;
+  top: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item__list {
+  border-bottom: 1px solid #cbd5e1;
+  padding: 1rem;
+  cursor: pointer;
 }

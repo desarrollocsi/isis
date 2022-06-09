@@ -1,7 +1,7 @@
 <div class="container">
   <div class="container__">
     <div class="card">
-      <fieldset>
+      <fieldset class="container__search">
         <input
           type="text"
           placeholder="Buscar paciente"
@@ -9,6 +9,22 @@
           #search
           (keyup.enter)="buscarPaciente(search.value)"
         />
+
+        <ng-container *ngIf="searchPaciente$ | async as searchPaciente">
+          <ng-container *ngIf="searchPaciente.length > 0">
+            <div class="container__list">
+              <ul>
+                <li
+                  *ngFor="let paciente of searchPaciente"
+                  class="item__list"
+                  (click)="selectAcreditacion(paciente)"
+                >
+                  {{ paciente }}
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </ng-container>
       </fieldset>
       <ng-container *ngIf="datas$ | async as datas">
         <fieldset>
