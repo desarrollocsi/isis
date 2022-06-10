@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { PACIENTE, DATAS } from '../data/';
 import { Cobertura } from '../models';
 
@@ -33,25 +33,33 @@ export class AdmisionLayaoutComponent implements OnInit {
       numero_autorizacion: [null],
     });
 
-    this.getDatas();
+    // this.getDatas();
   }
 
   searchPacientesClear() {
     this.searchPaciente$ = of([]);
   }
 
-  buscarPaciente(datoPaciente: string) {
+  buscarPaciente(datoPaciente: string, event: any) {
     if (datoPaciente.length === 0) {
       this.searchPacientesClear();
       return;
     }
 
     this.searchPaciente$ = of(
-      DATAS.filter((value) => value.includes(datoPaciente))
+      DATAS.filter(
+        ({ paciente, documento }) =>
+          paciente.includes(datoPaciente) || documento.includes(datoPaciente)
+      )
     );
   }
 
-  selectAcreditacion(paciente: string) {
+  paciente(idPaciente: number): Observable<any> {
+    return of(PACIENTE.find(({ id }) => id === idPaciente));
+  }
+
+  selectAcreditacion({ id }: { id: number }) {
+    this.datas$ = this.paciente(id);
     this.searchPacientesClear();
   }
 

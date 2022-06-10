@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AdmisionRoutingModule } from './admision-routing.module';
 import { AdmisionLayaoutComponent } from './admision-layaout/admision-layaout.component';
@@ -18,6 +19,11 @@ import { AdmisionCoberturasComponent } from './admision-coberturas/admision-cobe
     AdmisionAcreditacionComponent,
     AdmisionCoberturasComponent,
   ],
-  imports: [CommonModule, AdmisionRoutingModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    AdmisionRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
 })
 export class AdmisionModule {}

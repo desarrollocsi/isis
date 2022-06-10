@@ -3,11 +3,11 @@
     <div class="card">
       <fieldset class="container__search">
         <input
-          type="text"
+          type="search"
           placeholder="Buscar paciente"
           class="input__controlv2"
           #search
-          (keyup.enter)="buscarPaciente(search.value)"
+          (keyup.enter)="buscarPaciente(search.value, $event)"
         />
 
         <ng-container *ngIf="searchPaciente$ | async as searchPaciente">
@@ -19,18 +19,25 @@
                   class="item__list"
                   (click)="selectAcreditacion(paciente)"
                 >
-                  {{ paciente }}
+                  {{ paciente.paciente | uppercase }}
                 </li>
               </ul>
             </div>
           </ng-container>
         </ng-container>
       </fieldset>
+      <!-- 
+      <fieldset class="container__search">
+        <img src="../../../../assets/icons/search__black.svg" />
+        <input type="text" />
+        <img src="../../../../assets//icons/close.png" />
+      </fieldset> -->
+
       <ng-container *ngIf="datas$ | async as datas">
         <fieldset>
           <legend><h2>DATO DEL PACIENTE</h2></legend>
           <app-admision-datosdelpacientes
-            [paciente]="datas.paciente"
+            [paciente]="datas"
           ></app-admision-datosdelpacientes>
         </fieldset>
 
@@ -50,13 +57,13 @@
         </fieldset>
         <fieldset *ngIf="isCobertura">
           <legend><h2>COBERTURAS</h2></legend>
-
           <app-admision-coberturas
             (selectCoberturas)="getCoberturasSeleccionada($event)"
             [coberturas]="coberturas$ | async"
           ></app-admision-coberturas>
         </fieldset>
       </ng-container>
+
       <br />
 
       <ng-container *ngIf="isAutorizacion">
