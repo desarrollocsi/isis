@@ -1,0 +1,52 @@
+<aside class="container__">
+  <!-- <input
+    type="text"
+    [value]="acreditacion.codigoAfiliado"
+    disabled
+    class="input__controlv2"
+  />
+  <input
+    type="text"
+    [value]="acreditacion.producto"
+    disabled
+    class="input__controlv2"
+  />
+  <input
+    type="text"
+    [value]="acreditacion.empresa"
+    disabled
+    class="input__controlv2"
+  />
+  <input
+    type="text"
+    [value]="acreditacion.fechaVigencia"
+    disabled
+    class="input__controlv2"
+  />
+  <button (click)="getCoberturas()">COBERTURAS</button> -->
+</aside>
+<aside class="container__table">
+  <table>
+    <thead>
+      <tr>
+        <th>PRODUCTO</th>
+        <th>CODIGO AFI.</th>
+        <th>PACIENTE</th>
+        <th>EMPRESA</th>
+        <th>DOCUMENTO</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let acreditacion of acreditacion">
+        <td>{{ acreditacion.CoDescripcion }}</td>
+        <td>{{ acreditacion.CoAfPaciente }}</td>
+        <td>
+          {{ acreditacion.ApPaternoPaciente }}
+          {{ acreditacion.ApMaternoPaciente }} {{ acreditacion.NoPaciente }}
+        </td>
+        <td>{{ acreditacion.NoPaContratante }}</td>
+        <td>{{ acreditacion.NuDoPaciente }}</td>
+      </tr>
+    </tbody>
+  </table>
+</aside>
