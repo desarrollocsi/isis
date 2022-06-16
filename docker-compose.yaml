@@ -1,0 +1,6 @@
+services:
+    isis:
+        container_name: isisapp
+        ports:
+            - '8080:80'
+        build: .
