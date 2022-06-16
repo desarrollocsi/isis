@@ -1,4 +1,4 @@
-<!-- <div class="container animate__animated animate__fadeIn">
+<div class="container animate__animated animate__fadeIn">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ng-container *ngIf="campos.periodo.value">
       <h2 style="text-align: center">
@@ -24,9 +24,7 @@
               {{ item.td_desc }}
             </option>
           </select>
-          <label class="label-control" for="tipo_documento_p"
-            >Tipo de documento</label
-          >
+          <label class="label-control" for="tipo_documento_p">Tipo de documento</label>
         </div>
 
         <div class="flex-item">
@@ -40,9 +38,7 @@
             [pattern]="pattern_doc_p"
             (input)="nrodocp_valid()"
           />
-          <label class="label-control" for="tipo_documento_p"
-            >Número de documento</label
-          >
+          <label class="label-control" for="tipo_documento_p">Número de documento</label>
           <div
             *ngIf="
               campos.nro_documento_p.invalid &&
@@ -89,53 +85,49 @@
         </div>
 
         <ng-container *ngIf="campos.tipo_documento_p.value != 11">
-          <div class="flex-item">
+            <div class="flex-item">
             <input
-              type="text"
-              class="input-control"
-              placeholder=" "
-              formControlName="paterno_p"
-              maxlength="150"
-              [required]="campos.tipo_documento_p.value != 11"
-              oninput="value = value.toUpperCase()"
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="paterno_p"
+                maxlength="150"
+                [required]="campos.tipo_documento_p.value != 11"
+                oninput="value = value.toUpperCase()"
             />
-            <label class="label-control" for="paterno_p"
-              >Apellido Paterno</label
-            >
+            <label class="label-control" for="paterno_p">Apellido Paterno</label>
             <div
-              *ngIf="
+                *ngIf="
                 campos.paterno_p.invalid &&
                 (campos.paterno_p.dirty || campos.paterno_p.touched)
-              "
-              class="{{ ImputError }}"
+                "
+                class="{{ ImputError }}"
             >
-              Campo requerido
+                Campo requerido
             </div>
-          </div>
+            </div>
 
-          <div class="flex-item">
+            <div class="flex-item">
             <input
-              type="text"
-              class="input-control"
-              placeholder=" "
-              formControlName="materno_p"
-              maxlength="150"
-              [required]="campos.tipo_documento_p.value != 11"
-              oninput="value = value.toUpperCase()"
+                type="text"
+                class="input-control"
+                placeholder=" "
+                formControlName="materno_p"
+                maxlength="150"
+                [required]="campos.tipo_documento_p.value != 11"
+                oninput="value = value.toUpperCase()"
             />
-            <label class="label-control" for="materno_p"
-              >Apellido Materno</label
-            >
+            <label class="label-control" for="materno_p">Apellido Materno</label>
             <div
-              *ngIf="
+                *ngIf="
                 campos.materno_p.invalid &&
                 (campos.materno_p.dirty || campos.materno_p.touched)
-              "
-              class="{{ ImputError }}"
+                "
+                class="{{ ImputError }}"
             >
-              Campo requerido
+                Campo requerido
             </div>
-          </div>
+            </div>
         </ng-container>
 
         <div class="flex-item flex2">
@@ -149,13 +141,7 @@
             oninput="value = value.toUpperCase()"
           />
           <label class="label-control" for="domicilio">Dirección</label>
-          <div
-            *ngIf="
-              campos.domicilio.invalid &&
-              (campos.domicilio.dirty || campos.domicilio.touched)
-            "
-            class="{{ ImputError }}"
-          >
+          <div *ngIf="campos.domicilio.invalid && (campos.domicilio.dirty || campos.domicilio.touched)" class="{{ ImputError }}">
             Campo requerido
           </div>
         </div>
@@ -238,10 +224,7 @@
           [checked]="campos.result_email.value == 1"
           (change)="f_result_email($event.target.checked ? 1 : 0)"
         />
-        <label
-          >El usuario autorizó la notificación del resultado del reclamo al
-          correo electrónico consignado
-        </label>
+        <label>El usuario autorizó la notificación del resultado del reclamo al correo electrónico consignado </label>
       </div>
     </div>
 
@@ -264,9 +247,7 @@
                 {{ item.td_desc }}
               </option>
             </select>
-            <label class="label-control" for="tipo_documento"
-              >Tipo de documento</label
-            >
+            <label class="label-control" for="tipo_documento">Tipo de documento</label>
           </div>
 
           <div class="flex-item">
@@ -281,9 +262,7 @@
               (input)="nrodoc_valid()"
               oninput="value = value.toUpperCase()"
             />
-            <label class="label-control" for="nro_documento"
-              >Número de documento</label
-            >
+            <label class="label-control" for="nro_documento">Número de documento</label>
             <div
               *ngIf="
                 campos.nro_documento.invalid &&
@@ -341,9 +320,7 @@
                 [required]="!afectada && campos.tipo_documento.value != 11"
                 oninput="value = value.toUpperCase()"
               />
-              <label class="label-control" for="paterno"
-                >Apellido Paterno</label
-              >
+              <label class="label-control" for="paterno">Apellido Paterno</label>
               <div
                 *ngIf="
                   campos.paterno.invalid &&
@@ -365,9 +342,7 @@
                 [required]="!afectada && campos.tipo_documento.value != 11"
                 oninput="value = value.toUpperCase()"
               />
-              <label class="label-control" for="materno"
-                >Apellido Materno</label
-              >
+              <label class="label-control" for="materno">Apellido Materno</label>
               <div
                 *ngIf="
                   campos.materno.invalid &&
@@ -388,9 +363,9 @@
       <div class="flex-container wrap">
         <div class="flex-item">
           <select class="input-control input-select" formControlName="medio">
-            <option [ngValue]="1">1-Virtual</option>
-            <option [ngValue]="2">2-Físico</option>
-            <option [ngValue]="3">3-Telefónica</option>
+            <option [ngValue]=1>1-Virtual</option>
+            <option [ngValue]=2>2-Físico</option>
+            <option [ngValue]=3>3-Telefónica</option>
           </select>
           <label class="label-control" for="medio">Medio de Presentación</label>
         </div>
@@ -402,9 +377,7 @@
               class="input-control"
               formControlName="fecha"
             />
-            <label class="label-control" for="fecha"
-              >Fecha de presentación</label
-            >
+            <label class="label-control" for="fecha">Fecha de presentación</label>
             <div
               *ngIf="
                 campos.fecha.invalid &&
@@ -430,9 +403,7 @@
               {{ item.mr_desc }}
             </option>
           </select>
-          <label class="label-control" for="medio_recepcion"
-            >Medio de Recepción</label
-          >
+          <label class="label-control" for="medio_recepcion">Medio de Recepción</label>
         </div>
 
         <div class="flex-item">
@@ -441,15 +412,13 @@
             class="input-control"
             formControlName="cod_fisico"
             maxlength="15"
-            [required]="campos.medio_recepcion?.value == 2"
+            [required]="campos.medio_recepcion.value == 2"
           />
-          <label class="label-control" for="cod_fisico"
-            >N° Hoja de reclamación en salud</label
-          >
+          <label class="label-control" for="cod_fisico">N° Hoja de reclamación en salud</label>
           <div
             *ngIf="
-              campos.cod_fisico?.invalid &&
-              (campos.cod_fisico?.dirty || campos.cod_fisico?.touched)
+              campos.cod_fisico.invalid &&
+              (campos.cod_fisico.dirty || campos.cod_fisico.touched)
             "
             class="{{ ImputError }}"
           >
@@ -478,68 +447,59 @@
         </div>
       </div>
 
-      <div class="flex-container wrap">
-        <div class="flex-item">
-          <select class="input-control input-select" formControlName="servicio">
-            <option
-              [ngValue]="item.sr_cod"
-              *ngFor="let item of servicios$ | async"
-            >
-              {{ item.sr_desc }}
-            </option>
-          </select>
-          <label class="label-control" for="servicio"
-            >Servicio donde se efectuó el hecho que inicio el reclamo</label
-          >
-          <div
-            *ngIf="campos.servicio.invalid && campos.servicio.touched"
-            class="{{ ImputError }}"
-          >
-            Campo requerido
-          </div>
-        </div>
+        <div class="flex-container wrap">
+            <div class="flex-item">
+                <select class="input-control input-select" formControlName="servicio">
+                <option
+                    [ngValue]="item.sr_cod"
+                    *ngFor="let item of servicios$ | async"
+                >
+                    {{ item.sr_desc }}
+                </option>
+                </select>
+                <label class="label-control" for="servicio"
+                >Servicio donde se efectuó el hecho que inicio el reclamo</label
+                >
+                <div
+                *ngIf="campos.servicio.invalid && campos.servicio.touched"
+                class="{{ ImputError }}"
+                >
+                Campo requerido
+                </div>
+            </div>
 
-        <div class="flex-item">
-          <select
-            class="input-control input-select"
-            formControlName="especialidad"
-          >
-            <option></option>
-            <option
-              [ngValue]="item.codigo"
-              *ngFor="let item of especialidades$ | async"
-            >
-              {{ item.descripcion }}
-            </option>
-          </select>
-          <label class="label-control" for="especialidad">Especialidad</label>
-        </div>
+            <div class="flex-item">
+                <select class="input-control input-select" formControlName="especialidad">
+                    <option></option>
+                    <option [ngValue]="item.codigo" *ngFor="let item of especialidades$ | async">
+                        {{ item.descripcion }}
+                    </option>
+                </select>
+                <label class="label-control" for="especialidad">Especialidad</label>
+            </div>
 
-        <div class="flex-item">
-          <select class="input-control input-select" formControlName="medico">
-            <option></option>
-            <option
-              [ngValue]="item.codigo"
-              *ngFor="let item of medicos$ | async"
-            >
-              {{ item.descripcion }}
-            </option>
-          </select>
-          <label class="label-control" for="medico">Médico</label>
-        </div>
+            <div class="flex-item">
+                <select class="input-control input-select" formControlName="medico">
+                  <option></option>
+									<option [ngValue]="item.codigo" *ngFor="let item of medicos$ | async">
+                        {{ item.descripcion }}
+                    </option>
+                </select>
+                <label class="label-control" for="medico">Médico</label>
+            </div>
 
-        <div class="flex-item">
-          <select
-            class="input-control input-select"
-            formControlName="compete"
-            (change)="getEstado(campos.compete.value)"
-          >
-            <option [ngValue]="1">Si</option>
-            <option [ngValue]="2">No</option>
-            <option [ngValue]="3">Compartida</option>
-          </select>
-          <label class="label-control" for="compete">Compete</label>
-        </div>
+            <div class="flex-item">
+            <select
+                class="input-control input-select"
+                formControlName="compete"
+                (change)="getEstado(campos.compete.value)"
+            >
+                <option [ngValue]=1>Si</option>
+                <option [ngValue]=2>No</option>
+                <option [ngValue]=3>Compartida</option>
+            </select>
+            <label class="label-control" for="compete">Compete</label>
+            </div>
       </div>
     </div>
 
@@ -552,20 +512,18 @@
               class="input-control input-select"
               formControlName="derivado_tipo"
             >
-              <option [ngValue]="1">
+              <option [ngValue]=1>
                 IPRESS (Institucion Prestadora de Servicios de Salud)
               </option>
-              <option [ngValue]="2">
+              <option [ngValue]=2>
                 UGIPRESS (Unidad de Gestion de IPRESS)
               </option>
-              <option [ngValue]="3">
+              <option [ngValue]=3>
                 IAFAS (Institucion Administradora de Fondos de Aseguramiento en
                 Salud)
               </option>
             </select>
-            <label class="label-control" for="derivado_tipo"
-              >Tipo de Institución</label
-            >
+            <label class="label-control" for="derivado_tipo">Tipo de Institución</label>
           </div>
           <div class="flex-item">
             <input
@@ -591,13 +549,13 @@
           </div>
         </div>
       </div>
-    </ng-container>-->
+    </ng-container>
 
-<!--CLASIFICADORES-->
-<!-- <ng-container
+    <!--CLASIFICADORES-->
+    <ng-container
       *ngIf="campos.compete.value == 1 || campos.compete.value == 3"
     >
-      <div class="card animate__animated animate__fadeIn">
+    <div class="card animate__animated animate__fadeIn">
         <h3>Clasisficación:</h3>
         <div class="flex-item">
           <select
@@ -612,9 +570,7 @@
               {{ item.cr_def_corta }}
             </option>
           </select>
-          <label class="label-control" for="clasificacion1"
-            >Primer Clasificador</label
-          >
+          <label class="label-control" for="clasificacion1">Primer Clasificador</label>
           <div
             *ngIf="
               campos.clasificacion1.invalid && campos.clasificacion1.touched
@@ -626,22 +582,20 @@
         </div>
 
         <div class="flex-item">
-          <select
-            class="input-control input-select"
-            formControlName="clasificacion2"
-          >
-            <option [ngValue]="null"></option>
-            <option
-              [ngValue]="item.cr_cod"
-              *ngFor="let item of clasificaciones$ | async"
+            <select
+              class="input-control input-select"
+              formControlName="clasificacion2"
             >
-              {{ item.cr_def_corta }}
-            </option>
-          </select>
-          <label class="label-control" for="clasificacion2"
-            >Segundo Clasificador</label
-          >
-        </div>
+              <option [ngValue]="null"></option>
+              <option
+                [ngValue]="item.cr_cod"
+                *ngFor="let item of clasificaciones$ | async"
+              >
+                {{ item.cr_def_corta }}
+              </option>
+            </select>
+            <label class="label-control" for="clasificacion2">Segundo Clasificador</label>
+          </div>
 
         <div class="flex-item">
           <select
@@ -656,15 +610,13 @@
               {{ item.cr_def_corta }}
             </option>
           </select>
-          <label class="label-control" for="clasificacion3"
-            >Tercer Clasificador</label
-          >
+          <label class="label-control" for="clasificacion3">Tercer Clasificador</label>
         </div>
-      </div>
-    </ng-container> -->
+    </div>
+    </ng-container>
 
-<!--ESTADO-->
-<!-- <div class="card animate__animated animate__fadeIn">
+    <!--ESTADO-->
+    <div class="card animate__animated animate__fadeIn">
       <h3>Estado y Etapa:</h3>
       <div class="flex-container wrap">
         <div class="flex-item">
@@ -683,15 +635,15 @@
           </select>
           <label class="label-control" for="estado">Estado</label>
           <div
-            *ngIf="campos.estado?.invalid && campos.estado?.touched"
+            *ngIf="campos.estado.invalid && campos.estado.touched"
             class="{{ ImputError }}"
           >
             Campo requerido
           </div>
-        </div> -->
+        </div>
 
-<!--ETAPA-->
-<!-- <div class="flex-item">
+        <!--ETAPA-->
+        <div class="flex-item">
           <select
             class="input-control input-select"
             formControlName="etapa"
@@ -707,19 +659,19 @@
           </select>
           <label class="label-control" for="etapa">Etapa</label>
           <div
-            *ngIf="campos.etapa?.invalid && campos.etapa?.touched"
+            *ngIf="campos.etapa.invalid && campos.etapa.touched"
             class="{{ ImputError }}"
           >
             Campo requerido
           </div>
-        </div> -->
+        </div>
 
-<!--RECLAMO PRIMIGENIO-->
-<!-- <ng-container
+        <!--RECLAMO PRIMIGENIO-->
+        <ng-container
           *ngIf="
-            campos.estado?.value == 4 ||
-            campos.estado?.value == 5 ||
-            campos.medio_recepcion?.value == 6
+            campos.estado.value == 4 ||
+            campos.estado.value == 5 ||
+            campos.medio_recepcion.value == 6
           "
         >
           <div class="flex-item animate__animated animate__fadeIn">
@@ -729,18 +681,15 @@
               placeholder=" "
               formControlName="codigo_original"
               [required]="
-                campos.estado?.value == 4 ||
-                campos.estado?.value == 5 ||
-                campos.medio_recepcion?.value == 6
+                campos.estado.value == 4 ||
+                campos.estado.value == 5 ||
+                campos.medio_recepcion.value == 6
               "
             />
-            <label class="label-control" for="codigo_original"
-              >Código del reclamo original</label
-            >
+            <label class="label-control" for="codigo_original">Código del reclamo original</label>
             <div
               *ngIf="
-                campos.codigo_original?.invalid &&
-                campos.codigo_original?.touched
+                campos.codigo_original.invalid && campos.codigo_original.touched
               "
               class="{{ ImputError }}"
             >
@@ -749,10 +698,10 @@
           </div>
         </ng-container>
       </div>
-    </div> -->
+    </div>
 
-<!--RESULTADO-->
-<!-- <ng-container *ngIf="(resultados$ | async)?.length > 0">
+    <!--RESULTADO-->
+    <ng-container *ngIf="(resultados$ | async)?.length > 0">
       <div class="card animate__animated animate__fadeIn">
         <h3>Resultado:</h3>
         <div class="flex-container wrap">
@@ -772,54 +721,53 @@
             </select>
             <label class="label-control" for="resultado">Resultado</label>
             <div
-              *ngIf="campos.resultado?.invalid && campos.resultado?.touched"
+              *ngIf="campos.resultado.invalid && campos.resultado.touched"
               class="{{ ImputError }}"
             >
               Campo requerido
             </div>
           </div>
-          <ng-container *ngIf="campos.resultado?.value != 0">
+          <ng-container *ngIf="campos.resultado.value != 0">
             <div class="flex-item">
-              <input
+                <input
                 type="date"
                 class="input-control"
                 formControlName="fecha_result"
-                [required]="campos.resultado?.value != 0"
-              />
-              <label class="label-control" for="fecha_result"
-                >Fecha del Resultado</label
-              >
-              <div
-                *ngIf="
-                  campos.fecha_result?.invalid && campos.fecha_result?.touched
-                "
+                [required]="campos.resultado.value != 0"
+                />
+                <label class="label-control" for="fecha_result">Fecha del Resultado</label>
+                <div
+                *ngIf="campos.fecha_result.invalid && campos.fecha_result.touched"
                 class="{{ ImputError }}"
-              >
+                >
                 Campo requerido
-              </div>
+                </div>
             </div>
-          </ng-container>
+        </ng-container>
 
-          <ng-container *ngIf="campos.resultado?.value == 5">
+          <ng-container *ngIf="campos.resultado.value == 5">
             <div class="flex-item">
               <select
-                class="input-control input-select animate__animated animate__fadeIn"
+                class="
+                  input-control input-select
+                  animate__animated animate__fadeIn
+                "
                 formControlName="mot_concl_antic"
-                [required]="campos.resultado?.value == 5"
+                [required]="campos.resultado.value == 5"
               >
-                <option [ngValue]="1">1-Desentimiento escrito</option>
-                <option [ngValue]="2">2-Trato directo</option>
-                <option [ngValue]="3">3-Conciliación</option>
-                <option [ngValue]="4">4-Transacción extrajudicial</option>
-                <option [ngValue]="5">5-Laudo arbitral</option>
+                <option [ngValue]=1>1-Desentimiento escrito</option>
+                <option [ngValue]=2>2-Trato directo</option>
+                <option [ngValue]=3>3-Conciliación</option>
+                <option [ngValue]=4>4-Transacción extrajudicial</option>
+                <option [ngValue]=5>5-Laudo arbitral</option>
               </select>
               <label class="label-control" for="mot_concl_antic"
                 >Motivo de la conclusión anticipada</label
               >
               <div
                 *ngIf="
-                  campos.mot_concl_antic?.invalid &&
-                  campos.mot_concl_antic?.touched
+                  campos.mot_concl_antic.invalid &&
+                  campos.mot_concl_antic.touched
                 "
                 class="{{ ImputError }}"
               >
@@ -828,28 +776,28 @@
             </div>
           </ng-container>
           <ng-container
-            *ngIf="campos.estado?.value == 1 || campos.estado?.value == 6"
+            *ngIf="campos.estado.value == 1 || campos.estado.value == 6"
           >
             <div class="flex-item">
               <select
                 class="input-control input-select"
                 formControlName="comunic_result"
                 [required]="
-                  campos.estado?.value == 1 || campos.estado?.value == 6
+                  campos.estado.value == 1 || campos.estado.value == 6
                 "
               >
-                <option [ngValue]="1">
+                <option [ngValue]=1>
                   Domicilio consignado en el libro de reclamaciones
                 </option>
-                <option [ngValue]="2">Correo electrónico</option>
-                <option [ngValue]="3">Otra dirección proporcionada</option>
+                <option [ngValue]=2>Correo electrónico</option>
+                <option [ngValue]=3>Otra dirección proporcionada</option>
               </select>
               <label class="label-control" for="comunic_result"
                 >Medio de comunicación del resultado</label
               >
               <div
                 *ngIf="
-                  campos.comunic_result?.invalid && campos.comunic_result?.touched
+                  campos.comunic_result.invalid && campos.comunic_result.touched
                 "
                 class="{{ ImputError }}"
               >
@@ -861,17 +809,13 @@
                 type="date"
                 class="input-control"
                 formControlName="fecha_notif_result"
-                [required]="
-                  campos.estado?.value == 1 || campos.estado?.value == 6
-                "
+                [required]="campos.estado.value == 1 || campos.estado.value == 6"
               />
-              <label class="label-control" for="fecha_notif_result"
-                >Fecha de notificación</label
-              >
+              <label class="label-control" for="fecha_notif_result">Fecha de notificación</label>
               <div
                 *ngIf="
-                  campos.fecha_notif_result?.invalid &&
-                  campos.fecha_notif_result?.touched
+                  campos.fecha_notif_result.invalid &&
+                  campos.fecha_notif_result.touched
                 "
                 class="{{ ImputError }}"
               >
@@ -881,11 +825,11 @@
           </ng-container>
         </div>
       </div>
-    </ng-container> -->
+    </ng-container>
 
-<!-- MEDIDAS -->
-<!-- <ng-container
-      *ngIf="campos.resultado?.value == 1 || campos.resultado?.value == 2"
+    <!-- MEDIDAS -->
+    <ng-container
+      *ngIf="campos.resultado.value == 1 || campos.resultado.value == 2"
     >
       <div class="card animate__animated animate__fadeIn">
         <h3>Medidas</h3>
@@ -896,46 +840,50 @@
                 <div class="flex-container wrap">
                   <div class="flex-item">
                     <select
-                      class="input-control input-select animate__animated animate__fadeIn"
+                      class="
+                        input-control input-select
+                        animate__animated animate__fadeIn
+                      "
                       formControlName="naturaleza"
                     >
-                      <option [ngValue]="1">
+                      <option [ngValue]=1>
                         1-Administrativa respecto a procesos propios de la IAFA
                       </option>
-                      <option [ngValue]="2">
+                      <option [ngValue]=2>
                         2-Administrativa respecto a procesos propios de la
                         IPRESS
                       </option>
-                      <option [ngValue]="3">
+                      <option [ngValue]=3>
                         3-Administrativa respecto a procesos propios de la
                         UGIPRESS
                       </option>
-                      <option [ngValue]="4">
+                      <option [ngValue]=4>
                         4-Asistencial (Prestacional)
                       </option>
-                      <option [ngValue]="5">
+                      <option [ngValue]=5>
                         5-Administrativa y Asistencial (Prestacional)
                       </option>
                     </select>
-                    <label class="label-control" for="naturaleza"
-                      >Naturaleza de la medida</label
-                    >
+                    <label class="label-control" for="naturaleza">Naturaleza de la medida</label>
                   </div>
                   <div class="flex-item">
                     <select
-                      class="input-control input-select animate__animated animate__fadeIn"
+                      class="
+                        input-control input-select
+                        animate__animated animate__fadeIn
+                      "
                       formControlName="proceso"
                     >
-                      <option [ngValue]="1">1-Afiliación</option>
-                      <option [ngValue]="2">2-Acreditación</option>
-                      <option [ngValue]="3">
+                      <option [ngValue]=1>1-Afiliación</option>
+                      <option [ngValue]=2>2-Acreditación</option>
+                      <option [ngValue]=3>
                         3-Prestación de servicios en salud
                       </option>
-                      <option [ngValue]="4">
+                      <option [ngValue]=4>
                         4-Liquidación, cobro o pago al usuario por servicios
                         prestados
                       </option>
-                      <option [ngValue]="5">
+                      <option [ngValue]=5>
                         5-Contratación de servicios en salud de una IAFAS a una
                         IPRESS
                       </option>
@@ -952,9 +900,7 @@
                       placeholder=" "
                       formControlName="descripcion"
                     ></textarea>
-                    <label class="label-control" for="descripcion"
-                      >Descripcion</label
-                    >
+                    <label class="label-control" for="descripcion">Descripcion</label>
                   </div>
                 </div>
 
@@ -994,11 +940,10 @@
           <img src="assets/icons/add-plus.svg" />
         </div>
       </div>
-    </ng-container> -->
-
-<!-- <div class="group-btn">
+    </ng-container>
+    <div class="group-btn">
       <button type="submit" class="btn">{{ tituloBoton }}</button>
       <button type="button" class="btn" (click)="back()">Cancelar</button>
     </div>
   </form>
-</div>  -->
+</div>

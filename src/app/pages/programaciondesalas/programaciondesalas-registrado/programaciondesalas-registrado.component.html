@@ -21,7 +21,7 @@
           <div class="group">
             <select
               class="input-control input-select"
-              (change)="changeMedicoIntervecion($event.target['value'])"
+              (change)="changeMedicoIntervecion($event.target.value)"
               formControlName="se_codigo"
             >
               <option value="null">Seleccionar</option>
@@ -38,7 +38,7 @@
             <select
               class="input-control input-select"
               formControlName="cq_codiqx"
-              (change)="setParticipantes($event.target['value'])"
+              (change)="setParticipantes($event.target.value)"
             >
               <option value="null">Seleccionar</option>
               <option
@@ -54,7 +54,7 @@
             <select
               class="input-control input-select"
               formControlName="medico"
-              (change)="setAsignacionCirujano($event.target['value'])"
+              (change)="setAsignacionCirujano($event.target.value)"
             >
               <option value="null">Seleccionar</option>
               <option
@@ -216,9 +216,7 @@
                 [id]="equipos.label"
                 [value]="equipos.value"
                 [checked]="equipos.isChecked"
-                (change)="
-                  agregarEquipoMedico($event.target['checked'], equipos)
-                "
+                (change)="agregarEquipoMedico($event.target.checked, equipos)"
               />
               <label [for]="equipos.label" class="checkbox__label">{{
                 equipos.label | titlecase
@@ -236,7 +234,7 @@
                 [id]="otro.label"
                 [value]="otro.value"
                 [checked]="otro.isChecked"
-                (change)="chanceCheckbox($event.target['checked'], otro)"
+                (change)="chanceCheckbox($event.target.checked, otro)"
               />
               <label [for]="otro.label" class="checkbox__label border__b1">{{
                 otro.label | titlecase

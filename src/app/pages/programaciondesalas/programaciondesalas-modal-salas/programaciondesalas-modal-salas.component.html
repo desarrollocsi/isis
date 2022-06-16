@@ -45,7 +45,7 @@
               type="checkbox"
               [id]="disponibilidadDeSala.hora"
               [value]="disponibilidadDeSala | json"
-              (change)="selectTime($event)"
+              (change)="selectTime($event.target)"
             />
             <label
               class="item__data"

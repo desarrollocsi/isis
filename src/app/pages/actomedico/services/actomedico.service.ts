@@ -30,23 +30,16 @@ export class ActomedicoService {
   }
 
   apidynamic(verb: string, data: any) {
-    // switch (verb) {
-    //   case 'POST': {
-    //     return this.http.post(`${environment.apiUrl}/actomedico`, data);
-    //   }
-    //   case 'PUT': {
-    //     return this.http.put(
-    //       `${environment.apiUrl}/actomedico/${data.id}`,
-    //       data
-    //     );
-    //   }
-    // }
-
-    const API__DYNAMIC = {
-      POST: this.http.post(`${environment.apiUrl}/actomedico`, data),
-      PUT: this.http.put(`${environment.apiUrl}/actomedico/${data.id}`, data),
-    };
-
-    return API__DYNAMIC[verb];
+    switch (verb) {
+      case 'POST': {
+        return this.http.post(`${environment.apiUrl}/actomedico`, data);
+      }
+      case 'PUT': {
+        return this.http.put(
+          `${environment.apiUrl}/actomedico/${data.id}`,
+          data
+        );
+      }
+    }
   }
 }
