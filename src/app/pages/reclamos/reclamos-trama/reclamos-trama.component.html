@@ -1,201 +1,256 @@
 <div class="container animate__animated animate__fadeIn">
-    <form [formGroup]='form' (ngSubmit)="onSubmit()">
-        <div class="card animate__animated animate__fadeIn">
-            <div class="flex-container" >
-                <div class="flex-item">
-                    <select class="input-control input-select" formControlName="anio" (change)='cargatrama()'>
-                        <option [ngValue]="anio.id" *ngFor="let anio of anio$">
-                            {{ anio.id }}</option>
-                    </select>
-                    <label class="label-control">Año</label>
-                </div>
-                <div class="flex-item">
-                    <select class="input-control input-select" formControlName="mes" (change)='cargatrama()'>
-                        <option [ngValue]="mes.id" *ngFor="let mes of mes$">
-                            {{ mes.text }}</option>
-                    </select>
-                    <label class="label-control">Mes</label>
-                </div>
-                <div class="flex-item">
-                    <button type="submit" class="btn" [disabled]="estadotrama == 0 || estadotrama == 2">
-                        Generar
-                    </button>
-                    <button type="button" class="btn" [disabled]="estadotrama == 1 || estadotrama == 0" (click)="descargar('txt')">
-                        Descargar
-                    </button>
-                </div>
-            </div>
-            <h3>Trama Reclamos:</h3>
-            <table class="Table animate__animated animate__fadeIn" id="tabla1">
-                <thead>
-                    <tr>
-                        <th>Periodo</th>
-                        <th>Tipo administrado declarante</th>
-                        <th>Código de administrado declarante</th>
-                        <th>Código UGIPRESS</th>
-                        <th>Tipo institución presento reclamo</th>
-                        <th>Código administrado presentó reclamo</th>
-                        <th>Medio presentación del Reclamo</th>
-                        <th>Código Único de Registro</th>
-                        <th>Tipo de documento (afectado)</th>
-                        <th>N° documento (afectado)</th>
-                        <th>Razón social (afectado)</th>
-                        <th>Nombres (afectado)</th>
-                        <th>A. Paterno (afectado)</th>
-                        <th>A. Materno (afectado)</th>
-                        <th>Tipo documento (presenta)</th>
-                        <th>N° Documento (presenta)</th>
-                        <th>Razón social (presenta)</th>
-                        <th>Nombres (presenta)</th>
-                        <th>A. Paterno (presenta)</th>
-                        <th>A. Materno (presenta)</th>
-                        <th>Autoriza resultado a email</th>
-                        <th>email</th>
-                        <th>domicilio</th>
-                        <th>telefono</th>
-                        <th>Medio Recepcion</th>
-                        <th>Fecha presentación</th>
-                        <th>Detalle</th>
-                        <th>Servicio</th>
-                        <th>Compete</th>
-                        <th>Clasificación 1</th>
-                        <th>Clasificación 2</th>
-                        <th>Clasificación 3</th>
-                        <th>Estado</th>
-                        <th>Código primigenio</th>
-                        <th>Etapa</th>
-                        <th>Tipo administrado deriva</th>
-                        <th>Código administrado deriva</th>
-                        <th>Resultado</th>
-                        <th>Motivo conclusión anticipada</th>
-                        <th>Fecha resultado</th>
-                        <th>Comunicación de resultado</th>
-                        <th>Fecha comunicación resultado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let rec of reclamos$">
-                        <td>{{ rec.periodo }}</td>
-                        <td>1</td>
-                        <td>00013383</td>
-                        <td>00013383</td>
-                        <td>1</td>
-                        <td>00013383</td>
-                        <td>{{ rec.medio }}</td>
-                        <td>
-                            <nobr>00013383-{{ rec.re_cod }}</nobr>
-                        </td>
-                        <td>{{ rec.tipo_documento }}</td>
-                        <td>{{ rec.nro_documento }}</td>
-                        <td>{{ rec.nombres }}</td>
-                        <td>{{ rec.nombres }}</td>
-                        <td>{{ rec.paterno }}</td>
-                        <td>{{ rec.materno }}</td>
-                        <td>{{ rec.tipo_documento_p }}</td>
-                        <td>{{ rec.nro_documento_p }}</td>
-                        <td>{{ rec.nombres_p }}</td>
-                        <td>{{ rec.nombres_p }}</td>
-                        <td>{{ rec.paterno_p }}</td>
-                        <td>{{ rec.materno_p }}</td>
-                        <td>{{ rec.result_email }}</td>
-                        <td>{{ rec.email }}</td>
-                        <td>{{ rec.domicilio }}</td>
-                        <td>{{ rec.telefono }}</td>
-                        <td>{{ rec.medio_recepcion }}</td>
-                        <td>{{ rec.fecha }}</td>
-                        <td [ngStyle]="{'min-width.em': rec.detalle.length / 10}">{{ rec.detalle }}</td>
-                        <td>{{ rec.servicio }}</td>
-                        <td>{{ rec.compete }}</td>
-                        <td>{{ rec.clasificacion1 }}</td>
-                        <td>{{ rec.clasificacion2 }}</td>
-                        <td>{{ rec.clasificacion3 }}</td>
-                        <td>{{ rec.estado }}</td>
-                        <td>{{ rec.codigo_original }}</td>
-                        <td>{{ rec.etapa }}</td>
-                        <td>{{ rec.derivado_tipo }}</td>
-                        <td>{{ rec.derivado_codigo }}</td>
-                        <td>{{ rec.resultado }}</td>
-                        <td>{{ rec.mot_concl_antic }}</td>
-                        <td>{{ rec.fecha_result }}</td>
-                        <td>{{ rec.comunic_result }}</td>
-                        <td>{{ rec.fecha_notif_result }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3>Trama Medidas:</h3>
-            <table class="Table animate__animated animate__fadeIn" id="trama">
-                <thead>
-                    <tr>
-                        <th>Medio Presentación</th>
-                        <th>Código Único de Registro</th>
-                        <th>Código de la medida</th>
-                        <th>Descripción</th>
-                        <th>Naturaleza</th>
-                        <th>Proceso</th>
-                        <th>Fecha Implemenctación</th>
-                        <th>Fecha Culminación</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let med of medidas$" class="Table animate__animated animate__fadeIn">
-                        <td>{{ med.medio }}</td>
-                        <td>
-                            <nobr>00013383-{{ med.re_cod }}</nobr>
-                        </td>
-                        <td>{{ ('0'+med.numero).slice(-2) }}</td>
-                        <td [ngStyle]="{'min-width.em': med.descripcion.length / 10}">{{ med.descripcion }}</td>
-                        <td>{{ med.naturaleza }}</td>
-                        <td>{{ med.proceso }}</td>
-                        <td>{{ med.fecha_implem}}</td>
-                        <td>{{ med.fecha_culm }}</td>
-                    </tr>
-                </tbody>
-            </table>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card animate__animated animate__fadeIn">
+      <div class="flex-container">
+        <div class="flex-item">
+          <select
+            class="input-control input-select"
+            formControlName="anio"
+            (change)="cargatrama()"
+          >
+            <option [ngValue]="anio.id" *ngFor="let anio of anio$">
+              {{ anio.id }}
+            </option>
+          </select>
+          <label class="label-control">Año</label>
         </div>
-    </form>
-    <div class="card">
-        <h3>Leyenda:</h3>
-        <div class="flex-container" >
-            <div class="flex-item">
-                <table class="Table animate__animated animate__fadeIn">
-                    <thead><tr><th colspan="2">ESTADO</th></tr></thead>
-                    <tbody>
-                        <tr *ngFor="let est of estados$ | async" class="Table animate__animated animate__fadeIn">
-                        <td>{{est.er_cod}}</td>
-                        <td>{{est.er_desc}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="Table">
-                    <thead><tr><th colspan="2">ETAPA</th></tr></thead>
-                    <tbody>
-                        <tr *ngFor="let eta of etapas$ | async" class="Table animate__animated animate__fadeIn">
-                        <td>{{eta.etr_cod}}</td>
-                        <td>{{eta.etr_desc}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="flex-item">
-                <table class="Table animate__animated animate__fadeIn">
-                    <thead><tr><th colspan="2">RESULTADO</th></tr></thead>
-                    <tbody>
-                        <tr *ngFor="let res of resultados$ | async" class="Table animate__animated animate__fadeIn">
-                        <td>{{res.rr_cod}}</td>
-                        <td>{{res.rr_desc}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="Table animate__animated animate__fadeIn">
-                    <thead><tr><th colspan="2">MEDIO RECEPCIÓN</th></tr></thead>
-                    <tbody>
-                        <tr *ngFor="let med of medios_recepcion$ | async" class="Table animate__animated animate__fadeIn">
-                        <td>{{med.mr_cod}}</td>
-                        <td>{{med.mr_desc}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="flex-item">
+          <select
+            class="input-control input-select"
+            formControlName="mes"
+            (change)="cargatrama()"
+          >
+            <option [ngValue]="mes.id" *ngFor="let mes of mes$">
+              {{ mes.text }}
+            </option>
+          </select>
+          <label class="label-control">Mes</label>
         </div>
-    <div>
+        <div class="flex-item">
+          <button
+            type="submit"
+            class="btn"
+            [disabled]="estadotrama == 0 || estadotrama == 2"
+          >
+            Generar
+          </button>
+          <button
+            type="button"
+            class="btn"
+            [disabled]="estadotrama == 1 || estadotrama == 0"
+            (click)="descargar('txt')"
+          >
+            Descargar
+          </button>
+        </div>
+      </div>
+      <h3>Trama Reclamos:</h3>
+      <table class="Table animate__animated animate__fadeIn" id="tabla1">
+        <thead>
+          <tr>
+            <th>Periodo</th>
+            <th>Tipo administrado declarante</th>
+            <th>Código de administrado declarante</th>
+            <th>Código UGIPRESS</th>
+            <th>Tipo institución presento reclamo</th>
+            <th>Código administrado presentó reclamo</th>
+            <th>Medio presentación del Reclamo</th>
+            <th>Código Único de Registro</th>
+            <th>Tipo de documento (afectado)</th>
+            <th>N° documento (afectado)</th>
+            <th>Razón social (afectado)</th>
+            <th>Nombres (afectado)</th>
+            <th>A. Paterno (afectado)</th>
+            <th>A. Materno (afectado)</th>
+            <th>Tipo documento (presenta)</th>
+            <th>N° Documento (presenta)</th>
+            <th>Razón social (presenta)</th>
+            <th>Nombres (presenta)</th>
+            <th>A. Paterno (presenta)</th>
+            <th>A. Materno (presenta)</th>
+            <th>Autoriza resultado a email</th>
+            <th>email</th>
+            <th>domicilio</th>
+            <th>telefono</th>
+            <th>Medio Recepcion</th>
+            <th>Fecha presentación</th>
+            <th>Detalle</th>
+            <th>Servicio</th>
+            <th>Compete</th>
+            <th>Clasificación 1</th>
+            <th>Clasificación 2</th>
+            <th>Clasificación 3</th>
+            <th>Estado</th>
+            <th>Código primigenio</th>
+            <th>Etapa</th>
+            <th>Tipo administrado deriva</th>
+            <th>Código administrado deriva</th>
+            <th>Resultado</th>
+            <th>Motivo conclusión anticipada</th>
+            <th>Fecha resultado</th>
+            <th>Comunicación de resultado</th>
+            <th>Fecha comunicación resultado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let rec of reclamos$">
+            <td>{{ rec.periodo }}</td>
+            <td>1</td>
+            <td>00013383</td>
+            <td>00013383</td>
+            <td>1</td>
+            <td>00013383</td>
+            <td>{{ rec.medio }}</td>
+            <td>
+              <h4>00013383-{{ rec.re_cod }}</h4>
+            </td>
+            <td>{{ rec.tipo_documento }}</td>
+            <td>{{ rec.nro_documento }}</td>
+            <td>{{ rec.nombres }}</td>
+            <td>{{ rec.nombres }}</td>
+            <td>{{ rec.paterno }}</td>
+            <td>{{ rec.materno }}</td>
+            <td>{{ rec.tipo_documento_p }}</td>
+            <td>{{ rec.nro_documento_p }}</td>
+            <td>{{ rec.nombres_p }}</td>
+            <td>{{ rec.nombres_p }}</td>
+            <td>{{ rec.paterno_p }}</td>
+            <td>{{ rec.materno_p }}</td>
+            <td>{{ rec.result_email }}</td>
+            <td>{{ rec.email }}</td>
+            <td>{{ rec.domicilio }}</td>
+            <td>{{ rec.telefono }}</td>
+            <td>{{ rec.medio_recepcion }}</td>
+            <td>{{ rec.fecha }}</td>
+            <td [ngStyle]="{ 'min-width.em': rec.detalle.length / 10 }">
+              {{ rec.detalle }}
+            </td>
+            <td>{{ rec.servicio }}</td>
+            <td>{{ rec.compete }}</td>
+            <td>{{ rec.clasificacion1 }}</td>
+            <td>{{ rec.clasificacion2 }}</td>
+            <td>{{ rec.clasificacion3 }}</td>
+            <td>{{ rec.estado }}</td>
+            <td>{{ rec.codigo_original }}</td>
+            <td>{{ rec.etapa }}</td>
+            <td>{{ rec.derivado_tipo }}</td>
+            <td>{{ rec.derivado_codigo }}</td>
+            <td>{{ rec.resultado }}</td>
+            <td>{{ rec.mot_concl_antic }}</td>
+            <td>{{ rec.fecha_result }}</td>
+            <td>{{ rec.comunic_result }}</td>
+            <td>{{ rec.fecha_notif_result }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Trama Medidas:</h3>
+      <table class="Table animate__animated animate__fadeIn" id="trama">
+        <thead>
+          <tr>
+            <th>Medio Presentación</th>
+            <th>Código Único de Registro</th>
+            <th>Código de la medida</th>
+            <th>Descripción</th>
+            <th>Naturaleza</th>
+            <th>Proceso</th>
+            <th>Fecha Implemenctación</th>
+            <th>Fecha Culminación</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let med of medidas$"
+            class="Table animate__animated animate__fadeIn"
+          >
+            <td>{{ med.medio }}</td>
+            <td>
+              <h4>00013383-{{ med.re_cod }}</h4>
+            </td>
+            <td>{{ ("0" + med.numero).slice(-2) }}</td>
+            <td [ngStyle]="{ 'min-width.em': med.descripcion.length / 10 }">
+              {{ med.descripcion }}
+            </td>
+            <td>{{ med.naturaleza }}</td>
+            <td>{{ med.proceso }}</td>
+            <td>{{ med.fecha_implem }}</td>
+            <td>{{ med.fecha_culm }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </form>
+  <div class="card">
+    <h3>Leyenda:</h3>
+    <div class="flex-container">
+      <div class="flex-item">
+        <table class="Table animate__animated animate__fadeIn">
+          <thead>
+            <tr>
+              <th colspan="2">ESTADO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let est of estados$ | async"
+              class="Table animate__animated animate__fadeIn"
+            >
+              <td>{{ est.er_cod }}</td>
+              <td>{{ est.er_desc }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="Table">
+          <thead>
+            <tr>
+              <th colspan="2">ETAPA</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let eta of etapas$ | async"
+              class="Table animate__animated animate__fadeIn"
+            >
+              <td>{{ eta.etr_cod }}</td>
+              <td>{{ eta.etr_desc }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="flex-item">
+        <table class="Table animate__animated animate__fadeIn">
+          <thead>
+            <tr>
+              <th colspan="2">RESULTADO</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let res of resultados$ | async"
+              class="Table animate__animated animate__fadeIn"
+            >
+              <td>{{ res.rr_cod }}</td>
+              <td>{{ res.rr_desc }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <table class="Table animate__animated animate__fadeIn">
+          <thead>
+            <tr>
+              <th colspan="2">MEDIO RECEPCIÓN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              *ngFor="let med of medios_recepcion$ | async"
+              class="Table animate__animated animate__fadeIn"
+            >
+              <td>{{ med.mr_cod }}</td>
+              <td>{{ med.mr_desc }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div></div>
+  </div>
 </div>

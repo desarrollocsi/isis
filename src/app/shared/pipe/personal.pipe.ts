@@ -7,7 +7,7 @@ import { AuthStorageService } from '../../core/services';
 export class PersonalPipe implements PipeTransform {
   constructor(private AuthStorageService: AuthStorageService) {}
 
-  transform(codigoDelPersonal: unknown, ...args: unknown[]): unknown {
+  transform(codigoDelPersonal: unknown, ...args: unknown[]): any {
     const DATA_DEFAULT = '(No se asigno)';
     let index = this.AuthStorageService.personal.findIndex(
       (data) => data.codigo === codigoDelPersonal
