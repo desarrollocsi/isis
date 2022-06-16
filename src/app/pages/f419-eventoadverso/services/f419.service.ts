@@ -51,7 +51,7 @@ export class F419Service {
   }
 
   /**SUBJECT**/
-  private __refresh = new Subject<any>();
+  private __refresh = new Subject<void>();
   private __idIncidencia = new Subject<any>();
 
   get idIncidencia() {

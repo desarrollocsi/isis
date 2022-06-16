@@ -15,7 +15,7 @@ import {
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent implements OnInit {
-  @Input() menus: string;
+  @Input() menus: any;
   constructor(
     private AST: AuthStorageService,
     private IS: IntermedaryService,
@@ -39,8 +39,7 @@ export class NavbarComponent implements OnInit {
 
   onMenu() {
     this.menus$ = this.IS._menus.pipe(
-      switchMap((id: string) => this.AST.getMenu(id)),
-      tap(console.log)
+      switchMap((id: string) => this.AST.getMenu(id))
     );
   }
 
@@ -48,8 +47,7 @@ export class NavbarComponent implements OnInit {
     this.submenus$ = this.AST.getSubmenu(id);
   }
 
-  onRoute(route: any) {
-    const { nombres, tabla } = route;
+  onRoute({ nombres, tabla }) {
     this.IS.getRoute({ nombres, tabla });
   }
 

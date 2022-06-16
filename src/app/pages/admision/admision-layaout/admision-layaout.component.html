@@ -1,0 +1,138 @@
+<div class="container">
+  <div class="container__">
+    <div class="card">
+      <fieldset class="container__search">
+        <input
+          type="search"
+          placeholder="Buscar paciente"
+          class="input__controlv2"
+          #search
+          (keyup.enter)="buscarPaciente(search.value, $event)"
+        />
+
+        <ng-container *ngIf="searchPaciente$ | async as searchPaciente">
+          <ng-container *ngIf="searchPaciente.length > 0">
+            <div class="container__list">
+              <ul>
+                <li
+                  *ngFor="let paciente of searchPaciente"
+                  class="item__list"
+                  (click)="selectAcreditacion(paciente)"
+                >
+                  {{ paciente.paciente | uppercase }}
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+        </ng-container>
+      </fieldset>
+      <!-- 
+      <fieldset class="container__search">
+        <img src="../../../../assets/icons/search__black.svg" />
+        <input type="text" />
+        <img src="../../../../assets//icons/close.png" />
+      </fieldset> -->
+
+      <ng-container *ngIf="datas$ | async as datas">
+        <fieldset>
+          <legend><h2>DATO DEL PACIENTE</h2></legend>
+          <app-admision-datosdelpacientes
+            [paciente]="datas"
+          ></app-admision-datosdelpacientes>
+        </fieldset>
+
+        <fieldset>
+          <legend><h2>DATO DE LA CITA</h2></legend>
+          <app-admision-datosdelacita
+            [citas]="datas.citas"
+          ></app-admision-datosdelacita>
+        </fieldset>
+
+        <fieldset>
+          <legend><h2>DATO DE LA ACREDITACION</h2></legend>
+          <app-admision-acreditacion
+            [acreditacion]="datas.acreditacion"
+            (coberturas)="getCoberturas($event)"
+          ></app-admision-acreditacion>
+        </fieldset>
+        <fieldset *ngIf="isCobertura">
+          <legend><h2>COBERTURAS</h2></legend>
+          <app-admision-coberturas
+            (selectCoberturas)="getCoberturasSeleccionada($event)"
+            [coberturas]="coberturas$ | async"
+          ></app-admision-coberturas>
+        </fieldset>
+      </ng-container>
+
+      <br />
+
+      <ng-container *ngIf="isAutorizacion">
+        <fieldset>
+          <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <section class="group__input">
+              <input
+                type="text"
+                formControlName="cobertura"
+                class="input__controlv2"
+              />
+              <input
+                type="text"
+                formControlName="copago_fijo"
+                class="input__controlv2"
+              />
+              <input
+                type="text"
+                formControlName="copago_variable"
+                class="input__controlv2"
+              />
+              <input
+                type="text"
+                formControlName="numero_autorizacion"
+                class="input__controlv2"
+              />
+            </section>
+
+            <section class="group__input">
+              <textarea
+                class="input__controlv2"
+                formControlName="observacion"
+                row="30"
+                cols="150"
+              ></textarea>
+            </section>
+            <section class="group__input">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="7">SERVICIO</th>
+                  </tr>
+                  <tr>
+                    <th>PROCEDIMIENTO</th>
+                    <th>PRECIO</th>
+                    <th>CF</th>
+                    <th>CV</th>
+                    <th>VALOR VENTA</th>
+                    <th>IGV</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>CONSULTA</td>
+                    <td>50.00</td>
+                    <td>50.00</td>
+                    <td>70%</td>
+                    <td>50.00</td>
+                    <td>9.00</td>
+                    <td>59.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
+            <button class="btn">Generar Admision</button>
+          </form>
+        </fieldset>
+      </ng-container>
+    </div>
+  </div>
+</div>
