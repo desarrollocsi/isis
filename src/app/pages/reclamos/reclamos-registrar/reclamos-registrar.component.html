@@ -1,4 +1,4 @@
-<!-- <div class="container animate__animated animate__fadeIn">
+<div class="container animate__animated animate__fadeIn">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     <ng-container *ngIf="campos.periodo.value">
       <h2 style="text-align: center">
@@ -236,7 +236,7 @@
           type="checkbox"
           name="result_email"
           [checked]="campos.result_email.value == 1"
-          (change)="f_result_email($event.target.checked ? 1 : 0)"
+          (change)="f_result_email($event.target['checked'] ? 1 : 0)"
         />
         <label
           >El usuario autorizó la notificación del resultado del reclamo al
@@ -590,11 +590,11 @@
             </div>
           </div>
         </div>
-      </div>
-    </ng-container>-->
+      </div> </ng-container
+    >-->
 
-<!--CLASIFICADORES-->
-<!-- <ng-container
+    <!--CLASIFICADORES-->
+    <!-- <ng-container
       *ngIf="campos.compete.value == 1 || campos.compete.value == 3"
     >
       <div class="card animate__animated animate__fadeIn">
@@ -663,8 +663,8 @@
       </div>
     </ng-container> -->
 
-<!--ESTADO-->
-<!-- <div class="card animate__animated animate__fadeIn">
+    <!--ESTADO-->
+    <div class="card animate__animated animate__fadeIn">
       <h3>Estado y Etapa:</h3>
       <div class="flex-container wrap">
         <div class="flex-item">
@@ -688,10 +688,11 @@
           >
             Campo requerido
           </div>
-        </div> -->
+        </div>
+        -->
 
-<!--ETAPA-->
-<!-- <div class="flex-item">
+        <!--ETAPA-->
+        <div class="flex-item">
           <select
             class="input-control input-select"
             formControlName="etapa"
@@ -712,10 +713,10 @@
           >
             Campo requerido
           </div>
-        </div> -->
+        </div>
 
-<!--RECLAMO PRIMIGENIO-->
-<!-- <ng-container
+        <!--RECLAMO PRIMIGENIO-->
+        <ng-container
           *ngIf="
             campos.estado?.value == 4 ||
             campos.estado?.value == 5 ||
@@ -749,10 +750,10 @@
           </div>
         </ng-container>
       </div>
-    </div> -->
+    </div>
 
-<!--RESULTADO-->
-<!-- <ng-container *ngIf="(resultados$ | async)?.length > 0">
+    <!--RESULTADO-->
+    <ng-container *ngIf="(resultados$ | async)?.length > 0">
       <div class="card animate__animated animate__fadeIn">
         <h3>Resultado:</h3>
         <div class="flex-container wrap">
@@ -849,7 +850,8 @@
               >
               <div
                 *ngIf="
-                  campos.comunic_result?.invalid && campos.comunic_result?.touched
+                  campos.comunic_result?.invalid &&
+                  campos.comunic_result?.touched
                 "
                 class="{{ ImputError }}"
               >
@@ -881,10 +883,10 @@
           </ng-container>
         </div>
       </div>
-    </ng-container> -->
+    </ng-container>
 
-<!-- MEDIDAS -->
-<!-- <ng-container
+    <!-- MEDIDAS -->
+    <ng-container
       *ngIf="campos.resultado?.value == 1 || campos.resultado?.value == 2"
     >
       <div class="card animate__animated animate__fadeIn">
@@ -994,11 +996,11 @@
           <img src="assets/icons/add-plus.svg" />
         </div>
       </div>
-    </ng-container> -->
+    </ng-container>
 
-<!-- <div class="group-btn">
+    <div class="group-btn">
       <button type="submit" class="btn">{{ tituloBoton }}</button>
       <button type="button" class="btn" (click)="back()">Cancelar</button>
     </div>
   </form>
-</div>  -->
+</div>
