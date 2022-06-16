@@ -1,9 +1,14 @@
 export const PACIENTE = [
   {
     id: 1,
-    paciente: 'YUR1 ADAN VALDEZ CARAZAS',
-    documento: '47217397',
+    paciente: 'CALVO VARGAS DORA LILIANA',
+    primerNombre: 'DORA',
+    segundoNombre: 'LILIANA',
+    apellidoPaterno: 'CALVO',
+    apellidoMaterno: 'VARGAS',
+    documento: '40078058',
     acreditacion: {
+      iafas: '20001',
       codigo: 1000,
       producto: 'PLANES MEDICOS',
       codigoAfiliado: 12345679,
@@ -20,9 +25,14 @@ export const PACIENTE = [
   },
   {
     id: 2,
-    paciente: 'YUR2 ADAN VALDEZ CARAZAS',
-    documento: '99999999',
+    paciente: 'BEDOYA GUERRERO GINA GRIMALDINA',
+    primerNombre: 'GINA',
+    segundoNombre: 'GRIMALDINA',
+    apellidoPaterno: 'BEDOYA',
+    apellidoMaterno: 'GUERRERO',
+    documento: '40098237',
     acreditacion: {
+      iafas: '20002',
       codigo: 1000,
       producto: 'PLANES MEDICOS',
       codigoAfiliado: 9999999,
@@ -39,7 +49,20 @@ export const PACIENTE = [
   },
 ];
 
-export const DATAS = [
-  { id: 1, paciente: 'yur1 adan valdez', documento: '47217397' },
-  { id: 2, paciente: 'yur2 adan valdez', documento: '99999999' },
+export const DATA__ATENCION = [
+  { codigo: 12, descripcion: 'AMENAZA DE ABORTO' },
+  { codigo: 10, descripcion: 'COMPLICACIONES DEL EMBARAZO' },
+  { codigo: 1, descripcion: 'CONSULTA AMBULATORIA' },
+  { codigo: 11, descripcion: 'CONTROL DEL RECIEN NACIDO' },
+  { codigo: 6, descripcion: 'CONTROL DE NIÑO SANO' },
+  { codigo: 14, descripcion: 'CONTROL POST HOSPITALARIO' },
+  { codigo: 9, descripcion: 'CONTROL POST NATAL' },
+  { codigo: 8, descripcion: 'CONTROL PRE NATAL' },
+  { codigo: 2, descripcion: 'EMERGENCIA MEDICA' },
+  { codigo: 13, descripcion: 'EMERGENCIA OBSTETRICA' },
+  { codigo: 3, descripcion: 'HOSPITALIZACION' },
+  { codigo: 4, descripcion: 'MATERNIDAD' },
+  { codigo: 15, descripcion: 'NUTRICIONISTA' },
+  { codigo: 16, descripcion: 'PEDIATRICO' },
+  { codigo: 7, descripcion: 'VACUNACION' },
 ];

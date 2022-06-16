@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { DATA__ATENCION } from '../data';
 
 @Component({
   selector: 'app-admision-datosdelpacientes',
@@ -7,7 +9,12 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AdmisionDatosdelpacientesComponent implements OnInit {
   @Input() paciente: any;
+
+  atenciones$: Observable<any>;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.atenciones$ = of(DATA__ATENCION);
+  }
 }

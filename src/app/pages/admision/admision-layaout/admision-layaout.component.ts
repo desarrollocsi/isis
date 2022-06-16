@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { PACIENTE, DATAS } from '../data/';
-import { Cobertura } from '../models';
+import { PACIENTE, DATA__ATENCION } from '../data/';
+import { Cobertura, WebserviceSualudNombre } from '../models';
+import { HttpService } from '../services/http.service';
 
 @Component({
   selector: 'app-admision-layaout',
@@ -14,11 +15,12 @@ export class AdmisionLayaoutComponent implements OnInit {
   form: FormGroup;
   coberturas$: Observable<any>;
   searchPaciente$: Observable<any>;
+  atenciones$: Observable<any>;
 
   isCobertura: boolean = false;
   isAutorizacion: boolean = false;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private httpService: HttpService) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -32,8 +34,11 @@ export class AdmisionLayaoutComponent implements OnInit {
       copago_variable: [null],
       numero_autorizacion: [null],
     });
+    this.getAtenciones();
+  }
 
-    // this.getDatas();
+  getAtenciones() {
+    this.atenciones$ = of(DATA__ATENCION);
   }
 
   searchPacientesClear() {
@@ -47,9 +52,10 @@ export class AdmisionLayaoutComponent implements OnInit {
     }
 
     this.searchPaciente$ = of(
-      DATAS.filter(
+      PACIENTE.filter(
         ({ paciente, documento }) =>
-          paciente.includes(datoPaciente) || documento.includes(datoPaciente)
+          paciente.includes(datoPaciente.toUpperCase()) ||
+          documento.includes(datoPaciente.toUpperCase())
       )
     );
   }
@@ -58,8 +64,11 @@ export class AdmisionLayaoutComponent implements OnInit {
     return of(PACIENTE.find(({ id }) => id === idPaciente));
   }
 
-  selectAcreditacion({ id }: { id: number }) {
-    this.datas$ = this.paciente(id);
+  selectAcreditacion(data: any) {
+    // this.datas$ = this.paciente(id);
+    this.datas$ = this.httpService.consultaNombre(
+      new WebserviceSualudNombre(data)
+    );
     this.searchPacientesClear();
   }
 

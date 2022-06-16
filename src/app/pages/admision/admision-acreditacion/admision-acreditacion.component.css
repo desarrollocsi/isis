@@ -10,3 +10,25 @@
   border-radius: 0.5rem;
   outline: none;
 }
+
+table,
+th,
+td {
+  border: 1px solid #cbd5e1;
+  border-collapse: collapse;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  padding: 1rem;
+  text-align: center;
+}
+
+.container__table {
+  /* height: 350px; */
+  /* overflow-y: scroll; */
+}
