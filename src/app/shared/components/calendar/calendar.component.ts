@@ -19,8 +19,8 @@ export class CalendarComponent implements OnInit {
     'Domingo',
   ];
 
-  monthSelect: any[];
-  data: any[] = [];
+  monthSelect: object[];
+  data: object[] = [];
   dateSelect: any;
   yearMonth: string;
   modoAleatorio: boolean = false;

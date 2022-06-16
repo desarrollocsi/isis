@@ -19,7 +19,7 @@ import {
 export class FormdinamicoModalComponent implements OnInit, OnDestroy {
   @Input() forms: Observable<any>;
 
-  form$: Observable<any>;
+  form$: Observable<object>;
   modal$: Observable<any>;
   data$: Observable<any>;
   form: FormGroup;

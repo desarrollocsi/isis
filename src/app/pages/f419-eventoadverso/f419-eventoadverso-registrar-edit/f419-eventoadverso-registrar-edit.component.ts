@@ -164,7 +164,7 @@ export class F419EventoadversoRegistrarEditComponent
   indexDetalle = (codigoDetalle: string) =>
     this.detalleValue.findIndex(({ codigo }) => codigo === codigoDetalle);
 
-  addDetail(checked, { id, idinvolucrados }) {
+  addDetail({ checked }, { id, idinvolucrados }) {
     checked &&
       this.detalles.push(
         this.fb.group({

@@ -25,7 +25,7 @@ export class HistoriaRegistrarComponent implements OnInit {
   estadoCiviles$: Observable<any>;
   tipoDocumentos$: Observable<any>;
   ocupaciones$: Observable<any>;
-  dataPaciente: any = null;
+  dataPaciente: object = null;
   constructor(
     private fb: FormBuilder,
     private HS: HistoriaService,
