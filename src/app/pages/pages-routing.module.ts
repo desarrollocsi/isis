@@ -80,11 +80,6 @@ const routes: Routes = [
         loadChildren: () =>
           import('./admision/admision.module').then((m) => m.AdmisionModule),
       },
-      {
-        path: 'caja',
-        loadChildren: () =>
-          import('./caja/caja.module').then((m) => m.CajaModule),
-      },
     ],
   },
 ];
