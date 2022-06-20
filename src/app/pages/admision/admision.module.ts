@@ -5,6 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AdmisionRoutingModule } from './admision-routing.module';
+import { SharedModule } from '../../shared/shared.module';
+
 import { AdmisionLayaoutComponent } from './admision-layaout/admision-layaout.component';
 import { AdmisionDatosdelpacientesComponent } from './admision-datosdelpacientes/admision-datosdelpacientes.component';
 import { AdmisionDatosdelacitaComponent } from './admision-datosdelacita/admision-datosdelacita.component';
@@ -24,6 +26,7 @@ import { AdmisionCoberturasComponent } from './admision-coberturas/admision-cobe
     AdmisionRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    SharedModule,
   ],
 })
 export class AdmisionModule {}

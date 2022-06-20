@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, of } from 'rxjs';
+import { combineLatest, map, Observable, of } from 'rxjs';
+import { finalize, tap } from 'rxjs/operators';
 import { PACIENTE, DATA__ATENCION } from '../data/';
 import { Cobertura, WebserviceSualudNombre } from '../models';
 import { HttpService } from '../services/http.service';
@@ -16,9 +17,11 @@ export class AdmisionLayaoutComponent implements OnInit {
   coberturas$: Observable<any>;
   searchPaciente$: Observable<any>;
   atenciones$: Observable<any>;
-
+  datasPacientes$: Observable<any>;
+  paciente$: Observable<any>;
   isCobertura: boolean = false;
   isAutorizacion: boolean = false;
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder, private httpService: HttpService) {}
 
@@ -26,13 +29,13 @@ export class AdmisionLayaoutComponent implements OnInit {
     this.form = this.fb.group({
       idacreditacion: [null],
       idcobertura: [null],
-      cobertura: [null],
+      cobertura: [{ value: null, disabled: true }],
       idautorizacion: [null],
       idcitas: [null],
       observacion: [null],
-      copago_fijo: [null],
-      copago_variable: [null],
-      numero_autorizacion: [null],
+      copago_fijo: [{ value: null, disabled: true }],
+      copago_variable: [{ value: null, disabled: true }],
+      numero_autorizacion: [{ value: null, disabled: true }],
     });
     this.getAtenciones();
   }
@@ -45,7 +48,7 @@ export class AdmisionLayaoutComponent implements OnInit {
     this.searchPaciente$ = of([]);
   }
 
-  buscarPaciente(datoPaciente: string, event: any) {
+  buscarPaciente(datoPaciente: string) {
     if (datoPaciente.length === 0) {
       this.searchPacientesClear();
       return;
@@ -60,31 +63,35 @@ export class AdmisionLayaoutComponent implements OnInit {
     );
   }
 
-  paciente(idPaciente: number): Observable<any> {
-    return of(PACIENTE.find(({ id }) => id === idPaciente));
-  }
-
-  selectAcreditacion(data: any) {
-    // this.datas$ = this.paciente(id);
+  selectAcreditacion(datas: any) {
+    this.isLoading = true;
     this.datas$ = this.httpService.consultaNombre(
-      new WebserviceSualudNombre(data)
+      new WebserviceSualudNombre(datas)
     );
+
+    this.datasPacientes$ = this.httpService.getDataPaciente(datas);
+
+    this.paciente$ = combineLatest([this.datas$, this.datasPacientes$]).pipe(
+      map(([data, datasPacientes]) => {
+        return { datasPacientes, data };
+      }),
+      finalize(() => (this.isLoading = false))
+    );
+
     this.searchPacientesClear();
   }
 
-  getCoberturas(cobertura: any) {
-    this.isCobertura = true;
-    this.coberturas$ = of(cobertura);
+  getCoberturas(acreditacion: any) {
+    this.isLoading = true;
+    this.coberturas$ = this.httpService
+      .consultaCoberturas(acreditacion)
+      .pipe(finalize(() => (this.isLoading = false)));
   }
 
   getCoberturasSeleccionada(cobertura: any) {
     this.isCobertura = false;
     this.isAutorizacion = true;
     this.form.patchValue(new Cobertura(cobertura));
-  }
-
-  getDatas() {
-    this.datas$ = of(PACIENTE);
   }
 
   onSubmit() {

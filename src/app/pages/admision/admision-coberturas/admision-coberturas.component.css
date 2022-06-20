@@ -15,7 +15,16 @@ th {
   text-align: center;
 }
 
+.text__left {
+  text-align: left;
+}
+
 .container__table {
   height: 350px;
   overflow-y: scroll;
+}
+
+.active {
+  background-color: #8cc8c8;
+  font-weight: 600;
 }

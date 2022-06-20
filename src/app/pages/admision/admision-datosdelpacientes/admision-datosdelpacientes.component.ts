@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable, of } from 'rxjs';
+
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DATA__ATENCION } from '../data';
 
 @Component({
@@ -11,10 +13,13 @@ export class AdmisionDatosdelpacientesComponent implements OnInit {
   @Input() paciente: any;
 
   atenciones$: Observable<any>;
+  form: FormGroup;
 
-  constructor() {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.atenciones$ = of(DATA__ATENCION);
+
+    this.form = this.fb.group({});
   }
 }

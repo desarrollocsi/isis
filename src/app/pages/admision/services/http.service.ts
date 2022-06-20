@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
+//
+import { PACIENTE } from '../data';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +10,7 @@ import { Observable } from 'rxjs';
 export class HttpService {
   constructor(private http: HttpClient) {}
 
-  parametersDynamic(data: any) {
+  private parametersDynamic(data: any) {
     let params = new URLSearchParams();
 
     for (const key in data) {
@@ -18,15 +20,31 @@ export class HttpService {
     return params.toString();
   }
 
+  getDataPaciente({ id }): Observable<any> {
+    return of(PACIENTE.find((value) => value.id === id));
+  }
+
   consultaNombre(data: any): Observable<any> {
-    const httpHeaders = new HttpHeaders({
+    const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
     });
 
     return this.http.post(
       `http://localhost:8080/sitedsApi/consultaNombre`,
       this.parametersDynamic(data),
-      { headers: httpHeaders }
+      { headers: headers }
+    );
+  }
+
+  consultaCoberturas(data: any): Observable<any> {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/x-www-form-urlencoded',
+    });
+
+    return this.http.post(
+      `http://localhost:8080/sitedsApi/consultaCobertura`,
+      this.parametersDynamic(data),
+      { headers }
     );
   }
 }

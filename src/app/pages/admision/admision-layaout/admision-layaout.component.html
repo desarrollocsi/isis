@@ -7,7 +7,7 @@
           placeholder="Buscar paciente"
           class="input__controlv2"
           #search
-          (keyup.enter)="buscarPaciente(search.value, $event)"
+          (keyup.enter)="buscarPaciente(search.value)"
         />
 
         <ng-container *ngIf="searchPaciente$ | async as searchPaciente">
@@ -26,56 +26,36 @@
           </ng-container>
         </ng-container>
       </fieldset>
-      <ng-container *ngIf="datas$ | async as datas">
+
+      <ng-container *ngIf="paciente$ | async as datasPaciente">
+        <fieldset>
+          <legend><h2>DATOS DEL PACIENTE</h2></legend>
+          <app-admision-datosdelpacientes
+            [paciente]="datasPaciente.datasPacientes"
+          ></app-admision-datosdelpacientes>
+        </fieldset>
+        <fieldset>
+          <legend><h2>DATOS DE LA CITA</h2></legend>
+          <app-admision-datosdelacita
+            [citas]="datasPaciente.datasPacientes.citas"
+          ></app-admision-datosdelacita>
+        </fieldset>
         <fieldset>
           <legend><h2>DATOS DE LA ACREDITACION</h2></legend>
           <app-admision-acreditacion
-            [acreditacion]="datas.acreditaciones"
-            (coberturas)="getCoberturas($event)"
+            [acreditacion]="datasPaciente.data.acreditaciones"
+            (selectAcreditacion)="getCoberturas($event)"
           ></app-admision-acreditacion>
         </fieldset>
-        <fieldset>
-          <legend><h2>DATOS DEL PACIENTE</h2></legend>
-          <app-admision-datosdelpacientes
-            [paciente]="datas"
-          ></app-admision-datosdelpacientes>
-        </fieldset>
-        <fieldset>
-          <legend><h2>DATOS DE LA CITA</h2></legend>
-          <app-admision-datosdelacita
-            [citas]="datas.citas"
-          ></app-admision-datosdelacita>
-        </fieldset>
-        <!-- 
-          
-        <fieldset>
-          <legend><h2>DATOS DEL PACIENTE</h2></legend>
-          <app-admision-datosdelpacientes
-            [paciente]="datas"
-          ></app-admision-datosdelpacientes>
-        </fieldset>
-
-        <fieldset>
-          <legend><h2>DATOS DE LA CITA</h2></legend>
-          <app-admision-datosdelacita
-            [citas]="datas.citas"
-          ></app-admision-datosdelacita>
-        </fieldset>
-
-
-
-        <fieldset *ngIf="isCobertura">
-          <legend><h2>COBERTURAS</h2></legend>
-          <app-admision-coberturas
-            (selectCoberturas)="getCoberturasSeleccionada($event)"
-            [coberturas]="coberturas$ | async"
-          ></app-admision-coberturas>
-        </fieldset> -->
+      </ng-container>
+      <ng-container *ngIf="coberturas$ | async as coberturas">
+        <app-admision-coberturas
+          [coberturas]="coberturas"
+          (selectCoberturas)="getCoberturasSeleccionada($event)"
+        ></app-admision-coberturas>
       </ng-container>
 
-      <br />
-
-      <!-- <fieldset>
+      <fieldset>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <fieldset>
             <legend><h2>Datos del atencion</h2></legend>
@@ -106,29 +86,41 @@
 
           <ng-container *ngIf="isAutorizacion">
             <section class="group__input">
-              <input
-                type="text"
-                formControlName="cobertura"
-                class="input__controlv2"
-              />
-              <input
-                type="text"
-                formControlName="copago_fijo"
-                class="input__controlv2"
-              />
-              <input
-                type="text"
-                formControlName="copago_variable"
-                class="input__controlv2"
-              />
-              <input
-                type="text"
-                formControlName="numero_autorizacion"
-                class="input__controlv2"
-              />
+              <aside class="group__item">
+                <input
+                  type="text"
+                  formControlName="cobertura"
+                  class="input__controlv2"
+                />
+                <label class="control__label">Cobertura</label>
+              </aside>
+              <aside class="group__item">
+                <input
+                  type="text"
+                  formControlName="copago_fijo"
+                  class="input__controlv2"
+                />
+                <label class="control__label">Copago Fijo</label>
+              </aside>
+              <aside class="group__item">
+                <input
+                  type="text"
+                  formControlName="copago_variable"
+                  class="input__controlv2"
+                />
+                <label class="control__label">Copago Variable</label>
+              </aside>
+              <aside class="group__item">
+                <input
+                  type="text"
+                  formControlName="numero_autorizacion"
+                  class="input__controlv2"
+                />
+                <label class="control__label">N° Autorizacion</label>
+              </aside>
             </section>
           </ng-container>
-          <section class="group__input">
+          <!-- <section class="group__input">
             <textarea
               class="input__controlv2"
               formControlName="observacion"
@@ -165,11 +157,11 @@
                 </tr>
               </tbody>
             </table>
-          </section>
+          </section> -->
           <button class="btn">Generar Admision</button>
         </form>
-      </fieldset> -->
+      </fieldset>
     </div>
   </div>
 </div>
-prueba
+<app-loading [loading]="isLoading"></app-loading>
