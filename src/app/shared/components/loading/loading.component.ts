@@ -1,12 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+interface Loadding {
+  isLoading: boolean;
+  message?: string;
+}
+
 @Component({
   selector: 'app-loading',
-  templateUrl: './loading.component.html',
+  template: `<ng-container *ngIf="loading?.isLoading">
+    <div class="container__loadding">
+      <div class="loading"></div>
+      <span class="loading__message">{{ loading?.message }} ...</span>
+    </div>
+  </ng-container> `,
   styleUrls: ['./loading.component.css'],
 })
 export class LoadingComponent implements OnInit {
-  @Input() loading: boolean = false;
+  @Input() loading: Loadding;
 
   constructor() {}
 

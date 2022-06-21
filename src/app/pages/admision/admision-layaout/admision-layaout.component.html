@@ -48,6 +48,7 @@
           ></app-admision-acreditacion>
         </fieldset>
       </ng-container>
+
       <ng-container *ngIf="coberturas$ | async as coberturas">
         <app-admision-coberturas
           [coberturas]="coberturas"
@@ -164,4 +165,4 @@
     </div>
   </div>
 </div>
-<app-loading [loading]="isLoading"></app-loading>
+<app-loading [loading]="loading"></app-loading>

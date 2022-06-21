@@ -17,12 +17,10 @@ export class AdmisionCoberturasComponent implements OnInit {
   ngOnInit(): void {}
 
   generarAutorizacion(data: any) {
-    console.log(data);
-
     Swal.fire({
       title: '¿Esta seguro de Seleccionar la cobertura?',
-      text: `${data.CoberturaDescripcion}`,
-      icon: 'info',
+      text: `${data?.CoberturaDescripcion}`,
+      icon: 'question',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',

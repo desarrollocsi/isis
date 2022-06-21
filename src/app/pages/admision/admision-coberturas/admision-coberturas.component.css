@@ -5,8 +5,17 @@ td {
   border-collapse: collapse;
 }
 
+tr:last-child {
+  border: none;
+}
+
 table {
   width: 100%;
+}
+
+thead {
+  background-color: #009b6e;
+  color: #fff;
 }
 
 td,
@@ -22,6 +31,7 @@ th {
 .container__table {
   height: 350px;
   overflow-y: scroll;
+  border-bottom: 1px solid #cbd5e1;
 }
 
 .active {

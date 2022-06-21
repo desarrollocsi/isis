@@ -2,14 +2,15 @@
   <table>
     <thead>
       <tr>
-        <th colspan="6">COBERTURAS</th>
+        <th colspan="7">COBERTURAS</th>
       </tr>
       <tr>
         <th>COBERTURA</th>
-        <th class="text__left">DESCRIPCION</th>
+        <th>DESCRIPCION</th>
         <th>CF</th>
         <th>CV</th>
-        <th>MSGOBS / MSGCONESPECIALES</th>
+        <th>MSGOBS</th>
+        <th>MSGCONESPECIALES</th>
         <th>FIN DE CARENCIA</th>
       </tr>
     </thead>
@@ -21,17 +22,19 @@
       >
         <td>{{ cobertura.CoTiCobertura }}{{ cobertura.CoSubTiCobertura }}</td>
         <td class="text__left">
-          {{ cobertura.CoberturaDescripcion }}
+          {{ cobertura?.CoberturaDescripcion }}
         </td>
         <td>{{ cobertura.CoPagoFijo }}</td>
         <td>{{ cobertura.CoPagoVariable }}%</td>
-        <td>{{ cobertura.MsgObs ?? cobertura.MsgConEspeciales }}</td>
+        <td class="text__left">
+          {{ cobertura.MsgObs }}
+        </td>
+        <td class="text__left">
+          {{ cobertura.MsgConEspeciales }}
+        </td>
+
         <td>
-          {{
-            cobertura.FeFinCarencia === "00000000"
-              ? null
-              : cobertura.FeFinCarencia
-          }}
+          {{ cobertura.FeFinCarencia }}
         </td>
       </tr>
     </tbody>

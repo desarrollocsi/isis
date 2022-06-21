@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admision-acreditacion',
@@ -17,7 +18,11 @@ export class AdmisionAcreditacionComponent implements OnInit {
   ngOnInit(): void {}
 
   getAcreditacion(data: any) {
-    this.selectAcreditacion.emit(data);
+    if (data.CoEsPaciente === '1') {
+      this.selectAcreditacion.emit(data);
+      return;
+    }
+    Swal.fire('', 'Acreditacion Anulada', 'error');
   }
 
   selectItem(data: any) {

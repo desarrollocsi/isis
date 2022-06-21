@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { tap, combineLatest, Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 //
 import { PACIENTE } from '../data';
+import { WebserviceSualudNombre } from '../models';
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +33,20 @@ export class HttpService {
 
     return this.http.post(
       `http://localhost:8080/sitedsApi/consultaNombre`,
-      this.parametersDynamic(data),
+      this.parametersDynamic(new WebserviceSualudNombre(data)),
       { headers: headers }
+    );
+  }
+
+  getPaciente(data: any) {
+    return combineLatest([
+      this.consultaNombre(data),
+      this.getDataPaciente(data),
+    ]).pipe(
+      map(([data, datasPacientes]) => {
+        return { data, datasPacientes };
+      }),
+      tap(console.log)
     );
   }
 

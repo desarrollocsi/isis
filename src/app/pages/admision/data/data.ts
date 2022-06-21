@@ -47,6 +47,30 @@ export const PACIENTE = [
       consultorios: 'CONSULTORIOS 5000',
     },
   },
+  {
+    id: 3,
+    paciente: 'BARRERA HERRERA ARACELLI IRENE',
+    primerNombre: 'ARACELLI',
+    segundoNombre: 'IRENE',
+    apellidoPaterno: 'BARRERA',
+    apellidoMaterno: 'HERRERA',
+    documento: '76524899',
+    acreditacion: {
+      iafas: '40004',
+      codigo: 1000,
+      producto: 'PLANES MEDICOS',
+      codigoAfiliado: 9999999,
+      empresa: 'TERMOCHILCA SA',
+      fechaVigencia: '2022-06-07',
+    },
+    citas: {
+      fecha: '2022-06-07',
+      hora: '13:00:00',
+      medico: 'ABURTO XXXXX',
+      especialidad: 'PEDIATRA',
+      consultorios: 'CONSULTORIOS 5000',
+    },
+  },
 ];
 
 export const DATA__ATENCION = [

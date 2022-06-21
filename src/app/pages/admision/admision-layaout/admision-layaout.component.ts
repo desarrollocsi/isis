@@ -1,10 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { combineLatest, map, Observable, of } from 'rxjs';
-import { finalize, tap } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { PACIENTE, DATA__ATENCION } from '../data/';
 import { Cobertura, WebserviceSualudNombre } from '../models';
 import { HttpService } from '../services/http.service';
+
+interface Loadding {
+  isLoading: boolean;
+  message?: string;
+}
 
 @Component({
   selector: 'app-admision-layaout',
@@ -21,7 +26,7 @@ export class AdmisionLayaoutComponent implements OnInit {
   paciente$: Observable<any>;
   isCobertura: boolean = false;
   isAutorizacion: boolean = false;
-  isLoading: boolean = false;
+  loading: Loadding;
 
   constructor(private fb: FormBuilder, private httpService: HttpService) {}
 
@@ -64,28 +69,32 @@ export class AdmisionLayaoutComponent implements OnInit {
   }
 
   selectAcreditacion(datas: any) {
-    this.isLoading = true;
-    this.datas$ = this.httpService.consultaNombre(
-      new WebserviceSualudNombre(datas)
-    );
+    this.coberturas$ = of(null);
+    this.loading = { isLoading: true, message: 'Consultando acreditacion' };
+    // this.datas$ = this.httpService.consultaNombre(
+    //   new WebserviceSualudNombre(datas)
+    // );
 
-    this.datasPacientes$ = this.httpService.getDataPaciente(datas);
+    // this.datasPacientes$ = this.httpService.getDataPaciente(datas);
 
-    this.paciente$ = combineLatest([this.datas$, this.datasPacientes$]).pipe(
-      map(([data, datasPacientes]) => {
-        return { datasPacientes, data };
-      }),
-      finalize(() => (this.isLoading = false))
-    );
+    // this.paciente$ = combineLatest([this.datas$, this.datasPacientes$]).pipe(
+    //   map(([data, datasPacientes]) => {
+    //     return { datasPacientes, data };
+    //   }),
+    //   finalize(() => (this.loading = { isLoading: false }))
+    // );
 
+    this.paciente$ = this.httpService
+      .getPaciente(datas)
+      .pipe(finalize(() => (this.loading = { isLoading: false })));
     this.searchPacientesClear();
   }
 
   getCoberturas(acreditacion: any) {
-    this.isLoading = true;
+    this.loading = { isLoading: true, message: 'Consultando las coberturas' };
     this.coberturas$ = this.httpService
       .consultaCoberturas(acreditacion)
-      .pipe(finalize(() => (this.isLoading = false)));
+      .pipe(finalize(() => (this.loading = { isLoading: false })));
   }
 
   getCoberturasSeleccionada(cobertura: any) {
