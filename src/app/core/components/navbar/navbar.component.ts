@@ -47,8 +47,9 @@ export class NavbarComponent implements OnInit {
     this.submenus$ = this.AST.getSubmenu(id);
   }
 
-  onRoute({ nombres, tabla }) {
-    this.IS.getRoute({ nombres, tabla });
+  onRoute({ nombres, tabla, accion }) {
+    nombres = (accion.split("/").pop())
+    this.IS.getRoute({nombres,tabla});
   }
 
   logout() {

@@ -124,7 +124,7 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
     this.medidas = this.form.get('medidas') as FormArray;
     this.getEstado(1);
     this.getEtapaResultado(1);
-    this.tipodocumentos$ = this.RS.getTipoDocumento();
+    this.tipodocumentos$ = this.HS.getTipoDocumento();
     this.clasificaciones$ = this.RS.getClasificacion();
     this.servicios$ = this.RS.getServicio();
     this.medios_recepcion$ = this.RS.getMedioRecepcion();

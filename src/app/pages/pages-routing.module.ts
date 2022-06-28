@@ -81,9 +81,9 @@ const routes: Routes = [
           import('./admision/admision.module').then((m) => m.AdmisionModule),
       },
       {
-        path: 'caja',
+        path: 'pagoconsumo',
         loadChildren: () =>
-          import('./caja/caja.module').then((m) => m.CajaModule),
+          import('./pagoconsumo/pagoconsumo.module').then((m) => m.PagoConsumoModule),
       },
     ],
   },

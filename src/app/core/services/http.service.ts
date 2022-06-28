@@ -46,7 +46,19 @@ export class HttpService {
     return this.http.get(`${environment.apiUrl}/tipodedocumentos/`);
   }
 
+  getTipoDocumento() {
+    return this.http.get(`${environment.apiUrl}/tipodocumento`);
+  }
+
   getOcupaciones() {
     return this.http.get(`${environment.apiUrl}/ocupaciones/`);
+  }
+
+  getTipoComprobantes() {
+    return this.http.get(`${environment.apiUrl}/tipocomprobante/`);
+  }
+
+  getMedioPago() {
+    return this.http.get(`${environment.apiUrl}/mediopago/`);
   }
 }
