@@ -8,6 +8,7 @@
 />
 <div class="modal">
   <div class="modal-wrap">
+    <form [formGroup]="form">
     <div class="modal-head">
       {{ Tittle }}
     </div>
@@ -18,7 +19,7 @@
             <option [ngValue]="1">Contado</option>
             <option [ngValue]="2">Crédito</option>
           </select>
-          <label class="label-control" for="tipo_comprobante">Forma de Pago</label>
+          <label class="label-control" for="forma">Forma de Pago</label>
         </div>
         <div class="flex-item">
           <select class="input-control input-select" formControlName="medio">
@@ -27,9 +28,58 @@
             <option [ngValue]="3">Tarjeta de Débito</option>
             <option [ngValue]="4">Nota de Crédito</option>
           </select>
-          <label class="label-control" for="tipo_comprobante">Forma de Pago</label>
+          <label class="label-control" for="medio">Medio de Pago</label>
+        </div>
+        <div class="flex-item">
+          <select class="input-control input-select" formControlName="moneda">
+            <option [ngValue]="1">Soles</option>
+            <option [ngValue]="2">Dolares</option>
+            <option [ngValue]="3">Euros</option>
+          </select>
+          <label class="label-control" for="moneda">Moneda</label>
+        </div>
+        <ng-container *ngIf="[2,3].includes(campos.medio.value)">
+          <div class="flex-item">
+            <select class="input-control input-select" formControlName="marcatarjeta">
+              <option [ngValue]="1">VISA</option>
+              <option [ngValue]="2">MASTERCAR</option>
+              <option [ngValue]="3">AMEX</option>
+            </select>
+            <label class="label-control" for="marcatarjeta">Marca Tarjeta</label>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="campos.medio.value == 4">
+          <div class="flex-item">
+            <input type="number" class="input-control" placeholder=" " formControlName="nronc" maxlength="20">
+            <label class="label-control" for="nronc">N° de Nota de Crédito</label>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="campos.medio.value == 1">
+          <div class="flex-item">
+            <input type="number" class="input-control" placeholder=" " formControlName="importe"  [readonly]="campos.medio.value == 1">
+            <label class="label-control" for="importe">Importe a pagar</label>
+            <div *ngIf="campos.importe.invalid && (campos.importe.dirty || campos.importe.touched)" class="{{ ImputError }}">
+              Campo requerido
+            </div>
+          </div>
+          <div class="flex-item">
+            <input type="number" class="input-control" placeholder=" " formControlName="recibido" maxlength="10">
+            <label class="label-control" for="recibido">Recibido</label>
+          </div>
+          <div class="flex-item">
+            <input type="number" class="input-control" placeholder=" " formControlName="vuelto" maxlength="10">
+            <label class="label-control" for="vuelto">Vuelto</label>
+          </div>
+        </ng-container>
+        <div class="flex-item">
+          <input type="number" class="input-control" placeholder=" " formControlName="pendiente" maxlength="10">
+          <label class="label-control" for="pendiente">Pendiente</label>
         </div>
       </div>
+      <div style="align-self:end">
+        <button class="btn" (click)="test()">Guardar</button>
+      </div>
     </div>
+  </form>
   </div>
 </div>

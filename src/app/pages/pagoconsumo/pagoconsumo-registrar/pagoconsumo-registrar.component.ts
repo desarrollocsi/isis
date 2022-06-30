@@ -136,7 +136,7 @@ export class PagoConsumoRegistrarComponent implements OnInit, OnDestroy {
       control.updateValueAndValidity();
     });
     this.form.markAllAsTouched();
-    console.log(this.form.value);
+    //console.log(this.form.value);
     if (this.form.valid) {
       if (this.VERB_HTTP == 'PUT') {
         this.campos.modificador.setValue(this.campos.usuario.value);
