@@ -80,6 +80,11 @@ const routes: Routes = [
         loadChildren: () =>
           import('./admision/admision.module').then((m) => m.AdmisionModule),
       },
+      {
+        path: 'pagoconsumo',
+        loadChildren: () =>
+          import('./pagoconsumo/pagoconsumo.module').then((m) => m.PagoConsumoModule),
+      },
     ],
   },
 ];

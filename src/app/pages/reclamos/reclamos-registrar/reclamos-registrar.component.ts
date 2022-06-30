@@ -124,7 +124,7 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
     this.medidas = this.form.get('medidas') as FormArray;
     this.getEstado(1);
     this.getEtapaResultado(1);
-    this.tipodocumentos$ = this.RS.getTipoDocumento();
+    this.tipodocumentos$ = this.HS.getTipoDocumento();
     this.clasificaciones$ = this.RS.getClasificacion();
     this.servicios$ = this.RS.getServicio();
     this.medios_recepcion$ = this.RS.getMedioRecepcion();
@@ -179,7 +179,7 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
   }
 
   getEtapaResultado(estado: number) {
-    var etp, res, x;
+    var etp, res;
     if (estado == 1) {
       etp = [3];
       res = [1, 2, 3, 4, 5];
@@ -190,29 +190,36 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
       res = [0];
       this.campos.resultado.setValue(0);
     }
+
     if (estado == 3) {
       etp = [];
       res = [0];
       this.campos.resultado.setValue(0);
     }
+
     if (estado == 4 || estado == 5) {
       etp = [];
       res = [];
     }
+
     if (estado == 6) {
       etp = [4];
       res = [1, 2, 3, 4, 5];
       this.campos.etapa.setValue(4);
     }
+
     this.etapas$ = this.RS.getEtapa().pipe(
       map((data) => data.filter((p) => etp.includes(p.etr_cod)))
     );
+
     this.resultados$ = this.RS.getResultado().pipe(
       map((data) => data.filter((p) => res.includes(p.rr_cod)))
     );
+
     if (!etp.includes(this.campos.etapa.value)) {
       this.campos.etapa.reset();
     }
+
     if (!res.includes(this.campos.resultado.value)) {
       this.campos.resultado.reset();
       this.campos.fecha_result.reset();
@@ -222,7 +229,6 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
   }
 
   nrodocp_valid() {
-    const ndoc = this.campos.nro_documento_p.value;
     switch (this.campos.tipo_documento_p.value) {
       default:
         this.pattern_doc_p = '[A-Za-z0-9]{0,15}';
@@ -239,7 +245,6 @@ export class ReclamosRegistrarComponent implements OnInit, OnDestroy {
   }
 
   nrodoc_valid() {
-    const ndoc = this.campos.nro_documento.value;
     switch (this.campos.tipo_documento.value) {
       default:
         this.pattern_doc = '[A-Za-z0-9]{0,15}';

@@ -13,7 +13,7 @@
     *ngFor="let list of lists | paginate: { itemsPerPage: 5, currentPage: p }"
   >
     <div class="cell">
-      {{ list.codigo | titlecase }}
+      {{ list.codigo  | titlecase }}
     </div>
     <div class="cell">
       {{ list.descripcion | titlecase }}

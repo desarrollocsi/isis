@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormGroup } from '@angular/forms'
 import { ReclamosService } from '../services/reclamos.service'
-import { AuthStorageService, MessageService } from '../../../core/services'
+import { AuthStorageService, MessageService, HttpService } from '../../../core/services'
 import { Observable, Subject } from 'rxjs'
 import * as moment from 'moment'
 import { takeUntil } from 'rxjs/operators'
@@ -36,7 +36,8 @@ export class ReclamosTramaComponent implements OnInit {
         private fb: FormBuilder,
         private RS: ReclamosService,
         private ATH: AuthStorageService,
-        private MS: MessageService
+        private MS: MessageService,
+        private HS: HttpService,
     ) { }
 
     get campos() {
@@ -58,7 +59,7 @@ export class ReclamosTramaComponent implements OnInit {
             usuario: [this.ATH.User]
         })
         this.cargatrama()
-        this.tipodocumentos$ = this.RS.getTipoDocumento()
+        this.tipodocumentos$ = this.HS.getTipoDocumentos()
         this.estados$ = this.RS.getEstado()
         this.etapas$ = this.RS.getEtapa()
         this.resultados$ = this.RS.getResultado()

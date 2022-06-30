@@ -1,0 +1,185 @@
+
+<div class="container animate__animated animate__fadeIn">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="card animate__animated animate__fadeIn">
+      <h3>Datos del Comprobante:</h3>
+      <div class="flex-container wrap">
+        <div class="flex-item">
+          <select class="input-control input-select" formControlName="tipo_comprobante" (change)="nrodoc_valid()"
+            maxlength="15">
+            <option ngValue="item.td_cod" *ngFor="let item of tipocomprobante$ | async">
+              {{ item.descripcion }}
+            </option>
+          </select>
+          <label class="label-control" for="tipo_comprobante">Tipo Comprobante</label>
+        </div>
+        <div class="flex-item">
+          <select class="input-control input-select" formControlName="tipo_documento" (change)="nrodoc_valid()"
+            maxlength="15">
+            <option ngValue="item.td_cod" *ngFor="let item of tipodocumento$ | async">
+              {{ item.td_desc }}
+            </option>
+          </select>
+          <label class="label-control" for="tipo_documento">Tipo Documento</label>
+        </div>
+        <div class="flex-item">
+          <input class="input-control" type="text" formControlName="nro_documento" placeholder=" " maxlength="15"
+            [pattern]="pattern_doc" (input)="nrodoc_valid()" oninput="value = value.toUpperCase()" />
+          <label class="label-control" for="nro_documento">Número de documento</label>
+          <div *ngIf="
+                campos.nro_documento.invalid &&
+                campos.nro_documento.errors?.required &&
+                (campos.nro_documento.dirty || campos.nro_documento.touched)
+              " class="{{ ImputError }}">
+            Campo requerido
+          </div>
+          <div *ngIf="
+                campos.nro_documento.invalid &&
+                !campos.nro_documento.errors?.required &&
+                (campos.nro_documento.dirty || campos.nro_documento.touched)
+              " class="{{ ImputError }}">
+            Campo inválido
+          </div>
+        </div>
+      </div>
+      <div class="flex-container wrap">
+        <div class="flex-item flex2">
+          <input type="text" class="input-control" placeholder=" " formControlName="nombres" maxlength="150"
+            [required]="!afectada" oninput="value = value.toUpperCase()" />
+          <label class="label-control" for="nombres">{{
+            campos.tipo_documento.value != 11 ? "Nombres" : "Razón Social"
+            }}</label>
+          <div *ngIf="
+                  campos.nombres.invalid &&
+                  (campos.nombres.dirty || campos.nombres.touched)
+                " class="{{ ImputError }}">
+            Campo requerido
+          </div>
+        </div>
+        <div class="flex-item flex2">
+          <input type="text" class="input-control" placeholder=" " formControlName="domicilio" maxlength="100" required
+            oninput="value = value.toUpperCase()" />
+          <label class="label-control" for="domicilio">Dirección</label>
+          <div *ngIf="
+                  campos.domicilio.invalid &&
+                  (campos.domicilio.dirty || campos.domicilio.touched)
+                " class="{{ ImputError }}">
+            Campo requerido
+          </div>
+        </div>
+      </div>
+      <h3>Datos del paciente:</h3>
+      <div class="flex-container wrap">
+        <div class="flex-item">
+          <input type="text" class="input-control" formControlName="paciente" placeholder=" " />
+          <label class="label-control" for="paciente">Cuenta</label>
+        </div>
+        <div class="flex-item">
+          <input type="text" class="input-control" formControlName="paciente" readonly />
+          <label class="label-control" for="paciente">Paciente</label>
+        </div>
+        <div class="flex-item">
+          <input type="text" class="input-control" formControlName="aseguradora" readonly/>
+          <label class="label-control" for="aseguradora">Aseguradora</label>
+        </div>
+      </div>
+      <div class="flex-container wrap">
+        <div class="flex-item">
+          <input type="text" class="input-control" formControlName="plan" readonly/>
+          <label class="label-control" for="plan">Plan</label>
+        </div>
+        <div class="flex-item">
+          <input type="text" class="input-control" formControlName="tipo_paciente" readonly/>
+          <label class="label-control" for="tipo_paciente">Tipo de Paciente</label>
+        </div>
+        <div class="flex-item">
+          <input type="text" class="input-control" formControlName="cfijo" readonly/>
+          <label class="label-control" for="cfijo">Copago Fijo</label>
+        </div>
+        <div class="flex-item">
+          <input type="text" class="input-control" formControlName="cvariable" readonly/>
+          <label class="label-control" for="cvariable">Copago Variable</label>
+        </div>
+      </div>
+      <h3 style="align-self:end">Detalle del Consumo:</h3>
+      <div class="table animate__animated animate__fadeIn">
+        <div class="row-header">
+          <div class="cell cell-5">N°</div>
+          <div class="cell">Descripción</div>
+          <div class="cell cell-20">Cantidad</div>
+          <div class="cell cell-20">UDM</div>
+          <div class="cell cell-20">Precio Unitario</div>
+          <div class="cell cell-20">Valor Venta</div>
+          <div class="cell cell-20">IGV</div>
+          <div class="cell cell-20">Total</div>
+        </div>
+        <div class="row-body">
+          <div class="cell cell-5">1</div>
+          <div class="cell" style="text-align:left">Consulta ambulatoria</div>
+          <div class="cell cell-20">2</div>
+          <div class="cell cell-20">Unidad</div>
+          <div class="cell cell-20">50.00</div>
+          <div class="cell cell-20">100.00</div>
+          <div class="cell cell-20">18.00</div>
+          <div class="cell cell-20">118.00</div>
+        </div>
+        <div class="row-footer">
+          <div class="cell cell-5"></div>
+          <div class="cell">TOTALES</div>
+          <div class="cell cell-20">-</div>
+          <div class="cell cell-20">-</div>
+          <div class="cell cell-20">-</div>
+          <div class="cell cell-20">100.00</div>
+          <div class="cell cell-20">18.00</div>
+          <div class="cell cell-20">118.00</div>
+        </div>
+      </div>
+      <br>
+      <div style="display: flex;justify-content: space-between;">
+        <h3 style="align-self:end">Detalle de los Medios de Pago:</h3>
+        <button class="btn" (click)="openModal(null)">Agregar</button>
+      </div>
+      <div class="table animate__animated animate__fadeIn">
+        <div class="row-header">
+          <div class="cell cell-5">N°</div>
+          <div class="cell">Forma de Pago</div>
+          <div class="cell">Moneda</div>
+          <div class="cell">A Pagar</div>
+          <div class="cell">Recibido</div>
+          <div class="cell">Vuelto</div>
+          <div class="cell">Tarjeta</div>
+          <div class="cell">Nota de Crédito</div>
+          <div class="cell">Acción</div>
+        </div>
+        <div class="row-body" *ngFor="let pago of pagos$ | async">
+          <div class="cell cell-5">2</div>
+          <div class="cell">Efectivo</div>
+          <div class="cell">S/.</div>
+          <div class="cell">18.00</div>
+          <div class="cell">20.00</div>
+          <div class="cell">2.00</div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell">
+            <div class="icon-action-svg">
+              (click)="openModal(pago)"
+              <img src="assets/icons/edit-color.svg" alt="Editar" />
+              <img src="assets/icons/delete-color.svg" alt="Borrar" />
+            </div>
+          </div>
+        </div>
+        <div class="row-footer">
+          <div class="cell"></div>
+          <div class="cell cell-50"></div>
+          <div class="cell"></div>
+          <div class="cell">-</div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell"></div>
+          <div class="cell">TOTAL PAGADO:</div>
+          <div class="cell">118.00</div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

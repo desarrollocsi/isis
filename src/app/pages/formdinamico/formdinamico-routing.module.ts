@@ -7,6 +7,9 @@ const routes: Routes = [
   { path: 'medicos', component: FormdinamicoComponent },
   { path: 'turnos', component: FormdinamicoComponent },
   { path: 'consultorios', component: FormdinamicoComponent },
+  { path: 'centrocosto', component: FormdinamicoComponent },
+  { path: 'mediopago', component: FormdinamicoComponent },
+  { path: 'tipocomprobante', component: FormdinamicoComponent },
 ];
 
 @NgModule({
