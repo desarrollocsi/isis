@@ -1,4 +1,4 @@
-FROM node:slim as build-step
+FROM node as build-step
 
 RUN mkdir -p /app
 
