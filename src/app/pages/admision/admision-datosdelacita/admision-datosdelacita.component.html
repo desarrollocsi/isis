@@ -1,17 +1,47 @@
-<aside class="container__">
-  <input type="text" disabled [value]="citas.fecha" class="input__controlv2" />
-  <input type="text" disabled [value]="citas.hora" class="input__controlv2" />
-  <input type="text" disabled [value]="citas.medico" class="input__controlv2" />
-  <input
-    type="text"
-    disabled
-    [value]="citas.especialidad"
-    class="input__controlv2"
-  />
-  <input
-    type="text"
-    disabled
-    [value]="citas.consultorios"
-    class="input__controlv2"
-  />
-</aside>
+<section class="container__">
+  <aside class="group">
+    <input
+      type="text"
+      disabled
+      [value]="citas?.fecha"
+      class="input__controlv2"
+    />
+    <label class="control__label">Fecha cita</label>
+  </aside>
+  <aside class="group">
+    <input
+      type="text"
+      disabled
+      [value]="citas?.hora"
+      class="input__controlv2"
+    />
+    <label class="control__label">Hora Cita</label>
+  </aside>
+  <aside class="group">
+    <input
+      type="text"
+      disabled
+      [value]="citas?.medico"
+      class="input__controlv2"
+    />
+    <label class="control__label">Medico</label>
+  </aside>
+  <aside class="group">
+    <input
+      type="text"
+      disabled
+      [value]="citas?.especialidad"
+      class="input__controlv2"
+    />
+    <label class="control__label">Especialidad</label>
+  </aside>
+  <aside class="group">
+    <input
+      type="text"
+      disabled
+      [value]="citas?.consultorios"
+      class="input__controlv2"
+    />
+    <label class="control__label">Consultorio</label>
+  </aside>
+</section>

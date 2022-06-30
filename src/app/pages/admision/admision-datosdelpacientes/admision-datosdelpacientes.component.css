@@ -3,10 +3,42 @@
   gap: 1rem;
 }
 
+.group {
+  position: relative;
+  width: 100%;
+}
+
 .input__controlv2 {
   width: 100%;
   padding: 1rem;
   border: 1px solid #cbd5e1;
   border-radius: 0.5rem;
   outline: none;
+}
+
+.control__label {
+  position: absolute;
+  top: 0.9rem;
+  left: 1rem;
+  transition: 0.3s;
+  background-color: #fff;
+  color: #828282;
+  padding: 0 0.5rem;
+}
+
+.input__controlv2:focus + .control__label {
+  top: -0.5rem;
+  left: 0.9rem;
+  z-index: 1;
+  font-weight: 500;
+  font-size: 0.75rem;
+}
+
+.input__controlv2:not(:placeholder-shown).input__controlv2:not(:focus)
+  + .control__label {
+  top: -0.5rem;
+  left: 0.9rem;
+  z-index: 1;
+  font-weight: 500;
+  font-size: 0.75rem;
 }

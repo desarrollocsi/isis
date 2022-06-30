@@ -1,9 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { PACIENTE, DATA__ATENCION } from '../data/';
-import { Cobertura, WebserviceSualudNombre } from '../models';
+import { Cobertura } from '../models';
 import { HttpService } from '../services/http.service';
+
+interface Loadding {
+  isLoading: boolean;
+  message?: string;
+}
 
 @Component({
   selector: 'app-admision-layaout',
@@ -16,9 +22,31 @@ export class AdmisionLayaoutComponent implements OnInit {
   coberturas$: Observable<any>;
   searchPaciente$: Observable<any>;
   atenciones$: Observable<any>;
-
+  datasPacientes$: Observable<any>;
+  paciente$: Observable<any>;
   isCobertura: boolean = false;
   isAutorizacion: boolean = false;
+  respuestaTrama$: Observable<any>;
+  loading: Loadding;
+
+  _copagoVariable: string;
+  _copagoFijo: string;
+
+  set copagoFijo(copagoFijo: string) {
+    this._copagoFijo = copagoFijo;
+  }
+
+  set copagoVariable(copagoVariable: string) {
+    this._copagoVariable = copagoVariable;
+  }
+
+  get copagoFijo() {
+    return this._copagoFijo;
+  }
+
+  get copagoVariable() {
+    return this._copagoVariable;
+  }
 
   constructor(private fb: FormBuilder, private httpService: HttpService) {}
 
@@ -26,13 +54,13 @@ export class AdmisionLayaoutComponent implements OnInit {
     this.form = this.fb.group({
       idacreditacion: [null],
       idcobertura: [null],
-      cobertura: [null],
+      cobertura: [{ value: null, disabled: true }],
       idautorizacion: [null],
       idcitas: [null],
       observacion: [null],
-      copago_fijo: [null],
-      copago_variable: [null],
-      numero_autorizacion: [null],
+      copago_fijo: [{ value: null, disabled: true }],
+      copago_variable: [{ value: null, disabled: true }],
+      numero_autorizacion: [{ value: null, disabled: true }],
     });
     this.getAtenciones();
   }
@@ -45,11 +73,11 @@ export class AdmisionLayaoutComponent implements OnInit {
     this.searchPaciente$ = of([]);
   }
 
-  buscarPaciente(datoPaciente: string, event: any) {
-    if (datoPaciente.length === 0) {
-      this.searchPacientesClear();
-      return;
-    }
+  buscarPaciente(datoPaciente: string) {
+    // if (datoPaciente.length === 0) {
+    //   this.searchPacientesClear();
+    //   return;
+    // }
 
     this.searchPaciente$ = of(
       PACIENTE.filter(
@@ -60,31 +88,34 @@ export class AdmisionLayaoutComponent implements OnInit {
     );
   }
 
-  paciente(idPaciente: number): Observable<any> {
-    return of(PACIENTE.find(({ id }) => id === idPaciente));
-  }
+  selectAcreditacion(datas: any) {
+    this.coberturas$ = of(null);
+    this.loading = { isLoading: true, message: 'Consultando acreditacion' };
 
-  selectAcreditacion(data: any) {
-    // this.datas$ = this.paciente(id);
-    this.datas$ = this.httpService.consultaNombre(
-      new WebserviceSualudNombre(data)
+    this.paciente$ = this.httpService.getPaciente(datas).pipe(
+      finalize(() => {
+        this.loading = { isLoading: false };
+        this.isAutorizacion = false;
+      })
     );
     this.searchPacientesClear();
   }
 
-  getCoberturas(cobertura: any) {
-    this.isCobertura = true;
-    this.coberturas$ = of(cobertura);
+  getCoberturas(acreditacion: any) {
+    this.loading = { isLoading: true, message: 'Consultando las coberturas' };
+    this.coberturas$ = this.httpService
+      .consultaCoberturas(acreditacion)
+      .pipe(finalize(() => (this.loading = { isLoading: false })));
   }
 
   getCoberturasSeleccionada(cobertura: any) {
     this.isCobertura = false;
     this.isAutorizacion = true;
     this.form.patchValue(new Cobertura(cobertura));
-  }
 
-  getDatas() {
-    this.datas$ = of(PACIENTE);
+    const { copago_variable, copago_fijo } = new Cobertura(cobertura);
+    this.copagoVariable = copago_variable;
+    this.copagoFijo = copago_fijo;
   }
 
   onSubmit() {

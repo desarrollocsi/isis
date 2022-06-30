@@ -11,15 +11,21 @@
   outline: none;
 }
 
+table {
+  width: 100%;
+  border-radius: 1em;
+  border-collapse: collapse;
+}
+
 table,
 th,
 td {
   border: 1px solid #cbd5e1;
-  border-collapse: collapse;
 }
 
-table {
-  width: 100%;
+thead {
+  background-color: #009b6e;
+  color: #fff;
 }
 
 td,
@@ -28,7 +34,20 @@ th {
   text-align: center;
 }
 
+tbody tr {
+  cursor: pointer;
+}
+
 .container__table {
-  /* height: 350px; */
-  /* overflow-y: scroll; */
+  height: 200px;
+  overflow-y: scroll;
+  border-bottom: 1px solid #cbd5e1;
+}
+
+.active {
+  background-color: #828282;
+}
+
+.desactive {
+  background-color: #f89ca0;
 }

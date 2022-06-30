@@ -2,7 +2,11 @@
   <table>
     <thead>
       <tr>
+        <th colspan="7">COBERTURAS</th>
+      </tr>
+      <tr>
         <th>COBERTURA</th>
+        <th>DESCRIPCION</th>
         <th>CF</th>
         <th>CV</th>
         <th>MSGOBS</th>
@@ -12,20 +16,25 @@
     </thead>
     <tbody>
       <tr
-        *ngFor="let cobertura of coberturas"
+        *ngFor="let cobertura of coberturas.coberturas"
         (click)="generarAutorizacion(cobertura)"
+        [class.active]="selectCobertura === cobertura"
       >
-        <td>{{ cobertura.CoTiCobertura }} {{ cobertura.CoSubTiCobertura }}</td>
+        <td>{{ cobertura.CoTiCobertura }}{{ cobertura.CoSubTiCobertura }}</td>
+        <td class="text__left">
+          {{ cobertura?.CoberturaDescripcion }}
+        </td>
         <td>{{ cobertura.CoPagoFijo }}</td>
         <td>{{ cobertura.CoPagoVariable }}%</td>
-        <td>{{ cobertura.MsgObs }}</td>
-        <td>{{ cobertura.MsgConEspeciales }}</td>
+        <td class="text__left">
+          {{ cobertura.MsgObs }}
+        </td>
+        <td class="text__left">
+          {{ cobertura.MsgConEspeciales }}
+        </td>
+
         <td>
-          {{
-            cobertura.FeFinCarencia === "00000000"
-              ? null
-              : cobertura.FeFinCarencia
-          }}
+          {{ cobertura.FeFinCarencia }}
         </td>
       </tr>
     </tbody>

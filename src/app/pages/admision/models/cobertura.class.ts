@@ -4,8 +4,14 @@ export class Cobertura {
   public cobertura: string;
   public numero_autorizacion: string;
 
-  constructor({ CoPagoFijo, CoPagoVariable, CoTiCobertura, CoSubTiCobertura }) {
-    this.cobertura = `${CoTiCobertura} ${CoSubTiCobertura}`;
+  constructor({
+    CoPagoFijo,
+    CoPagoVariable,
+    CoTiCobertura,
+    CoSubTiCobertura,
+    CoberturaDescripcion,
+  }) {
+    this.cobertura = `${CoTiCobertura} ${CoSubTiCobertura} ${CoberturaDescripcion}`;
     this.copago_fijo = CoPagoFijo;
     this.copago_variable = CoPagoVariable;
     this.numero_autorizacion = '123456789';

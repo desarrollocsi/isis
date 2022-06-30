@@ -10,6 +10,7 @@ import { ProgrammingStatusPipe } from './pipe/programming-status.pipe';
 import { PersonalPipe } from './pipe/personal.pipe';
 import { StatusDinamicoPipe } from './pipe/status-dinamico.pipe';
 import { TitlePipe } from './pipe/title.pipe';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { TitlePipe } from './pipe/title.pipe';
     PersonalPipe,
     StatusDinamicoPipe,
     TitlePipe,
+    LoadingComponent,
   ],
   imports: [CommonModule, SharedRoutingModule],
   exports: [
@@ -31,6 +33,7 @@ import { TitlePipe } from './pipe/title.pipe';
     PersonalPipe,
     StatusDinamicoPipe,
     TitlePipe,
+    LoadingComponent,
   ],
 })
 export class SharedModule {}

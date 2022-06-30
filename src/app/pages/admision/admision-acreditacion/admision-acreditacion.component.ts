@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, of } from 'rxjs';
-import { COBERTURA } from '../data';
+import { Observable } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-admision-acreditacion',
@@ -10,35 +9,23 @@ import { COBERTURA } from '../data';
 })
 export class AdmisionAcreditacionComponent implements OnInit {
   @Input() acreditacion: any;
-  @Output() coberturas: EventEmitter<any> = new EventEmitter();
-
-  form: FormGroup;
+  @Output() selectAcreditacion = new EventEmitter<{}>();
 
   coberturas$: Observable<any>;
 
-  constructor(private fb: FormBuilder) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      ApPaternoPaciente: [null],
-      NoPaciente: [null],
-      CoAfPaciente: [null],
-      ApMaternoPaciente: [null],
-      CoProducto: [null],
-      CoDescripcion: [null],
-      CoParentesco: [null],
-      NuPlan: [null],
-      TiCaContratante: [null],
-      NoPaContratante: [null],
-      NoContratante: [null],
-      NoMaContratante: [null],
-      TiDoContratante: [null],
-      IdReContratante: [null],
-      CoReContratante: [null],
-    });
+  ngOnInit(): void {}
+
+  getAcreditacion(data: any) {
+    if (data.CoEsPaciente === '1') {
+      this.selectAcreditacion.emit(data);
+      return;
+    }
+    Swal.fire('', 'Acreditacion Anulada', 'error');
   }
 
-  getCoberturas() {
-    this.coberturas.emit(COBERTURA.coberturas);
+  selectItem(data: any) {
+    this.selectAcreditacion = data;
   }
 }
