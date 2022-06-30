@@ -10,6 +10,8 @@ import { WebserviceSualudNombre } from '../models';
   providedIn: 'root',
 })
 export class HttpService {
+  URL: string = 'http://localhost:8080';
+
   constructor(private http: HttpClient) {}
 
   private parametersDynamic(data: any) {
@@ -32,7 +34,7 @@ export class HttpService {
     });
 
     return this.http.post(
-      `http://localhost:8080/sitedsApi/consultaNombre`,
+      `${this.URL}/sitedsApi/consultaNombre`,
       this.parametersDynamic(new WebserviceSualudNombre(data)),
       { headers: headers }
     );
@@ -45,10 +47,10 @@ export class HttpService {
     ]).pipe(
       map(([data, datasPacientes]) => {
         return { data, datasPacientes };
-      }),
-      tap(console.log)
+      })
     );
   }
+  n;
 
   consultaCoberturas(data: any): Observable<any> {
     const headers = new HttpHeaders({
@@ -56,7 +58,7 @@ export class HttpService {
     });
 
     return this.http.post(
-      `http://localhost:8080/sitedsApi/consultaCobertura`,
+      `${this.URL}/sitedsApi/consultaCobertura`,
       this.parametersDynamic(data),
       { headers }
     );

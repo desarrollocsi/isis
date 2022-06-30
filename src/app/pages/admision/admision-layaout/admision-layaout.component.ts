@@ -26,6 +26,7 @@ export class AdmisionLayaoutComponent implements OnInit {
   paciente$: Observable<any>;
   isCobertura: boolean = false;
   isAutorizacion: boolean = false;
+  respuestaTrama$: Observable<any>;
   loading: Loadding;
 
   constructor(private fb: FormBuilder, private httpService: HttpService) {}
@@ -71,18 +72,6 @@ export class AdmisionLayaoutComponent implements OnInit {
   selectAcreditacion(datas: any) {
     this.coberturas$ = of(null);
     this.loading = { isLoading: true, message: 'Consultando acreditacion' };
-    // this.datas$ = this.httpService.consultaNombre(
-    //   new WebserviceSualudNombre(datas)
-    // );
-
-    // this.datasPacientes$ = this.httpService.getDataPaciente(datas);
-
-    // this.paciente$ = combineLatest([this.datas$, this.datasPacientes$]).pipe(
-    //   map(([data, datasPacientes]) => {
-    //     return { datasPacientes, data };
-    //   }),
-    //   finalize(() => (this.loading = { isLoading: false }))
-    // );
 
     this.paciente$ = this.httpService
       .getPaciente(datas)
