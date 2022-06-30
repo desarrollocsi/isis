@@ -10,7 +10,8 @@ import { WebserviceSualudNombre } from '../models';
   providedIn: 'root',
 })
 export class HttpService {
-  URL: string = 'http://localhost:8080';
+  //URL: string = 'http://localhost:8080';
+  URL: string = 'http://192.168.10.183:8080/';
 
   constructor(private http: HttpClient) {}
 

@@ -55,7 +55,6 @@
           (selectCoberturas)="getCoberturasSeleccionada($event)"
         ></app-admision-coberturas>
       </ng-container>
-
       <fieldset>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <fieldset>
@@ -120,45 +119,46 @@
                 <label class="control__label">N° Autorizacion</label>
               </aside>
             </section>
+            <section class="group__input">
+              <textarea
+                class="input__controlv2"
+                formControlName="observacion"
+                placeholder="Observacion"
+                row="30"
+                cols="150"
+              ></textarea>
+            </section>
+            <section class="group__input">
+              <table>
+                <thead>
+                  <tr>
+                    <th colspan="7">SERVICIO</th>
+                  </tr>
+                  <tr>
+                    <th>PROCEDIMIENTO</th>
+                    <th>PRECIO</th>
+                    <th>CF</th>
+                    <th>CV</th>
+                    <th>VALOR VENTA</th>
+                    <th>IGV</th>
+                    <th>TOTAL</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>CONSULTA</td>
+                    <td>50.00</td>
+                    <td>{{ copagoFijo }}</td>
+                    <td>{{ copagoVariable }}%</td>
+                    <td>50.00</td>
+                    <td>9.00</td>
+                    <td>59.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </section>
           </ng-container>
-          <!-- <section class="group__input">
-            <textarea
-              class="input__controlv2"
-              formControlName="observacion"
-              placeholder="Observacion"
-              row="30"
-              cols="150"
-            ></textarea>
-          </section>
-          <section class="group__input">
-            <table>
-              <thead>
-                <tr>
-                  <th colspan="7">SERVICIO</th>
-                </tr>
-                <tr>
-                  <th>PROCEDIMIENTO</th>
-                  <th>PRECIO</th>
-                  <th>CF</th>
-                  <th>CV</th>
-                  <th>VALOR VENTA</th>
-                  <th>IGV</th>
-                  <th>TOTAL</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>CONSULTA</td>
-                  <td>50.00</td>
-                  <td>50.00</td>
-                  <td>70%</td>
-                  <td>50.00</td>
-                  <td>9.00</td>
-                  <td>59.00</td>
-                </tr>
-              </tbody>
-            </table>
-          </section> -->
+
           <button class="btn">Generar Admision</button>
         </form>
       </fieldset>
@@ -167,5 +167,3 @@
 </div>
 
 <app-loading [loading]="loading"></app-loading>
-
-<!-- <button class="btn" (click)="envioTrama()">Generar factura</button> -->

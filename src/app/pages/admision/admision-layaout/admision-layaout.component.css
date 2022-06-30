@@ -86,6 +86,11 @@ table {
   width: 100%;
 }
 
+thead {
+  background-color: #009b6e;
+  color: #fff;
+}
+
 td,
 th {
   padding: 1rem;

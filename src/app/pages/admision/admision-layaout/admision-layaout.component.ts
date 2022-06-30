@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { combineLatest, map, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { PACIENTE, DATA__ATENCION } from '../data/';
-import { Cobertura, WebserviceSualudNombre } from '../models';
+import { Cobertura } from '../models';
 import { HttpService } from '../services/http.service';
 
 interface Loadding {
@@ -28,6 +28,25 @@ export class AdmisionLayaoutComponent implements OnInit {
   isAutorizacion: boolean = false;
   respuestaTrama$: Observable<any>;
   loading: Loadding;
+
+  _copagoVariable: string;
+  _copagoFijo: string;
+
+  set copagoFijo(copagoFijo: string) {
+    this._copagoFijo = copagoFijo;
+  }
+
+  set copagoVariable(copagoVariable: string) {
+    this._copagoVariable = copagoVariable;
+  }
+
+  get copagoFijo() {
+    return this._copagoFijo;
+  }
+
+  get copagoVariable() {
+    return this._copagoVariable;
+  }
 
   constructor(private fb: FormBuilder, private httpService: HttpService) {}
 
@@ -55,10 +74,10 @@ export class AdmisionLayaoutComponent implements OnInit {
   }
 
   buscarPaciente(datoPaciente: string) {
-    if (datoPaciente.length === 0) {
-      this.searchPacientesClear();
-      return;
-    }
+    // if (datoPaciente.length === 0) {
+    //   this.searchPacientesClear();
+    //   return;
+    // }
 
     this.searchPaciente$ = of(
       PACIENTE.filter(
@@ -73,9 +92,12 @@ export class AdmisionLayaoutComponent implements OnInit {
     this.coberturas$ = of(null);
     this.loading = { isLoading: true, message: 'Consultando acreditacion' };
 
-    this.paciente$ = this.httpService
-      .getPaciente(datas)
-      .pipe(finalize(() => (this.loading = { isLoading: false })));
+    this.paciente$ = this.httpService.getPaciente(datas).pipe(
+      finalize(() => {
+        this.loading = { isLoading: false };
+        this.isAutorizacion = false;
+      })
+    );
     this.searchPacientesClear();
   }
 
@@ -90,6 +112,10 @@ export class AdmisionLayaoutComponent implements OnInit {
     this.isCobertura = false;
     this.isAutorizacion = true;
     this.form.patchValue(new Cobertura(cobertura));
+
+    const { copago_variable, copago_fijo } = new Cobertura(cobertura);
+    this.copagoVariable = copago_variable;
+    this.copagoFijo = copago_fijo;
   }
 
   onSubmit() {
