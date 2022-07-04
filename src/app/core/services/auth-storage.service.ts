@@ -18,10 +18,10 @@ export class AuthStorageService {
 
   setRol(data: any) {
     localStorage.setItem('_rol', data.Rol[0].nombre);
-    this.setIdMedioc(data);
+    this.setIdMedico(data);
   }
 
-  setIdMedioc(data: any) {
+  setIdMedico(data: any) {
     if (data.Rol[0].nombre === 'MEDICO') {
       localStorage.setItem('_idmedico', data.User.id_medico);
     }
@@ -68,8 +68,7 @@ export class AuthStorageService {
     return localStorage.getItem(`_${nombre}`) ? true : false;
   }
 
-  getMenu(data: any) {
-    const { id } = data;
+  getMenu({ id }) {
     const menu = JSON.parse(localStorage.getItem('_menu'));
     return of(menu.filter((menu: any) => menu.padre === parseInt(id)));
   }

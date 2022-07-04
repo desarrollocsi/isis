@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
 
   onMenu() {
     this.menus$ = this.IS._menus.pipe(
-      switchMap((id: string) => this.AST.getMenu(id))
+      switchMap((id: any) => this.AST.getMenu(id))
     );
   }
 

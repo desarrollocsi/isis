@@ -6,9 +6,19 @@ import { NgxPaginationModule } from 'ngx-pagination';
 
 import { ActomedicoRoutingModule } from './actomedico-routing.module';
 import { ActomedicoComponent } from './actomedico.component';
+import {
+  MedicamentoComponent,
+  ProcedimientoComponent,
+  SearchComponent,
+} from './searchs.component';
 
 @NgModule({
-  declarations: [ActomedicoComponent],
+  declarations: [
+    ActomedicoComponent,
+    MedicamentoComponent,
+    ProcedimientoComponent,
+    SearchComponent,
+  ],
   imports: [
     CommonModule,
     ActomedicoRoutingModule,

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { environment } from '../../../../environments/environment';
+//
+
+import { medicamento, procedimiento } from '../data';
 
 @Injectable({
   providedIn: 'root',
@@ -30,23 +33,26 @@ export class ActomedicoService {
   }
 
   apidynamic(verb: string, data: any) {
-    // switch (verb) {
-    //   case 'POST': {
-    //     return this.http.post(`${environment.apiUrl}/actomedico`, data);
-    //   }
-    //   case 'PUT': {
-    //     return this.http.put(
-    //       `${environment.apiUrl}/actomedico/${data.id}`,
-    //       data
-    //     );
-    //   }
-    // }
-
     const API__DYNAMIC = {
       POST: this.http.post(`${environment.apiUrl}/actomedico`, data),
       PUT: this.http.put(`${environment.apiUrl}/actomedico/${data.id}`, data),
     };
 
     return API__DYNAMIC[verb];
+  }
+
+  search({ text, key }) {
+    const SEARCH__API_DYNAMIC = {
+      MEDICAMENTO: () =>
+        medicamento.filter(({ descripcion }) =>
+          descripcion.includes(text.toUpperCase())
+        ),
+      PROCEDIMIENTO: () =>
+        procedimiento.filter(({ descripcion }) =>
+          descripcion.includes(text.toUpperCase())
+        ),
+    };
+
+    return of(SEARCH__API_DYNAMIC[key]());
   }
 }

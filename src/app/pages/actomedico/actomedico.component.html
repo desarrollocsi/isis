@@ -304,6 +304,76 @@
             </div>
           </ng-container>
         </div>
+        <!-- PROCEDIMIENTO -->
+        <ng-container *ngIf="procedimiento">
+          <app-search
+            [nameSearch]="nameSearch"
+            (item)="selectItem($event)"
+          ></app-search>
+        </ng-container>
+
+        <div class="card">
+          <table>
+            <thead>
+              <th>#</th>
+              <th>DESCRIPCION</th>
+              <th>DELETE</th>
+            </thead>
+            <tbody>
+              <ng-container formArrayName="procedimientos">
+                <tr *ngFor="let _ of procedimientos.controls; index as i">
+                  <ng-container [formGroupName]="i">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ procedimientos.value[i].descripcion }}</td>
+                    <td>DELETE</td>
+                  </ng-container>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-option" (click)="agregarConsumos()">
+            <img src="assets/icons/add-plus.svg" />
+            <span>Agregar procedimiento</span>
+          </div>
+        </div>
+        <!-- MEDICAMENTO -->
+        <ng-container *ngIf="medicamento">
+          <app-search
+            [nameSearch]="nameSearch"
+            (item)="selectItem($event)"
+          ></app-search>
+        </ng-container>
+
+        <div class="card">
+          <table>
+            <thead>
+              <th>#</th>
+              <th>DESCRIPCION</th>
+              <th>DELETE</th>
+            </thead>
+            <tbody>
+              <ng-container formArrayName="medicamentos">
+                <tr *ngFor="let _ of medicamentos.controls; index as i">
+                  <ng-container [formGroupName]="i">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ medicamentos.value[i].descripcion }}</td>
+                    <td>DELETE</td>
+                  </ng-container>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="card">
+          <div class="card-option" (click)="agregarConsumos('MEDICAMENTO')">
+            <img src="assets/icons/add-plus.svg" />
+            <span>Agregar medicamento</span>
+          </div>
+        </div>
 
         <div class="card">
           <h3>5.- Atencion</h3>
@@ -320,11 +390,6 @@
             </select>
           </div>
         </div>
-        <!-- <pre>
-          <code>
-            {{ formActoMedico.getRawValue() | json }}
-          </code>
-        </pre> -->
       </div>
     </div>
     <div class="group-button">
@@ -332,3 +397,9 @@
     </div>
   </div>
 </form>
+
+<!-- <pre>
+  <code>
+    {{ formActoMedico.getRawValue() | json }}
+  </code>
+</pre> -->

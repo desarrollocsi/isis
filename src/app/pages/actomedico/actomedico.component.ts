@@ -1,6 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormArray, FormControl } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  FormControl,
+  Validators,
+} from '@angular/forms';
 import { combineLatest, Observable, Subject } from 'rxjs';
 import {
   debounceTime,
@@ -44,10 +50,17 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
   search$ = new Subject<string>();
   antecedentes: any;
   diagnosticos: any;
+  medicamentos: any;
+  procedimientos: any;
   visible = true;
   p: number = 1;
   VERB_HTTP: string = 'POST';
   tituloBoton: string = 'Registrar';
+
+  nameSearch: string;
+
+  examples1: [] = [];
+  examples2: [] = [];
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   get usuario() {
@@ -58,7 +71,7 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.formActoMedico = this.fb.group({
-      id: [null],
+      id: [null, Validators.required],
       idcita: [null],
       motivo: [null],
       problema: [null],
@@ -75,12 +88,19 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
       destino: [null],
       antecedentes: this.fb.array([]),
       diagnosticos: this.fb.array([]),
+      procedimientos: this.fb.array([]),
+      medicamentos: this.fb.array([]),
       usuario: [this.usuario],
     });
 
     this.antecedentes$ = this.http.getAntecedentes();
     this.antecedentes = this.formActoMedico.get('antecedentes') as FormArray;
     this.diagnosticos = this.formActoMedico.get('diagnosticos') as FormArray;
+
+    this.procedimientos = this.formActoMedico.get(
+      'procedimientos'
+    ) as FormArray;
+    this.medicamentos = this.formActoMedico.get('medicamentos') as FormArray;
 
     this.getDataActoMedico();
     this.getCie();
@@ -142,7 +162,7 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
         takeUntil(this.unsubscribe$),
         map(([peso, talla]) => (peso / (talla * talla)).toFixed(2))
       )
-      .subscribe((data) => this.form.icorporal.setValue(data));
+      .subscribe((data) => this.formActoMedico.patchValue({ icorporal: data }));
   }
 
   search(search: any) {
@@ -201,12 +221,60 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    if (this.formActoMedico.invalid) return;
+
     this.AMS.apidynamic(this.VERB_HTTP, this.formActoMedico.value)
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((data) => {
+      .subscribe((data: any) => {
         this.MS.MessageInfo(data['message']);
         this.router.navigate(['home/agendamedica']);
       });
+  }
+
+  ///////////////////////////////////////////////////////
+
+  _isProcedimiento: boolean = false;
+  _isMedicamento: boolean = false;
+
+  set procedimiento(isProcedimiento: boolean) {
+    this._isProcedimiento = isProcedimiento;
+  }
+
+  set medicamento(isMedicamento: boolean) {
+    this._isMedicamento = isMedicamento;
+  }
+
+  get procedimiento(): boolean {
+    return this._isProcedimiento;
+  }
+
+  get medicamento(): boolean {
+    return this._isMedicamento;
+  }
+
+  agregarConsumos(keyName: string = 'PROCEDIMIENTO') {
+    const SEARCH__DYNAMIC = {
+      MEDICAMENTO: () => {
+        this.medicamento = true;
+        this.procedimiento = false;
+      },
+      PROCEDIMIENTO: () => {
+        this.procedimiento = true;
+        this.medicamento = false;
+      },
+    };
+
+    this.nameSearch = keyName;
+    SEARCH__DYNAMIC[keyName]();
+  }
+
+  selectItem({ key, data }) {
+    const PUSH__DYNAMIC = {
+      PROCEDIMIENTO: () => this.procedimientos.push(this.fb.group(data)),
+      MEDICAMENTO: () => this.medicamentos.push(this.fb.group(data)),
+    };
+
+    PUSH__DYNAMIC[key]();
   }
 
   ngOnDestroy(): void {

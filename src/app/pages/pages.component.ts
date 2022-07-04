@@ -20,8 +20,6 @@ export class PagesComponent implements OnInit {
   }
 
   onMenu(data: any) {
-    this.menus$ = of(data).pipe(
-      switchMap((id: string) => this.AST.getMenu(id))
-    );
+    this.menus$ = of(data).pipe(switchMap((id: any) => this.AST.getMenu(id)));
   }
 }
