@@ -16,6 +16,7 @@ import {
 })
 export class NavbarComponent implements OnInit {
   @Input() menus: any;
+
   constructor(
     private AST: AuthStorageService,
     private IS: IntermedaryService,
@@ -39,6 +40,7 @@ export class NavbarComponent implements OnInit {
 
   onMenu() {
     this.menus$ = this.IS._menus.pipe(
+      tap(console.log),
       switchMap((id: any) => this.AST.getMenu(id))
     );
   }

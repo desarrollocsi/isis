@@ -17,11 +17,7 @@ export class HttpService {
 
   private parametersDynamic(data: any) {
     let params = new URLSearchParams();
-
-    for (const key in data) {
-      params.set(`${key}`, data[key]);
-    }
-
+    for (const key in data) params.set(`${key}`, data[key]);
     return params.toString();
   }
 
@@ -51,7 +47,6 @@ export class HttpService {
       })
     );
   }
-  n;
 
   consultaCoberturas(data: any): Observable<any> {
     const headers = new HttpHeaders({
@@ -63,5 +58,9 @@ export class HttpService {
       this.parametersDynamic(data),
       { headers }
     );
+  }
+
+  apigateway() {
+    return this.http.get('http://127.0.0.1:8000/programacion/5');
   }
 }

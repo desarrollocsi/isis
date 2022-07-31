@@ -11,7 +11,7 @@ import {
 import { Router } from '@angular/router';
 
 import { F419Service } from '../services';
-import { MessageService } from '../../../core/services';
+import { MessageService, AuthStorageService } from '../../../core/services';
 import { Observable, Subject } from 'rxjs';
 import { map, takeUntil, tap } from 'rxjs/operators';
 import { fieldsUpdate } from '../db/db';
@@ -39,7 +39,8 @@ export class F419EventoadversoRegistrarEditComponent
     private fb: FormBuilder,
     private F419Service: F419Service,
     private MessageService: MessageService,
-    private Router: Router
+    private Router: Router,
+    private AuthStorageService: AuthStorageService
   ) {}
 
   get detalles(): FormArray {
@@ -110,7 +111,7 @@ export class F419EventoadversoRegistrarEditComponent
       glosa: [null, [Validators.required]],
       turno: [null, [Validators.required]],
       reporta_area: [null, [Validators.required]],
-      usuario_registro: ['YVALDEZ'],
+      usuario_registro: [this.AuthStorageService.User],
       detalles: this.fb.array([]),
     });
 
@@ -170,7 +171,7 @@ export class F419EventoadversoRegistrarEditComponent
         this.fb.group({
           value: id,
           tipo: idinvolucrados,
-          usuario_registro: 'YVALDEZ',
+          usuario_registro: this.AuthStorageService.User,
         })
       );
     !checked && this.detalles.removeAt(this.indexDetalle(id));
@@ -178,7 +179,6 @@ export class F419EventoadversoRegistrarEditComponent
 
   onSubmit() {
     this.submit = true;
-    console.log(this.form.value);
     if (this.form.invalid) return;
     this.F419Service.apiDynamic({
       verb: this.verb,

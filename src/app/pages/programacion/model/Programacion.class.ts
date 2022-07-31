@@ -8,12 +8,19 @@ export class Programacion {
   public pr_turno: string;
   public pr_numero: string;
 
-  constructor(object: any) {
-    this.pr_numero = object.pr_numero;
-    this.pr_fecha = moment(object.pr_fecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
-    this.pr_servicio = object.pr_servicio;
-    this.pr_consultorio = object.pr_consultorio;
-    this.pr_medico = object.pr_medico;
-    this.pr_turno = object.pr_turno;
+  constructor({
+    pr_numero,
+    pr_fecha,
+    pr_servicio,
+    pr_consultorio,
+    pr_medico,
+    pr_turno,
+  }) {
+    this.pr_numero = pr_numero;
+    this.pr_fecha = moment(pr_fecha, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    this.pr_servicio = pr_servicio;
+    this.pr_consultorio = pr_consultorio;
+    this.pr_medico = pr_medico;
+    this.pr_turno = pr_turno;
   }
 }

@@ -56,11 +56,9 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
   p: number = 1;
   VERB_HTTP: string = 'POST';
   tituloBoton: string = 'Registrar';
-
   nameSearch: string;
 
-  examples1: [] = [];
-  examples2: [] = [];
+  __data: {};
 
   private readonly unsubscribe$: Subject<void> = new Subject();
   get usuario() {
@@ -100,6 +98,7 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
     this.procedimientos = this.formActoMedico.get(
       'procedimientos'
     ) as FormArray;
+
     this.medicamentos = this.formActoMedico.get('medicamentos') as FormArray;
 
     this.getDataActoMedico();
@@ -253,6 +252,8 @@ export class ActomedicoComponent implements OnInit, OnDestroy {
   }
 
   agregarConsumos(keyName: string = 'PROCEDIMIENTO') {
+    console.log(keyName);
+
     const SEARCH__DYNAMIC = {
       MEDICAMENTO: () => {
         this.medicamento = true;

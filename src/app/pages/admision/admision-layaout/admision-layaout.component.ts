@@ -32,6 +32,8 @@ export class AdmisionLayaoutComponent implements OnInit {
   _copagoVariable: string;
   _copagoFijo: string;
 
+  apigateway$: Observable<any>;
+
   set copagoFijo(copagoFijo: string) {
     this._copagoFijo = copagoFijo;
   }
@@ -63,6 +65,8 @@ export class AdmisionLayaoutComponent implements OnInit {
       numero_autorizacion: [{ value: null, disabled: true }],
     });
     this.getAtenciones();
+
+    this.apigateway$ = this.httpService.apigateway();
   }
 
   getAtenciones() {
@@ -119,6 +123,6 @@ export class AdmisionLayaoutComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    console.log(this.form.getRawValue());
   }
 }

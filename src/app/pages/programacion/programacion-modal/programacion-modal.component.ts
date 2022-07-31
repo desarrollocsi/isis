@@ -90,7 +90,7 @@ export class ProgramacionModalComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((data) => {
         this.getMedico(data.pr_servicio);
-        this.form.setValue(new Programacion(data));
+        this.form.patchValue(new Programacion(data));
       });
   }
 

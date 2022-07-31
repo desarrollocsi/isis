@@ -27,8 +27,10 @@ export class F419Service {
     return this.http.get(`${environment.apiUrl}/involucrados`);
   }
 
-  getIncidencia({ fecha, rol }) {
-    return this.http.get(`${environment.apiUrl}/incidencias/${fecha}/${rol}`);
+  getIncidencia({ fecha, rol, usuario }) {
+    return this.http.get(
+      `${environment.apiUrl}/incidencias/${fecha}/${rol}/${usuario}`
+    );
   }
 
   getIncidenciaDetail(id: number) {

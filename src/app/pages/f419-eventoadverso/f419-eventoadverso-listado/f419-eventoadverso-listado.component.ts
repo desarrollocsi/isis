@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { F419Service } from '../services';
-import { MessageService } from '../../../core/services';
+import { MessageService, AuthStorageService } from '../../../core/services';
 import { perfilMenu } from '../db/db';
 import { rulesParameters } from '../utils';
 import * as moment from 'moment';
@@ -16,7 +16,6 @@ import * as moment from 'moment';
 export class F419EventoadversoListadoComponent implements OnInit {
   dataIncidencia$: Observable<any>;
   title: string = 'Listado F419 de I/EA';
-  // title: string = 'Listado F419 Reporte de I/EA';
   perfil: string;
   dropdowns$: Observable<any>;
 
@@ -26,7 +25,8 @@ export class F419EventoadversoListadoComponent implements OnInit {
   constructor(
     private F419Service: F419Service,
     private Router: Router,
-    private MessageService: MessageService
+    private MessageService: MessageService,
+    private AuthStorageService: AuthStorageService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +37,11 @@ export class F419EventoadversoListadoComponent implements OnInit {
   }
 
   getFecha(fecha: string) {
-    this.fecha$.next({ fecha, rol: localStorage.getItem('_rol') });
+    this.fecha$.next({
+      fecha,
+      rol: localStorage.getItem('_rol'),
+      usuario: this.AuthStorageService.User,
+    });
   }
 
   getIncidenciasList() {

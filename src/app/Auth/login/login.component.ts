@@ -44,12 +44,12 @@ export class LoginComponent implements OnInit {
   }
 
   countModulos(data: any) {
-    if (data.filter((data: any) => data.nivel === 0).length > 1) {
+    const modulos = data.filter(({ nivel }) => nivel === 0);
+    if (modulos.length > 1) {
       this.router.navigate(['modulos']);
       return;
     }
-
-    this.AST.setModulos(data[0]);
+    this.AST.setModulos(modulos[0]);
     this.router.navigate(['home']);
   }
 }

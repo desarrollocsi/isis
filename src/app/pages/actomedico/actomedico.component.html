@@ -305,6 +305,7 @@
           </ng-container>
         </div>
         <!-- PROCEDIMIENTO -->
+
         <ng-container *ngIf="procedimiento">
           <app-search
             [nameSearch]="nameSearch"
@@ -317,7 +318,7 @@
             <thead>
               <th>#</th>
               <th>DESCRIPCION</th>
-              <th>DELETE</th>
+              <th>ACTION</th>
             </thead>
             <tbody>
               <ng-container formArrayName="procedimientos">
@@ -352,7 +353,7 @@
             <thead>
               <th>#</th>
               <th>DESCRIPCION</th>
-              <th>DELETE</th>
+              <th>ACTION</th>
             </thead>
             <tbody>
               <ng-container formArrayName="medicamentos">

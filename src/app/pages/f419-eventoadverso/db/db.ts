@@ -1,8 +1,11 @@
 import * as moment from 'moment';
+import { AuthStorageService } from '../../../core/services';
+
+const user = new AuthStorageService();
 
 export const perfilMenu = [
   {
-    perfil: 'SUPERADMIN',
+    perfil: 'Scalidad',
     menu: [
       {
         nombre: 'Views',
@@ -42,7 +45,7 @@ export const perfilMenu = [
     ],
   },
   {
-    perfil: 'USUARIO',
+    perfil: 'Ucalidad',
     menu: [
       {
         nombre: 'Views',
@@ -65,7 +68,7 @@ export const perfilMenu = [
 export const fieldsUpdate = [
   {
     fields: 'usuario_actualizado',
-    value: 'YVALDEZ',
+    value: user.User,
   },
   {
     fields: 'usuario_actualizado',

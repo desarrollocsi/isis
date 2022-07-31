@@ -17,7 +17,7 @@ export class AuthStorageService {
   }
 
   setRol(data: any) {
-    localStorage.setItem('_rol', data.Rol[0].nombre);
+    localStorage.setItem('_rol', data.Rol[0].nombre || data.Rol[0].descripcion);
     this.setIdMedico(data);
   }
 
@@ -59,23 +59,24 @@ export class AuthStorageService {
     return localStorage.getItem('_usuario');
   }
 
+  get menu() {
+    return JSON.parse(localStorage.getItem('_menu'));
+  }
+
   getModulos() {
-    const menu = JSON.parse(localStorage.getItem('_menu'));
-    return of(menu.filter((menu: any) => menu.nivel === 0));
+    return of(this.menu.filter(({ nivel }) => nivel === 0));
+  }
+
+  getMenu({ id }) {
+    return of(this.menu.filter(({ padre }) => padre === parseInt(id)));
+  }
+
+  getSubmenu(id: number) {
+    return of(this.menu.filter(({ padre }) => padre === id));
   }
 
   isValidacionMenus(nombre: string) {
     return localStorage.getItem(`_${nombre}`) ? true : false;
-  }
-
-  getMenu({ id }) {
-    const menu = JSON.parse(localStorage.getItem('_menu'));
-    return of(menu.filter((menu: any) => menu.padre === parseInt(id)));
-  }
-
-  getSubmenu(id: number) {
-    const menu = JSON.parse(localStorage.getItem('_menu'));
-    return of(menu.filter((menu: any) => menu.padre === id));
   }
 
   clearLocalstorage() {

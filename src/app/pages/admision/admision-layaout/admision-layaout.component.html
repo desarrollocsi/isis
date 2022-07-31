@@ -146,7 +146,7 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td>CONSULTA</td>
+                    <td>CONSULTA AMBULATORIO</td>
                     <td>50.00</td>
                     <td>{{ copagoFijo }}</td>
                     <td>{{ copagoVariable }}%</td>
@@ -165,5 +165,9 @@
     </div>
   </div>
 </div>
+
+<pre
+  >{{ apigateway$ | async | json }}
+</pre>
 
 <app-loading [loading]="loading"></app-loading>

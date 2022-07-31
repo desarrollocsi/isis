@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormArray, FormGroup, FormBuilder } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { ActomedicoService } from './services/actomedico.service';
 
@@ -10,8 +11,8 @@ import { ActomedicoService } from './services/actomedico.service';
         type="text"
         class="input-control"
         [placeholder]="nameSearch"
-        #search
         (keyup)="searchDynamic(search.value)"
+        #search
       />
       <label class="label-control">{{ nameSearch }}</label>
 
@@ -57,7 +58,7 @@ export class SearchComponent implements OnInit {
 
 @Component({
   selector: 'app-medicamento',
-  template: `<h1>Medicamento</h1>`,
+  template: ``,
   styleUrls: ['./actomedico.component.css'],
 })
 export class MedicamentoComponent implements OnInit {
@@ -66,9 +67,17 @@ export class MedicamentoComponent implements OnInit {
 
 @Component({
   selector: 'app-procedimiento',
-  template: `<h1>procedimiento</h1>`,
+  template: `<h1>Procedimiento</h1>`,
   styleUrls: ['./actomedico.component.css'],
 })
 export class ProcedimientoComponent implements OnInit {
-  ngOnInit(): void {}
+  @Input() procedimientos: any;
+
+  formArrayProcedimientos: FormArray;
+
+  constructor(private fb: FormBuilder) {}
+
+  ngOnInit(): void {
+    this.formArrayProcedimientos = this.fb.array([]);
+  }
 }
